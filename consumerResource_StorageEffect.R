@@ -62,14 +62,15 @@ R[1] <- 0.1
 for(t in 2:nTime){
   s <- rtruncnorm(n = 1, a = 0, b = Inf, mean = 15, sd = 5)
   thisStep <- updateN(b=bSeries[t,], c, w, s, d, lastN=N[t-1,], lastR=R[t-1])
+#   N[t,] <- rpois(2, thisStep[[1]])
   N[t,] <- thisStep[[1]]
   R[t] <- thisStep[[2]]
 }
 
-par(mfrow=c(2,1))
+par(mfrow=c(3,1))
 matplot(c(1:nTime), N, type="l", lwd=2)
 plot(c(1:nTime), R, type="l", lwd=1)
-
+matplot(c(1:nTime), bSeries, type="l", lwd=2)
 
 
 
