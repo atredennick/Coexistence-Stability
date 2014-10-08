@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  6 OCT 2014 16:05
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  8 OCT 2014 10:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -61,6 +61,17 @@ Package: verbatim 2003/08/22 v1.5q LaTeX2e package for verbatim enhancements
 \verbatim@line=\toks16
 \verbatim@in@stream=\read1
 )
+(/usr/local/texlive/2013/texmf-dist/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+
+(/usr/local/texlive/2013/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\@emptytoks=\toks17
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+))
 (/usr/local/texlive/2013/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2013/01/14 v2.14 AMS math features
 \@mathmargin=\skip43
@@ -71,7 +82,7 @@ Package: amstext 2000/06/29 v2.01
 
 (/usr/local/texlive/2013/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0
-\@emptytoks=\toks17
+\@emptytoks=\toks18
 \ex@=\dimen105
 ))
 (/usr/local/texlive/2013/texmf-dist/tex/latex/amsmath/amsbsy.sty
@@ -101,21 +112,21 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 567.
 \dotsspace@=\muskip10
 \c@parentequation=\count95
 \dspbrk@lvl=\count96
-\tag@help=\toks18
+\tag@help=\toks19
 \row@=\count97
 \column@=\count98
 \maxfields@=\count99
-\andhelp@=\toks19
+\andhelp@=\toks20
 \eqnshift@=\dimen108
 \alignsep@=\dimen109
 \tagshift@=\dimen110
 \tagwidth@=\dimen111
 \totwidth@=\dimen112
 \lineht@=\dimen113
-\@envbody=\toks20
+\@envbody=\toks21
 \multlinegap=\skip44
 \multlinetaggap=\skip45
-\mathdisplay@stack=\toks21
+\mathdisplay@stack=\toks22
 LaTeX Info: Redefining \[ on input line 2665.
 LaTeX Info: Redefining \] on input line 2666.
 )
@@ -276,12 +287,12 @@ LaTeX Font Info:    ... okay on input line 16.
 \scratchbox=\box29
 \nofMPsegments=\count107
 \nofMParguments=\count108
-\everyMPshowfont=\toks22
+\everyMPshowfont=\toks23
 \MPscratchCnt=\count109
 \MPscratchDim=\dimen115
 \MPnumerator=\count110
 \makeMPintoPDFobject=\count111
-\everyMPtoPDFconversion=\toks23
+\everyMPtoPDFconversion=\toks24
 ) (/usr/local/texlive/2013/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
 )
@@ -331,34 +342,70 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 (./modelNotes-concordance.tex)
+LaTeX Font Info:    Try loading font information for U+msa on input line 32.
+
+(/usr/local/texlive/2013/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 32.
+
+(/usr/local/texlive/2013/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
 Overfull \vbox (21.68121pt too high) has occurred while \output is active []
 
 
 [1
 
 {/usr/local/texlive/2013/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+! Misplaced alignment tab character &.
+l.57 ...ific biomass conversion rate for species &
+                                                  i&. Following Adler and Dr...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.57 ...ic biomass conversion rate for species &i&
+                                                  . Following Adler and Drak...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+
 Overfull \vbox (21.68121pt too high) has occurred while \output is active []
 
 
 [2] (./modelNotes.aux) ) 
 Here is how much of TeX's memory you used:
- 3372 strings out of 493315
- 46503 string characters out of 6137904
- 104610 words of memory out of 5000000
- 6749 multiletter control sequences out of 15000+600000
- 26674 words of font info for 56 fonts, out of 8000000 for 9000
+ 3682 strings out of 493315
+ 49905 string characters out of 6137904
+ 105122 words of memory out of 5000000
+ 7033 multiletter control sequences out of 15000+600000
+ 32059 words of font info for 79 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 38i,4n,23p,825b,295s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 38i,8n,26p,825b,295s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2013/texmf-dist/fonts/type1/public/
 amsfonts/cm/cmbx12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmr10.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmr12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfo
-nts/cm/cmr17.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmr7.pfb>
-Output written on modelNotes.pdf (2 pages, 65341 bytes).
+msfonts/cm/cmex10.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmmi12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmmi8.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmr10.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmr12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmr17.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmr7.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+r8.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy1
+0.pfb>
+Output written on modelNotes.pdf (2 pages, 108470 bytes).
 PDF statistics:
- 32 PDF objects out of 1000 (max. 8388607)
- 21 compressed objects within 1 object stream
+ 52 PDF objects out of 1000 (max. 8388607)
+ 36 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  5 words of extra memory for PDF output out of 10000 (max. 10000000)
 

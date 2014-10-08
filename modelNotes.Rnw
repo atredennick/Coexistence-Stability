@@ -1,7 +1,7 @@
 \documentclass[12pt]{article}
 \usepackage{graphics}
 \usepackage{graphicx, verbatim}
-\usepackage{amsmath}
+\usepackage{amssymb,amsmath}
 % \usepackage[T1]{fontenc}
 % \usepackage[utf8]{inputenc}
 \usepackage{authblk}
@@ -46,6 +46,24 @@ To that end, we will analyze a general consumer-resource model under different c
 Each scenario requires different model assumptions and structure, so we will describe each in turn. Although the structure may change slightly to incorporate different coexistence mechanisms, the strength of our approach lies in the similarities among the models since we work under a unified consumer-resource framework.
 
 \subsection{Temporal storage effect}
+We start with the simple model
 
+\begin{gather}
+N_{i,t+1} =N_{i,t} + N_{i,t}b_{i}(E_{t})[c_{i}w_{i}R-m_{i}]\\
+R =s-dR-\sum_{i=1}^{n} c_{i}RN_{i}
+\end{gather}
+
+where $b_{i}(E_{t})$ is the year-specific biomass conversion rate for species &i&. Following Adler and Drake (2008), we simualated a time series of annual biomass conversion rates for each species by drawing a sequence of correlate-by-species random variates ($E$) from a multivariate normal distribution with mean 0 and a variance-covariance ($\Sigma$) structure of
+
+\[ \Sigma = \left[ \begin{array}{cc}
+\sigma^{2}_{E} & \rho\sigma^{2}_{E} \\
+\rho\sigma^{2}_{E} & \sigma^{2}_{E} \end{array} \right].\]
+
+For $\Sigma$, the $\sigma^{2}_{E}$ is the variance of $E$ and $\rho$ is the correlation between the two species' annual biomass conversion rates. For environmental variation to promote coexistence, it must be the case that $\rho<1$.
+
+% \begin{align}
+% N_{i,t+1}$ = N_{i,t} + N_{i,t}b_{i}(E_{t})(c_{i}w_{i}R-m)\\
+% R$ = t
+% \end{align}
 
 \end{document}
