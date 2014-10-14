@@ -7,15 +7,16 @@ rm(list=ls())
 ####
 
 # initial conditions
-maxDays <- 120 #Rfreq*cycles
+maxDays <- 40 #Rfreq*cycles
 years <- 500
 burn.in <- 120
-NR <- c(N=c(1,1),R=90)
+NR <- c(N=c(1,1),R=50)
+Rmean <- 50
 
 parmsB <- list(
-  a = c(0.36,0.28),  # max growth rate for spp 1 and 2
+  a = c(0.23,0.2),  # max growth rate for spp 1 and 2
   b1 = c(25,10),  # right offset for growth rates 
-  b2 = c(0.08,0.1)  # rates at which max is approached
+  b2 = c(0.08,0.45)  # rates at which max is approached
 )
 
 
@@ -48,9 +49,15 @@ getB <- function(parmsB, R){
 Nstart <- 5
 Nsave <- matrix(nrow = years, ncol=2)
 Nsave[1,] <- c(Nstart,Nstart)
+
+#get vector of means for resource
+# set.seed(1653)
+muVec <- rnorm(years, 0, .2)
+
 for(g in 2:years){
   days = 1:maxDays
-  NR[3] <- rnorm(1,50,10)
+  mu <- muVec[g]
+  NR[3] <- Rmean + (Rmean*mu)
   # species parameters 
   cNow <- getB(parmsB, NR[3])
   parms <- list(
@@ -63,11 +70,11 @@ for(g in 2:years){
   N = output[,2:3]
   nMax <- c(max(N[1]), max(N[2]))
   seedFrac1 <- nMax[1] / (sum(nMax))
-  NR <- c(N=c(seedFrac1*Nstart, (1-seedFrac1)*Nstart),R=NA)
+  NR <- c(N=c(seedFrac1*(Nstart*2), (1-seedFrac1)*(Nstart*2)),R=NA)
   Nsave[g,] <- nMax
 }
 
-par(mfrow=c(2,1),mar=c(4,4,1,1))
+par(mfrow=c(1,3),mar=c(4,4,1,1))
 matplot(c(1:years),Nsave,type="l",xlab="Time",ylab="N")
 
 gomp <- function(parmsB,R){
@@ -80,3 +87,6 @@ gomp <- function(parmsB,R){
 R <- 0:120
 tmp<-gomp(parmsB=parmsB,R)
 matplot(R,tmp,type="l",ylab="Resource uptake")
+
+matplot(output[,1], output[,2:3], type="l")
+

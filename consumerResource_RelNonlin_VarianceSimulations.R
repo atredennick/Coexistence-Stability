@@ -82,6 +82,7 @@ for(doSD in 1:length(Rvar)){
   Nsave$totN <- apply(Nsave, MARGIN = 1, FUN = sum)
   Nsave <- Nsave[burn.in:years,]
   outStab[doSD,] <- apply(Nsave, MARGIN = 2, FUN = function(x){sd(x)/mean(x)})
+  rm(Nsave)
 }
 
 outStab <- as.data.frame(outStab)
