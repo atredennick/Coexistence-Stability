@@ -8,7 +8,7 @@ rm(list=ls())
 
 # initial conditions
 maxDays <- 120 #Rfreq*cycles
-years <- 1000
+years <- 500
 burn.in <- 120
 NR <- c(N=c(1,1),R=90)
 
