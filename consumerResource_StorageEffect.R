@@ -16,7 +16,7 @@ rho <- c(0.5,0,-0.5)
 # b <- c(0.5, 0.5)
 c <- c(0.1, 0.1)
 w <- c(0.2, 0.2)
-m <- c(0.18, 0.18)
+m <- c(0.6, 0.6)
 d <- 0.5
 nTime <- 1000
 
@@ -40,7 +40,7 @@ getB <- function(parms, R){
 }
 
 parms <- list(
-  a = c(0.8,0.6),  # max growth rate for spp 1 and 2
+  a = c(0.4,0.2),  # max growth rate for spp 1 and 2
   b1 = c(1.5,0.8),  # right offset for growth rates 
   b2 = c(0.1,0.5)  # rates at which max is approached
 )
@@ -69,7 +69,7 @@ updateN <- function(b, c, w, s, d, lastN, lastR){
     newN[i] <- lastN[i] + lastN[i]*b[i]*(c[i]*w[i]*lastR - m[i])
     consumption[i] <- c[i]*lastR*lastN[i]
   }
-  newR <- max(0, s - d*lastR - sum(consumption))
+  newR <- max(0, s)
   return(list(newN, newR))
 }
 
@@ -86,7 +86,7 @@ R[1] <- 0.1
 
 for(t in 2:nTime){
 #   s <- rtruncnorm(n = 1, a = 0, b = 13*2, mean = 13, sd = 5)
-  s <- rlnorm(n=1, mean=2.8, 0.13)
+  s <- rlnorm(n=1, mean=4.1, 0.1)
   bTmp <- getB(parms, R[t-1])
   thisStep <- updateN(b=bTmp, c, w, s, d, lastN=N[t-1,], lastR=R[t-1])
 #   thisStep <- updateN(b=bSeries[t,], c, w, s, d, lastN=N[t-1,], lastR=R[t-1])
