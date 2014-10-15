@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  8 OCT 2014 10:40
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  15 OCT 2014 14:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -261,24 +261,24 @@ File: t1aer.fd 1997/11/16 Font definitions for T1/aer.
 )))) (./modelNotes.aux)
 \openout1 = `modelNotes.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 16.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 16.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 17.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 17.
  (/usr/local/texlive/2013/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    ... okay on input line 17.
 
 (/usr/local/texlive/2013/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -342,12 +342,12 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 (./modelNotes-concordance.tex)
-LaTeX Font Info:    Try loading font information for U+msa on input line 32.
+LaTeX Font Info:    Try loading font information for U+msa on input line 33.
 
 (/usr/local/texlive/2013/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 32.
+LaTeX Font Info:    Try loading font information for U+msb on input line 33.
 
 (/usr/local/texlive/2013/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -358,39 +358,18 @@ Overfull \vbox (21.68121pt too high) has occurred while \output is active []
 [1
 
 {/usr/local/texlive/2013/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-! Misplaced alignment tab character &.
-l.57 ...ific biomass conversion rate for species &
-                                                  i&. Following Adler and Dr...
-I can't figure out why you would want to use a tab mark
-here. If you just want an ampersand, the remedy is
-simple: Just type `I\&' now. But if some right brace
-up above has ended a previous alignment prematurely,
-you're probably due for more error messages, and you
-might try typing `S' now just to see what is salvageable.
-
-! Misplaced alignment tab character &.
-l.57 ...ic biomass conversion rate for species &i&
-                                                  . Following Adler and Drak...
-I can't figure out why you would want to use a tab mark
-here. If you just want an ampersand, the remedy is
-simple: Just type `I\&' now. But if some right brace
-up above has ended a previous alignment prematurely,
-you're probably due for more error messages, and you
-might try typing `S' now just to see what is salvageable.
-
-
 Overfull \vbox (21.68121pt too high) has occurred while \output is active []
 
 
 [2] (./modelNotes.aux) ) 
 Here is how much of TeX's memory you used:
- 3682 strings out of 493315
- 49905 string characters out of 6137904
+ 3686 strings out of 493315
+ 49937 string characters out of 6137904
  105122 words of memory out of 5000000
- 7033 multiletter control sequences out of 15000+600000
- 32059 words of font info for 79 fonts, out of 8000000 for 9000
+ 7035 multiletter control sequences out of 15000+600000
+ 35060 words of font info for 81 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 38i,8n,26p,825b,295s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 38i,11n,26p,825b,295s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2013/texmf-dist/fonts/type1/public/
 amsfonts/cm/cmbx12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/a
 msfonts/cm/cmex10.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/am
@@ -402,7 +381,7 @@ cm/cmr17.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm
 /cmr7.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cm
 r8.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy1
 0.pfb>
-Output written on modelNotes.pdf (2 pages, 108470 bytes).
+Output written on modelNotes.pdf (2 pages, 106509 bytes).
 PDF statistics:
  52 PDF objects out of 1000 (max. 8388607)
  36 compressed objects within 1 object stream
