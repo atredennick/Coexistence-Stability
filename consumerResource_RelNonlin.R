@@ -57,7 +57,7 @@ muVec <- rnorm(years, 0, .2)
 for(g in 2:years){
   days = 1:maxDays
   mu <- muVec[g]
-  NR[3] <- Rmean + (Rmean*mu)
+  NR[3] <- rnorm(1, Rmean, 13)
   # species parameters 
   cNow <- getB(parmsB, NR[3])
   parms <- list(
