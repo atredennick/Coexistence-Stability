@@ -52,7 +52,7 @@ We start with the continuous-time model
 \begin{align}
 \frac{\text{d}D_{i}}{\text{d}t} &= c_{i}b_{i}N_{i} - g_{i}D_{i} - m_{D,i}D_{i}\\
 \frac{\text{d}N_{i}}{\text{d}t} &= f(R,N_{i}) + g_{i}D_{i} - c_{i}b_{i}N_{i} - m_{N,i}N_{i}\\
-\frac{\text{d}R_{i}}{\text{d}t} &= a(S - R) - \sum\limits_{i=1,2}f(R,N_{i})
+\frac{\text{d}R_{i}}{\text{d}t} &= a(S - R) - \sum\limits_{i=1,2}f(R,(N_{i}+g_{i}D_{i}))
 \end{align}
 where $i$ denotes species, $D$ is the dormant (long-lived) biomass state, $B$ is the living biomass (fast-growing, shorter-lived) state, $b$ is the "birth" rate of new biomass in the dormant state, $c$ is some factor related to the cost of producing the dormant state, $g$ is the time-fluctuating activation rate of dormant biomass to the live biomass state, and $m$s are biomass loss rates. The growth rate of living biomass is a resource-dependent function, $f(R,N) = r_{i}R/(K_{i}+R)$, where $r$ is the maximum growth rate and $K$ is the resource level at which growth is one-half $r$. For the resource dynamics, whose state is denoted by $R$, we use a linear resource renewal equation where $a$ scales resource turnover rate and $S$ is the resource equilibrium when consumers are absent.
 
