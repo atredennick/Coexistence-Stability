@@ -54,6 +54,9 @@ We start with the continuous-time model
 \frac{\text{d}N_{i}}{\text{d}t} &= f(R,N_{i}) + g_{i}D_{i} - c_{i}b_{i}N_{i} - m_{N,i}N_{i}\\
 \frac{\text{d}R_{i}}{\text{d}t} &= a(S - R) - \sum\limits_{i=1,2}f(R,N_{i})
 \end{align}
+where $i$ denotes species, $D$ is the dormant (long-lived) biomass state, $B$ is the living biomass (fast-growing, shorter-lived) state, $b$ is the "birth" rate of new biomass in the dormant state, $c$ is some factor related to the cost of producing the dormant state, $g$ is the time-fluctuating activation rate of dormant biomass to the live biomass state, and $m$s are biomass loss rates. The growth rate of living biomass is a resource-dependent function, $f(R,N) = r_{i}R/(K_{i}+R)$, where $r$ is the maximum growth rate and $K$ is the resource level at which growth is one-half $r$. For the resource dynamics, whose state is denoted by $R$, we use a linear resource renewal equation where $a$ scales resource turnover rate and $S$ is the resource equilibrium when consumers are absent.
+
+To make this a "storage-effect" model, we need to satisfy three conditions: (1) the organisms must have a mechanism for persistence under unfavorable conditions, (2) species must respond differently to environmental conditions, and (3) the effects of competition on a species must be more strongly negative in good years relative to unfavorable years. Our model meets condition 1 because we include a dormant stage with very low death rates. We satisfy condition 2 with model whenever $g$ is not perfectly correlated between species. Lastly, our model meets condition 3 because condition 2 partitions intraspecific and interspecific competition into different years. So long as resource uptake rates are equal ... oops we have a problem!  
 
 
 
