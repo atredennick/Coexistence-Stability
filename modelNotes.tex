@@ -47,7 +47,7 @@ To that end, we will analyze a general consumer-resource model under different c
 
 Each scenario requires different model assumptions and structure, so we will describe each in turn. Although the structure may change slightly to incorporate different coexistence mechanisms, the strength of our approach lies in the similarities among the models since we work under a unified consumer-resource framework.
 
-\subsection{Temporal storage effect}
+\subsection{A general consumer-resource model}
 We start with the continuous-time model
 
 \begin{align}
@@ -55,8 +55,9 @@ We start with the continuous-time model
 \frac{\text{d}N_{i}}{\text{d}t} &= f(R)(N_{i} + g_{i,e}D_{i}) - c_{i}b_{i}(N_{i} + g_{i,e}D_{i})  - m_{N,i}(N_{i}+g_{i,e}D_{i})\\
 \frac{\text{d}R_{i}}{\text{d}t} &= a(S - R) - \sum\limits_{i=1,2}f(R)(N_{i}+g_{i,e}D_{i})
 \end{align}
-where $i$ denotes species, $D$ is the dormant (long-lived) biomass state, $B$ is the living biomass (fast-growing, shorter-lived) state, $b$ is the ``birth" rate of new biomass in the dormant state, $c$ is some factor related to the cost of producing the dormant state, and $m$s are biomass loss rates. $g$ is a time-fluctuating activation rate of dormant biomass to the live biomass state that occurs at discrete times $e$ (in our case, every `year'). The growth rate of living biomass is a resource-dependent function, $f(R) = r_{i}R/(K_{i}+R)$, where $r$ is the maximum growth rate and $K$ is the resource level at which growth is one-half $r$. For the resource dynamics, whose state is denoted by $R$, we use a linear resource renewal equation where $a$ scales resource turnover rate and $S$ is the resource equilibrium when consumers are absent, and an offtake of the resource equal to the sum of each species' consumption, $\sum_{i=1,2}f(R)(N_{i}+g_{i,e}D_{i})$.
+where $i$ denotes species, $D$ is the dormant (long-lived) biomass state, $B$ is the living biomass (fast-growing, shorter-lived) state, $b$ is the ``birth" rate of new biomass in the dormant state, $c$ is some factor related to the cost of producing the dormant state, and $m$s are biomass loss rates. $g$ is a time-fluctuating activation rate of dormant biomass to the live biomass state that occurs at discrete times $e$ (in our case, every `year'). The growth rate of living biomass is a resource-dependent function, $f(R) = r_{i}R/(K_{i}+R)$, where $r$ is the maximum growth rate and $K$ is the resource level at which growth is one-half $r$. For the resource dynamics, whose state is denoted by $R$, we use a linear resource renewal equation where $a$ scales resource turnover rate and $S$ is the resource equilibrium when consumers are absent, and an offtake of the resource equal to the sum of each species' consumption, $\sum_{i=1,2}f(R)(N_{i}+g_{i,e}D_{i})$. If $g_{1,2}=1$ across all $e$ events then $D$ and $N$ collapse into one state and we have a basic consumer-resource model of two species competiting for one essential resource.
 
+\subsubsection{Implementing the storage effect}
 To make this a ``storage-effect" model, we need to satisfy three conditions: (1) the organisms must have a mechanism for persistence under unfavorable conditions, (2) species must respond differently to environmental conditions, and (3) the effects of competition on a species must be more strongly negative in good years relative to unfavorable years. Our model meets condition 1 because we include a dormant stage with very low death rates. We satisfy condition 2 with our model whenever $g$ is not perfectly correlated between species. Lastly, our model meets condition 3 because condition 2 partitions intraspecific and interspecific competition into different years. Thus, during a high $g$ year for one species, resource uptake is also inherently high for that species, which increases intraspecific competition relative to interspecific competition. So, given adequate variability in $g$, the inferior competitor (species with lower $r$) can persist.  
 
 
