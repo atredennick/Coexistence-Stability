@@ -15,9 +15,9 @@ library(mvtnorm)
 ####
 maxTime <- 1000
 c <- c(1,1)
-b <- c(0.2, 0.2)
+b <- c(0.5, 0.5)
 mD <- c(0.0001, 0.0001)
-r <- c(2.1, 2.08)
+r <- c(2.1, 2)
 K <- c(.1, .1)
 mN <- c(0.1, 0.1)
 a <- 0.5
@@ -25,7 +25,7 @@ S <- 10
 Rmu <- 1 # mean resource pulse (on log scale)
 Rsd <-.6 # st dev of resource pulses (on log scale)
 sigE <- c(2)
-rho <- c(0)
+rho <- c(-1)
 
 ####
 #### Model function
