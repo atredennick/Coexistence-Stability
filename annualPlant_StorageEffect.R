@@ -14,9 +14,9 @@ sigE <- c(0,0.4,1,2.5,5,7.5,10)
 rho <- c(0.5,0,-0.5)
 s <- c(0.5, 0.5)
 alpha <- c(1,1)
-lambda <- c(101,99)
+lambda <- c(101,90)
 
-nTime <- 500
+nTime <- 100
 
 
 ####
@@ -39,7 +39,7 @@ updateN <- function(g, s, alpha, lambda, lastN){
   newN <- numeric(2)
   for(i in 1:2){
     newN[i] <- lastN[i]*s[i]*(1-g[i]) + ((lambda[i]*g[i]*lastN[i]) / (1 + (alpha[i]*g[i]*lastN[i] + alpha[-i]*g[-i]*lastN[-i])))
-    newN[i] <- rpois(1, newN[i])
+#     newN[i] <- rpois(1, newN[i])
   }
   return(newN)
 }
@@ -49,7 +49,7 @@ updateN <- function(g, s, alpha, lambda, lastN){
 #### Simulations ---------------------------
 ####
 
-gSeries <- getG(sigE[4], rho[1], nTime)
+gSeries <- getG(sigE[3], rho[3], nTime)
 N <- matrix(data = NA, nrow = nTime, ncol = 2)
 N[1,] <- c(100,100)
 for(t in 2:nTime){

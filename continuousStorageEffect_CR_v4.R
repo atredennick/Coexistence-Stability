@@ -17,14 +17,14 @@ maxTime <- 1000
 c <- c(1,1)
 b <- c(0.5, 0.5)
 mD <- c(0.0001, 0.0001)
-r <- c(2.2, 2)
+r <- c(2.5, 2.1)
 K <- c(.1, .1)
 mN <- c(0.1, 0.1)
 a <- 0.5
 S <- 10
 Rmu <- 1 # mean resource pulse (on log scale)
 Rsd <-.6 # st dev of resource pulses (on log scale)
-sigE <- c(1)
+sigE <- c(2.5)
 rho <- c(-1)
 
 ####
@@ -90,7 +90,7 @@ parms <- list(
   a = a,
   S = S
 )
-DNR <- c(D=c(1,0), N=c(1,1),R=1)
+DNR <- c(D=c(30,30), N=c(20,20),R=1)
 output = as.data.frame(ode(y = DNR, times = simTime, func = updateDNR,
                            parms = parms, events = list(func = gfun, times=simTime)))
 
