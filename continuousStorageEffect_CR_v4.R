@@ -13,18 +13,18 @@ library(mvtnorm)
 ####
 #### Parameters
 ####
-maxTime <- 10
+maxTime <- 1000
 c <- c(1,1)
 b <- c(0.5, 0.5)
 mD <- c(0.0001, 0.0001)
-r <- c(2, 2)
+r <- c(2.2, 2)
 K <- c(.1, .1)
 mN <- c(0.1, 0.1)
 a <- 0.5
 S <- 10
 Rmu <- 1 # mean resource pulse (on log scale)
 Rsd <-.6 # st dev of resource pulses (on log scale)
-sigE <- c(2)
+sigE <- c(1)
 rho <- c(-1)
 
 ####
@@ -79,7 +79,7 @@ gfun <- function(t, y, parms){
   })
 }
   
-simTime <- seq(1,maxTime,by=0.001)
+simTime <- seq(1,maxTime,by=1)
 parms <- list(
   c = c,
   b = b,
@@ -90,7 +90,7 @@ parms <- list(
   a = a,
   S = S
 )
-DNR <- c(D=c(1,0), N=c(1,0),R=1)
+DNR <- c(D=c(1,0), N=c(1,1),R=1)
 output = as.data.frame(ode(y = DNR, times = simTime, func = updateDNR,
                            parms = parms, events = list(func = gfun, times=simTime)))
 
@@ -98,11 +98,13 @@ output = as.data.frame(ode(y = DNR, times = simTime, func = updateDNR,
 ####
 #### Plot results
 ####
-par(mfrow=c(3,1))
+par(mfrow=c(1,3),mar=c(4,4,1,1))
 # ylim=c(0, max(output[,4]+output[,5]))
-matplot(simTime, output[,4:5], type="l", main="Live Biomass", col=c("darkorange", "purple"))
+matplot(simTime, output[,4:5], type="l", main="Live Biomass", 
+        col=c("darkorange", "purple"), xlab="Years (T)", ylab="Biomass (N)")
 # lines(simTime, output[,4]+output[,5], lwd=3, col="dodgerblue")
-matplot(simTime, output[,2:3], type="l", main="Dormant Biomass", col=c("darkorange", "purple"))
+matplot(simTime, output[,2:3], type="l", main="Dormant Biomass", 
+        col=c("darkorange", "purple"), xlab="Years (T)", ylab="Biomass (D)")
 
 R <- seq(0,1,0.01)
 getR <- function(r, R, K){
@@ -111,5 +113,6 @@ getR <- function(r, R, K){
   return(cbind(out1, out2))
 }
 tmp<-getR(r, R, K)
-matplot(R, tmp, type="l", col=c("darkorange", "purple"))
+matplot(R, tmp, type="l", col=c("darkorange", "purple"), 
+        ylab="Intrinsic growth rate (r)", xlab="Resource density (R)")
 
