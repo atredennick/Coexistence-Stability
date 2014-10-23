@@ -78,7 +78,7 @@ To make this a ``storage-effect" model, we need to satisfy three conditions: (1)
 source("continuousStorageEffect_CR_v4.R")
 @
 \end{center}
-\caption{Example time-series from our pulsed consumer-resource model where $g$ is perfectly uncorrelated, $r_1$ = r[1], and $r_2$ = r[2]. Species 1 is orange, species 2 is purple. The far right panel shows how the growth rates of the two species change with resource density (this becomes important when modeling relative nonlinearity).}
+\caption{Example time-series from our pulsed consumer-resource model where $g$ is perfectly uncorrelated, $r_1$ = \Sexpr{r[1]}, and $r_2$ = \Sexpr{r[2]}. Species 1 is orange, species 2 is purple. The far right panel shows how the growth rates of the two species change with resource density (this becomes important when modeling relative nonlinearity).}
 \end{figure}
 
 
