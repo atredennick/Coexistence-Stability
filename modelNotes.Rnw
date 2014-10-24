@@ -63,8 +63,8 @@ At the beginning of each season we start with initial conditions defined as $V_{
 \end{align}
 The consumers transition between $N$ and $D$ instantaneously between years. We assume resource density does not change between years. So, at the yearly transition:
 \begin{align}
-  V_{i,t+1} &= D_{i}(T^-) + N_{i}(T^-) - D_{i}(T^-)g_{t} \\
-  W_{i,t+1} &= D_{i}(T^-)g_{t} - N_{i}(T^-) \\
+  V_{i,t+1} &= D_{i}(T^-) + N_{i}(T^-) - [N_{i}(T^-)+D_{i}(T^-)]g_{t} \\
+  W_{i,t+1} &= [N_{i}(T^-)+D_{i}(T^-)]g_{t} \\
   Z_{t+1} &= R(T^-)
 \end{align}
 where $D(T^-)$, $N(T^-)$, and $R(T^-)$ are the densities of each state at the end of the year and $g$ is a time-fluctuating activation rate that regulates how much dormant biomass is converted to growing-season live biomass each year. Our formulation assumes that at the end of each season all accumulated living biomass [$N(T^-)$] is converted to dormant biomass.
