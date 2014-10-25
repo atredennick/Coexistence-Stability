@@ -27,8 +27,8 @@
 \author[1]{\large Andrew T. Tredennick}
 \author[1]{\large Peter B. Adler}
 \author[2]{\large Frederick Adler}
-\affil[1]{\footnotesize Department of Wildland Resources and the Ecology Center, Utah State University}
-\affil[2]{\footnotesize Departments of Biology and Mathematics, University of Utah}
+\affil[1]{\footnotesize \emph{Department of Wildland Resources and the Ecology Center, Utah State University}}
+\affil[2]{\footnotesize \emph{Departments of Biology and Mathematics, University of Utah}}
 \maketitle
 
 %----------------------------------------------------
