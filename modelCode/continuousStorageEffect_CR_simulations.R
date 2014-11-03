@@ -18,7 +18,7 @@ library(gridExtra)
 ####
 maxTime <- 2000
 burn.in <- 1000
-nSims <- 100
+nSims <- 20
 c <- c(1,1)
 b <- c(0.5, 0.5)
 mD <- c(0.0001, 0.0001)
