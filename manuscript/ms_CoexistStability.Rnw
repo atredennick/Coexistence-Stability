@@ -93,6 +93,8 @@ Some preliminary results from running simulations of the storage effect version 
 
 One of the things we are interested in is how well the community buffers itself against resource variability. Really I should calculate some kind of asynchrony metric, but for now I just looked at the ratio of the resource CV to the community CV (Figure~\ref{fig:storeEffSims}, bottom panel). Kind of difficult to interpret, but it is interesting that at high levels of variability in the environmental cue that drives the storage effect, the ratio decreases with resource supply variability. The opposite occurs at lower levels of variability in the environmental cue.
 
+NOTE: I should probably also put a check in the code somewhere to make sure we don't have extinctions...
+
 \begin{figure}
 \centering
 \includegraphics[width=0.5\textwidth]{"CV_TwoPanel"}
