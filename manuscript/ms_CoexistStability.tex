@@ -70,14 +70,44 @@ At the beginning of each season we start with initial conditions defined as $V_{
 \end{align}
 The consumers transition between $N$ and $D$ instantaneously between years. We assume resource density does not change between years. So, at the yearly transition:
 \begin{align}
-  V_{i,t+1} &= D_{i}(T^-) + N_{i}(T^-) - [N_{i}(T^-)+D_{i}(T^-)]g_{t} \\
+  V_{i,t+1} &= [N_{i}(T^-)+D_{i}(T^-)](1-g_{t}) \\
   W_{i,t+1} &= [N_{i}(T^-)+D_{i}(T^-)]g_{t} \\
   Z_{t+1} &= R(T^-)
 \end{align}
 where $D(T^-)$, $N(T^-)$, and $R(T^-)$ are the densities of each state at the end of the year and $g$ is a time-fluctuating activation rate that regulates how much dormant biomass is converted to growing-season live biomass each year. Our formulation assumes that at the end of each season all accumulated living biomass [$N(T^-)$] is converted to dormant biomass.
 
+\begin{center}
+\begin{table}
+\caption{Definition of model parameters.}
+\begin{tabular}{l l}
+\hline
+Parameter & Definition \\
+\hline
+$m_{D}$ & dormant state mortality rate \\
+$r$ & live state maximum resource uptake rate \\
+$K$ & live state half-saturation constant for resource uptake rate \\
+$m_{N}$ & live state mortality rate \\
+$a$ & resource turnover rate \\
+$S$ & resource supply rate \\
+$g$ & dormant-to-live biomass transition fraction \\ 
+\hline
+\end{tabular}
+\end{table}
+\end{center}
+
 \subsubsection{Implementing the storage effect}
-To make this a ``storage-effect" model, we need to satisfy three conditions: (1) the organisms must have a mechanism for persistence under unfavorable conditions, (2) species must respond differently to environmental conditions, and (3) the effects of competition on a species must be more strongly negative in good years relative to unfavorable years. Our model meets condition 1 because we include a dormant stage with very low death rates. We satisfy condition 2 with our model whenever $g$ is not perfectly correlated between species. Lastly, our model meets condition 3 because condition 2 partitions intraspecific and interspecific competition into different years. Thus, during a high $g$ year for one species, resource uptake is also inherently high for that species, which increases intraspecific competition relative to interspecific competition. So, given adequate variability in $g$, the inferior competitor (species with lower $r$) can persist.  
+To make this a ``storage-effect" model, we need to satisfy three conditions: (1) the organisms must have a mechanism for persistence under unfavorable conditions, (2) species must respond differently to environmental conditions, and (3) the effects of competition on a species must be more strongly negative in good years relative to unfavorable years. Our model meets condition 1 because we include a dormant stage with very low death rates. We satisfy condition 2 with our model whenever $g$ is not perfectly correlated between species. Lastly, our model meets condition 3 because condition 2 partitions intraspecific and interspecific competition into different years. Thus, during a high $g$ year for one species, resource uptake is also inherently high for that species, which increases intraspecific competition relative to interspecific competition. So, given adequate variability in $g$, the inferior competitor (species with lower $r$) can persist. 
+
+Following Adler and Drake (2008), we generated sequences of (un)correlated dormant-to-live state transition rates ($g$) for each species by drawing from multivariate normal distributions with mean 0 and a variance-covariance matrix of
+
+\begin{align}
+\begin{bmatrix}
+\sigma^2_{E} & \rho\sigma^2_{E} \\
+\rho\sigma^2_{E} & \sigma^2_{E}
+\end{bmatrix}
+\end{align}
+
+\noindent{}where $\sigma^2_{E}$ is the variance and $\rho$ is the correlation between between the two species' transition rates. For environmental variability, here induced as variability in $g$, to promote coexistence via the storage effect, $\rho$ must be less than 1. The inferior competitor has the strongest potential to persist when $\rho=-1$ (perfectly uncorrelated transition rates). 
 
 \begin{figure}
 \begin{center}

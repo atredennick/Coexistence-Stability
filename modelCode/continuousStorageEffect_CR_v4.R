@@ -3,6 +3,11 @@
 ## coexisting on one essential resource                         ##
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
+####
+#### 11/4/2014
+#### atredenn@gmail.com
+####
+
 # species "split" themselves between a dormant, low-mortaility stage (D) and a higher mortality, high growth stage (N)
 # the single resource is R
 # There are two sources of variability: an environmental cue that drives the storage effect, and resource variability
@@ -20,15 +25,15 @@ library(mvtnorm)
 #### Parameters
 ####
 maxTime <- 1000 #simulation run time
-# c <- c(1,1) #not used for now, could be a "cost" parameter for biomass storage
-# b <- c(0.5, 0.5) #also not used, could be assimilation efficiency
+c <- c(1,1) #not used for now, could be a "cost" parameter for biomass storage
+b <- c(0.5, 0.5) #also not used, could be assimilation efficiency
 mD <- c(0.0001, 0.0001) #dormant state continuous death rate
 r <- c(2.2, 2) #live state intrinsic growth rates
 K <- c(.1, .1) #live state half-saturation consant for growth curve as function of resource
 mN <- c(0.1, 0.1) #live state continuous death rate
 a <- 0.5 #resource turnover rate
 S <- 10 #average resource supply rate
-sVar <- 10 #resource supply rate variability
+sVar <- 1 #resource supply rate variability
 sigE <- 1 #environmental cue variability
 rho <- -1 #environmental cue correlation between species
 
