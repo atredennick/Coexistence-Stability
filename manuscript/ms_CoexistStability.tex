@@ -83,8 +83,20 @@ To make this a ``storage-effect" model, we need to satisfy three conditions: (1)
 \begin{center}
 \includegraphics{Fig-001}
 \end{center}
-\caption{Example time-series from our pulsed consumer-resource model where $g$ is perfectly uncorrelated, $r_1$ = 2.2, and $r_2$ = 2. Species 1 is orange, species 2 is purple. The far right panel shows how the growth rates of the two species change with resource density (this becomes important when modeling relative nonlinearity).}
+\caption{Example time-series from our pulsed consumer-resource model where $g$ is perfectly uncorrelated (storage effect operating), $r_1$ = 2.2, and $r_2$ = 2. Species 1 is orange, species 2 is purple. The far right panel shows the population, by species, and community-level coefficient of variation.}
 \end{figure}
 
+\section{Results}
+\subsection{Storage effect model}
+Some preliminary results from running simulations of the storage effect version of the model at different levels of environmental cue variability ($\sigma_{E}$) and resource supply variability ($\sigma_{S}$). I ran 20 simulations at each combination of $\sigma_{E}$ and $\sigma_{S}$ shown in Figure~\ref{fig:storeEffSims} (the points are the means across the 20 simulations, each run for 2,000 time-steps, with the initial 1,000 time-steps discarded before calculating anything). There is a weak trend of community CV to saturate at high levels of resource supply variability (Figure~\ref{fig:storeEffSims}, top panel). 
+
+One of the things we are interested in is how well the community buffers itself against resource variability. Really I should calculate some kind of asynchrony metric, but for now I just looked at the ratio of the resource CV to the community CV (Figure~\ref{fig:storeEffSims}, bottom panel). Kind of difficult to interpret, but it is interesting that at high levels of variability in the environmental cue that drives the storage effect, the ratio decreases with resource supply variability. The opposite occurs at lower levels of variability in the environmental cue.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.5\textwidth]{"CV_TwoPanel"}
+\caption{Preliminary results from model simulations under storage effect conditions.}
+ \label{fig:storeEffSims}
+\end{figure}
 
 \end{document}
