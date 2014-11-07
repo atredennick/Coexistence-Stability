@@ -127,7 +127,7 @@ NOTE: I should probably also put a check in the code somewhere to make sure we d
 
 \begin{figure}
 \centering
-\includegraphics[width=0.5\textwidth]{"CV_TwoPanel"}
+\includegraphics[width=1\textwidth]{"CV_FourPanel"}
 \caption{Preliminary results from model simulations under storage effect conditions.}
  \label{fig:storeEffSims}
 \end{figure}
