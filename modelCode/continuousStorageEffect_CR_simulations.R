@@ -33,6 +33,8 @@ rho <- c(-1)
 
 cvOut <- matrix(nrow=length(sVarVec), ncol=length(sigEvec))
 cvRes <- matrix(nrow=length(sVarVec), ncol=length(sigEvec))
+meanOut <- matrix(nrow=length(sVarVec), ncol=length(sigEvec))
+sdOut <- 
 
 ####
 #### Model function
