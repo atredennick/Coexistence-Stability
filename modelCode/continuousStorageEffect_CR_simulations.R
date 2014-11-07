@@ -34,7 +34,8 @@ rho <- c(-1)
 cvOut <- matrix(nrow=length(sVarVec), ncol=length(sigEvec))
 cvRes <- matrix(nrow=length(sVarVec), ncol=length(sigEvec))
 meanOut <- matrix(nrow=length(sVarVec), ncol=length(sigEvec))
-sdOut <- 
+sdOut <- matrix(nrow=length(sVarVec), ncol=length(sigEvec))
+sppRatio <- matrix(nrow=length(sVarVec), ncol=length(sigEvec))
 
 ####
 #### Model function
@@ -71,6 +72,9 @@ for(cue in 1:length(sigEvec)){
     sVar <- sVarVec[env]
     cvR <- numeric(nSims)
     cvN <- numeric(nSims)
+    avgN <- numeric(nSims)
+    sdN <- numeric(nSims)
+    rN <- numeric(nSims)
     for(sim in 1:nSims){
       ####
       #### Simulate model
@@ -107,12 +111,18 @@ for(cue in 1:length(sigEvec)){
       output = as.data.frame(ode(y = DNR, times = simTime, func = updateDNR,
                                  parms = parms, events = list(func = gfun, times=simTime)))
       cvN[sim] <- sd(output[burn.in:maxTime,4]+output[burn.in:maxTime,5])/mean(output[burn.in:maxTime,4]+output[burn.in:maxTime,5])
-      cvR[sim] <- sd(output[burn.in:maxTime,6])/mean(output[burn.in:maxTime,6])  
+      cvR[sim] <- sd(output[burn.in:maxTime,6])/mean(output[burn.in:maxTime,6]) 
+      avgN[sim] <- mean(output[burn.in:maxTime,4]+output[burn.in:maxTime,5])
+      sdN[sim] <- sd(output[burn.in:maxTime,4]+output[burn.in:maxTime,5])
+      rN[sim] <- mean(output[burn.in:maxTime,5])/mean(output[burn.in:maxTime,4])
       print(c(sim, env, cue))
     }#end of sims
     
     cvOut[env,cue] <- mean(cvN)
     cvRes[env,cue] <- mean(cvR)
+    meanOut[env,cue] <- mean(avgN)
+    sdOut[env,cue] <- mean(sdN)
+    sppRatio[env,cue] <- mean(rN)
   }#end resource loop
 }#end env cue loop (storage effect)
 
@@ -128,6 +138,16 @@ cvD$sVar <- rep(sVarVec, times=length(sigEvec))
 colnames(cvD)[1:2] <- c("eVar", "CV")
 cvD$RCV <- cvRD$value
 cvD$cvRatio <- cvD$RCV/cvD$CV
+colnames(meanOut) <- sigEvec
+colnames(sdOut) <- sigEvec
+colnames(sppRatio) <- sigEvec
+moutD <- melt(as.data.frame(meanOut))
+sdoutD <- melt(as.data.frame(sdOut))
+ratioD <- melt(as.data.frame(sppRatio))
+cvD$meanN <- moutD$value
+cvD$sdN <- sdoutD$value
+cvD$sppRatio <- ratioD$value
+
 
 g1 <- ggplot(cvD, aes(x=sVar, y=CV, group=eVar))+
   geom_line(aes(color=as.numeric(as.character(eVar))))+
@@ -138,19 +158,36 @@ g1 <- ggplot(cvD, aes(x=sVar, y=CV, group=eVar))+
   scale_color_continuous(name=expression(sigma[E]))+
   theme_bw()
 
-g2 <- ggplot(cvD, aes(x=sVar, y=cvRatio, group=eVar))+
+g2 <- ggplot(cvD, aes(x=sVar, y=meanN, group=eVar))+
   geom_line(aes(color=as.numeric(as.character(eVar))))+
   geom_point(size=8, color="white")+
   geom_point(size=4,aes(color=as.numeric(as.character(eVar))))+
-  geom_hline(aes(yintercept=1))+
-  scale_y_continuous(limits=c(0,25))+
   xlab(expression(sigma[S]))+
-  ylab(expression(CV[R]/CV[N[1]+N[2]]))+
+  ylab("Mean Community Biomass")+
   scale_color_continuous(name=expression(sigma[E]))+
   theme_bw()
 
-g <- arrangeGrob(g1,g2)
-png(filename = "CV_twoPanel.png", width = 5, height = 8, units="in", res=200)
+g3 <- ggplot(cvD, aes(x=sVar, y=sdN, group=eVar))+
+  geom_line(aes(color=as.numeric(as.character(eVar))))+
+  geom_point(size=8, color="white")+
+  geom_point(size=4,aes(color=as.numeric(as.character(eVar))))+
+  xlab(expression(sigma[S]))+
+  ylab("SD of Community Biomass")+
+  scale_color_continuous(name=expression(sigma[E]))+
+  theme_bw()
+
+g4 <- ggplot(cvD, aes(x=sVar, y=sppRatio, group=eVar))+
+  geom_line(aes(color=as.numeric(as.character(eVar))))+
+  geom_point(size=8, color="white")+
+  geom_point(size=4,aes(color=as.numeric(as.character(eVar))))+
+  geom_hline(aes(yintercept=0))+
+  xlab(expression(sigma[S]))+
+  ylab("N1/N2")+
+  scale_color_continuous(name=expression(sigma[E]))+
+  theme_bw()
+
+g <- arrangeGrob(g1,g2,g3,g4)
+png(filename = "CV_FourPanel.png", width = 8, height = 5, units="in", res=200)
 g
 dev.off()
 
