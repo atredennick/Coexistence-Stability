@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  4 NOV 2014 16:48
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  7 NOV 2014 13:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -360,27 +360,26 @@ Overfull \vbox (21.68121pt too high) has occurred while \output is active []
 [1
 
 {/usr/local/texlive/2013/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-<"SemiDiscreteModel".pdf, id=13, 323.2075pt x 315.1775pt>
-File: "SemiDiscreteModel".pdf Graphic file (type pdf)
-
-<use "SemiDiscreteModel".pdf>
-Package pdftex.def Info: "SemiDiscreteModel".pdf used on input line 60.
-(pdftex.def)             Requested size: 224.03688pt x 218.47302pt.
+<"ConceptFig".png, id=13, 372.4314pt x 314.6154pt>
+File: "ConceptFig".png Graphic file (type png)
+ <use "ConceptFig".png>
+Package pdftex.def Info: "ConceptFig".png used on input line 60.
+(pdftex.def)             Requested size: 224.03688pt x 189.26035pt.
 
 Overfull \vbox (21.68121pt too high) has occurred while \output is active []
 
 
-[2]
-Overfull \vbox (21.68121pt too high) has occurred while \output is active []
-
-
-[3 <./SemiDiscreteModel.pdf>]
+[2 <./ConceptFig.png>]
 Overfull \hbox (0.27147pt too wide) in paragraph at lines 101--102
 []\T1/aer/m/n/12 Following Adler and Drake (2008), we gen-er-ated se-quences of
  (un)correlated dormant-
  []
 
-<Fig-001.pdf, id=47, 614.295pt x 216.81pt>
+
+Overfull \vbox (21.68121pt too high) has occurred while \output is active []
+
+
+[3] <Fig-001.pdf, id=28, 614.295pt x 216.81pt>
 File: Fig-001.pdf Graphic file (type pdf)
  <use Fig-001.pdf>
 Package pdftex.def Info: Fig-001.pdf used on input line 114.
@@ -389,7 +388,7 @@ Package pdftex.def Info: Fig-001.pdf used on input line 114.
 Overfull \vbox (21.68121pt too high) has occurred while \output is active []
 
 
-[4 <./Fig-001.pdf>] <"CV_TwoPanel".png, id=57, 1003.75pt x 1606.0pt>
+[4 <./Fig-001.pdf>] <"CV_TwoPanel".png, id=38, 1003.75pt x 1606.0pt>
 File: "CV_TwoPanel".png Graphic file (type png)
 
 <use "CV_TwoPanel".png>
@@ -399,15 +398,11 @@ Package pdftex.def Info: "CV_TwoPanel".png used on input line 129.
 Overfull \vbox (21.68121pt too high) has occurred while \output is active []
 
 
-[5]
-Overfull \vbox (21.68121pt too high) has occurred while \output is active []
-
-
-[6 <./CV_TwoPanel.png>] (./ms_CoexistStability.aux) ) 
+[5 <./CV_TwoPanel.png>] (./ms_CoexistStability.aux) ) 
 Here is how much of TeX's memory you used:
  3714 strings out of 493315
- 50494 string characters out of 6137904
- 111138 words of memory out of 5000000
+ 50459 string characters out of 6137904
+ 107138 words of memory out of 5000000
  7053 multiletter control sequences out of 15000+600000
  40690 words of font info for 90 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
@@ -425,10 +420,10 @@ s/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2013/texmf-dist/fonts/t
 ype1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2013/texmf-dist/fonts/ty
 pe1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2013/texmf-dist/fonts/type
 1/public/amsfonts/cm/cmti10.pfb>
-Output written on ms_CoexistStability.pdf (6 pages, 328344 bytes).
+Output written on ms_CoexistStability.pdf (5 pages, 328434 bytes).
 PDF statistics:
- 104 PDF objects out of 1000 (max. 8388607)
- 73 compressed objects within 1 object stream
+ 81 PDF objects out of 1000 (max. 8388607)
+ 54 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  20 words of extra memory for PDF output out of 10000 (max. 10000000)
 

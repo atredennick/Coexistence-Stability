@@ -56,7 +56,7 @@ where $i$ denotes species, $D$ is the dormant (long-lived) biomass state, $N$ is
 
 \begin{figure}
 \centering
-\includegraphics[width=0.5\textwidth]{"SemiDiscreteModel"}
+\includegraphics[width=0.5\textwidth]{"ConceptFig"}
 \caption{Schematic of our semi-discrete consumer-resource model. See text for parameter definitions.}
  \label{fig:model}
 \end{figure}

@@ -32,8 +32,8 @@ r <- c(2.2, 2) #live state intrinsic growth rates
 K <- c(.1, .1) #live state half-saturation consant for growth curve as function of resource
 mN <- c(0.1, 0.1) #live state continuous death rate
 a <- 0.5 #resource turnover rate
-S <- 10 #average resource supply rate
-sVar <- 1 #resource supply rate variability
+S <- 100 #average resource supply rate
+sVar <- 5 #resource supply rate variability
 sigE <- 1 #environmental cue variability
 rho <- -1 #environmental cue correlation between species
 
