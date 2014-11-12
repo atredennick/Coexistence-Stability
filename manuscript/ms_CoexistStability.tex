@@ -116,6 +116,16 @@ Following Adler and Drake (2008), we generated sequences of (un)correlated dorma
 \caption{Example time-series from our pulsed consumer-resource model where $g$ is perfectly uncorrelated (storage effect operating), $r_1$ = 2.2, and $r_2$ = 2. Species 1 is orange, species 2 is purple. The far right panel shows the population, by species, and community-level coefficient of variation.}
 \end{figure}
 
+\subsection{Implementing relative nonlinearity}
+When considering consumer-resource dynamics, species coexistence by relative nonlinearity requires that each species has different nonlinear responses to resource availability, and resource availability must fluctuate through time. In a constant resource environment, the species with the lowest R* will always exclude the other species.  
+
+\begin{figure}
+\begin{center}
+\includegraphics{Fig-002}
+\end{center}
+\caption{Example time-series from our pulsed consumer-resource model where $g_{1,2}=1$, but species have different nonlinear uptake rate responses to resource supply (A). Species 2 has the lowest R* but its resource response saturates at a lower level than species 2. Species 1 is orange, species 2 is purple. The far right panel shows the population, by species, and community-level coefficient of variation.}
+\end{figure}
+
 \section{Results}
 \subsection{Storage effect model}
 Some preliminary results from running simulations of the storage effect version of the model at different levels of environmental cue variability ($\sigma_{E}$) and resource supply variability ($\sigma_{S}$). I ran 20 simulations at each combination of $\sigma_{E}$ and $\sigma_{S}$ shown in Figure~\ref{fig:storeEffSims} (the points are the means across the 20 simulations, each run for 2,000 time-steps, with the initial 1,000 time-steps discarded before calculating anything). There is a weak trend of community CV to saturate at high levels of resource supply variability (Figure~\ref{fig:storeEffSims}, top panel). 
