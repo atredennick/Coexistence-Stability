@@ -118,12 +118,12 @@ source("../modelCode/continuousStorageEffect_CR_v4.R")
 \end{figure}
 
 \subsection{Implementing relative nonlinearity}
-When considering consumer-resource dynamics, species coexistence by relative nonlinearity requires that each species has different nonlinear responses to resource availability, and resource availability must fluctuate through time. In a constant resource environment, the species with the lowest R* will always exclude the other species.  
+When considering consumer-resource dynamics, species coexistence by relative nonlinearity requires that each species has different nonlinear responses to resource availability, and resource availability must fluctuate through time. In a constant resource environment, the species with the lowest R* will always exclude the other species. So we can compare this model to the storage effect model, we still allow the germination rate \emph{g} to vary, but both species are perfectly correlate -- that is, $\rho=1$.  
 
 \begin{figure}
 \begin{center}
 <<echo=FALSE, fig=TRUE,jpeg=TRUE,height=3, width=8.5 >>=
-source("../modelCode/continuousRelativeNonlinearity_CR.R")
+source("../modelCode/continuousRelativeNonlinearity_CR_v2.R")
 @
 \end{center}
 \caption{Example time-series from our pulsed consumer-resource model where $g_{1,2}=1$, but species have different nonlinear uptake rate responses to resource supply (A). Species 2 has the lowest R* but its resource response saturates at a lower level than species 2. Species 1 is orange, species 2 is purple. The far right panel shows the population, by species, and community-level coefficient of variation.}

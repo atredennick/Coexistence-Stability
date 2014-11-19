@@ -35,10 +35,10 @@ mN <- c(0.1, 0.1) #live state continuous death rate
 a <- 0.5 #resource turnover rate
 S <- 5 #average resource supply rate
 sVar <- 10 #resource supply rate variability
-sigE <- 0.5 #environmental cue variability
+sigE <- 0.25 #environmental cue variability
 rho <- 1 #environmental cue correlation between species
 Rmu <- 2
-Rsd=1.5
+Rsd=2.5
 ####
 #### Model function
 ####
@@ -84,7 +84,7 @@ gVec1 <- gVec[,1]
 gVec2 <- gVec[,2]
 
 Rnow <- rlnorm(maxTime, Rmu, Rsd)
-hist(Rnow)
+# hist(Rnow)
 
 #forcing for resource supply rate variations
 # forcedat <- data.frame(Time = c(1:maxTime),
