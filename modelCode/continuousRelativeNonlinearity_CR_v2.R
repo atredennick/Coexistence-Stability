@@ -35,8 +35,7 @@ mN <- c(0.1, 0.1) #live state continuous death rate
 a <- 0.5 #resource turnover rate
 S <- 5 #average resource supply rate
 sVar <- 10 #resource supply rate variability
-sigEvec <- c(0, 0.5, 1, 2.5, 5, 7.5, 10)
-# sigE <- 0.5 #environmental cue variability
+sigE <- 0.5 #environmental cue variability
 rho <- 1 #environmental cue correlation between species
 Rmu <- 2
 Rsd=1.5
