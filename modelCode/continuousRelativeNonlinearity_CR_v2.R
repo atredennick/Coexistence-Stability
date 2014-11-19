@@ -28,15 +28,16 @@ maxTime <- 1000 #simulation run time
 c <- c(1,1) #not used for now, could be a "cost" parameter for biomass storage
 b <- c(0.5, 0.5) #also not used, could be assimilation efficiency
 mD <- c(0.0001, 0.0001) #dormant state continuous death rate
-r <- c(2.1, 0.15) #live state intrinsic growth rates
+r <- c(2.1, 0.2) #live state intrinsic growth rates
 K2 <- c(100, 200) #rate of approaching max growth rate
 K <- c(25,2) #offset for growth rate function
 mN <- c(0.1, 0.1) #live state continuous death rate
 a <- 0.5 #resource turnover rate
 S <- 5 #average resource supply rate
 sVar <- 10 #resource supply rate variability
-sigE <- 0 #environmental cue variability
-rho <- 0 #environmental cue correlation between species
+sigEvec <- c(0, 0.5, 1, 2.5, 5, 7.5, 10)
+# sigE <- 0.5 #environmental cue variability
+rho <- 1 #environmental cue correlation between species
 Rmu <- 2
 Rsd=1.5
 ####
@@ -72,9 +73,16 @@ gfun <- function(t, y, parms){
 ####
 #### Simulate model
 ####
-#function for transition fraction time series
-gVec1 <- rep(0.2,maxTime)
-gVec2 <- rep(0.2,maxTime)
+#function for transition time series
+getG <- function(sigE, rho, nTime){
+  varcov <- matrix(c(sigE, rho*sigE, rho*sigE, sigE), 2, 2)
+  e <- rmvnorm(n = nTime, mean = c(0,0), sigma = varcov)
+  g <- exp(e) / (1+exp(e))
+  return(g)
+}
+gVec <- getG(sigE = sigE, rho = rho, nTime = maxTime)
+gVec1 <- gVec[,1]
+gVec2 <- gVec[,2]
 
 Rnow <- rlnorm(maxTime, Rmu, Rsd)
 hist(Rnow)
