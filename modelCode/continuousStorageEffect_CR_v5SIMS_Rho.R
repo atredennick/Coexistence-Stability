@@ -27,9 +27,9 @@ library(gridExtra)
 ####
 #### Parameters
 ####
-maxTime <- 20 #simulation run time
+maxTime <- 2000 #simulation run time
 burn.in <- maxTime*0.5
-nSims <- 1
+nSims <- 20
 c <- c(1,1) #not used for now, could be a "cost" parameter for biomass storage
 b <- c(0.5, 0.5) #also not used, could be assimilation efficiency
 mD <- c(0.0001, 0.0001) #dormant state continuous death rate
