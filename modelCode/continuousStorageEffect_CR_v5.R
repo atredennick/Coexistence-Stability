@@ -24,7 +24,7 @@ library(mvtnorm)
 ####
 #### Parameters
 ####
-maxTime <- 2000 #simulation run time
+maxTime <- 1000 #simulation run time
 c <- c(1,1) #not used for now, could be a "cost" parameter for biomass storage
 b <- c(0.5, 0.5) #also not used, could be assimilation efficiency
 mD <- c(0.0001, 0.0001) #dormant state continuous death rate
@@ -36,7 +36,7 @@ a <- 0.5 #resource turnover rate
 S <- 10 #average resource supply rate
 sVar <- 5 #resource supply rate variability
 sigE <- 0.1 #environmental cue variability
-rho <- -1 #environmental cue correlation between species
+rho <- -0.5 #environmental cue correlation between species
 Rmu <- 2
 Rsd <- 0.1
 
