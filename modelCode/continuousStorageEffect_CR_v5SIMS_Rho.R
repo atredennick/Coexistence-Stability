@@ -126,11 +126,13 @@ for(gRep in 1:length(rhoVec)){
       #run the model
       output = as.data.frame(ode(y = DNR, times = simTime, func = updateDNR,
                                  parms = parms, events = list(func = gfun, times=simTime))) 
-      cvN[sim] <- sd(output[burn.in:maxTime,4]+output[burn.in:maxTime,5])/mean(output[burn.in:maxTime,4]+output[burn.in:maxTime,5])
+#       cvN[sim] <- sd(output[burn.in:maxTime,4]+output[burn.in:maxTime,5])/mean(output[burn.in:maxTime,4]+output[burn.in:maxTime,5])
+      cvN[sim] <- mean(output[burn.in:maxTime,4]+output[burn.in:maxTime,5]) / sqrt(sd(output[burn.in:maxTime,4]+output[burn.in:maxTime,5])+sum(cov(output[burn.in:maxTime,4],output[burn.in:maxTime,5])))
       cvR[sim] <- sd(output[burn.in:maxTime,6])/mean(output[burn.in:maxTime,6]) 
       avgN[sim] <- mean(output[burn.in:maxTime,4]+output[burn.in:maxTime,5])
       sdN[sim] <- sd(output[burn.in:maxTime,4]+output[burn.in:maxTime,5])
-      rN[sim] <- mean(output[burn.in:maxTime,5])/mean(output[burn.in:maxTime,4])
+#       rN[sim] <- mean(output[burn.in:maxTime,5])/mean(output[burn.in:maxTime,4])
+      rN[sim] <- cov(output[burn.in:maxTime,4],output[burn.in:maxTime,5])
       print(c(sim, ResRep, gRep))
     }#end simulation loop
     
@@ -171,7 +173,7 @@ g1 <- ggplot(cvD, aes(x=eVar, y=CV, group=sVar))+
   geom_point(size=8, color="white")+
   geom_point(size=4,aes(color=as.numeric(as.character(sVar))))+
   xlab(expression(rho))+
-  ylab(expression(CV[N[1]+N[2]]))+
+  ylab(expression(S[T]))+
   scale_color_continuous(name=expression(sigma[R]))+
   theme_bw()
 
@@ -198,7 +200,7 @@ g4 <- ggplot(cvD, aes(x=eVar, y=sppRatio, group=sVar))+
   geom_point(size=8, color="white")+
   geom_point(size=4,aes(color=as.numeric(as.character(sVar))))+
   xlab(expression(rho))+
-  ylab("N2/N1")+
+  ylab("cov(N1,N2)")+
   scale_color_continuous(name=expression(sigma[R]))+
   theme_bw()
 

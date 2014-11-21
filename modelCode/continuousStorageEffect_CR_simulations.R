@@ -16,9 +16,9 @@ library(gridExtra)
 ####
 #### Parameters
 ####
-maxTime <- 2000
-burn.in <- 1000
-nSims <- 20
+maxTime <- 20
+burn.in <- 10
+nSims <- 2
 c <- c(1,1)
 b <- c(0.5, 0.5)
 mD <- c(0.0001, 0.0001)
@@ -110,7 +110,8 @@ for(cue in 1:length(sigEvec)){
       DNR <- c(D=c(30,30), N=c(20,20),R=1)
       output = as.data.frame(ode(y = DNR, times = simTime, func = updateDNR,
                                  parms = parms, events = list(func = gfun, times=simTime)))
-      cvN[sim] <- sd(output[burn.in:maxTime,4]+output[burn.in:maxTime,5])/mean(output[burn.in:maxTime,4]+output[burn.in:maxTime,5])
+#       cvN[sim] <- sd(output[burn.in:maxTime,4]+output[burn.in:maxTime,5])/mean(output[burn.in:maxTime,4]+output[burn.in:maxTime,5])
+      cvN[sim] <- mean(output[burn.in:maxTime,4]+output[burn.in:maxTime,5]) / sqrt(sd(output[burn.in:maxTime,4]+output[burn.in:maxTime,5])+sum(cov(output[burn.in:maxTime,4],output[burn.in:maxTime,5])))
       cvR[sim] <- sd(output[burn.in:maxTime,6])/mean(output[burn.in:maxTime,6]) 
       avgN[sim] <- mean(output[burn.in:maxTime,4]+output[burn.in:maxTime,5])
       sdN[sim] <- sd(output[burn.in:maxTime,4]+output[burn.in:maxTime,5])
