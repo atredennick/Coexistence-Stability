@@ -206,5 +206,5 @@ g4 <- ggplot(cvD, aes(x=eVar, y=sppRatio, group=sVar))+
 
 g <- arrangeGrob(g1,g2,g3,g4)
 png(filename = "CV_FourPanel_RhoVary_StorageEff.png", width = 8, height = 5, units="in", res=200)
-g
+print(g)
 dev.off()
