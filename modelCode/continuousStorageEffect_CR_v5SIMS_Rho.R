@@ -27,9 +27,9 @@ library(gridExtra)
 ####
 #### Parameters
 ####
-maxTime <- 2000 #simulation run time
+maxTime <- 1000 #simulation run time
 burn.in <- maxTime*0.5
-nSims <- 20
+nSims <- 5
 c <- c(1,1) #not used for now, could be a "cost" parameter for biomass storage
 b <- c(0.5, 0.5) #also not used, could be assimilation efficiency
 mD <- c(0.0001, 0.0001) #dormant state continuous death rate
@@ -127,13 +127,16 @@ for(gRep in 1:length(rhoVec)){
       output = as.data.frame(ode(y = DNR, times = simTime, func = updateDNR,
                                  parms = parms, events = list(func = gfun, times=simTime))) 
 #       cvN[sim] <- sd(output[burn.in:maxTime,4]+output[burn.in:maxTime,5])/mean(output[burn.in:maxTime,4]+output[burn.in:maxTime,5])
-      cvN[sim] <- mean(output[burn.in:maxTime,4]+output[burn.in:maxTime,5]) / sqrt(sd(output[burn.in:maxTime,4]+output[burn.in:maxTime,5])+sum(cov(output[burn.in:maxTime,4],output[burn.in:maxTime,5])))
+      totN <- mean(output[burn.in:maxTime,4]+output[burn.in:maxTime,5])
+      sdN <- sd(output[burn.in:maxTime,4])+sd(output[burn.in:maxTime,5])
+      covN <- cov(output[burn.in:maxTime,4],output[burn.in:maxTime,5])
+      cvN[sim] <- totN/sqrt(sdN+sum(covN))
       cvR[sim] <- sd(output[burn.in:maxTime,6])/mean(output[burn.in:maxTime,6]) 
       avgN[sim] <- mean(output[burn.in:maxTime,4]+output[burn.in:maxTime,5])
       sdN[sim] <- sd(output[burn.in:maxTime,4]+output[burn.in:maxTime,5])
 #       rN[sim] <- mean(output[burn.in:maxTime,5])/mean(output[burn.in:maxTime,4])
       rN[sim] <- cov(output[burn.in:maxTime,4],output[burn.in:maxTime,5])
-      print(c(sim, ResRep, gRep))
+      print(paste("Simulation",sim,"for resource sigma", ResRep, "with rho", gRep))
     }#end simulation loop
     
     cvOut[ResRep,gRep] <- mean(cvN)
