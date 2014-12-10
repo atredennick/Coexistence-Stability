@@ -27,9 +27,9 @@ library(gridExtra)
 ####
 #### Parameters
 ####
-maxTime <- 1000 #simulation run time
+maxTime <- 2000 #simulation run time
 burn.in <- maxTime*0.5
-nSims <- 5
+nSims <- 20
 c <- c(1,1) #not used for now, could be a "cost" parameter for biomass storage
 b <- c(0.5, 0.5) #also not used, could be assimilation efficiency
 mD <- c(0.0001, 0.0001) #dormant state continuous death rate
@@ -48,6 +48,8 @@ RsdVec <- c(0,0.25,0.5,0.75,1)
 ####
 #### Storage matrices for output
 ####
+covOut <- matrix(nrow=length(RsdVec), ncol=length(rhoVec))
+sdSumOut <- matrix(nrow=length(RsdVec), ncol=length(rhoVec))
 cvOut <- matrix(nrow=length(RsdVec), ncol=length(rhoVec))
 cvRes <- matrix(nrow=length(RsdVec), ncol=length(rhoVec))
 meanOut <- matrix(nrow=length(RsdVec), ncol=length(rhoVec))
@@ -120,6 +122,8 @@ for(gRep in 1:length(rhoVec)){
     avgN <- numeric(nSims)
     sdN <- numeric(nSims)
     rN <- numeric(nSims)
+    covN <- numeric(nSims)
+    sdNsum <- numeric(nSims)
     
     for(sim in 1:nSims){
       DNR <- c(D=c(1500,1500), N=c(1500,1500),R=2) #initial conditions
@@ -128,17 +132,20 @@ for(gRep in 1:length(rhoVec)){
                                  parms = parms, events = list(func = gfun, times=simTime))) 
 #       cvN[sim] <- sd(output[burn.in:maxTime,4]+output[burn.in:maxTime,5])/mean(output[burn.in:maxTime,4]+output[burn.in:maxTime,5])
       totN <- mean(output[burn.in:maxTime,4]+output[burn.in:maxTime,5])
-      sdN <- sd(output[burn.in:maxTime,4])+sd(output[burn.in:maxTime,5])
-      covN <- cov(output[burn.in:maxTime,4],output[burn.in:maxTime,5])
-      cvN[sim] <- totN/sqrt(sdN+sum(covN))
+      sdNsum[sim] <- sd(output[burn.in:maxTime,4])+sd(output[burn.in:maxTime,5])
+      covN[sim] <- cov(output[burn.in:maxTime,4],output[burn.in:maxTime,5])
+      sdN[sim] <- sd(output[burn.in:maxTime,4]+output[burn.in:maxTime,5])
+      cvN[sim] <- totN/sdN[sim]
       cvR[sim] <- sd(output[burn.in:maxTime,6])/mean(output[burn.in:maxTime,6]) 
       avgN[sim] <- mean(output[burn.in:maxTime,4]+output[burn.in:maxTime,5])
-      sdN[sim] <- sd(output[burn.in:maxTime,4]+output[burn.in:maxTime,5])
+      ifelse(is.na(sdN[sim])==TRUE, stop("SD is undefined."), "sd is good")
 #       rN[sim] <- mean(output[burn.in:maxTime,5])/mean(output[burn.in:maxTime,4])
       rN[sim] <- cov(output[burn.in:maxTime,4],output[burn.in:maxTime,5])
       print(paste("Simulation",sim,"for resource sigma", ResRep, "with rho", gRep))
     }#end simulation loop
     
+    covOut[ResRep,gRep] <- mean(covN)
+    sdSumOut[ResRep,gRep] <- mean(sdNsum)
     cvOut[ResRep,gRep] <- mean(cvN)
     cvRes[ResRep,gRep] <- mean(cvR)
     meanOut[ResRep,gRep] <- mean(avgN)
@@ -148,6 +155,11 @@ for(gRep in 1:length(rhoVec)){
   }#end resource var reps
 }#end rho looping
 
+####
+#### Write results to file
+####
+outList <- list(covOut, sdSumOut, cvOut, cvRes, meanOut, sdOut, sppRatio)
+saveRDS(outList, file = "rhoVaryResults.rds")
 
 ####
 #### Plot results
