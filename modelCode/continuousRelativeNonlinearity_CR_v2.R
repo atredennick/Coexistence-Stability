@@ -24,21 +24,21 @@ library(mvtnorm)
 ####
 #### Parameters
 ####
-maxTime <- 1000 #simulation run time
+maxTime <- 200 #simulation run time
 c <- c(1,1) #not used for now, could be a "cost" parameter for biomass storage
 b <- c(0.5, 0.5) #also not used, could be assimilation efficiency
 mD <- c(0.0001, 0.0001) #dormant state continuous death rate
-r <- c(2.1, 0.2) #live state intrinsic growth rates
+r <- c(0.7, 0.2) #live state intrinsic growth rates
 K2 <- c(100, 200) #rate of approaching max growth rate
-K <- c(25,2) #offset for growth rate function
+K <- c(660,1) #offset for growth rate function
 mN <- c(0.1, 0.1) #live state continuous death rate
 a <- 0.5 #resource turnover rate
 S <- 5 #average resource supply rate
 sVar <- 10 #resource supply rate variability
 sigE <- 0.25 #environmental cue variability
 rho <- 1 #environmental cue correlation between species
-Rmu <- 2
-Rsd=2.5
+Rmu <- 0.1
+Rsd= 1.5
 ####
 #### Model function
 ####
@@ -49,7 +49,7 @@ updateDNR <- function(t, DNR, parms){
     dD2dt = -(mD[2]*D2)
     dN1dt = N1*(r[1]*exp(-K[1]*(exp(-K2[1]*R)))) - mN[1]*N1
     dN2dt = N2*(r[2]*exp(-K[2]*(exp(-K2[2]*R)))) - mN[2]*N2
-    dRdt = a*(S-R) - (N1*(r[1]*R/(K[1]+R)) + (N2*(r[2]*R/(K[2]+R))))
+    dRdt = a*(S-R) - ((N1*(r[1]*exp(-K[1]*(exp(-K2[1]*R))))) + (N2*(r[2]*exp(-K[2]*(exp(-K2[2]*R))))))
     list(c(dD1dt, dD2dt, dN1dt, dN2dt, dRdt)) #output
   })
 }
@@ -82,6 +82,8 @@ getG <- function(sigE, rho, nTime){
 gVec <- getG(sigE = sigE, rho = rho, nTime = maxTime)
 gVec1 <- gVec[,1]
 gVec2 <- gVec[,2]
+gVec1 <- rep(0.25, maxTime)
+gVec2 <- rep(0.25, maxTime)
 
 Rnow <- rlnorm(maxTime, Rmu, Rsd)
 # hist(Rnow)
@@ -103,7 +105,7 @@ parms <- list(
   a = a,
   S = S
 )
-DNR <- c(D=c(0,0), N=c(3000,3000),R=1) #initial conditions
+DNR <- c(D=c(50,50), N=c(15,15),R=1) #initial conditions
 
 #run the model
 output = as.data.frame(ode(y = DNR, times = simTime, func = updateDNR,
@@ -140,6 +142,6 @@ matplot(simTime, output[,4:5], type="l", main="Live Biomass", lty=c(1,1),
 
 barplot(cvs, names.arg = c("Spp 1", "Spp 2", "Community"), ylab="C.V.", col=c("darkorange", "purple", "grey"))
 box()
-
+cov(output[,4], output[,5])
 
 

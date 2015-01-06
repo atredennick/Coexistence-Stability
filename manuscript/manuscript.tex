@@ -93,18 +93,18 @@ University of Utah, Salt Lake City, UT}
 
 \subsection{Introduction}\label{introduction}
 
-Theoretical work aimed toward identifying the mechanisms by which
-species richness promotes temporal stability has treated species
-coexistence as a foregone conclusion. In so doing, that large body of
-work implicitly assumes that the interaction between environmental
-variability and the mechanism(s) by which species coexist is trivial.
-However, under the same conditions of environmental variability,
-population dynamics will respond differently depending on the
-coexistence context. In turn, this leads to different dynamics at the
-community and ecosystem levels depending on how species interact. So, it
-stands to reason that identifying the key mechanisms that promote
-ecosystem stability requires a solid understanding of how species
-coexistence mediates temporal stability in fluctuating environments.
+Species richness tends to confer temporal stability of biomass
+production in competitive plant communities. Though rarely considered,
+this implies a strong role for the mode and stability of species
+coexistence. Yet, theoretical work aimed toward identifying the
+mechanisms by which species richness promotes temporal stability has
+treated species coexistence as a foregone conclusion. In so doing, that
+large body of work implicitly assumes that the interaction between
+environmental variability and the mechanism(s) by which species coexist
+is trivial. However, under the same conditions of environmental
+variability, population dynamics will respond differently depending on
+the coexistence context. In turn, this leads to different dynamics at
+the community and ecosystem levels depending on how species interact.
 
 To that end, we will analyze a general consumer-resource model under
 different coexistence assmptions. Our starting point is a model of two
@@ -123,6 +123,9 @@ to incorporate different coexistence mechanisms, the strength of our
 approach lies in the similarities among the models since we work under a
 unified consumer-resource framework.
 
+\subsection{Model description and
+analysis}\label{model-description-and-analysis}
+
 \subsubsection{A general consumer-resource
 model}\label{a-general-consumer-resource-model}
 
@@ -138,28 +141,28 @@ We start with a general consumer-resource model where the consumer can
 be in one of two-states: a dormant state $D$ and a live state $N$
 (Figure\textasciitilde{}\ref{fig:model}). Transitions between $N$ and
 $D$ occur at discrete intervals $T$, so our model is formulated as
-``pulsed differential equations``. For clarity we refer to $T$ as years
-and the growing time between years, $\tau$, as seasons. Seasonal
-(within-year) dynamics are modeled as three differential equations:
+``pulsed differential equations" (Pachepsky et al. 2008, Mailleret and
+Lemesle 2009). For clarity we refer to $T$ as years and the growing time
+between years, $\tau$, as seasons. Seasonal (within-year) dynamics are
+modeled as three differential equations:
 
 \begin{align}
 \frac{\text{d}D_{i}}{\text{d}\tau} &= -(m_{D,i}D_{i})\\
-\frac{\text{d}N_{i}}{\text{d}\tau} &= f(R)N_{i} - m_{N,i}N_{i}\\
-\frac{\text{d}R_{i}}{\text{d}\tau} &= a(S - R) - \sum\limits_{i=1,2}f(R)N_{i}
+\frac{\text{d}N_{i}}{\text{d}\tau} &= f_{i}(R)N_{i} - m_{N,i}N_{i}\\
+\frac{\text{d}R_{i}}{\text{d}\tau} &= a(S - R) - \sum\limits_{i=1,2}f_{i}(R)N_{i}
 \end{align}
 
 where $i$ denotes species, $D$ is the dormant (long-lived) biomass
 state, $N$ is the living biomass (fast-growing, shorter-lived) state,
 and $m$s are biomass loss rates. The growth rate of living biomass is a
-resource-dependent function, $f(R) = r_{i}R/(K_{i}+R)$, where $r$ is the
-maximum growth rate and $K$ is the resource level at which growth is
-one-half $r$. For the resource dynamics, whose state is denoted by $R$,
-we use a linear resource renewal equation where $a$ scales resource
-turnover rate and $S$ is the resource equilibrium when consumers are
-absent, and an offtake of the resource equal to the sum of each species'
-consumption, $\sum_{i=1,2}f(R)N_{i}$. Note that since transitions
-between $N$ and $D$ are pulsed, only biomass loss occurs throughout the
-season for $D$.
+resource-dependent function,
+$f_{i}(R) = r_{i}e^{-\alpha_{i}e^{-\beta_{i}R}}$. For the resource
+dynamics, whose state is denoted by $R$, we use a linear resource
+renewal equation where $a$ scales resource turnover rate and $S$ is the
+resource equilibrium when consumers are absent, and an offtake of the
+resource equal to the sum of each species' consumption,
+$\sum_{i=1,2}f(R)N_{i}$. Note that since transitions between $N$ and $D$
+are pulsed, only biomass loss occurs throughout the season for $D$.
 
 At the beginning of each season we start with initial conditions defined
 as $V_{t}$, $W_{t}$, and $Z_{t}$ for the dormant state, the live state,
@@ -289,5 +292,13 @@ lower levels of variability in the environmental cue.
 Adler, P. B., and J. M. Drake. 2008. Environmental variation, stochastic
 extinction, and competitive coexistence. The American naturalist
 172:186--195.
+
+Mailleret, L., and V. Lemesle. 2009. A note on semi-discrete modelling
+in the life sciences. Philosophical transactions. Series A,
+Mathematical, physical, and engineering sciences 367:4779--4799.
+
+Pachepsky, E., R. M. Nisbet, and W. W. Murdoch. 2008. Between discrete
+and continuous: Consumer-resource dynamics with synchronized
+reproduction. Ecology 89:280--288.
 
 \end{document}

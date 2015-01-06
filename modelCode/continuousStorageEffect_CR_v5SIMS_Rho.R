@@ -66,7 +66,7 @@ updateDNR <- function(t, DNR, parms){
     dD2dt = -(mD[2]*D2)
     dN1dt = N1*(r[1]*exp(-K[1]*(exp(-K2[1]*R)))) - mN[1]*N1
     dN2dt = N2*(r[2]*exp(-K[2]*(exp(-K2[2]*R)))) - mN[2]*N2
-    dRdt = a*(S-R) - (N1*(r[1]*R/(K[1]+R)) + (N2*(r[2]*R/(K[2]+R))))
+    dRdt = a*(S-R) - ((N1*(r[1]*exp(-K[1]*(exp(-K2[1]*R))))) + (N2*(r[2]*exp(-K[2]*(exp(-K2[2]*R))))))
     list(c(dD1dt, dD2dt, dN1dt, dN2dt, dRdt)) #output
   })
 }
@@ -126,7 +126,7 @@ for(gRep in 1:length(rhoVec)){
     sdNsum <- numeric(nSims)
     
     for(sim in 1:nSims){
-      DNR <- c(D=c(1500,1500), N=c(1500,1500),R=2) #initial conditions
+      DNR <- c(D=c(50,50), N=c(50,50),R=2) #initial conditions
       #run the model
       output = as.data.frame(ode(y = DNR, times = simTime, func = updateDNR,
                                  parms = parms, events = list(func = gfun, times=simTime))) 
