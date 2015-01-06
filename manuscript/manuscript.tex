@@ -21,6 +21,25 @@
 % use microtype if available
 \IfFileExists{microtype.sty}{\usepackage{microtype}}{}
 \usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+% Redefine \includegraphics so that, unless explicit options are
+% given, the image width will not exceed the width of the page.
+% Images get their normal width if they fit onto the page, but
+% are scaled down if they would overflow the margins.
+\makeatletter
+\def\ScaleIfNeeded{%
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+\let\Oldincludegraphics\includegraphics
+{%
+ \catcode`\@=11\relax%
+ \gdef\includegraphics{\@ifnextchar[{\Oldincludegraphics}{\Oldincludegraphics[width=\ScaleIfNeeded]}}%
+}%
 \ifxetex
   \usepackage[setpagesize=false, % page size defined by xetex
               unicode=false, % unicode breaks when used with xetex
@@ -106,6 +125,14 @@ unified consumer-resource framework.
 
 \subsubsection{A general consumer-resource
 model}\label{a-general-consumer-resource-model}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{components/figure/manuscript-figure_1.pdf}
+\caption{Diagram of our semi-discrete consumer-resource model. Solid
+lines show continuous dynamics while dashed lines show the discrete
+transitions.}
+\end{figure}
 
 We start with a general consumer-resource model where the consumer can
 be in one of two-states: a dormant state $D$ and a live state $N$
@@ -254,5 +281,13 @@ difficult to interpret, but it is interesting that at high levels of
 variability in the environmental cue that drives the storage effect, the
 ratio decreases with resource supply variability. The opposite occurs at
 lower levels of variability in the environmental cue.
+
+\pagebreak{}
+
+\subsection{References}\label{references}
+
+Adler, P. B., and J. M. Drake. 2008. Environmental variation, stochastic
+extinction, and competitive coexistence. The American naturalist
+172:186--195.
 
 \end{document}
