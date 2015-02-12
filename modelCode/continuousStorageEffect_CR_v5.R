@@ -20,6 +20,9 @@ rm(list=ls())
 ####
 library(deSolve)
 library(mvtnorm)
+library(ggplot2)
+library(reshape2)
+library(gridExtra)
 
 ####
 #### Parameters
@@ -28,17 +31,17 @@ maxTime <- 1000 #simulation run time
 c <- c(1,1) #not used for now, could be a "cost" parameter for biomass storage
 b <- c(0.5, 0.5) #also not used, could be assimilation efficiency
 mD <- c(0.0001, 0.0001) #dormant state continuous death rate
-r <- c(2, 2) #live state intrinsic growth rates
+r <- c(1.9, 2) #live state intrinsic growth rates
 K2 <- c(100, 100) #rate of approaching max growth rate
 K <- c(25,25) #offset for growth rate function
 mN <- c(0.1, 0.1) #live state continuous death rate
 a <- 0.5 #resource turnover rate
 S <- 10 #average resource supply rate
 sVar <- 5 #resource supply rate variability
-sigE <- 0.1 #environmental cue variability
-rho <- -0.5 #environmental cue correlation between species
+sigE <- 0.5 #environmental cue variability
+rho <- -0.7 #environmental cue correlation between species
 Rmu <- 2
-Rsd <- 0.1
+Rsd <- 0
 
 ####
 #### Model function
@@ -97,7 +100,7 @@ parms <- list(
   a = a,
   S = S
 )
-DNR <- c(D=c(50,50), N=c(50,50),R=1) #initial conditions
+DNR <- c(D=c(1,50), N=c(1,50),R=1) #initial conditions
 
 #run the model
 output = as.data.frame(ode(y = DNR, times = simTime, func = updateDNR,
@@ -128,6 +131,27 @@ ts <- c((mean(output[,4])/sd(output[,4])),
          (mean(output[,5])/sd(output[,5])), 
          (mean(output[,4]+output[,5])/sd(output[,4]+output[,5])))
 barplot(ts, names.arg = c("Spp 1", "Spp 2", "Community"), ylab="Temporal Stability", col=c("darkorange", "purple", "grey35"))
+
+synch <- var(output[,4]+output[,5])/(sd(output[,4])+sd(output[,5]))^2
+synch
+
+growth_rate <- as.data.frame(rbind(cbind(R, tmp[,1]), cbind(R, tmp[,2])))
+growth_rate$species <- c(rep("A", length(R)), rep("B", length(R)))
+
+out_mod <- data.frame(time = rep(simTime, 3),
+                      species = c(rep("A", maxTime), rep("B", maxTime), rep("Comm.", maxTime)),
+                      biomass = c(output[,4], output[,5], output[,4]+output[,5]))
+
+ts_df <- data.frame(species=c("A", "B", "Comm."),
+                    stability=ts)
+
+g1 <- ggplot(growth_rate, aes(x=R, y=V2, color=species))+
+  geom_line(size=1)
+g2 <- ggplot(out_mod, aes(x=time, y=biomass, color=species))+
+  geom_line()
+g3 <- ggplot(ts_df, aes(x=species, y=stability, fill=species))+
+  geom_bar(stat = "identity", width=0.75)
+g_all <- grid.arrange(g1, g2, g3, nrow=1)
 
 
 # # plot the growth rate functions for each species
