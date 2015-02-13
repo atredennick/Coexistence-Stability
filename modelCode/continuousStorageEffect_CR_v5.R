@@ -38,8 +38,8 @@ mN <- c(0.1, 0.1) #live state continuous death rate
 a <- 0.5 #resource turnover rate
 S <- 10 #average resource supply rate
 sVar <- 5 #resource supply rate variability
-sigE <- 0.5 #environmental cue variability
-rho <- -0.7 #environmental cue correlation between species
+sigE <- 5 #environmental cue variability
+rho <- -1 #environmental cue correlation between species
 Rmu <- 2
 Rsd <- 0
 
@@ -151,7 +151,7 @@ g2 <- ggplot(out_mod, aes(x=time, y=biomass, color=species))+
   geom_line()
 g3 <- ggplot(ts_df, aes(x=species, y=stability, fill=species))+
   geom_bar(stat = "identity", width=0.75)
-g_all <- grid.arrange(g1, g2, g3, nrow=1)
+g_all <- grid.arrange(g1, g2, g3, ncol=1)
 
 
 # # plot the growth rate functions for each species
