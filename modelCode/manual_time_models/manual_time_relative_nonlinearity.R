@@ -28,6 +28,7 @@ updateDNR <- function(state_variables, parameters){
 #TODO: make S a semi-normal function with increasing then decreasing values
 #      over the 120 days.
 S <- rlnorm(120,0,1)
+S[50:120] <- 0
 grow_days <- 120 #120 growing days
 
 # Initial values
