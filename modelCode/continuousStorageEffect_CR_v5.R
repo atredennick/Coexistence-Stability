@@ -27,20 +27,20 @@ library(gridExtra)
 ####
 #### Parameters
 ####
-maxTime <- 1000 #simulation run time
+maxTime <- 100 #simulation run time
 c <- c(1,1) #not used for now, could be a "cost" parameter for biomass storage
 b <- c(0.5, 0.5) #also not used, could be assimilation efficiency
 mD <- c(0.0001, 0.0001) #dormant state continuous death rate
-r <- c(1.9, 2) #live state intrinsic growth rates
-K2 <- c(100, 100) #rate of approaching max growth rate
-K <- c(25,25) #offset for growth rate function
-mN <- c(0.1, 0.1) #live state continuous death rate
+r <- c(5, 5) #live state intrinsic growth rates
+K2 <- c(0.08, 0.08) #rate of approaching max growth rate
+K <- c(10,10) #offset for growth rate function
+mN <- c(0.5, 0.5) #live state continuous death rate
 a <- 0.5 #resource turnover rate
-S <- 10 #average resource supply rate
+S <- 50 #average resource supply rate
 sVar <- 5 #resource supply rate variability
-sigE <- 5 #environmental cue variability
-rho <- -1 #environmental cue correlation between species
-Rmu <- 2
+sigE <- 1 #environmental cue variability
+rho <- 0 #environmental cue correlation between species
+Rmu <- 5
 Rsd <- 0
 
 ####
@@ -51,9 +51,9 @@ updateDNR <- function(t, DNR, parms){
   with(as.list(c(DNR, parms)), {
     dD1dt = -(mD[1]*D1)
     dD2dt = -(mD[2]*D2)
-    dN1dt = N1*(r[1]*exp(-K[1]*(exp(-K2[1]*R)))) - mN[1]*N1
-    dN2dt = N2*(r[2]*exp(-K[2]*(exp(-K2[2]*R)))) - mN[2]*N2
-    dRdt = a*(S-R) - ((N1*(r[1]*exp(-K[1]*(exp(-K2[1]*R))))) + (N2*(r[2]*exp(-K[2]*(exp(-K2[2]*R))))))
+    dN1dt = N1*(r[1]*exp(-K[1]*(exp(-K2[1]*R)))) - mN[1]
+    dN2dt = N2*(r[2]*exp(-K[2]*(exp(-K2[2]*R)))) - mN[2]
+    dRdt = -1 * ((N1*(r[1]*exp(-K[1]*(exp(-K2[1]*R))))) + (N2*(r[2]*exp(-K[2]*(exp(-K2[2]*R))))))
     list(c(dD1dt, dD2dt, dN1dt, dN2dt, dRdt)) #output
   })
 }
@@ -100,7 +100,7 @@ parms <- list(
   a = a,
   S = S
 )
-DNR <- c(D=c(1,50), N=c(1,50),R=1) #initial conditions
+DNR <- c(D=c(1,1), N=c(1,1),R=100) #initial conditions
 
 #run the model
 output = as.data.frame(ode(y = DNR, times = simTime, func = updateDNR,
@@ -111,27 +111,13 @@ output = as.data.frame(ode(y = DNR, times = simTime, func = updateDNR,
 #### Plot results
 ####
 par(mfrow=c(1,3),mar=c(4,4,1,1))
-R <- seq(0,0.1,0.001)
+R <- seq(0,100,1)
 getR <- function(r, R, K){
   out1 <- (r[1]*exp(-K[1]*(exp(-K2[1]*R))))
   out2 <- (r[2]*exp(-K[2]*(exp(-K2[2]*R)))) 
   return(cbind(out1, out2))
 }
 tmp<-getR(r, R, K)
-matplot(R, tmp, type="l", col=c("darkorange", "purple"), lty=c(1,2), 
-        ylab="Instantaneous growth rate (r)", xlab="Resource density (R)", lwd=c(10,4))
-
-matplot(simTime, output[,4:5], type="l", main="Live Biomass", 
-        col=c("darkorange", "purple"), xlab="Years (T)", ylab="Biomass (N)")
-
-# matplot(simTime, output[,2:3], type="l", main="Dormant Biomass", 
-#         col=c("darkorange", "purple"), xlab="Years (T)", ylab="Biomass (D)")
-
-ts <- c((mean(output[,4])/sd(output[,4])), 
-         (mean(output[,5])/sd(output[,5])), 
-         (mean(output[,4]+output[,5])/sd(output[,4]+output[,5])))
-barplot(ts, names.arg = c("Spp 1", "Spp 2", "Community"), ylab="Temporal Stability", col=c("darkorange", "purple", "grey35"))
-
 synch <- var(output[,4]+output[,5])/(sd(output[,4])+sd(output[,5]))^2
 synch
 
@@ -145,23 +131,18 @@ out_mod <- data.frame(time = rep(simTime, 3),
 ts_df <- data.frame(species=c("A", "B", "Comm."),
                     stability=ts)
 
+my_colors <- c("red", "blue")
 g1 <- ggplot(growth_rate, aes(x=R, y=V2, color=species))+
-  geom_line(size=1)
-g2 <- ggplot(out_mod, aes(x=time, y=biomass, color=species))+
-  geom_line()
-g3 <- ggplot(ts_df, aes(x=species, y=stability, fill=species))+
-  geom_bar(stat = "identity", width=0.75)
-g_all <- grid.arrange(g1, g2, g3, ncol=1)
+  geom_line(size=1)+
+  geom_hline(aes(yintercept=mN[1]), linetype=2, color=my_colors[1])+
+  geom_hline(aes(yintercept=mN[2]), linetype=2, color=my_colors[2])+
+  scale_color_manual(values=my_colors)
+g2 <- ggplot(subset(out_mod, species!="Comm."), aes(x=time, y=biomass, color=species))+
+  geom_line()+
+  scale_color_manual(values=my_colors)
+# g3 <- ggplot(ts_df, aes(x=species, y=stability, fill=species))+
+#   geom_bar(stat = "identity", width=0.75)
+g_all <- grid.arrange(g1, g2, ncol=1)
 
 
-# # plot the growth rate functions for each species
-# R <- seq(0,1,0.01)
-# getR <- function(r, R, K){
-#   out1 <- r[1]*R/(K[1]+R)
-#   out2 <- r[2]*R/(K[2]+R)  
-#   return(cbind(out1, out2))
-# }
-# tmp<-getR(r, R, K)
-# matplot(R, tmp, type="l", col=c("darkorange", "purple"), 
-#         ylab="Intrinsic growth rate (r)", xlab="Resource density (R)")
 
