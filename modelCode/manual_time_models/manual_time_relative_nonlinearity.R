@@ -48,7 +48,8 @@ for(day in 2:grow_days){
 
 # Plot this to make sure it is right
 par(mfrow=c(1,2))
-matplot(c(1:grow_days), save_states[,c(3,4)], type="l")
+matplot(c(1:grow_days), save_states[,c(3,4)], type="l",
+        xlab="Day", ylab="Biomass")
 
 # plot the growth rate functions for each species
 R <- seq(0,0.1,0.001)
