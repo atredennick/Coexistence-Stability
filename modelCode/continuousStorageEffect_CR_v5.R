@@ -1,16 +1,16 @@
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 ## Semi-discrete temporal storage effect model of two species   ## 
 ## coexisting on one essential resource                         ##
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 ####
 #### 11/4/2014
 #### atredenn@gmail.com
 ####
 
-# species "split" themselves between a dormant, low-mortaility stage (D) and a higher mortality, high growth stage (N)
-# the single resource is R
-# There are two sources of variability: an environmental cue that drives the storage effect, and resource variability
+# species "split" themselves between a dormant, low-mortaility stage (D) and 
+#   a higher mortality, high growth stage (N)
+# The single resource is R
+# There are two sources of variability: an environmental cue that drives the
+#   storage effect, and resource variability
 
 # clear the workspace
 rm(list=ls())
@@ -40,8 +40,8 @@ S <- 50 #average resource supply rate
 sVar <- 5 #resource supply rate variability
 sigE <- 1 #environmental cue variability
 rho <- 0 #environmental cue correlation between species
-Rmu <- 5
-Rsd <- 0
+Rmu <- 5 #mean resource abundance (on log scale)
+Rsd <- 0 #temporal standard deviation of resource abundance (on log scale)
 
 ####
 #### Model function
