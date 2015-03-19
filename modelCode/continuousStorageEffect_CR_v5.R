@@ -40,7 +40,7 @@ S <- 50 #average resource supply rate
 sVar <- 5 #resource supply rate variability
 sigE <- 1 #environmental cue variability
 rho <- 0 #environmental cue correlation between species
-Rmu <- 5 #mean resource abundance (on log scale)
+Rmu <- 4 #mean resource abundance (on log scale)
 Rsd <- 0 #temporal standard deviation of resource abundance (on log scale)
 
 ####
@@ -51,9 +51,9 @@ updateDNR <- function(t, DNR, parms){
   with(as.list(c(DNR, parms)), {
     dD1dt = -(mD[1]*D1)
     dD2dt = -(mD[2]*D2)
-    dN1dt = N1*(r[1]*exp(-K[1]*(exp(-K2[1]*R)))) - mN[1]
-    dN2dt = N2*(r[2]*exp(-K[2]*(exp(-K2[2]*R)))) - mN[2]
-    dRdt = -1 * ((N1*(r[1]*exp(-K[1]*(exp(-K2[1]*R))))) + (N2*(r[2]*exp(-K[2]*(exp(-K2[2]*R))))))
+    dN1dt = N1*(r[1]*exp(-K[1]*(exp(-K2[1]*R))) - mN[1])
+    dN2dt = N2*(r[2]*exp(-K[2]*(exp(-K2[2]*R))) - mN[2])
+    dRdt = -1 * ((dN1dt + mN[1]*N1) + (dN2dt + mN[2]*N2))
     list(c(dD1dt, dD2dt, dN1dt, dN2dt, dRdt)) #output
   })
 }
@@ -143,6 +143,6 @@ g2 <- ggplot(subset(out_mod, species!="Comm."), aes(x=time, y=biomass, color=spe
 # g3 <- ggplot(ts_df, aes(x=species, y=stability, fill=species))+
 #   geom_bar(stat = "identity", width=0.75)
 g_all <- grid.arrange(g1, g2, ncol=1)
-
-
+plot(output$time, output$R)
+head(output)
 
