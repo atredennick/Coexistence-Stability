@@ -86,8 +86,8 @@ We start with a general consumer-resource model where the consumer can be in one
 
 \begin{align}
 \frac{\text{d}D_{i}}{\text{d}\tau} &= -(m_{D,i}D_{i})\\
-\frac{\text{d}N_{i}}{\text{d}\tau} &= f_{i}(R)N_{i} - m_{N,i}N_{i}\\
-\frac{\text{d}R_{i}}{\text{d}\tau} &= a(S - R) - \sum\limits_{i=1,2}f_{i}(R)N_{i}
+\frac{\text{d}N_{i}}{\text{d}\tau} &= N_{i}[f_{i}(R) - m_{N,i}]\\
+\frac{\text{d}R_{i}}{\text{d}\tau} &= - \sum\limits_{i=1,2}f_{i}(R)N_{i}
 \end{align}
 
 where $i$ denotes species, $D$ is the dormant (long-lived) biomass state, $N$ is the living biomass (fast-growing, shorter-lived) state, and $m$s are biomass loss rates. The growth rate of living biomass is a resource-dependent function, $f_{i}(R) = r_{i}e^{-\alpha_{i}e^{-\beta_{i}R}}$. For the resource dynamics, whose state is denoted by $R$, we use a linear resource renewal equation where $a$ scales resource turnover rate and $S$ is the resource equilibrium when consumers are absent, and an offtake of the resource equal to the sum of each species' consumption, $\sum_{i=1,2}f(R)N_{i}$. Note that since transitions between $N$ and $D$ are pulsed, only biomass loss occurs throughout the season for $D$.
@@ -102,9 +102,9 @@ The consumers transition between $N$ and $D$ instantaneously between years. We a
 \begin{align}
   V_{i,t+1} &= [N_{i}(T^-)+D_{i}(T^-)](1-g_{t}) \\
   W_{i,t+1} &= [N_{i}(T^-)+D_{i}(T^-)]g_{t} \\
-  Z_{t+1} &= R(T^-)
+  Z_{t+1} &= R(T^-) + R(T^+)
 \end{align}
-where $D(T^-)$, $N(T^-)$, and $R(T^-)$ are the densities of each state at the end of the year and $g$ is a time-fluctuating activation rate that regulates how much dormant biomass is converted to growing-season live biomass each year. Our formulation assumes that at the end of each season all accumulated living biomass [$N(T^-)$] is converted to dormant biomass.
+where $D(T^-)$, $N(T^-)$, and $R(T^-)$ are the densities of each state at the end of the year and $g$ is a time-fluctuating activation rate that regulates how much dormant biomass is converted to growing-season live biomass each year. $R(T^+)$ is a randomly generated resource pulse. Our formulation assumes that at the end of each season all accumulated living biomass [$N(T^-)$] is converted to dormant biomass.
 
 \begin{center}
 \begin{table}

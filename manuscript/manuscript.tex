@@ -93,17 +93,32 @@ University of Utah, Salt Lake City, UT}
 
 \subsection{Introduction}\label{introduction}
 
-Species richness tends to confer temporal stability of biomass
-production in competitive plant communities via compensatory dynamics
-among species. Two classes of mechanisms can produce copmensatory
-dynamics: (1) temporal complementarity among species and (2) functional
-complementarity among species. Temporal complementarity results in
-asynchronous population fluctations that, when aggregated over all
-populations in a community, dampens variability at the community or
-ecosystem level. Such asynchonry in population dynamics through time is
-driven by either species-specific responses to variable environmental
-conditions or differences in the rate at which species respond to
-disturbance.
+It is now clear that species richness tends to increase the temporal
+stability of biomass production in competitive plant communities. It is
+even becoming clear that a few core mechanisms related to compensatory
+dynamics among species through temporal or functional complementarity
+can explain the positive relationship between diversity and stability.
+What remains unclear is how the coexistence mechanism that maintains
+species richness influences the strength of compensatory dynamics.
+Theoretical studies based on Lotka-Volterra models have given us insight
+into the mechanisms that promote stability in communities where species
+coexist by fluctuation-independent mechanisms. A remaining challenge is
+to explore the importance of proposed mechanisms behind
+diversity-stability relationships in communities where species
+coexistence is maintained by temporal variability. Specifically, we seek
+to understand the mechanisms that promote temporal stability in
+communities where species coexistence is achieved because of temporal
+variability.
+
+Theory highlights two classes of mechanisms that can stabilize
+communities and ecosystems by compensatory dynamics: (1) temporal
+complementarity among species and (2) functional complementarity among
+species. Temporal complementarity results in asynchronous population
+fluctations that, when aggregated over all populations in a community,
+dampens variability at the community or ecosystem level. Such asynchonry
+in population dynamics through time is driven by either species-specific
+responses to variable environmental conditions or differences in the
+rate at which species respond to disturbance.
 
 In contrast to temporal complementarity, functional complementarity
 increases community stability by reducing the strength of interspecific
@@ -112,18 +127,9 @@ recent work suggests interspecific competition is actually
 destabilizing. This is because functional complementarity and
 competition are negatively correlated, and functional complementarity
 among species (i.e., non-temporal niche differences) generally results
-in the productivity of spcecies in mixture being greater than expected
+in the productivity of species in mixture being greater than expected
 from monocultures. So called overyielding increases mean productivity
 more than its variance, leading to greater temporal stability.
-
-This implies a strong role for the mode and stability of species
-coexistence. Yet, theoretical work aimed toward identifying the
-mechanisms by which species richness promotes temporal stability has
-treated species coexistence as a foregone conclusion. Most studies
-either assume coexistence a priori or ensure coexistence by non-temporal
-forms of niche differentiation. In so doing, that large body of work
-implicitly assumes that the interaction between environmental
-variability and the mechanism(s) by which species coexist is trivial.
 
 To that end, we will analyze a general consumer-resource model under
 different coexistence assmptions. Our starting point is a model of two
@@ -167,8 +173,8 @@ modeled as three differential equations:
 
 \begin{align}
 \frac{\text{d}D_{i}}{\text{d}\tau} &= -(m_{D,i}D_{i})\\
-\frac{\text{d}N_{i}}{\text{d}\tau} &= f_{i}(R)N_{i} - m_{N,i}N_{i}\\
-\frac{\text{d}R_{i}}{\text{d}\tau} &= a(S - R) - \sum\limits_{i=1,2}f_{i}(R)N_{i}
+\frac{\text{d}N_{i}}{\text{d}\tau} &= N_{i}[f_{i}(R) - m_{N,i}]\\
+\frac{\text{d}R_{i}}{\text{d}\tau} &= - \sum\limits_{i=1,2}f_{i}(R)N_{i}
 \end{align}
 
 where $i$ denotes species, $D$ is the dormant (long-lived) biomass
@@ -201,7 +207,7 @@ the yearly transition:
 \begin{align}
   V_{i,t+1} &= [N_{i}(T^-)+D_{i}(T^-)](1-g_{t}) \\
   W_{i,t+1} &= [N_{i}(T^-)+D_{i}(T^-)]g_{t} \\
-  Z_{t+1} &= R(T^-)
+  Z_{t+1} &= R(T^-) + R(T^+)
 \end{align}
 
 where $D(T^-)$, $N(T^-)$, and $R(T^-)$ are the densities of each state
