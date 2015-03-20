@@ -23,7 +23,7 @@ maxTime <- 200
 burn.in <- maxTime/10
 DNR <- c(D=c(1,1),N=c(1,1),R=100)
 Rmu <- 2      #mean resource pulse (on log scale)
-Rsd <- 1.2     #std dev of resource pulses (on log scale)
+Rsd <- 1.2    #std dev of resource pulses (on log scale)
 
 
 ####
@@ -76,7 +76,7 @@ parms <- list(
   r = c(5,1),          #max growth rate for genotype A and a
   k1 = c(20,10),       #right offset for growth rates 
   k2 = c(0.08,0.4),    #rates at which max is approached
-  mN = c(0.5,0.5),      #live biomass loss (mortality) rates 
+  mN = c(0.5,0.5),     #live biomass loss (mortality) rates 
   mD = c(0.001, 0.001) #dormant biomass loss (mortality) rates
 )
 

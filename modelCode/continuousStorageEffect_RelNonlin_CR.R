@@ -23,7 +23,7 @@ maxTime <- 200
 burn.in <- maxTime/10
 DNR <- c(D=c(1,1),N=c(1,1),R=100)
 Rmu <- 2      #mean resource pulse (on log scale)
-Rsd <- 2    #std dev of resource pulses (on log scale)
+Rsd <- 1      #std dev of resource pulses (on log scale)
 sigE <- 1     #environmental cue variability
 rho <- -1     #environmental cue correlation between species
 
@@ -65,9 +65,6 @@ gfun <- function(t, y, parms){
     return(c(D1, D2, N1, N2, R))
   })
 }
-
-
-#TODO: try to implement event function and event data at the same time
 
 ####
 #### Simulate model -----------------------------------------------------
