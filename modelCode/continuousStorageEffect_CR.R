@@ -23,7 +23,7 @@ maxTime <- 200
 burn.in <- maxTime/10
 DNR <- c(D=c(1,1),N=c(1,1),R=100)
 Rmu <- 2      #mean resource pulse (on log scale)
-Rsd <- 0    #std dev of resource pulses (on log scale)
+Rsd <- 1      #std dev of resource pulses (on log scale)
 sigE <- 1     #environmental cue variability
 rho <- 0      #environmental cue correlation between species
 
@@ -103,5 +103,9 @@ output = as.data.frame(ode(y = DNR, times = simTime, func = updateDNR, parms = p
 #### Make some plots ----------------------------------------------
 ####
 par(mfrow=c(1,2))
-matplot(output[,1],output[,2:3],xlab="Time",ylab="N",type="l")
-plot(output[,1],output[,4],xlab="Time",ylab="Resource",type="l")
+matplot(output[burn.in:maxTime,1],output[burn.in:maxTime,2:3],xlab="Time",ylab="N",type="l")
+plot(output[burn.in:maxTime,1],output[burn.in:maxTime,4],xlab="Time",ylab="Resource",type="l")
+biomass_cv <- sd(rowSums(output[burn.in:maxTime,2:3])) / mean(rowSums(output[burn.in:maxTime,2:3]))
+resource_cv <- sd(output[burn.in:maxTime,4])/mean(output[burn.in:maxTime,4])
+buffer <- biomass_cv/resource_cv
+buffer
