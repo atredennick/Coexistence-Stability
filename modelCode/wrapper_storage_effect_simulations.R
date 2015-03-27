@@ -11,8 +11,8 @@ rm(list=ls())
 ####
 #### Initial conditions and global variables ------------------------
 ####
-maxTime <- 2500 
-burn.in <- 1000
+maxTime <- 500 
+burn.in <- 100
 DNR <- c(D=c(1,1),N=c(1,1),R=100)
 Rmu <- 2                                #mean resource pulse (on log scale)
 Rsd <- seq(0,3,by=0.25)                 #std dev of resource pulses (on log scale)
@@ -80,5 +80,13 @@ for(resource in 1:resource_sims){
     } #next rho
   } #next cue variability level
 } #next resource variability level
+
+
+####
+####  Save output ------------------------------------------
+####
+out_sims <- out_sims[2:nrow(out_sims),]
+saveRDS(out_sims, "storage_effect_simulation_output.rds")
+
 
 
