@@ -29,7 +29,7 @@ parms <- list(
 resource_sims <- length(Rsd)
 env_cue_sims <- length(sigE)
 rho_sims <- length(rho_vec)
-sims_per_level <- 2
+sims_per_level <- 20
 
 ####
 #### Load relevant libraries and source the model --------------------
