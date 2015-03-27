@@ -42,8 +42,8 @@ source("semi_discrete_consumer_resource_fxns.R")
 ####
 ####  Loop through simulation sets -----------------------------------
 ####
-out_sims <- data.frame(sim=NA, rho=NA, sig_e=NA, sig_r=NA,
-                       sd_n=NA, mu_n=NA, cv_n=NA, buffer=NA)
+out_sims_all <- data.frame(sim=NA, rho=NA, sig_e=NA, sig_r=NA,
+                           sd_n=NA, mu_n=NA, cv_n=NA, buffer=NA)
 simTime <- seq(1,maxTime,by=1) #creates a vector of time steps to get output from deSolve
 for(resource in 1:resource_sims){
   for(cue in 1:env_cue_sims){
@@ -66,6 +66,8 @@ for(resource in 1:resource_sims){
         biomass_cv <- biomass_sd/biomass_mu 
         resource_cv <- sd(output[burn.in:maxTime,4])/mean(output[burn.in:maxTime,4])
         buffer <- biomass_cv/resource_cv
+        out_sims <- data.frame(sim=NA, rho=NA, sig_e=NA, sig_r=NA,
+                               sd_n=NA, mu_n=NA, cv_n=NA, buffer=NA)
         out_sims$sim <- sim
         out_sims$rho <- rho_vec[rho]
         out_sims$sig_e <- sigE[cue]
@@ -74,7 +76,8 @@ for(resource in 1:resource_sims){
         out_sims$mu_n <- biomass_mu
         out_sims$cv_n <- biomass_cv
         out_sims$buffer <- buffer
-          
+        out_sims <- out_sims[2:nrow(out_sims),]
+        out_sims_all <- rbind(out_sims_all, out_sims)
         print(paste("Done with resource", resource, "for sigE", cue, "and rho", rho))
       } #next simulation
     } #next rho
@@ -85,8 +88,8 @@ for(resource in 1:resource_sims){
 ####
 ####  Save output ------------------------------------------
 ####
-out_sims <- out_sims[2:nrow(out_sims),]
-saveRDS(out_sims, "storage_effect_simulation_output.rds")
+out_sims_all <- out_sims_all[2:nrow(out_sims_all),]
+saveRDS(out_sims_all, "storage_effect_simulation_output.rds")
 
 
 
