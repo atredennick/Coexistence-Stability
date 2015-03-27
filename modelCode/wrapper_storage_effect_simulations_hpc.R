@@ -32,7 +32,7 @@ parms <- list(
   mD = c(0.001, 0.001)                  #dormant biomass loss (mortality) rates
 )
 
-resource_sims <- length(Rsd)
+resource_sims <- length(Rsd_vec)
 env_cue_sims <- length(sigE)
 rho_sims <- length(rho_vec)
 sims_per_level <- 100
