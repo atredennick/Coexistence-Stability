@@ -1,12 +1,10 @@
 \documentclass[12pt,]{article}
-\usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
 \usepackage{fixltx2e} % provides \textsubscript
-% use upquote if available, for straight quotes in verbatim environments
-\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
 \else % if luatex or xelatex
   \ifxetex
@@ -18,28 +16,23 @@
   \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
   \newcommand{\euro}{€}
 \fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 % use microtype if available
-\IfFileExists{microtype.sty}{\usepackage{microtype}}{}
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
 \usepackage[margin=1in]{geometry}
 \usepackage{graphicx}
-% Redefine \includegraphics so that, unless explicit options are
-% given, the image width will not exceed the width of the page.
-% Images get their normal width if they fit onto the page, but
-% are scaled down if they would overflow the margins.
 \makeatletter
-\def\ScaleIfNeeded{%
-  \ifdim\Gin@nat@width>\linewidth
-    \linewidth
-  \else
-    \Gin@nat@width
-  \fi
-}
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
 \makeatother
-\let\Oldincludegraphics\includegraphics
-{%
- \catcode`\@=11\relax%
- \gdef\includegraphics{\@ifnextchar[{\Oldincludegraphics}{\Oldincludegraphics[width=\ScaleIfNeeded]}}%
-}%
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
 \ifxetex
   \usepackage[setpagesize=false, % page size defined by xetex
               unicode=false, % unicode breaks when used with xetex
@@ -62,16 +55,31 @@
 \setlength{\emergencystretch}{3em}  % prevent overfull lines
 \setcounter{secnumdepth}{0}
 
-\author{}
-\date{}
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+\setlength{\droptitle}{-2em}
+  \title{}
+  \pretitle{\vspace{\droptitle}}
+  \posttitle{}
+  \author{}
+  \preauthor{}\postauthor{}
+  \date{}
+  \predate{}\postdate{}
+
+
 \usepackage{lineno}
 \linenumbers
 \usepackage{setspace}
 \doublespacing
 
+
 \begin{document}
 
-\normalsize
+\maketitle
 
 
 \section{How coexistence mechanisms mediate temporal
@@ -81,7 +89,7 @@ stability}\label{how-coexistence-mechanisms-mediate-temporal-stability}
 Adler}\label{andrew-t.-tredennick-peter-b.-adler-and-frederick-r.-adler}
 
 \emph{Andrew T. Tredennick
-(\href{mailto:atredenn@gmail.com}{\href{mailto:atredenn@gmail.com}{atredenn@gmail.com}}),
+(\href{mailto:atredenn@gmail.com}{\href{mailto:atredenn@gmail.com}{\nolinkurl{atredenn@gmail.com}}}),
 Department of Wildland Resources and the Ecology Center, Utah State
 University, Logan, UT}
 
@@ -110,31 +118,11 @@ to understand the mechanisms that promote temporal stability in
 communities where species coexistence is achieved because of temporal
 variability.
 
-Theory highlights two classes of mechanisms that can stabilize
-communities and ecosystems by compensatory dynamics: (1) temporal
-complementarity among species and (2) functional complementarity among
-species. Temporal complementarity results in asynchronous population
-fluctations that, when aggregated over all populations in a community,
-dampens variability at the community or ecosystem level. Such asynchonry
-in population dynamics through time is driven by either species-specific
-responses to variable environmental conditions or differences in the
-rate at which species respond to disturbance.
-
-In contrast to temporal complementarity, functional complementarity
-increases community stability by reducing the strength of interspecific
-competition. Once thought to be stabilizing at the community level,
-recent work suggests interspecific competition is actually
-destabilizing. This is because functional complementarity and
-competition are negatively correlated, and functional complementarity
-among species (i.e., non-temporal niche differences) generally results
-in the productivity of species in mixture being greater than expected
-from monocultures. So called overyielding increases mean productivity
-more than its variance, leading to greater temporal stability.
-
 To that end, we will analyze a general consumer-resource model under
-different coexistence assmptions. Our starting point is a model of two
-plant consumers and one resource (e.g., soil moisture or nitrogen). We
-will focus on three cases of species coexistence:
+different fluctuation-dependent coexistence assmptions. Our starting
+point is a model of two plant consumers and one resource (e.g., soil
+moisture or nitrogen). We will focus on three cases of species
+coexistence:
 
 \begin{enumerate}
   \item Relative nonlinearty
@@ -163,13 +151,13 @@ transitions.}
 \end{figure}
 
 We start with a general consumer-resource model where the consumer can
-be in one of two-states: a dormant state $D$ and a live state $N$
-(Figure\textasciitilde{}\ref{fig:model}). Transitions between $N$ and
-$D$ occur at discrete intervals $T$, so our model is formulated as
-``pulsed differential equations" (Pachepsky et al. 2008, Mailleret and
-Lemesle 2009). For clarity we refer to $T$ as years and the growing time
-between years, $\tau$, as seasons. Seasonal (within-year) dynamics are
-modeled as three differential equations:
+be in one of two-states: a dormant state \(D\) and a live state \(N\)
+(Fig. 1). Transitions between \(N\) and \(D\) occur at discrete
+intervals \(T\), so our model is formulated as ``pulsed differential
+equations" (Pachepsky et al. 2008, Mailleret and Lemesle 2009). For
+clarity we refer to \(T\) as years and the growing time between years,
+\(\tau\), as seasons. Seasonal (within-year) dynamics are modeled as
+three differential equations:
 
 \begin{align}
 \frac{\text{d}D_{i}}{\text{d}\tau} &= -(m_{D,i}D_{i})\\
@@ -177,22 +165,20 @@ modeled as three differential equations:
 \frac{\text{d}R_{i}}{\text{d}\tau} &= - \sum\limits_{i=1,2}f_{i}(R)N_{i}
 \end{align}
 
-where $i$ denotes species, $D$ is the dormant (long-lived) biomass
-state, $N$ is the living biomass (fast-growing, shorter-lived) state,
-and $m$s are biomass loss rates. The growth rate of living biomass is a
-resource-dependent function,
-$f_{i}(R) = r_{i}e^{-\alpha_{i}e^{-\beta_{i}R}}$. For the resource
-dynamics, whose state is denoted by $R$, we use a linear resource
-renewal equation where $a$ scales resource turnover rate and $S$ is the
-resource equilibrium when consumers are absent, and an offtake of the
-resource equal to the sum of each species' consumption,
-$\sum_{i=1,2}f(R)N_{i}$. Note that since transitions between $N$ and $D$
-are pulsed, only biomass loss occurs throughout the season for $D$.
+where \(i\) denotes species, \(D\) is the dormant (long-lived) biomass
+state, \(N\) is the living biomass (fast-growing, shorter-lived) state,
+and \(m\)s are biomass loss rates. The growth rate of living biomass is
+a resource-dependent function,
+\(f_{i}(R) = r_{i}e^{-\alpha_{i}e^{-\beta_{i}R}}\). Resource depletion
+is equal to the sum of each species' consumption,
+\(\sum_{i=1,2}f(R)N_{i}\). Note that since transitions between \(N\) and
+\(D\) are pulsed, only biomass loss occurs throughout the season for
+\(D\).
 
 At the beginning of each season we start with initial conditions defined
-as $V_{t}$, $W_{t}$, and $Z_{t}$ for the dormant state, the live state,
-and the resource, respectively. So for each season, Eqs. 1-3 are solved
-given the initial conditions:
+as \(V_{t}\), \(W_{t}\), and \(Z_{t}\) for the dormant state, the live
+state, and the resource, respectively. So for each season, Eqs. 1-3 are
+solved given the initial conditions:
 
 \begin{align}
   D_{i}(0) &= V_{i,t} \\
@@ -200,7 +186,7 @@ given the initial conditions:
   R(0) &= Z_{t}
 \end{align}
 
-The consumers transition between $N$ and $D$ instantaneously between
+The consumers transition between \(N\) and \(D\) instantaneously between
 years. We assume resource density does not change between years. So, at
 the yearly transition:
 
@@ -210,12 +196,13 @@ the yearly transition:
   Z_{t+1} &= R(T^-) + R(T^+)
 \end{align}
 
-where $D(T^-)$, $N(T^-)$, and $R(T^-)$ are the densities of each state
-at the end of the year and $g$ is a time-fluctuating activation rate
-that regulates how much dormant biomass is converted to growing-season
-live biomass each year. Our formulation assumes that at the end of each
-season all accumulated living biomass {[}$N(T^-)${]} is converted to
-dormant biomass.
+where \(D(T^-)\), \(N(T^-)\), and \(R(T^-)\) are the densities of each
+state at the end of the year and \(g\) is a time-fluctuating activation
+rate that regulates how much dormant biomass is converted to
+growing-season live biomass each year. \(R(T^+)\) is a randomly
+generated resource pulse. Our formulation assumes that at the end of
+each season all accumulated living biomass {[}\(N(T^-)\){]} is converted
+to dormant biomass.
 
 \begin{center}
 \begin{table}
@@ -246,16 +233,17 @@ environmental conditions, and (3) the effects of competition on a
 species must be more strongly negative in good years relative to
 unfavorable years. Our model meets condition 1 because we include a
 dormant stage with very low death rates. We satisfy condition 2 with our
-model whenever $g$ is not perfectly correlated between species. Lastly,
-our model meets condition 3 because condition 2 partitions intraspecific
-and interspecific competition into different years. Thus, during a high
-$g$ year for one species, resource uptake is also inherently high for
-that species, which increases intraspecific competition relative to
-interspecific competition. So, given adequate variability in $g$, the
-inferior competitor (species with lower $r$) can persist.
+model whenever \(g\) is not perfectly correlated between species.
+Lastly, our model meets condition 3 because condition 2 partitions
+intraspecific and interspecific competition into different years. Thus,
+during a high \(g\) year for one species, resource uptake is also
+inherently high for that species, which increases intraspecific
+competition relative to interspecific competition. So, given adequate
+variability in \(g\), the inferior competitor (species with lower \(r\))
+can persist.
 
 Following Adler and Drake (2008), we generated sequences of
-(un)correlated dormant-to-live state transition rates ($g$) for each
+(un)correlated dormant-to-live state transition rates (\(g\)) for each
 species by drawing from multivariate normal distributions with mean 0
 and a variance-covariance matrix of
 
@@ -266,12 +254,12 @@ and a variance-covariance matrix of
 \end{bmatrix}
 \end{align}
 
-\noindent{}where $\sigma^2_{E}$ is the variance and $\rho$ is the
+\noindent{}where \(\sigma^2_{E}\) is the variance and \(\rho\) is the
 correlation between between the two species' transition rates. For
-environmental variability, here induced as variability in $g$, to
-promote coexistence via the storage effect, $\rho$ must be less than 1.
-The inferior competitor has the strongest potential to persist when
-$\rho=-1$ (perfectly uncorrelated transition rates).
+environmental variability, here induced as variability in \(g\), to
+promote coexistence via the storage effect, \(\rho\) must be less than
+1. The inferior competitor has the strongest potential to persist when
+\(\rho=-1\) (perfectly uncorrelated transition rates).
 
 \subsubsection{Implementing relative
 nonlinearity}\label{implementing-relative-nonlinearity}
@@ -283,7 +271,7 @@ fluctuate through time. In a constant resource environment, the species
 with the lowest R* will always exclude the other species. So we can
 compare this model to the storage effect model, we still allow the
 germination rate \emph{g} to vary, but both species are perfectly
-correlate -- that is, $\rho=1$.
+correlate -- that is, \(\rho=1\).
 
 \subsection{Results}\label{results}
 
@@ -291,14 +279,15 @@ correlate -- that is, $\rho=1$.
 
 Some preliminary results from running simulations of the storage effect
 version of the model at different levels of environmental cue
-variability ($\sigma_{E}$) and resource supply variability
-($\sigma_{S}$). I ran 20 simulations at each combination of $\sigma_{E}$
-and $\sigma_{S}$ shown in Figure\textasciitilde{}\ref{fig:storeEffSims}
-(the points are the means across the 20 simulations, each run for 2,000
-time-steps, with the initial 1,000 time-steps discarded before
-calculating anything). There is a weak trend of community CV to saturate
-at high levels of resource supply variability
-(Figure\textasciitilde{}\ref{fig:storeEffSims}, top panel).
+variability (\(\sigma_{E}\)) and resource supply variability
+(\(\sigma_{S}\)). I ran 20 simulations at each combination of
+\(\sigma_{E}\) and \(\sigma_{S}\) shown in
+Figure\textasciitilde{}\ref{fig:storeEffSims} (the points are the means
+across the 20 simulations, each run for 2,000 time-steps, with the
+initial 1,000 time-steps discarded before calculating anything). There
+is a weak trend of community CV to saturate at high levels of resource
+supply variability (Figure\textasciitilde{}\ref{fig:storeEffSims}, top
+panel).
 
 One of the things we are interested in is how well the community buffers
 itself against resource variability. Really I should calculate some kind
@@ -312,7 +301,8 @@ lower levels of variability in the environmental cue.
 
 \pagebreak{}
 
-\subsection{References}\label{references}
+\subsection*{References}\label{references}
+\addcontentsline{toc}{subsection}{References}
 
 Adler, P. B., and J. M. Drake. 2008. Environmental variation, stochastic
 extinction, and competitive coexistence. The American naturalist
