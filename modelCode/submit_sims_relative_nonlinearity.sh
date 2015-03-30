@@ -1,6 +1,6 @@
 #!/bin/bash
-#SBATCH --array=1-13
-#SBATCH --job-name=R_simsstorage_job
+#SBATCH --array=1-14
+#SBATCH --job-name=R_simsrelnonlin_job
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --time=4-00:00:00
