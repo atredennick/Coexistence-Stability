@@ -45,10 +45,29 @@ sim_summary <- ddply(sim_results, .(rho, sig_e, sig_r), summarise,
                      cv_n = mean(cv_n),
                      buffer = mean(buffer))
 
+
 ####
 ####  Plot results ---------------------------------------------
 ####
 ggplot(sim_summary, aes(x=sig_r, y=cv_n, color=rho, group=as.factor(rho)))+
+  geom_line()+
+  facet_wrap("sig_e")
+
+ggplot(sim_summary, aes(x=sig_r, y=buffer, color=rho, group=as.factor(rho)))+
+  geom_hline(aes(yintercept=1), linetype=2)+
+  geom_line()+
+  geom_point()+
+  facet_wrap("sig_e")+
+  ylab(expression(CV[community]/CV[resource]))+
+  xlab(expression(paste("Resource Variability (", sigma[r], "; on log scale)")))+
+  guides(color = guide_colorbar(title = expression(rho)))+
+  theme_bw()
+
+ggplot(sim_summary, aes(x=rho, y=buffer, color=sig_r, group=as.factor(sig_r)))+
+  geom_line()+
+  facet_wrap("sig_e")
+
+ggplot(sim_summary, aes(x=rho, y=cv_n, color=sig_r, group=as.factor(sig_r)))+
   geom_line()+
   facet_wrap("sig_e")
 
