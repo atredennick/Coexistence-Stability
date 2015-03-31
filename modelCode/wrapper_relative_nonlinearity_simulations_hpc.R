@@ -34,8 +34,6 @@ parms <- list(
 
 
 resource_sims <- length(Rsd_vec)
-env_cue_sims <- length(sigE)
-rho_sims <- length(rho_vec)
 sims_per_level <- 100
 
 ####
