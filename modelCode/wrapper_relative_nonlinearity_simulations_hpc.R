@@ -47,7 +47,7 @@ source("semi_discrete_consumer_resource_fxns.R")
 ####
 ####  Loop through simulation sets -----------------------------------
 ####
-out_sims_all <- data.frame(sim=NA, rho=NA, sig_e=NA, sig_r=NA,
+out_sims_all <- data.frame(sim=NA, sig_r=NA,
                            sd_n=NA, mu_n=NA, cv_n=NA, buffer=NA)
 simTime <- seq(1,maxTime,by=1) #creates a vector of time steps to get output from deSolve
 # Set constant "germination" fraction for relative nonlinearity alone
@@ -69,11 +69,9 @@ for(sim in 1:sims_per_level){
   biomass_cv <- biomass_sd/biomass_mu 
   resource_cv <- sd(output[burn.in:maxTime,4])/mean(output[burn.in:maxTime,4])
   buffer <- biomass_cv/resource_cv
-  out_sims <- data.frame(sim=NA, rho=NA, sig_e=NA, sig_r=NA,
+  out_sims <- data.frame(sim=NA, sig_r=NA,
                          sd_n=NA, mu_n=NA, cv_n=NA, buffer=NA)
   out_sims$sim <- sim
-  out_sims$rho <- rho_vec[rho]
-  out_sims$sig_e <- sigE[cue]
   out_sims$sig_r <- Rsd_vec[resource]
   out_sims$sd_n <- biomass_sd
   out_sims$mu_n <- biomass_mu
