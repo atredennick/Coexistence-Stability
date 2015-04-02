@@ -67,8 +67,6 @@ gfun <- function(t, y, parms){
 }
 
 
-#TODO: try to implement event function and event data at the same time
-
 ####
 #### Simulate model -----------------------------------------------------
 ####
