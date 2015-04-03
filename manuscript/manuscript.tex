@@ -159,9 +159,9 @@ years and the growing time between years, $\tau$, as seasons. Seasonal
 where $i$ denotes species, $D$ is the dormant (long-lived) biomass
 state, $N$ is the living biomass (fast-growing, shorter-lived) state,
 and $m$s are biomass loss rates. The growth rate of living biomass is a
-resource-dependent function,
-$f_{i}(R) = r_{i}e^{-\alpha_{i}e^{-\beta_{i}R}}$. Resource depletion is
-equal to the sum of each species' consumption,
+resource-dependent Hill function,
+$f_{i}(R) = r_{i}R^{\alpha_{i}} / (\beta_{i}^{\alpha_{i}}+R^{\alpha_{i}})$.
+Resource depletion is equal to the sum of each species' consumption,
 $\sum_{i=1,2}f_{i}(R)N_{i}$. Note that since transitions between $N$ and
 $D$ are pulsed, only biomass loss occurs throughout the season for $D$.
 
