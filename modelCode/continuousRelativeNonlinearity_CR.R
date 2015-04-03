@@ -1,6 +1,24 @@
 ## Semi-discrete relative nonlinearity model of two species   ## 
 ## coexisting on one essential resource                       ##
 
+##  Resource uptake function (Hill function)
+uptake_R <- function(r, R, alpha, beta){
+  return((r*R^alpha) / (beta^alpha + R^alpha))
+}
+
+R <- seq(0,100,1)
+out_r <- matrix(ncol=2, nrow=length(R))
+alpha <- c(10,0.5)
+beta <- c(50,500)
+for(i in 1:length(out_r)){
+  out_r[i,1] <- uptake_R(5, R[i], alpha[1], beta[1])
+  out_r[i,2] <- uptake_R(5, R[i], alpha[2], beta[2])
+}
+matplot(R, out_r, type="l")
+
+
+
+
 ####
 #### 3/19/2014
 #### atredenn@gmail.com
