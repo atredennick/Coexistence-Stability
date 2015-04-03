@@ -9,6 +9,8 @@
 ##                      function that can be called within the model.
 ##                   -- Includes option for a temporally autocorrelated
 ##                      resource pulse function.
+##                   -- Adds 'Rstart' variable to saved output to track
+##                      initial condition of resource for each season.
 
 ##  MODEL DESCRIPTION
 # Species "split" themselves between a dormant, low-mortaility stage (D) and 
@@ -23,21 +25,21 @@ rm(list=ls())
 ####
 #### Initial conditions, global variables, and parameters ------------------------
 ####
-temporal_autocorrelation <- TRUE    #turn temporal autocorrelation on(T)/off(F)
-seasons <- 500                      #number of seasons to simulate
-seasons_to_exclude <- 100           #initial seasons to exclude from plots
-days_to_track <- 5                  #number of days to recover from odSolve
-DNR <- c(D=c(1,1),N=c(1,1),R=10)    #initial conditions
-Rmu <- 2                            #mean resource pulse (on log scale)
-Rsd <- 1                            #std dev of resource pulses (on log scale)
-sigE <- 2                           #environmental cue variability
-rho <- 0                            #environmental cue correlation between species
+temporal_autocorrelation <- FALSE   # turn temporal autocorrelation on(T)/off(F)
+seasons <- 500                      # number of seasons to simulate
+seasons_to_exclude <- 100           # initial seasons to exclude from plots
+days_to_track <- 5                  # number of days to recover from odSolve
+DNR <- c(D=c(1,1),N=c(1,1),R=10)    # initial conditions
+Rmu <- 2                            # mean resource pulse (on log scale)
+Rsd <- 0                            # std dev of resource pulses (on log scale)
+sigE <- 2                           # environmental cue variability
+rho <- 0                            # environmental cue correlation between species
 parms <- list(
-  r = c(10,10),                     #max growth rate for each species
-  alpha = c(10,10),                 #rate parameter for Hill function 
-  beta = c(50,50),                  #shape parameter for Hill function
-  mN = c(0.5,0.5),                  #live biomass loss (mortality) rates 
-  mD = c(0.001, 0.001)              #dormant biomass loss (mortality) rates
+  r = c(10,10),                     # max growth rate for each species
+  alpha = c(10,10),                 # rate parameter for Hill function 
+  beta = c(50,50),                  # shape parameter for Hill function
+  mN = c(0.5,0.5),                  # live biomass loss (mortality) rates 
+  mD = c(0.001, 0.001)              # dormant biomass loss (mortality) rates
 )
 
 ####
@@ -111,9 +113,10 @@ if(temporal_autocorrelation==TRUE){
   } 
 }
 
-save_seasons <- data.frame(time=NA,D1=NA,D2=NA,N1=NA,N2=NA,R=NA,season=NA)
+save_seasons <- data.frame(time=NA,D1=NA,D2=NA,N1=NA,N2=NA,R=NA,Rstart=NA,season=NA)
 
 for(season_now in 1:seasons){
+  Rstart <- as.list(DNR)$R
   output <- as.data.frame(ode(y = DNR, times = days, 
                               func = updateDNR, parms = parms))
   DNR <- as.numeric(output[nrow(output),nms])
@@ -123,6 +126,7 @@ for(season_now in 1:seasons){
   names(DNR) <- nms
   new_season <- as.data.frame(output)
   new_season$season <- season_now
+  new_season$Rstart <- Rstart
   save_seasons <- rbind(save_seasons, new_season)
 }
 
@@ -139,9 +143,9 @@ matplot(seq_along(along.with = save_seasons$time),
 end_of_season <- which(save_seasons$time == max(days))
 end_seasons <- save_seasons[end_of_season,]
 matplot(end_seasons$season, end_seasons[,c("N1","N2")], type="l")
-# plot(N1 ~ R, end_seasons)
-# plot(N2 ~ R, end_seasons)
-# plot(N1 ~ N2, end_seasons)
+plot(N1 ~ Rstart, end_seasons)
+plot(N2 ~ Rstart, end_seasons)
+plot(N1 ~ N2, end_seasons)
 
 #Plot the resource uptake function
 # R <- seq(0,100,1)
