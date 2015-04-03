@@ -25,7 +25,7 @@ rm(list=ls())
 ####
 #### Initial conditions, global variables, and parameters ------------------------
 ####
-temporal_autocorrelation <- FALSE   # turn temporal autocorrelation on(T)/off(F)
+temporal_autocorrelation <- F       # turn temporal autocorrelation on(T)/off(F)
 seasons <- 500                      # number of seasons to simulate
 seasons_to_exclude <- 100           # initial seasons to exclude from plots
 days_to_track <- 5                  # number of days to recover from odSolve
