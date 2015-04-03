@@ -1,40 +1,49 @@
-## Semi-discrete storage effect model of two species   ## 
-## coexisting on one essential resource                ##
+##  Semi-discrete storage effect model of two species 
+##    coexisting on one essential resource                
 
-####
-#### 3/19/2014
-#### atredenn@gmail.com
-####
+##  Author: Andrew Tredennick
+##  Email:  atredenn@gmail.com
+##  Date:   3.19.2015
+##  Update: 4.2.2015 -- Implements looping over odSolve for seasons.
+##                   -- Makes resource uptake a Hill function, and a
+##                      function that can be called within the model.
+##                   -- Includes option for a temporally autocorrelated
+##                      resource pulse function.
 
 ##  MODEL DESCRIPTION
-# species "split" themselves between a dormant, low-mortaility stage (D) and 
-#   a higher mortality, high growth stage (N)
-# The single resource is R
+# Species "split" themselves between a dormant, low-mortaility stage (D) and 
+# a higher mortality, high growth stage (N).
+# The single resource is R.
 # There are two sources of variability: an environmental cue that drives the
-#   storage effect, and resource variability
+# storage effect, and resource variability.
 
 # clear the workspace
 rm(list=ls())
 
 ####
-#### Initial conditions and global variables ------------------------
+#### Initial conditions, global variables, and parameters ------------------------
 ####
-maxTime <- 500 
-burn.in <- maxTime/10
-DNR <- c(D=c(1,1),N=c(1,1),R=100)
-Rmu <- 2      #mean resource pulse (on log scale)
-Rsd <- 0    #std dev of resource pulses (on log scale)
-sigE <- 2     #environmental cue variability
-rho <- 0     #environmental cue correlation between species
+temporal_autocorrelation <- TRUE    #turn temporal autocorrelation on(T)/off(F)
+seasons <- 500                      #number of seasons to simulate
+seasons_to_exclude <- 100           #initial seasons to exclude from plots
+days_to_track <- 5                  #number of days to recover from odSolve
+DNR <- c(D=c(1,1),N=c(1,1),R=10)    #initial conditions
+Rmu <- 2                            #mean resource pulse (on log scale)
+Rsd <- 1                            #std dev of resource pulses (on log scale)
+sigE <- 2                           #environmental cue variability
+rho <- 0                            #environmental cue correlation between species
+parms <- list(
+  r = c(10,10),                     #max growth rate for each species
+  alpha = c(10,10),                 #rate parameter for Hill function 
+  beta = c(50,50),                  #shape parameter for Hill function
+  mN = c(0.5,0.5),                  #live biomass loss (mortality) rates 
+  mD = c(0.001, 0.001)              #dormant biomass loss (mortality) rates
+)
 
 ####
 #### Load relevant libraries ----------------------------------------
 ####
-library(deSolve)
-library(mvtnorm)
-library(ggplot2)
-library(reshape2)
-library(gridExtra)
+library(deSolve); library(mvtnorm)
 
 
 ####
@@ -57,16 +66,6 @@ uptake_R <- function(r, R, alpha, beta){
   return((r*R^alpha) / (beta^alpha + R^alpha))
 }
 
-R <- seq(0,100,1)
-out_r <- matrix(ncol=2, nrow=length(R))
-alpha <- c(10,10)
-beta <- c(50,50)
-for(i in 1:nrow(out_r)){
-  out_r[i,1] <- uptake_R(5, R[i], alpha[1], beta[1])
-  out_r[i,2] <- uptake_R(5, R[i], alpha[2], beta[2])
-}
-matplot(R, out_r, type="l")
-
 ## Discrete model
 update_DNR <- function(t,DNR,gs){
   with (as.list(DNR),{
@@ -85,14 +84,7 @@ update_DNR <- function(t,DNR,gs){
 ####
 #### Simulate model -----------------------------------------------------
 ####
-simTime <- seq(1,maxTime,by=1)
-parms <- list(
-  r = c(10,10),          #max growth rate for genotype A and a
-  alpha = c(10,10),       #right offset for growth rates 
-  beta = c(50,50),    #rates at which max is approached
-  mN = c(0.5,0.5),      #live biomass loss (mortality) rates 
-  mD = c(0.001, 0.001) #dormant biomass loss (mortality) rates
-)
+days <- c(1:days_to_track)
 
 # Get "germination" fractions for each year
 getG <- function(sigE, rho, nTime){
@@ -102,18 +94,25 @@ getG <- function(sigE, rho, nTime){
   return(g)
 }
 
-
-# Set random resource fluctuations
-
-
-# Run the model
 # Loop over seasons
-seasons <- 500
-days <- c(1:5)
 nms <- names(DNR)
 gVec <- getG(sigE = sigE, rho = rho, nTime = seasons)
-Rvector <- rlnorm(seasons,Rmu,Rsd)
+
+if(temporal_autocorrelation==FALSE){
+  Rvector <- rlnorm(seasons,Rmu,Rsd) 
+}
+
+if(temporal_autocorrelation==TRUE){
+  if(Rsd != 0){
+    Rvector <- filter(rlnorm(seasons,Rmu,Rsd), filter=rep(1,3), circular=TRUE)
+  }
+  if(Rsd == 0){
+    Rvector <- rlnorm(seasons,Rmu,Rsd) 
+  } 
+}
+
 save_seasons <- data.frame(time=NA,D1=NA,D2=NA,N1=NA,N2=NA,R=NA,season=NA)
+
 for(season_now in 1:seasons){
   output <- as.data.frame(ode(y = DNR, times = days, 
                               func = updateDNR, parms = parms))
@@ -127,9 +126,14 @@ for(season_now in 1:seasons){
   save_seasons <- rbind(save_seasons, new_season)
 }
 
+
+####
+####  Make some plots ----------------------------------
+####
 #take out first couple seasons
-save_seasons <- subset(save_seasons, season>100)
-matplot(seq_along(along.with = save_seasons$time), save_seasons[,c("N1","N2")], type="l")
+save_seasons <- subset(save_seasons, season>seasons_to_exclude)
+matplot(seq_along(along.with = save_seasons$time), 
+        save_seasons[,c("N1","N2")], type="l")
 
 #plot just seasons
 end_of_season <- which(save_seasons$time == max(days))
@@ -139,4 +143,22 @@ matplot(end_seasons$season, end_seasons[,c("N1","N2")], type="l")
 # plot(N2 ~ R, end_seasons)
 # plot(N1 ~ N2, end_seasons)
 
+#Plot the resource uptake function
+# R <- seq(0,100,1)
+# out_r <- matrix(ncol=2, nrow=length(R))
+# alpha <- c(10,10)
+# beta <- c(50,50)
+# for(i in 1:nrow(out_r)){
+#   out_r[i,1] <- uptake_R(5, R[i], alpha[1], beta[1])
+#   out_r[i,2] <- uptake_R(5, R[i], alpha[2], beta[2])
+# }
+# matplot(R, out_r, type="l")
+
+#Plot histograms of resource supply rates at different sigRs
+# sigR <- seq(0,1,0.25)
+# par(mfrow=c(2,3))
+# for(i in 1:length(sigR)){
+#   hist(rlnorm(100,2,sigR[i]))
+# }
+# plot(filter(rlnorm(100,2,1), filter=rep(1,3), circular=TRUE))
 
