@@ -11,6 +11,9 @@
 ##                        resource pulse function.
 ##                     -- Adds 'Rstart' variable to saved output to track
 ##                        initial condition of resource for each season.
+##                     -- Tracks 20 time steps from the ODE instead of 5
+##                        to make sure we get right end point.
+
 
 ##  MODEL DESCRIPTION
 # Species "split" themselves between a dormant, low-mortaility stage (D) and 
@@ -19,9 +22,14 @@
 # There are two sources of variability: an environmental cue that drives the
 # storage effect, and resource variability.
 
+## DEPENDS
+# Running this script requires the following R packages:
+# 'deSolve' -- install.packages('deSolve')
+# 'mvtnorm' -- install.packages('mvtnorm')
+
 # clear the workspace
 rm(list=ls())
-set.seed(1001)
+
 ####
 #### Initial conditions, global variables, and parameters ------------------------
 ####
