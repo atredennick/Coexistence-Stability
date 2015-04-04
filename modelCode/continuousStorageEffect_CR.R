@@ -1,16 +1,16 @@
 ##  Semi-discrete storage effect model of two species 
 ##    coexisting on one essential resource                
 
-##  Author: Andrew Tredennick
-##  Email:  atredenn@gmail.com
-##  Date:   3.19.2015
-##  Update: 4.2.2015 -- Implements looping over odSolve for seasons.
-##                   -- Makes resource uptake a Hill function, and a
-##                      function that can be called within the model.
-##                   -- Includes option for a temporally autocorrelated
-##                      resource pulse function.
-##                   -- Adds 'Rstart' variable to saved output to track
-##                      initial condition of resource for each season.
+##  Authors:  Andrew Tredennick, Peter Adler, and Fred Adler
+##  Email:    atredenn@gmail.com
+##  Date:     3.19.2015
+##  Update:   4.2.2015 -- Implements looping over odSolve for seasons.
+##                     -- Makes resource uptake a Hill function, and a
+##                        function that can be called within the model.
+##                     -- Includes option for a temporally autocorrelated
+##                        resource pulse function.
+##                     -- Adds 'Rstart' variable to saved output to track
+##                        initial condition of resource for each season.
 
 ##  MODEL DESCRIPTION
 # Species "split" themselves between a dormant, low-mortaility stage (D) and 
@@ -21,14 +21,14 @@
 
 # clear the workspace
 rm(list=ls())
-
+set.seed(1001)
 ####
 #### Initial conditions, global variables, and parameters ------------------------
 ####
 temporal_autocorrelation <- F       # turn temporal autocorrelation on(T)/off(F)
 seasons <- 500                      # number of seasons to simulate
 seasons_to_exclude <- 100           # initial seasons to exclude from plots
-days_to_track <- 5                  # number of days to recover from odSolve
+days_to_track <- 20                 # number of days to recover from odSolve
 DNR <- c(D=c(1,1),N=c(1,1),R=10)    # initial conditions
 Rmu <- 2                            # mean resource pulse (on log scale)
 Rsd <- 0                            # std dev of resource pulses (on log scale)
@@ -136,16 +136,16 @@ for(season_now in 1:seasons){
 ####
 #take out first couple seasons
 save_seasons <- subset(save_seasons, season>seasons_to_exclude)
-matplot(seq_along(along.with = save_seasons$time), 
-        save_seasons[,c("N1","N2")], type="l")
+# matplot(seq_along(along.with = save_seasons$time), 
+#         save_seasons[,c("N1","N2")], type="l")
 
 #plot just seasons
 end_of_season <- which(save_seasons$time == max(days))
 end_seasons <- save_seasons[end_of_season,]
 matplot(end_seasons$season, end_seasons[,c("N1","N2")], type="l")
-plot(N1 ~ Rstart, end_seasons)
-plot(N2 ~ Rstart, end_seasons)
-plot(N1 ~ N2, end_seasons)
+# plot(N1 ~ Rstart, end_seasons)
+# plot(N2 ~ Rstart, end_seasons)
+# plot(N1 ~ N2, end_seasons)
 
 #Plot the resource uptake function
 # R <- seq(0,100,1)
