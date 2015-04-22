@@ -26,6 +26,7 @@
 
 # clear the workspace
 rm(list=ls())
+library('plyr')
 
 ####
 #### Initial conditions, global variables, and parameters ------------------------
@@ -33,9 +34,9 @@ rm(list=ls())
 temporal_autocorrelation <- F       # turn temporal autocorrelation on(T)/off(F)
 seasons <- 50                   # number of seasons to simulate
 seasons_to_exclude <- 0           # initial seasons to exclude from plots
-days_to_track <- 120               # number of days to simulate in odSolve
+days_to_track <- 60               # number of days to simulate in odSolve
 DNR <- c(D=c(1,1),N=c(1,1),R=10)    # initial conditions
-Rmu <- 2                            # mean resource pulse (on log scale)
+Rmu <- 4                            # mean resource pulse (on log scale)
 Rsd <- 2                            # std dev of resource pulses (on log scale)
 sigE <- 2                           # environmental cue variability
 rho <- 0                            # environmental cue correlation between species
@@ -165,8 +166,8 @@ mean_of_season <- ddply(save_seasons, .(season), summarise,
 par(mfrow=c(1,1),mar=c(4,4,1,1),tcl=-0.2,mgp=c(2,0.5,0))
 matplot(mean_of_season$season, mean_of_season[,c("mean_N1","mean_N2")], 
         type="l", xlab="season", ylab="abundance")
-matplot(mean_of_season$season, mean_of_season[,c("mean_D1","mean_D2")],
-        type="l", xlab="season", ylab="abundance")
+# matplot(mean_of_season$season, mean_of_season[,c("mean_D1","mean_D2")],
+#         type="l", xlab="season", ylab="abundance")
 # plot(N1 ~ Rstart, end_seasons)
 # plot(N2 ~ Rstart, end_seasons)
 # plot(N1 ~ N2, end_seasons)
