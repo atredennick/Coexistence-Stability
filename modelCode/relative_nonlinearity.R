@@ -42,6 +42,7 @@ seasons_to_exclude <- 10           # initial seasons to exclude from plots
 days_to_track <- 60               # number of days to simulate in odSolve
 DNR <- c(D=c(1,1),N=c(1,1),R=10)    # initial conditions
 Rmu <- 1                            # mean resource pulse (on log scale)
+Rsd_annual <- 0.1                     # std dev of annual mean resource level
 Rsd <- 1                            # std dev of resource pulses (on log scale)
 sigE <- 2                           # environmental cue variability
 rho <- 0                            # environmental cue correlation between species
@@ -114,8 +115,7 @@ gVec <- getG(sigE = sigE, rho = rho, nTime = seasons)
 gVec[] <- 1
 
 if(temporal_autocorrelation==FALSE){
-  Rvector <- runif(seasons,0.1,4)
-  Rvector <- rep(Rmu, seasons)
+  Rvector <- rlnorm(seasons, Rmu, Rsd_annual)
 }
 
 if(temporal_autocorrelation==TRUE){
@@ -129,7 +129,7 @@ if(temporal_autocorrelation==TRUE){
 
 pulse_events <- matrix(nrow=seasons, ncol=days_to_track)
 for(do_season in 1:seasons){
-  pulse_events[do_season,] <- rlnorm(days_to_track, Rvector[do_season], Rsd)
+  pulse_events[do_season,] <- rlnorm(days_to_track, log(Rvector[do_season]), Rsd)
 }
 save_seasons <- data.frame(time=NA,D1=NA,D2=NA,N1=NA,N2=NA,R=NA,Rstart=NA,season=NA)
 
