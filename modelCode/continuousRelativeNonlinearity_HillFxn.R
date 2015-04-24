@@ -40,7 +40,7 @@ seasons_to_exclude <- 0           # initial seasons to exclude from plots
 days_to_track <- 60               # number of days to simulate in odSolve
 DNR <- c(D=c(1,1),N=c(1,1),R=10)    # initial conditions
 Rmu <- 1                            # mean resource pulse (on log scale)
-Rsd <- 1                            # std dev of resource pulses (on log scale)
+Rsd <- 0.5                            # std dev of resource pulses (on log scale)
 sigE <- 2                           # environmental cue variability
 rho <- 0                            # environmental cue correlation between species
 parms <- list(
@@ -77,15 +77,6 @@ updateDNR <- function(t, DNR, parms){
 uptake_R <- function(r, R, alpha, beta){
   return((r*R^alpha) / (beta^alpha + R^alpha))
 }
-R <- seq(0,100,1)
-out_r <- matrix(ncol=2, nrow=length(R))
-alpha <- parms$alpha
-beta <- parms$beta
-for(i in 1:nrow(out_r)){
-  out_r[i,1] <- uptake_R(parms$r[1], R[i], alpha[1], beta[1])
-  out_r[i,2] <- uptake_R(parms$r[2], R[i], alpha[2], beta[2])
-}
-matplot(R, out_r, type="l")
 
 ## Discrete model
 update_DNR <- function(t,DNR,gs){
@@ -176,11 +167,20 @@ mean_of_season <- ddply(save_seasons, .(season), summarise,
                        mean_N2 = mean(N2),
                        mean_D1 = mean(D1),
                        mean_D2 = mean(D2))
-par(mfrow=c(1,1),mar=c(4,4,1,1),tcl=-0.2,mgp=c(2,0.5,0))
+par(mfrow=c(1,2),mar=c(4,4,1,1),tcl=-0.2,mgp=c(2,0.5,0))
+R <- seq(0,100,1)
+out_r <- matrix(ncol=2, nrow=length(R))
+alpha <- parms$alpha
+beta <- parms$beta
+for(i in 1:nrow(out_r)){
+  out_r[i,1] <- uptake_R(parms$r[1], R[i], alpha[1], beta[1])
+  out_r[i,2] <- uptake_R(parms$r[2], R[i], alpha[2], beta[2])
+}
+matplot(R, out_r, type="l", col=c("violet", "grey35"), lty=c(1,1), lwd=2)
 seasonal_total <- apply(mean_of_season[,c("mean_N1","mean_N2")], 1, sum)
 matplot(mean_of_season$season, mean_of_season[,c("mean_N1","mean_N2")], 
         type="l", xlab="season", ylab="abundance", ylim=c(0, max(seasonal_total,na.rm=TRUE)),
-        col=c("violet", "grey35"), lty=c(2,2))
+        col=c("violet", "grey35"), lty=c(2,2), lwd=c(2,2))
 lines(mean_of_season$season, seasonal_total, lwd=3, lty=1)
 # matplot(mean_of_season$season, mean_of_season[,c("mean_D1","mean_D2")],
 #         type="l", xlab="season", ylab="abundance")
