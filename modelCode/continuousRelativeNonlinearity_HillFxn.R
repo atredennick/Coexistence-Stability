@@ -30,17 +30,19 @@
 # clear the workspace
 rm(list=ls())
 library('plyr')
+library('ggplot2')
+library('gridExtra')
 
 ####
 #### Initial conditions, global variables, and parameters ------------------------
 ####
 temporal_autocorrelation <- F       # turn temporal autocorrelation on(T)/off(F)
-seasons <- 75                   # number of seasons to simulate
-seasons_to_exclude <- 0           # initial seasons to exclude from plots
+seasons <- 100                   # number of seasons to simulate
+seasons_to_exclude <- 10           # initial seasons to exclude from plots
 days_to_track <- 60               # number of days to simulate in odSolve
 DNR <- c(D=c(1,1),N=c(1,1),R=10)    # initial conditions
 Rmu <- 1                            # mean resource pulse (on log scale)
-Rsd <- 0.5                            # std dev of resource pulses (on log scale)
+Rsd <- 1                            # std dev of resource pulses (on log scale)
 sigE <- 2                           # environmental cue variability
 rho <- 0                            # environmental cue correlation between species
 parms <- list(
@@ -157,7 +159,7 @@ for(season_now in 1:seasons){
 ####  Make some plots ----------------------------------
 ####
 #take out first couple seasons
-# save_seasons <- subset(save_seasons, season>seasons_to_exclude)
+save_seasons <- subset(save_seasons, season>seasons_to_exclude)
 # matplot(seq_along(along.with = save_seasons$time), 
 #         save_seasons[,c("N1","N2")], type="l")
 
@@ -176,12 +178,52 @@ for(i in 1:nrow(out_r)){
   out_r[i,1] <- uptake_R(parms$r[1], R[i], alpha[1], beta[1])
   out_r[i,2] <- uptake_R(parms$r[2], R[i], alpha[2], beta[2])
 }
-matplot(R, out_r, type="l", col=c("violet", "grey35"), lty=c(1,1), lwd=2)
+matplot(R, out_r, type="l", col=c("violet", "grey35"), lty=c(1,1), lwd=2,
+        ylab = "resource uptake")
 seasonal_total <- apply(mean_of_season[,c("mean_N1","mean_N2")], 1, sum)
 matplot(mean_of_season$season, mean_of_season[,c("mean_N1","mean_N2")], 
         type="l", xlab="season", ylab="abundance", ylim=c(0, max(seasonal_total,na.rm=TRUE)),
         col=c("violet", "grey35"), lty=c(2,2), lwd=c(2,2))
 lines(mean_of_season$season, seasonal_total, lwd=3, lty=1)
+
+
+####
+####  Publication quality example plots
+####
+plot_df <- data.frame(season = rep(mean_of_season$season,3),
+                      seed_abundance = c(mean_of_season[,c("mean_N1")],
+                                         mean_of_season[,c("mean_N2")],
+                                         seasonal_total),
+                      variable = c(rep("Spp A", times=nrow(mean_of_season)),
+                                   rep("Spp B", times=nrow(mean_of_season)),
+                                   rep("Total", times=nrow(mean_of_season))))
+
+time_series_plot <- ggplot(plot_df, aes(x=season, y=seed_abundance, 
+                                        color=variable, size=variable,
+                                        linetype=variable))+
+  geom_line()+
+  scale_color_manual(values=c("violet", "grey35", "black"), name="")+
+  scale_size_manual(values=c(1,1,2), name="")+
+  scale_linetype_manual(values=c(2,2,1))+
+  guides(linetype=FALSE, size=FALSE, color=FALSE)+
+  ylab("seed abundance")+
+  theme_bw()
+
+resource_df <- data.frame(resource = R,
+                          uptake = c(out_r[,1], out_r[,2]),
+                          variable = c(rep("sppA", nrow(out_r)),
+                                       rep("sppB", nrow(out_r))))
+resource_plot <- ggplot(resource_df, aes(x=resource, y=uptake,color=variable))+
+  geom_line(size=1.5)+
+  geom_hline(aes(yintercept=parms$mN[1]), linetype=2)+
+  scale_color_manual(values=c("violet", "grey35", "black"), name="")+
+  guides(color=FALSE)+
+  ylab("resource uptake")+
+  xlab("resource level (R)")+
+  theme_bw()
+final_plot <- grid.arrange(resource_plot, time_series_plot, ncol=2)
+print(final_plot)
+
 # matplot(mean_of_season$season, mean_of_season[,c("mean_D1","mean_D2")],
 #         type="l", xlab="season", ylab="abundance")
 # plot(N1 ~ Rstart, end_seasons)
