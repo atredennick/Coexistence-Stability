@@ -36,14 +36,14 @@ seasons <- 75                   # number of seasons to simulate
 seasons_to_exclude <- 0           # initial seasons to exclude from plots
 days_to_track <- 60               # number of days to simulate in odSolve
 DNR <- c(D=c(1,1),N=c(1,1),R=10)    # initial conditions
-Rmu <- 1                            # mean resource pulse (on log scale)
+Rmu <- 2                            # mean resource pulse (on log scale)
 Rsd <- 1                            # std dev of resource pulses (on log scale)
 sigE <- 2                           # environmental cue variability
 rho <- 0                            # environmental cue correlation between species
 parms <- list(
   r = c(10,10),                     # max growth rate for each species
   alpha = c(10,0.5),                 # rate parameter for Hill function 
-  beta = c(50,2500),                  # shape parameter for Hill function
+  beta = c(30,2500),                  # shape parameter for Hill function
   mN = c(0.5,0.5),                  # live biomass loss (mortality) rates 
   mD = c(0.01, 0.01),              # dormant biomass loss (mortality) rates
   a = c(0.5,0.5)                    # allocation fraction of live biomass to seed bank
@@ -74,6 +74,15 @@ updateDNR <- function(t, DNR, parms){
 uptake_R <- function(r, R, alpha, beta){
   return((r*R^alpha) / (beta^alpha + R^alpha))
 }
+R <- seq(0,100,1)
+out_r <- matrix(ncol=2, nrow=length(R))
+alpha <- c(10,0.5)
+beta <- c(20,2500)
+for(i in 1:nrow(out_r)){
+  out_r[i,1] <- uptake_R(10, R[i], alpha[1], beta[1])
+  out_r[i,2] <- uptake_R(10, R[i], alpha[2], beta[2])
+}
+matplot(R, out_r, type="l")
 
 ## Discrete model
 update_DNR <- function(t,DNR,gs){
