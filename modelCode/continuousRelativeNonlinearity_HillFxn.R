@@ -16,6 +16,9 @@
 ##                         it to the dormant seed bank.
 ##  Update:   4.10.2015 -- Resource pulses happen within the season.
 ##                      -- Tracks average seasonal abundance as response.
+##  Update:   4.24.2015 -- Changes Hill fxn parameters for quick difference
+##                         in resource response curves. This leads to more
+##                         stable coexistence and more even biomass splits.
 
 ##  MODEL DESCRIPTION
 # Species "split" themselves between a dormant, low-mortaility stage (D) and 
@@ -36,14 +39,14 @@ seasons <- 75                   # number of seasons to simulate
 seasons_to_exclude <- 0           # initial seasons to exclude from plots
 days_to_track <- 60               # number of days to simulate in odSolve
 DNR <- c(D=c(1,1),N=c(1,1),R=10)    # initial conditions
-Rmu <- 2                            # mean resource pulse (on log scale)
+Rmu <- 1                            # mean resource pulse (on log scale)
 Rsd <- 1                            # std dev of resource pulses (on log scale)
 sigE <- 2                           # environmental cue variability
 rho <- 0                            # environmental cue correlation between species
 parms <- list(
-  r = c(10,10),                     # max growth rate for each species
-  alpha = c(10,0.5),                 # rate parameter for Hill function 
-  beta = c(30,2500),                  # shape parameter for Hill function
+  r = c(5,1),                     # max growth rate for each species
+  alpha = c(5,2),                 # rate parameter for Hill function 
+  beta = c(20,2.5),                  # shape parameter for Hill function
   mN = c(0.5,0.5),                  # live biomass loss (mortality) rates 
   mD = c(0.01, 0.01),              # dormant biomass loss (mortality) rates
   a = c(0.5,0.5)                    # allocation fraction of live biomass to seed bank
@@ -76,11 +79,11 @@ uptake_R <- function(r, R, alpha, beta){
 }
 R <- seq(0,100,1)
 out_r <- matrix(ncol=2, nrow=length(R))
-alpha <- c(10,0.5)
-beta <- c(20,2500)
+alpha <- parms$alpha
+beta <- parms$beta
 for(i in 1:nrow(out_r)){
-  out_r[i,1] <- uptake_R(10, R[i], alpha[1], beta[1])
-  out_r[i,2] <- uptake_R(10, R[i], alpha[2], beta[2])
+  out_r[i,1] <- uptake_R(parms$r[1], R[i], alpha[1], beta[1])
+  out_r[i,2] <- uptake_R(parms$r[2], R[i], alpha[2], beta[2])
 }
 matplot(R, out_r, type="l")
 
@@ -174,10 +177,11 @@ mean_of_season <- ddply(save_seasons, .(season), summarise,
                        mean_D1 = mean(D1),
                        mean_D2 = mean(D2))
 par(mfrow=c(1,1),mar=c(4,4,1,1),tcl=-0.2,mgp=c(2,0.5,0))
-matplot(mean_of_season$season, mean_of_season[,c("mean_N1","mean_N2")], 
-        type="l", xlab="season", ylab="abundance")
 seasonal_total <- apply(mean_of_season[,c("mean_N1","mean_N2")], 1, sum)
-lines(mean_of_season$season, seasonal_total, lwd=2, lty=2)
+matplot(mean_of_season$season, mean_of_season[,c("mean_N1","mean_N2")], 
+        type="l", xlab="season", ylab="abundance", ylim=c(0, max(seasonal_total,na.rm=TRUE)),
+        col=c("violet", "grey35"), lty=c(2,2))
+lines(mean_of_season$season, seasonal_total, lwd=3, lty=1)
 # matplot(mean_of_season$season, mean_of_season[,c("mean_D1","mean_D2")],
 #         type="l", xlab="season", ylab="abundance")
 # plot(N1 ~ Rstart, end_seasons)
