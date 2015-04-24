@@ -32,12 +32,12 @@ library('plyr')
 #### Initial conditions, global variables, and parameters ------------------------
 ####
 temporal_autocorrelation <- F       # turn temporal autocorrelation on(T)/off(F)
-seasons <- 50                   # number of seasons to simulate
+seasons <- 75                   # number of seasons to simulate
 seasons_to_exclude <- 0           # initial seasons to exclude from plots
 days_to_track <- 60               # number of days to simulate in odSolve
 DNR <- c(D=c(1,1),N=c(1,1),R=10)    # initial conditions
-Rmu <- 4                            # mean resource pulse (on log scale)
-Rsd <- 2                            # std dev of resource pulses (on log scale)
+Rmu <- 1                            # mean resource pulse (on log scale)
+Rsd <- 1                            # std dev of resource pulses (on log scale)
 sigE <- 2                           # environmental cue variability
 rho <- 0                            # environmental cue correlation between species
 parms <- list(
@@ -45,7 +45,7 @@ parms <- list(
   alpha = c(10,0.5),                 # rate parameter for Hill function 
   beta = c(50,2500),                  # shape parameter for Hill function
   mN = c(0.5,0.5),                  # live biomass loss (mortality) rates 
-  mD = c(0.001, 0.001),              # dormant biomass loss (mortality) rates
+  mD = c(0.01, 0.01),              # dormant biomass loss (mortality) rates
   a = c(0.5,0.5)                    # allocation fraction of live biomass to seed bank
 )
 
@@ -84,7 +84,7 @@ update_DNR <- function(t,DNR,gs){
     N2 <- D2*g2
     D1 <- D1*(1-g1)
     D2 <- D2*(1-g2)
-    R <- R + Rvector[t]
+    R <- Rvector[t]
     return(c(D1, D2, N1, N2, R))
   })
 }
@@ -110,7 +110,7 @@ gVec[] <- 1
 
 if(temporal_autocorrelation==FALSE){
   Rvector <- runif(seasons,0.1,4)
-  Rvector <- rep(2, seasons)
+  Rvector <- rep(Rmu, seasons)
 }
 
 if(temporal_autocorrelation==TRUE){
@@ -137,6 +137,7 @@ for(season_now in 1:seasons){
   output <- as.data.frame(ode(y = DNR, times = days, 
                               func = updateDNR, parms = parms,
                               events = list(data = eventdat)))
+
   DNR <- as.numeric(output[nrow(output),nms])
   names(DNR) <- nms
   R_update <- Rvector[season_now]
@@ -166,6 +167,8 @@ mean_of_season <- ddply(save_seasons, .(season), summarise,
 par(mfrow=c(1,1),mar=c(4,4,1,1),tcl=-0.2,mgp=c(2,0.5,0))
 matplot(mean_of_season$season, mean_of_season[,c("mean_N1","mean_N2")], 
         type="l", xlab="season", ylab="abundance")
+seasonal_total <- apply(mean_of_season[,c("mean_N1","mean_N2")], 1, sum)
+lines(mean_of_season$season, seasonal_total, lwd=2, lty=2)
 # matplot(mean_of_season$season, mean_of_season[,c("mean_D1","mean_D2")],
 #         type="l", xlab="season", ylab="abundance")
 # plot(N1 ~ Rstart, end_seasons)
