@@ -29,7 +29,7 @@ Rmu <- 2                            # mean resource pulse (on log scale)
 Rsd_annual <- 0.1                     # std dev of annual mean resource level
 Rsd <- 1                            # std dev of resource pulses (on log scale)
 sigE <- 2                           # environmental cue variability
-rho <- 0                            # environmental cue correlation between species
+rho <- -1                            # environmental cue correlation between species
 parms <- list(
   r = c(5,5),                     # max growth rate for each species
   alpha = c(5,5),                 # rate parameter for Hill function 
