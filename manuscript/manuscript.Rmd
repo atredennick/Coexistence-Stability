@@ -70,7 +70,7 @@ Model description and analysis
 ------------------------------
 ### A general consumer-resource model
 
-```{r figure_1, dependson="plot-options", fig.cap="Diagram of our semi-discrete consumer-resource model. Solid lines show continuous dynamics while dashed lines show the discrete transitions.", cache=FALSE, results='hide', fig.width=4, fig.height=6}
+```{r figure_1, dependson="plot-options", fig.cap="Diagram of our semi-discrete consumer-resource model. Solid lines show continuous dynamics while dashed lines show the discrete transitions.", cache=FALSE, results='hide', fig.width=4, fig.height=6, eval=FALSE}
 library(png)
 library(grid)
 img <- readPNG("ConceptFig.png")
@@ -123,9 +123,10 @@ $g$ & dormant-to-live biomass transition fraction \\
 ### Implementing the storage effect
 To make this a ``storage-effect" model, we need to satisfy three conditions: (1) the organisms must have a mechanism for persistence under unfavorable conditions, (2) species must respond differently to environmental conditions, and (3) the effects of competition on a species must be more strongly negative in good years relative to unfavorable years. Our model meets condition 1 because we include a dormant stage with very low death rates. We satisfy condition 2 with our model whenever $g$ is not perfectly correlated between species. Lastly, our model meets condition 3 because condition 2 partitions intraspecific and interspecific competition into different years. Thus, during a high $g$ year for one species, resource uptake is also inherently high for that species, which increases intraspecific competition relative to interspecific competition. So, given adequate variability in $g$, the inferior competitor (species with lower $r$) can persist. 
 
-Following @Adler2008, we generated sequences of (un)correlated dormant-to-live state transition rates ($g$) for each species by drawing from multivariate normal distributions with mean 0 and a variance-covariance matrix of
+Following @Adler2008, we generated sequences of (un)correlated dormant-to-live state transition rates ($g$) for each species by drawing from multivariate normal distributions with mean 0 and a variance-covariance matrix ($\Sigma_g$) of
 
 \begin{align}
+\Sigma_g = 
 \begin{bmatrix}
 \sigma^2_{E} & \rho\sigma^2_{E} \\
 \rho\sigma^2_{E} & \sigma^2_{E}
