@@ -29,7 +29,7 @@ Rmu <- 2                            # mean resource pulse (on log scale)
 Rsd_annual <- 0.1                     # std dev of annual mean resource level
 Rsd <- 1                            # std dev of resource pulses (on log scale)
 sigE <- 2                           # environmental cue variability
-rho <- -1                            # environmental cue correlation between species
+rho <- 0                            # environmental cue correlation between species
 parms <- list(
   r = c(5,5),                     # max growth rate for each species
   alpha = c(5,5),                 # rate parameter for Hill function 
@@ -47,6 +47,7 @@ library('mvtnorm')
 library('plyr')
 library('ggplot2')
 library('gridExtra')
+library('synchrony')
 
 
 ####
@@ -164,6 +165,5 @@ matplot(mean_of_season$season, mean_of_season[,c("mean_N1","mean_N2")],
         col=c("violet", "grey35"), lty=c(2,2), lwd=c(2,2))
 lines(mean_of_season$season, seasonal_total, lwd=3, lty=1)
 
-
-
-
+asynch <- 1 - as.numeric(community.sync(mean_of_season[,c("mean_N1","mean_N2")])[1])
+asynch
