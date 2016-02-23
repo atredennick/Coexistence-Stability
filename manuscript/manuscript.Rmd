@@ -136,7 +136,7 @@ At the beginning of each season we start with initial conditions defined as $V_{
   W_{i,t+1} &= [N_{i}(T^-)+D_{i}(T^-)]g_{t} \\
   Z_{t+1} &= R(T^-) + R(T^+)
 \end{align}
-\noindent where $D(T^-)$, $N(T^-)$, and $R(T^-)$ are the densities of each state at the end of the year and $g$ is a time-fluctuating activation rate that regulates how much dormant biomass is converted to growing-season live biomass each year. $R(T^+)$ is a randomly generated resource pulse from a log-normal distribution with mean $\mu_{R}$ and standard deviation $\sigma_{R}$. Our formulation assumes that at the end of each season all accumulated living biomass [$N(T^-)$] is converted to dormant biomass.
+\noindent where $D(T^-)$, $N(T^-)$, and $R(T^-)$ are the densities of each state at the end of the year and $g$ is a time-fluctuating activation rate that regulates how much dormant biomass is converted to growing-season live biomass each year. $R(T^+)$ is a randomly generated resource pulse from a log-normal distribution with mean $R_\mu$ and variance $R_{\sigma^2}$ (same mean and variance used to generate daily pulses). Our formulation assumes that at the end of each season all accumulated living biomass [$N(T^-)$] is converted to dormant biomass.
 
 \begin{center}
 \begin{table}
@@ -153,11 +153,11 @@ $b$ & live state maximum resource uptake rate (constant) \\
 $m_{N}$ & live state mortality rate (constant) \\
 $a$ & allocation fraction of live biomass to seed bank (constant) \\
 $g$ & dormant-to-live biomass transition fraction (variable) \\ 
-$\rho$ & correlation of species' environmental responses (constant) \\
+$\rho$ & correlation of species' responses transition cue (constant) \\
+$\sigma^2_{E}$ & variance of transition cue (constant) \\
 $r$ & daily resource supply pulse (variable) \\
 $R_{\mu}$ & mean resource pulse, on log scale (constant) \\
-$R_{\sigma^2}^T$ & variance of annual initial resource supply, on log scale (constant) \\
-$R_{\sigma^2}^{\tau}$ & variance of daily resource supply, on log scale (constant) \\
+$R_{\sigma^2}$ & variance of daily resource supply, on log scale (constant) \\
 
 \hline
 \end{tabular}
@@ -180,7 +180,15 @@ Following @Adler2008, we generated sequences of (un)correlated dormant-to-live s
 \noindent where $\sigma^2_{E}$ is the variance and $\rho$ is the correlation between between the two species' transition rates. For environmental variability, here induced as variability in $g$, to promote coexistence via the storage effect, $\rho$ must be less than 1. The inferior competitor has the strongest potential to persist when $\rho=-1$ (perfectly uncorrelated transition rates). 
 
 ### Implementing Relative Nonlinearity
-When considering consumer-resource dynamics, species coexistence by relative nonlinearity requires that each species has different nonlinear responses to resource availability, and resource availability must fluctuate through time. In a constant resource environment, the species with the lowest R* will always exclude the other species. So we can compare this model to the storage effect model, we still allow the germination rate \emph{g} to vary, but both species are perfectly correlate -- that is, $\rho=1$.  
+When considering consumer-resource dynamics, species coexistence by relative nonlinearity requires that each species has different nonlinear responses to resource availability, and resource availability must fluctuate through time. In a constant resource environment, the species with the lowest R* will always exclude the other species. So we can compare this model to the storage effect model, we still allow the germination rate \emph{g} to vary, but both species are perfectly correlate -- that is, $\rho=1$. 
+
+### Model Simulations
+For each coexistence mechanism (storage effect, relative nonlinearity), we ran model simulations at different levels of resource variance ($R_{\sigma^2}$), environmental cue variance ($\sigma_E$), and correlation of species responses to the environmental cue ($\rho$). 
+We ran simulations for 2,000 'years' with 60 day growing seasons. 
+After discarding an initial 100 years to reduce transient effects on our results, we calculated the stability of summed species biomass through time and species synchrony through time.
+For storage effect simulations, species were equivalent in their ability to capture and assimilate the resource (*R*) but had different, depending on $\rho$, germination rates.
+For relative nonlinearity simulations, species had equivalent germination rates ($\rho = 1$) but different resource acquisition functions (Fig. X).
+We explored a limited set of parameter space where the storage effect and relative nonlinearity were operating simultaneously.
 
 Results
 -------
@@ -191,6 +199,8 @@ Discussion
 
 
 \pagebreak{}
+
+\setlength{\parindent}{0ex}
 
 References
 ----------
