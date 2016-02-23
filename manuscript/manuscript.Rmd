@@ -72,6 +72,8 @@ Blah, blah, blah...
 
 \hrulefill 
 
+\setlength{\parindent}{5ex}
+
 Introduction
 ------------
 Species-specific responses to non-constant environmental conditions can stabilize species coexistence [@Chesson2000] and ecosystem function [@Loreau2010].
@@ -81,7 +83,7 @@ Despite rapid theoretical developments in the fields of species coexistence and 
 This is especially surprising since stable coexistece, however maintained, is a preqrequisite for biodiversity to confer stability of ecosystem function in the long term.
 
 Among the dizzying array of mechanisms that can maintain diversity, @Chesson2000 formalized two broad classes: fluctuation-independent and fluctuation-dependent mechanisms.
-Both classes of mechanisms rely on niche differences being greater than relative fitness differences for all species pairs in a community [@Adler2007a].
+Both classes of mechanisms rely on niche differences being greater than relative fitness differences for all species pairs in a community [@Chesson2000; @Adler2007a].
 In a fluctuation-independent case, species coexistence can be maintained by resource partitioning so long as each species is limited by a different resource [@Tilman1982].
 Much of the theoretical literature aimed at deciphering the mechanisms behind the diversity-stability relationship implicitly assumes fluctuation-independent coexistence.
 For example, Lotka-Volterra models have been widely used and include coexistence by keeping competition coefficients less than one [e.g., @Loreau2013].
@@ -91,7 +93,14 @@ There are two ways that species coexist in temporally fluctuating environments.
 First, there is the storage effect, where species coexistence is stable if the following three conditions are met: (i) have unique responses to environmental conditions, (ii) have some way to persist in unfavorable years, and (iii) the effects of competition must be greater in 'good' years relative to 'bad' years [@Chesson2000].
 Second, there is relative nonlinearity, where species have unique, nonlinear responses to a shared resource that fluctuates through time [@Chesson2000].
 
-Is the stability of coexistence related to the stability of ecosystem function through time?
+Both the storage effect and relative nonlinearity require that species have unique responses to environmental conditions.
+Not only do such species-specific responses stabilize coexistence, they can also stabilize ecosystem function by creating compensatory dynamics.
+All else being equal, ecosystem stability is highest when species responses to the environment are perfectly uncorrelated.
+Under the storage effect, uncorrelated species responses to the environment also results in the most stable conditions for coexistence.
+It stands to reason, then, that the strength of the storage effect should predict the degree to which species asynchrony stabilizes ecosystem function.
+However, the exact relationship between storage effect strength and ecosystem stability could take many, unknown, forms.
+
+Unlike the potential interaction between the storage effect and ecosystem stability, how relative nonlinearity might interact with ecosystem stability is less clear.
 
 
 Model and Analysis
@@ -113,7 +122,7 @@ We start with a general consumer-resource model where the consumer can be in one
 \frac{\text{d}R}{\text{d}\tau} &= r_{\tau} - \sum\limits_{i=1,2}f_{i}(R)N_{i}
 \end{align}
 
-where $i$ denotes species, $D$ is the dormant (long-lived) biomass state, $N$ is the living biomass (fast-growing, shorter-lived) state, *a* is fraction of life biomass allocated to seed production, and *m* is the biomass loss rate. The growth rate of living biomass is a resource-dependent Hill function, $f_{i}(R) = b_{i}R^{\alpha_{i}} / (\beta_{i}^{\alpha_{i}}+R^{\alpha_{i}})$, where *b* is a species' intrinsic growth rate and $\alpha$ and $\beta$ define the curvature of the function. The single resource *R* is replenished with daily pulse, $r_{\tau}$, randomly drawn from a log normal distribution: $r_{\tau} = \text{LogNormal}(R_\mu, R_\sigma)$. Resource depletion is equal to the sum of each species' consumption, $\sum_{i=1,2}f_{i}(R)N_{i}$. 
+\noindent where $i$ denotes species, $D$ is the dormant (long-lived) biomass state, $N$ is the living biomass (fast-growing, shorter-lived) state, *a* is fraction of life biomass allocated to seed production, and *m* is the biomass loss rate. The growth rate of living biomass is a resource-dependent Hill function, $f_{i}(R) = b_{i}R^{\alpha_{i}} / (\beta_{i}^{\alpha_{i}}+R^{\alpha_{i}})$, where *b* is a species' intrinsic growth rate and $\alpha$ and $\beta$ define the curvature of the function. The single resource *R* is replenished with daily pulse, $r_{\tau}$, randomly drawn from a log normal distribution: $r_{\tau} = \text{LogNormal}(R_\mu, R_\sigma)$. Resource depletion is equal to the sum of each species' consumption, $\sum_{i=1,2}f_{i}(R)N_{i}$. 
 
 At the beginning of each season we start with initial conditions defined as $V_{t}$, $W_{t}$, and $Z_{t}$ for the dormant state, the live state, and the resource, respectively. So for each season, Eqs. 1-3 are solved given the initial conditions:
 \begin{align}
@@ -121,28 +130,35 @@ At the beginning of each season we start with initial conditions defined as $V_{
   N_{i}(0) &= W_{i,t} \\
   R(0) &= Z_{t}
 \end{align}
-The consumers transition between $N$ and $D$ instantaneously between years. We assume resource density does not change between years. So, at the yearly transition:
+\noindent The consumers transition between $N$ and $D$ instantaneously between years. We assume resource density does not change between years. So, at the yearly transition:
 \begin{align}
   V_{i,t+1} &= [N_{i}(T^-)+D_{i}(T^-)](1-g_{t}) \\
   W_{i,t+1} &= [N_{i}(T^-)+D_{i}(T^-)]g_{t} \\
   Z_{t+1} &= R(T^-) + R(T^+)
 \end{align}
-where $D(T^-)$, $N(T^-)$, and $R(T^-)$ are the densities of each state at the end of the year and $g$ is a time-fluctuating activation rate that regulates how much dormant biomass is converted to growing-season live biomass each year. $R(T^+)$ is a randomly generated resource pulse from a log-normal distribution with mean $\mu_{R}$ and standard deviation $\sigma_{R}$. Our formulation assumes that at the end of each season all accumulated living biomass [$N(T^-)$] is converted to dormant biomass.
+\noindent where $D(T^-)$, $N(T^-)$, and $R(T^-)$ are the densities of each state at the end of the year and $g$ is a time-fluctuating activation rate that regulates how much dormant biomass is converted to growing-season live biomass each year. $R(T^+)$ is a randomly generated resource pulse from a log-normal distribution with mean $\mu_{R}$ and standard deviation $\sigma_{R}$. Our formulation assumes that at the end of each season all accumulated living biomass [$N(T^-)$] is converted to dormant biomass.
 
 \begin{center}
 \begin{table}
-\caption{Definition of model parameters.}
+\caption{Definition of model states and parameters. `Constant' parameters do not fluctuate during a simulation, while `variable' parameters do fluctuate through time in a given simulation.}
 \begin{tabular}{l l}
 \hline
 Parameter & Definition \\
 \hline
-$m_{D}$ & dormant state mortality rate \\
-$r$ & live state maximum resource uptake rate \\
-$K$ & live state half-saturation constant for resource uptake rate \\
-$m_{N}$ & live state mortality rate \\
-$a$ & resource turnover rate \\
-$S$ & resource supply rate \\
-$g$ & dormant-to-live biomass transition fraction \\ 
+$N$ & live biomass \\
+$D$ & dormant biomass \\
+$R$ & resource supply \\
+$m_{D}$ & dormant state mortality rate (constant) \\
+$b$ & live state maximum resource uptake rate (constant) \\
+$m_{N}$ & live state mortality rate (constant) \\
+$a$ & allocation fraction of live biomass to seed bank (constant) \\
+$g$ & dormant-to-live biomass transition fraction (variable) \\ 
+$\rho$ & correlation of species' environmental responses (constant) \\
+$r$ & daily resource supply pulse (variable) \\
+$R_{\mu}$ & mean resource pulse, on log scale (constant) \\
+$R_{\sigma^2}^T$ & variance of annual initial resource supply, on log scale (constant) \\
+$R_{\sigma^2}^{\tau}$ & variance of daily resource supply, on log scale (constant) \\
+
 \hline
 \end{tabular}
 \end{table}
@@ -161,7 +177,7 @@ Following @Adler2008, we generated sequences of (un)correlated dormant-to-live s
 \end{bmatrix}
 \end{align}
 
-\noindent{}where $\sigma^2_{E}$ is the variance and $\rho$ is the correlation between between the two species' transition rates. For environmental variability, here induced as variability in $g$, to promote coexistence via the storage effect, $\rho$ must be less than 1. The inferior competitor has the strongest potential to persist when $\rho=-1$ (perfectly uncorrelated transition rates). 
+\noindent where $\sigma^2_{E}$ is the variance and $\rho$ is the correlation between between the two species' transition rates. For environmental variability, here induced as variability in $g$, to promote coexistence via the storage effect, $\rho$ must be less than 1. The inferior competitor has the strongest potential to persist when $\rho=-1$ (perfectly uncorrelated transition rates). 
 
 ### Implementing Relative Nonlinearity
 When considering consumer-resource dynamics, species coexistence by relative nonlinearity requires that each species has different nonlinear responses to resource availability, and resource availability must fluctuate through time. In a constant resource environment, the species with the lowest R* will always exclude the other species. So we can compare this model to the storage effect model, we still allow the germination rate \emph{g} to vary, but both species are perfectly correlate -- that is, $\rho=1$.  
