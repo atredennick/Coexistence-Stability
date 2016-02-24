@@ -139,7 +139,7 @@ strg_results_fig <- grid.arrange(sync.strg, stab.strg, mu.strg, sd.strg, ncol=2,
 print(strg_results_fig)
 dev.off()
 
-
+strg_stability <- stability
 
 ####
 ####  RELATIVE NONLINEARITY PLOTS
@@ -240,7 +240,28 @@ strg_results_fig <- grid.arrange(sync.strg, stab.strg, mu.strg, sd.strg, ncol=2,
 print(strg_results_fig)
 dev.off()
 
+relnonlin_stability <- stability
 
 
+####
+####  COMPARE CV UNDER EACH COEXISTENCE MECHANISM
+####
+relnonlin_stability <- data.frame(rho = rep(pretty(seq(-1, 1, length.out=11), 11), each=11),
+                                  rsd = rep(relnonlin_stability$rsd, times=11),
+                                  simnum = strg_stability$simnum,
+                                  stable = rep(relnonlin_stability$stable, times=11))
+relnonlin_stability$type <- "relnon"
+strg_stability$type <- "storage"
+combo_stability <- rbind(relnonlin_stability, strg_stability[,c("rho", "rsd", "simnum", "stable", "type")])
+# wide_stability <- dcast(combo_stability, rho+rsd~type, value.var = "stable")
+ggplot(data=combo_stability, aes(x=rsd, y=stable, color=type))+
+  geom_point()+
+  geom_line()+
+  facet_wrap("rho")+
+  xlab(bquote(sigma[R]))+
+  ylab("CV of Total Community Biomass")+
+  scale_color_manual(values=c("red", "black"), labels=c("Relative Nonlinearity", "Storage Effect"), name="")+
+  theme_few()+
+  theme(axis.text.x=element_text(angle=45, hjust=1))
 
 
