@@ -180,7 +180,17 @@ library(ggplot2)
 library(ggthemes)
 library(mvtnorm)
 library(gridExtra)
-source("../modelCode/semi_discrete_consumer_resource_fxns.R")
+ ##  Resource uptake function (Hill function)
+  uptake_R <- function(r, R, alpha, beta){
+    return((r*R^alpha) / (beta^alpha + R^alpha))
+  }
+  # Get "germination" fractions for each year
+  getG <- function(sigE, rho, nTime){
+    varcov <- matrix(c(sigE, rho*sigE, rho*sigE, sigE), 2, 2)
+    e <- rmvnorm(n = nTime, mean = c(0,0), sigma = varcov)
+    g <- exp(e) / (1+exp(e))
+    return(g)
+  }
 
 ## STORAGE EFFECT PLOTS
 parms <- list(
@@ -292,7 +302,15 @@ Within-season dynamics were solved given initial conditions using the package 'd
 
 Results
 -------
+Stable coexistence and stable biomass production were positively correlated (rank correlation = #) when species coexistence was maintained by the storage effect.
+Species asynchrony decreased as correlations among species' responses to the environmental cue increased (fig. 2a) and the coefficient of variation of total biomass increased (fig. 2b).
+These relationships were unaffected by the variance of the resource, but asynchrony and the coefficient of variation of total biomass were always higher at higher levels of resource variability (fig. 2a-b).
 
+\begin{figure}[!ht]
+  \centering
+      \includegraphics{./components/storage_effect_synchstability}
+  \caption{Results from storage effect simulations.}
+\end{figure}
 
 Discussion
 ----------

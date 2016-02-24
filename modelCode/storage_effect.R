@@ -27,7 +27,7 @@ days_to_track <- 60               # number of days to simulate in odSolve
 DNR <- c(D=c(1,1),N=c(1,1),R=10)    # initial conditions
 Rmu <- 2                            # mean resource pulse (on log scale)
 Rsd_annual <- 0.1                     # std dev of annual mean resource level
-Rsd <- 1                            # std dev of resource pulses (on log scale)
+Rsd <- 0.1                            # std dev of resource pulses (on log scale)
 sigE <- 2                           # environmental cue variability
 rho <- 0                            # environmental cue correlation between species
 parms <- list(
@@ -167,3 +167,4 @@ lines(mean_of_season$season, seasonal_total, lwd=3, lty=1)
 
 asynch <- 1 - as.numeric(community.sync(mean_of_season[,c("mean_N1","mean_N2")])[1])
 asynch
+mean(seasonal_total)/sd(seasonal_total)
