@@ -13,10 +13,11 @@
 ####
 
 rm(list=ls())                    # Erase the memory
-fxnfile <- "semi_discrete_consumer_resource_fxns.R"
+fxnfile <- "storage_effect_fxns.R"
 source(fxnfile)                  # Load the name function for the simulations
 require(parallel)                # Load the parallel package, to run the simulations in parallel.
-
+library(deSolve)
+library(mvtnorm)
 
 nbcores <- 4 # Set number of cores to match machine
 set.seed(123456789)
@@ -33,7 +34,3 @@ prm <- storage_effect_varvars
 strg_outs <- mclapply(seq_len(nrow(prm)), function(i) do.call(simStorageModel, prm[i,]), mc.cores=nbcores)
 saveRDS(strg_outs, "../simulationResults/storage_effect_sims.RDS")
 
-
-####
-####  RELATIVE NONLINEARITY
-####

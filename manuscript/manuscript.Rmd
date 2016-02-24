@@ -24,17 +24,19 @@ urlcolor: black
 
 \textbf{\large{How Fluctuation-Dependent Coexistence Mechanisms Affect the Temporal Stability of Ecosystem Function}}
 
-\end{centering}
+
 
 \vspace{2.5em}
 
 \renewcommand*{\thefootnote}{\fnsymbol{footnote}}
 
-**Andrew T. Tredennick\textsuperscript{1,}\footnote{Corresponding author; email: atredenn@gmail.com}, Peter B. Adler\textsuperscript{1}, and Frederick R. Adler\textsuperscript{2}**
+Andrew T. Tredennick\textsuperscript{1,}\footnote{Corresponding author; email: atredenn@gmail.com}, Peter B. Adler\textsuperscript{1}, and Frederick R. Adler\textsuperscript{2}
 
 \vspace{1.5em}
 
 \textit{\small{\textsuperscript{1}Department of Wildland Resources and the Ecology Center, Utah State University, Logan, Utah 84322}}; \textit{\small{\textsuperscript{2}Departments of Biology and Mathematics, University of Utah, Salt Lake City, Utah}} 
+
+\end{centering}
 
 ```{r caching, include=FALSE}
 library("methods")
@@ -59,18 +61,20 @@ opts_chunk$set(dev='pdf', dev.args=c(version="1.3"))
 
 ```
 
-\hrulefill 
+\begin{abstract}
 
-ABSTRACT: For biodiversity to increase the temporal stability of ecosystem function in the long-term, coexistence must be stable.
+For biodiversity to increase the temporal stability of ecosystem function in the long-term, coexistence must be stable.
 Species-specific respones to environmental variation through time is key to understanding fluctuation-dependent coexistence mechanisms and how asynchrony in species dynamics can arise to stabilize ecosystem function.
 Despite the shared dependence on environmental fluctuations, theory on species coexistence and the relationship between species richness and ecosystem stability have developed independently.
 To formally link the two bodies of theory, we use consumer-resource models where coexistence between two species utilizing a single resource is maintained by two fluctuation-dependent mechanisms: the storage effect and relative nonlinearity.
 We examine how the strength of species coexistence relates to the temporal stability of aggregate ecosystem function and how the effect of environmental variability on stability is mediated by the mechanism of coexistence.
 Blah, blah, blah...
 
-*Keywords*: coexistence, storage effect, relative nonlinearity, diversity-stability hypothesis, pulsed differential equation, consumer-resource dynamics, synchrony
+\vspace{2em}
 
-\hrulefill 
+\noindent \textit{Keywords}: coexistence, storage effect, relative nonlinearity, diversity-stability hypothesis, pulsed differential equation, consumer-resource dynamics, synchrony
+
+\end{abstract}
 
 \setlength{\parindent}{5ex}
 
@@ -302,14 +306,20 @@ Within-season dynamics were solved given initial conditions using the package 'd
 
 Results
 -------
-Stable coexistence and stable biomass production were positively correlated (rank correlation = #) when species coexistence was maintained by the storage effect.
+The stability of coexistence ($1-\rho$) and the coefficient of variation of total biomass were negatively correlated (rank correlation = -0.19) when species coexistence was maintained by the storage effect.
 Species asynchrony decreased as correlations among species' responses to the environmental cue increased (fig. 2a) and the coefficient of variation of total biomass increased (fig. 2b).
 These relationships were unaffected by the variance of the resource, but asynchrony and the coefficient of variation of total biomass were always higher at higher levels of resource variability (fig. 2a-b).
 
 \begin{figure}[!ht]
   \centering
-      \includegraphics{./components/storage_effect_synchstability}
-  \caption{Results from storage effect simulations.}
+      \includegraphics{./components/storage_effect_synchstability.png}
+  \caption{Results from storage effect simulations showing the relationships between the correlation of species' responses to the environmental cue for germination and simulated species asynchrony (\textit{a}), coefficient of variation of total community biomass (\textit{b}), mean total community biomass (\textit{c}), and standard deviation of total community biomass (\textit{d}). Color ramps indicate the value of resource variability ($\sigma_R$) for a given simulation.}
+\end{figure}
+
+\begin{figure}[!ht]
+  \centering
+      \includegraphics{./components/relative_nonlinearity_synchstability.png}
+  \caption{Results from relative nonlinearity simulations showing the relationships between tresource variability ($\sigma_R$) and simulated species asynchrony (\textit{a}), coefficient of variation of total community biomass (\textit{b}), mean total community biomass (\textit{c}), and standard deviation of total community biomass (\textit{d}). The correlation of species' responses to the environmental cue for germination was equal to one for all relative nonlinearity simulations ($\rho=1$).}
 \end{figure}
 
 Discussion
