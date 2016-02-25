@@ -22,14 +22,18 @@ library(mvtnorm)
 nbcores <- 4 # Set number of cores to match machine
 set.seed(123456789)
 
-nrho <- 11
+nrho <- 21
 rholist <- rep(1, nrho)
-nsd <- 11
+nsd <- 21
 rsdlist <- pretty(seq(0, 1, length.out=nsd), nsd)
 
 relnonlin_varvars <- expand.grid(rholist,rsdlist)
 names(relnonlin_varvars) <- c("rho", "Rsd")
 prm <- unique(relnonlin_varvars)
 relnon_outs <- mclapply(seq_len(nrow(prm)), function(i) do.call(simRelNonlinModel, prm[i,]), mc.cores=nbcores)
-saveRDS(relnon_outs, "../simulationResults/relative_nonlinearity_sims.RDS")
 
+equil_runs <- sapply(relnon_outs, "[", 1)
+invasion_runs <- sapply(relnon_outs, "[", 2)
+
+saveRDS(equil_runs, "../simulationResults/relative_nonlinearity_sims.RDS")
+saveRDS(invasion_runs, "../simulationResults/relative_nonlinearity_invasion_sims.RDS")

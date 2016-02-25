@@ -148,9 +148,9 @@ strg_stability <- stability
 ####  RELATIVE NONLINEARITY PLOTS
 ####
 # Recreate simulation grid
-nrho <- 11
+nrho <- 21
 rholist <- rep(1, nrho)
-nsd <- 11
+nsd <- 21
 rsdlist <- pretty(seq(0, 1, length.out=nsd), nsd)
 relnonlin_varvars <- expand.grid(rholist,rsdlist)
 names(relnonlin_varvars) <- c("rho", "Rsd")
@@ -244,6 +244,61 @@ print(strg_results_fig)
 dev.off()
 
 relnonlin_stability <- stability
+
+
+
+####
+####  PLOT INVASION GROWTH RATE V. CV OF BIOMASS
+####
+##  Relative Nonlinearity
+# Recreate simulation grid
+nrho <- 21
+rholist <- rep(1, nrho)
+nsd <- 21
+rsdlist <- pretty(seq(0, 1, length.out=nsd), nsd)
+relnonlin_varvars <- expand.grid(rholist,rsdlist)
+names(relnonlin_varvars) <- c("rho", "Rsd")
+relnonlin_varvars <- unique(relnonlin_varvars)
+
+sims <- readRDS(paste0(path2results,"relative_nonlinearity_invasion_sims.RDS"))
+
+#take out first couple seasons
+seasons_to_exclude <- 20
+save_seasons <- data.frame(time=NA, D1=NA, D2=NA, N1=NA, N2=NA, R=NA, Rstart=NA,
+                           season=NA, rho=NA, rsd=NA, simnum=NA)
+for(i in 1:length(sims)){
+  tmp <- sims[[i]]
+  tmp <- tmp[2:nrow(tmp),]
+  tmp$rho <- relnonlin_varvars[i,"rho"]
+  tmp$rsd <- relnonlin_varvars[i,"Rsd"]
+  tmp$simnum <- i
+  save_seasons <- rbind(save_seasons, tmp)
+}
+save_seasons <- save_seasons[2:nrow(save_seasons),]
+
+# Analyze average biomass over the season
+mean_of_season <- ddply(save_seasons, .(season, rho, rsd, simnum), summarise,
+                        mean_N1 = mean(N1),
+                        mean_N2 = mean(N2),
+                        mean_D1 = mean(D1),
+                        mean_D2 = mean(D2))
+invasion_growth_rates <- mean_of_season[,c("season", "rho", "rsd", "mean_N1")]
+invasion_growth_rates$igr <- log(invasion_growth_rates$mean_N1) - log(0.01)
+mean_invasion_growth <- ddply(invasion_growth_rates, .(rho, rsd), summarise,
+                              avg_igr = mean(igr))
+igr_df <- data.frame(strength_coexist = mean_invasion_growth$avg_igr, 
+                     cv_biomass = relnonlin_stability$stable)
+cor(igr_df$strength_coexist, igr_df$cv_biomass, method = "spearman")
+strength_plot <- ggplot(igr_df, aes(x=strength_coexist, y=cv_biomass))+
+  geom_point(size=4)+
+  xlab("Strength of Coexistence")+
+  ylab("CV of Total Community Biomass")+
+  theme_few()
+
+png(paste0(path2figs,"strength_v_cv.png"), width = 5, height = 4, 
+    units="in", res=100)
+print(strength_plot)
+dev.off()
 
 
 ####

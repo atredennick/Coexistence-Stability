@@ -68,7 +68,11 @@ Species-specific respones to environmental variation through time is key to unde
 Despite the shared dependence on environmental fluctuations, theory on species coexistence and the relationship between species richness and ecosystem stability have developed independently.
 To formally link the two bodies of theory, we use consumer-resource models where coexistence between two species utilizing a single resource is maintained by two fluctuation-dependent mechanisms: the storage effect and relative nonlinearity.
 We examine how the strength of species coexistence relates to the temporal stability of aggregate ecosystem function and how the effect of environmental variability on stability is mediated by the mechanism of coexistence.
-Blah, blah, blah...
+When species coexisted via the storage effect, the strength of coexistence, as measured by invasion growth rates, was negatively associated with ecosystem variability (rank correlation = ).
+On the other hand, ecosystem variability and the strength of coexistence were positively associated under relative nonlinearity (rank correlation = 0.67) because the ability of an inferior competitor to persist increases with resource variability.
+Total community biomass was always less variable when species coexisted via the storage effect rather than relative nonlinearity.
+Our analysis confirms the intuitive idea that stable coexistence and stable ecosystems go hand-in-hand, but only for the storage effect.
+However, coexistence by relative nonlinearity is likely to be less common in nature, meaning our results from storage effect simulations may be most relevant to field studies.
 
 \vspace{2em}
 
@@ -313,6 +317,7 @@ When species coexistence was maintained by relative nonlinearity in resource con
 In general, the coefficient of variation of total biomass was lower when species coexistence is maintained by the storage effect compared to relative nonlinearity (fig. 4).
 The variability of total biomass becomes more equal among the two coexistence mechanisms as the correlations among species' responses to the environmental cue become more positive (fig. 4).
 
+<!-- 
 \begin{figure}[!ht]
   \centering
       \includegraphics{./components/storage_effect_synchstability.png}
@@ -323,6 +328,14 @@ The variability of total biomass becomes more equal among the two coexistence me
   \centering
       \includegraphics{./components/relative_nonlinearity_synchstability.png}
   \caption{Results from relative nonlinearity simulations showing the relationships between tresource variability ($\sigma_R$) and simulated species asynchrony (\textit{a}), coefficient of variation of total community biomass (\textit{b}), mean total community biomass (\textit{c}), and standard deviation of total community biomass (\textit{d}). The correlation of species' responses to the environmental cue for germination was equal to one for all relative nonlinearity simulations ($\rho=1$).}
+\end{figure}
+
+-->
+
+\begin{figure}[!ht]
+  \centering
+      \includegraphics[width=3in]{./components/strength_v_cv.png}
+  \caption{Relationship between the strength of coexistence (invasion growth rate of inferior competitor) and ecosystem variability.}
 \end{figure}
 
 \begin{figure}[!ht]
