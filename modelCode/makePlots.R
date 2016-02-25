@@ -81,6 +81,9 @@ syncdf <- data.frame(rho=storage_effect_varvars$rho,
                      rsd=storage_effect_varvars$Rsd,
                      async=1-tmp.sync)
 
+lowcol <- "black"
+highcol <- "grey"
+
 sync.strg <- ggplot()+
   geom_line(data=syncdf, aes(x=rho, y=async, color=rsd, group=as.factor(rsd)))+
   geom_point(data=syncdf, aes(x=rho, y=async, color=rsd, group=as.factor(rsd)),size=2)+
@@ -89,7 +92,7 @@ sync.strg <- ggplot()+
   ylab("Species Asynchrony")+
   # scale_color_continuous(name=bquote(sigma[R]))+
   scale_y_continuous(limits=c(0,1))+
-  scale_colour_gradient(low="black", high="grey", name=bquote(sigma[R]))+
+  scale_colour_gradient(low=lowcol, high=highcol, name=bquote(sigma[R]))+
   geom_text(aes(x=1, y=1, label="a"))
 
 seasonal_total <- ddply(mean_of_season, .(season, rho, rsd, simnum), summarise,
@@ -108,7 +111,7 @@ stab.strg <- ggplot()+
   theme_few()+
   xlab(bquote(rho))+
   ylab("CV of Total Biomass")+
-  scale_colour_gradient(low="black", high="grey", name=bquote(sigma[R]))+
+  scale_colour_gradient(low=lowcol, high=highcol, name=bquote(sigma[R]))+
   scale_y_continuous(limits=c(0,1))+
   geom_text(aes(x=1, y=1, label="b"))
 
@@ -118,7 +121,7 @@ mu.strg <- ggplot()+
   theme_few()+
   xlab(bquote(rho))+
   ylab("Mean Total Biomass")+
-  scale_colour_gradient(low="black", high="grey", name=bquote(sigma[R]))+
+  scale_colour_gradient(low=lowcol, high=highcol, name=bquote(sigma[R]))+
   scale_y_continuous(limits=c(0,100))+
   geom_text(aes(x=1, y=100, label="c"))
 
@@ -128,7 +131,7 @@ sd.strg <- ggplot()+
   theme_few()+
   xlab(bquote(rho))+
   ylab("SD Total Biomass")+
-  scale_colour_gradient(low="black", high="grey", name=bquote(sigma[R]))+
+  scale_colour_gradient(low=lowcol, high=highcol, name=bquote(sigma[R]))+
   scale_y_continuous(limits=c(0,100))+
   geom_text(aes(x=1, y=100, label="d"))
 
@@ -253,15 +256,29 @@ relnonlin_stability <- data.frame(rho = rep(pretty(seq(-1, 1, length.out=11), 11
 relnonlin_stability$type <- "relnon"
 strg_stability$type <- "storage"
 combo_stability <- rbind(relnonlin_stability, strg_stability[,c("rho", "rsd", "simnum", "stable", "type")])
-# wide_stability <- dcast(combo_stability, rho+rsd~type, value.var = "stable")
-ggplot(data=combo_stability, aes(x=rsd, y=stable, color=type))+
+
+mycolors <- c("#9D6188","#97A861")
+compare_plot <- ggplot(data=combo_stability, aes(x=rsd, y=stable, color=type))+
   geom_point()+
   geom_line()+
   facet_wrap("rho")+
   xlab(bquote(sigma[R]))+
   ylab("CV of Total Community Biomass")+
-  scale_color_manual(values=c("red", "black"), labels=c("Relative Nonlinearity", "Storage Effect"), name="")+
+  scale_y_continuous(limits=c(0,1))+
+  scale_color_manual(values=mycolors, labels=c("Relative Nonlinearity", "Storage Effect"), name="")+
   theme_few()+
   theme(axis.text.x=element_text(angle=45, hjust=1))
 
+png(paste0(path2figs,"compare_plots.png"), width = 8.5, height = 5, 
+    units="in", res=100)
+print(compare_plot)
+dev.off()
+
+
+## Plot the difference between coexistence mechanisms
+# wide_stability <- dcast(combo_stability, rho+rsd~type, value.var = "stable")
+# wide_stability$diff <- with(wide_stability, relnon-storage)
+# ggplot(wide_stability, aes(x=rsd, y=diff, color=rho, group=rho))+
+#   # geom_line()+
+#   geom_point()
 

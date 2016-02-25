@@ -322,6 +322,12 @@ These relationships were unaffected by the variance of the resource, but asynchr
   \caption{Results from relative nonlinearity simulations showing the relationships between tresource variability ($\sigma_R$) and simulated species asynchrony (\textit{a}), coefficient of variation of total community biomass (\textit{b}), mean total community biomass (\textit{c}), and standard deviation of total community biomass (\textit{d}). The correlation of species' responses to the environmental cue for germination was equal to one for all relative nonlinearity simulations ($\rho=1$).}
 \end{figure}
 
+\begin{figure}[!ht]
+  \centering
+      \includegraphics{./components/compare_plots.png}
+  \caption{Relationship between resource variability ($\sigma_R$) and the coefficient of variation of total community biomass for both coexistence mechanisms. Each panel shows results from different levels of environmental cue correlations ($\rho$) for the storage effect; $\rho=1$ across all panels for relative nonlinearity results. On average, the storage effect leads to less variable biomass production through time.}
+\end{figure}
+
 Discussion
 ----------
 
