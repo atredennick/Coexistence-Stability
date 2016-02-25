@@ -309,6 +309,9 @@ Results
 The stability of coexistence ($1-\rho$) and the coefficient of variation of total biomass were negatively correlated (rank correlation = -0.19) when species coexistence was maintained by the storage effect.
 Species asynchrony decreased as correlations among species' responses to the environmental cue increased (fig. 2a) and the coefficient of variation of total biomass increased (fig. 2b).
 These relationships were unaffected by the variance of the resource, but asynchrony and the coefficient of variation of total biomass were always higher at higher levels of resource variability (fig. 2a-b).
+When species coexistence was maintained by relative nonlinearity in resource consumption, species asynchrony did not vary with resource variability (fig. 3a), but the coefficient of total biomass, mean total biomass, and the standard deviation of total biomass all increased nonlinearly as resource variability increased (fig. 3b-d).
+In general, the coefficient of variation of total biomass was lower when species coexistence is maintained by the storage effect compared to relative nonlinearity (fig. 4).
+The variability of total biomass becomes more equal among the two coexistence mechanisms as the correlations among species' responses to the environmental cue become more positive (fig. 4).
 
 \begin{figure}[!ht]
   \centering
