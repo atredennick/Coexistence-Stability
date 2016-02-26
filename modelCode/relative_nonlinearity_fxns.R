@@ -126,7 +126,7 @@ simRelNonlinModel <- function(rho, Rsd){
   
   
   ### INVASION SIMULATIONS
-  equil_abund_superior <- mean(save_seasons$N1, na.rm = TRUE)
+  equil_abund_superior <- mean(save_seasons$N2, na.rm = TRUE)
   DNR <- c(D=c(1,1),N=c(0.01, equil_abund_superior), R=10)    # initial conditions
   invade_seasons <- data.frame(time=NA,D1=NA,D2=NA,N1=NA,N2=NA,R=NA,Rstart=NA,season=NA)
   for(season_now in 1:seasons){

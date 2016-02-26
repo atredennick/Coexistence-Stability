@@ -286,9 +286,47 @@ invasion_growth_rates <- mean_of_season[,c("season", "rho", "rsd", "mean_N1")]
 invasion_growth_rates$igr <- log(invasion_growth_rates$mean_N1) - log(0.01)
 mean_invasion_growth <- ddply(invasion_growth_rates, .(rho, rsd), summarise,
                               avg_igr = mean(igr))
-igr_df <- data.frame(strength_coexist = mean_invasion_growth$avg_igr, 
+igr_df_rel <- data.frame(strength_coexist = mean_invasion_growth$avg_igr, 
                      cv_biomass = relnonlin_stability$stable)
-cor(igr_df$strength_coexist, igr_df$cv_biomass, method = "spearman")
+cor(igr_df_rel$strength_coexist, igr_df_rel$cv_biomass, method = "spearman")
+
+##  Storage Effect
+sims <- readRDS(paste0(path2results,"storage_effect_invasion_sims.RDS"))
+
+#take out first couple seasons
+seasons_to_exclude <- 20
+save_seasons <- data.frame(time=NA, D1=NA, D2=NA, N1=NA, N2=NA, R=NA, Rstart=NA,
+                           season=NA, rho=NA, rsd=NA, simnum=NA)
+for(i in 1:length(sims)){
+  tmp <- sims[[i]]
+  tmp <- tmp[2:nrow(tmp),]
+  tmp$rho <- storage_effect_varvars[i,"rho"]
+  tmp$rsd <- storage_effect_varvars[i,"Rsd"]
+  tmp$simnum <- i
+  save_seasons <- rbind(save_seasons, tmp)
+}
+save_seasons <- save_seasons[2:nrow(save_seasons),]
+
+# Analyze average biomass over the season
+mean_of_season <- ddply(save_seasons, .(season, rho, rsd, simnum), summarise,
+                        mean_N1 = mean(N1),
+                        mean_N2 = mean(N2),
+                        mean_D1 = mean(D1),
+                        mean_D2 = mean(D2))
+invasion_growth_rates <- mean_of_season[,c("season", "rho", "rsd", "mean_N2")]
+invasion_growth_rates$igr <- log(invasion_growth_rates$mean_N2) - log(0.01)
+mean_invasion_growth <- ddply(invasion_growth_rates, .(rho, rsd), summarise,
+                              avg_igr = mean(igr))
+igr_df_strg <- data.frame(strength_coexist = mean_invasion_growth$avg_igr, 
+                          cv_biomass = strg_stability$stable,
+                          rho = strg_stability$rho,
+                          rsd = strg_stability$rsd)
+cor(igr_df_strg$strength_coexist, igr_df_strg$cv_biomass, method = "spearman")
+
+igr_df_strg <- igr_df_strg[-55,]
+ggplot(igr_df_strg, aes(x=strength_coexist, y=cv_biomass, color=rho))+
+  geom_point()
+
 strength_plot <- ggplot(igr_df, aes(x=strength_coexist, y=cv_biomass))+
   geom_point(size=4)+
   xlab("Strength of Coexistence")+

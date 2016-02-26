@@ -22,7 +22,7 @@ simStorageModel <- function(rho, Rsd){
   sigE <- 2                           # environmental cue variability
   rho <- rho                          # environmental cue correlation between species
   parms <- list(
-    r = c(5,5),                     # max growth rate for each species
+    r = c(5,4.9),                     # max growth rate for each species
     alpha = c(5,5),                 # rate parameter for Hill function 
     beta = c(20,20),                  # shape parameter for Hill function
     mN = c(0.5,0.5),                  # live biomass loss (mortality) rates 
@@ -123,6 +123,35 @@ simStorageModel <- function(rho, Rsd){
     new_season$Rstart <- Rstart
     save_seasons <- rbind(save_seasons, new_season)
   }
-  return(save_seasons)
+ 
+  
+   ### INVASION SIMULATIONS
+  equil_abund_superior <- mean(save_seasons$N1, na.rm = TRUE)
+  DNR <- c(D=c(1,1),N=c(equil_abund_superior, 0.01), R=10)    # initial conditions
+  invade_seasons <- data.frame(time=NA,D1=NA,D2=NA,N1=NA,N2=NA,R=NA,Rstart=NA,season=NA)
+  for(season_now in 1:seasons){
+    eventdat <- data.frame(var = rep("R", days_to_track),
+                           time = 1:days_to_track,
+                           value = pulse_events[season_now,],
+                           method = rep("add", days_to_track))
+    Rstart <- as.list(DNR)$R
+    output <- as.data.frame(ode(y = DNR, times = days, 
+                                func = updateDNR, parms = parms,
+                                events = list(data = eventdat)))
+    
+    DNR <- as.numeric(output[nrow(output),nms])
+    names(DNR) <- nms
+    R_update <- Rvector[season_now]
+    DNR <- update_DNR(season_now, DNR, gVec[season_now,])
+    names(DNR) <- nms
+    DNR["N1"] <- 0.01
+    DNR["N2"] <- equil_abund_superior 
+    new_season <- as.data.frame(output)
+    new_season$season <- season_now
+    new_season$Rstart <- Rstart
+    invade_seasons <- rbind(invade_seasons, new_season)
+  }
+  
+  return(list(save_seasons, invade_seasons))
 } #end simulation
 

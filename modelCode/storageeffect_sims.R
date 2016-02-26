@@ -32,5 +32,10 @@ storage_effect_varvars <- expand.grid(rholist,rsdlist)
 names(storage_effect_varvars) <- c("rho", "Rsd")
 prm <- storage_effect_varvars
 strg_outs <- mclapply(seq_len(nrow(prm)), function(i) do.call(simStorageModel, prm[i,]), mc.cores=nbcores)
-saveRDS(strg_outs, "../simulationResults/storage_effect_sims.RDS")
+
+equil_runs <- sapply(strg_outs, "[", 1)
+invasion_runs <- sapply(strg_outs, "[", 2)
+
+saveRDS(equil_runs, "../simulationResults/storage_effect_sims.RDS")
+saveRDS(invasion_runs, "../simulationResults/storage_effect_invasion_sims.RDS")
 
