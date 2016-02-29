@@ -327,13 +327,22 @@ igr_df_strg <- igr_df_strg[-55,]
 ggplot(igr_df_strg, aes(x=strength_coexist, y=cv_biomass, color=rho))+
   geom_point()
 
-strength_plot <- ggplot(igr_df, aes(x=strength_coexist, y=cv_biomass))+
-  geom_point(size=4)+
-  xlab("Strength of Coexistence")+
-  ylab("CV of Total Community Biomass")+
-  theme_few()
+igr_df_strg <- igr_df_strg[,1:2]
+igr_df_rel$type <- "Relative Nonlinearity"
+igr_df_strg$type <- "Storage Effect"
+igr_df <- rbind(igr_df_strg, igr_df_rel)
 
-png(paste0(path2figs,"strength_v_cv.png"), width = 5, height = 4, 
+mycolors <- c("#9D6188","#97A861")
+strength_plot <- ggplot(igr_df, aes(x=strength_coexist, y=cv_biomass, color=type))+
+  geom_point(size=4, shape=1)+
+  stat_smooth(se=FALSE, method="lm", size=1)+
+  xlab("Strength of Coexistence \n(Invasion Growth Rate)")+
+  ylab("CV of Total Community Biomass")+
+  scale_color_manual(values=mycolors, name="")+
+  theme_few()+
+  theme(legend.position=c(0.25,0.8))
+
+png(paste0(path2figs,"strength_v_cv.png"), width = 4.5, height = 4, 
     units="in", res=100)
 print(strength_plot)
 dev.off()
