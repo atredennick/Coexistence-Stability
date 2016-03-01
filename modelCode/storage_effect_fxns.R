@@ -20,7 +20,7 @@ simStorageModel <- function(rho, Rsd){
   Rmu <- 2                            # mean resource pulse (on log scale)
   Rsd_annual <- Rsd                     # std dev of annual mean resource level
   sigE <- 2                           # environmental cue variability
-  rho <- rho <- 0                          # environmental cue correlation between species
+  rho <- rho                         # environmental cue correlation between species
   parms <- list(
     r = c(5,4.9),                     # max growth rate for each species
     alpha = c(5,5),                 # rate parameter for Hill function 
@@ -128,7 +128,6 @@ simStorageModel <- function(rho, Rsd){
    ### INVASION SIMULATIONS
   equil_abund_superior <- mean(save_seasons$D1, na.rm = TRUE)
   DNR <- c(D=c(equil_abund_superior,1),N=c(1, 1), R=10)    # initial conditions
-  invade_seasons <- data.frame(time=NA,D1=NA,D2=NA,N1=NA,N2=NA,R=NA,Rstart=NA,season=NA)
   inv_results <- list()
   for(season_now in 1:seasons){
     DNR <- update_DNR(season_now, DNR, gVec[season_now,])
@@ -143,13 +142,14 @@ simStorageModel <- function(rho, Rsd){
                                 events = list(data = eventdat)))
     
     DNR <- as.numeric(output[nrow(output),nms])
-    inv_results[[season_now]] <- DNR 
+    inv_results[[season_now]] <- DNR # save next year's initial conditions
     
-    DNR <- c(D=c(equil_abund_superior,1),N=c(1, 1), R=10)    # initial conditions
+    DNR <- c(D=c(equil_abund_superior,1),
+             N=c(1, 1), 
+             R=10) # reset initial conditions
   }
-  mean(sapply(inv_results, "[", 2) / 1) #for testing
   
-  return(list(save_seasons, invade_seasons))
+  return(list(save_seasons, inv_results))
 } #end simulation
 
 
