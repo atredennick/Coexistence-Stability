@@ -182,7 +182,7 @@ Following @Adler2008, we generated sequences of (un)correlated dormant-to-live s
 ### Implementing Relative Nonlinearity
 When considering consumer-resource dynamics, species coexistence by relative nonlinearity requires that each species has different nonlinear responses to resource availability, and resource availability must fluctuate through time. In a constant resource environment, the species with the lowest R* will always exclude the other species. To compare this model to the storage effect model we still allow the germination rate \emph{g} to vary, but both species are perfectly correlated -- that is, $\rho=1$ (fig. 1). 
 
-```{r model_types, cache=FALSE, warning=FALSE, message=FALSE, eval=TRUE, fig.height=4, fig.width=5, fig.cap="Resource uptake functions and example time series of (un)correlated germination fractions for the storage effect (*a,b*) and relative nonlinearity (*c,d*) formulations of the consumer-resource model. The resource uptake functions for both species are equivalent for the storage effect, but their germination fractions are uncorrelated in time. The opposite is true for relative nonlinearity: the two species have unique resource uptake functions, but their germination fractions are perfectly correlated in time."}
+```{r model_types, cache=FALSE, warning=FALSE, message=FALSE, eval=TRUE, fig.height=3, fig.width=4, fig.cap="Resource uptake functions and example time series of (un)correlated germination fractions for the storage effect (*a,b*) and relative nonlinearity (*c,d*) formulations of the consumer-resource model. The resource uptake functions for both species are equivalent for the storage effect, but their germination fractions are uncorrelated in time. The opposite is true for relative nonlinearity: the two species have unique resource uptake functions, but their germination fractions are perfectly correlated in time."}
 library(ggplot2)
 library(ggthemes)
 library(mvtnorm)
@@ -191,8 +191,10 @@ library(gridExtra)
 # mycols <- c("black", "grey")
 mycols <- c("red", "blue")
 
-mytheme <- theme(axis.text=element_text(size=8),
-                 axis.title=element_text(size=10))
+mytheme <- theme(axis.text=element_text(size=6),
+                 axis.title=element_text(size=8),
+                 legend.text=element_text(size=6),
+                 legend.key.size=unit(0.3, "cm"))
 
  ##  Resource uptake function (Hill function)
   uptake_R <- function(r, R, alpha, beta){
@@ -239,9 +241,9 @@ strg_uptake_plot <- ggplot()+
 
 sigE <- 2   # environmental cue variability
 rho <- 0    # environmental cue correlation between species
-gVec <- getG(sigE = sigE, rho = rho, nTime = 50)
-germ_rate <- data.frame(species=rep(c(1:2),each=50),
-                        timestep=rep(c(1:50), times=2),
+gVec <- getG(sigE = sigE, rho = rho, nTime = 20)
+germ_rate <- data.frame(species=rep(c(1:2),each=20),
+                        timestep=rep(c(1:20), times=2),
                         germrate=c(gVec[,1], gVec[,2]))
 strg_germ_plot <- ggplot()+
   geom_line(data=germ_rate,aes(x=timestep, y=germrate, color=as.factor(species), linetype=as.factor(species)))+
@@ -286,9 +288,9 @@ reln_uptake_plot <- ggplot()+
 
 sigE <- 2   # environmental cue variability
 rho <- 1    # environmental cue correlation between species
-gVec <- getG(sigE = sigE, rho = rho, nTime = 50)
-germ_rate <- data.frame(species=rep(c(1:2),each=50),
-                        timestep=rep(c(1:50), times=2),
+gVec <- getG(sigE = sigE, rho = rho, nTime = 20)
+germ_rate <- data.frame(species=rep(c(1:2),each=20),
+                        timestep=rep(c(1:20), times=2),
                         germrate=c(gVec[,1], gVec[,2]))
 reln_germ_plot <- ggplot()+
   geom_line(data=germ_rate,aes(x=timestep, y=germrate, color=as.factor(species), linetype=as.factor(species)))+
