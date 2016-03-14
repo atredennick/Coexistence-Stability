@@ -9,7 +9,7 @@
 ##  Date:   3.27.2015
 
 
-simStorageModel <- function(rho, Rsd){
+simStorageModel <- function(rho, sigE){
 #   cat("## The simulation running is with phi=", rho, "\n")
 #   cat("## and with Rsd=", Rsd, "\n")
   ## Main parameters
@@ -17,9 +17,9 @@ simStorageModel <- function(rho, Rsd){
   seasons_to_exclude <- 10           # initial seasons to exclude from plots
   days_to_track <- 60               # number of days to simulate in odSolve
   DNR <- c(D=c(1,1),N=c(1,1),R=10)    # initial conditions
-  Rmu <- 2                            # mean resource pulse (on log scale)
-  Rsd_annual <- Rsd                     # std dev of annual mean resource level
-  sigE <- 2                           # environmental cue variability
+  Rmu <- 4                            # mean resource pulse (on log scale)
+  Rsd_annual <- Rsd <- 0                   # std dev of annual mean resource level
+  sigE <- sigE                           # environmental cue variability
   rho <- rho                         # environmental cue correlation between species
   parms <- list(
     r = c(5,4.9),                     # max growth rate for each species
@@ -87,6 +87,7 @@ simStorageModel <- function(rho, Rsd){
   # }
   
   Rvector <- rlnorm(seasons, Rmu, Rsd_annual)
+  Rvector[which(Rvector>100)] <- 100
   
   # if(temporal_autocorrelation==TRUE){
   #   if(Rsd != 0){
@@ -101,6 +102,7 @@ simStorageModel <- function(rho, Rsd){
   for(do_season in 1:seasons){
     pulse_events[do_season,] <- rlnorm(days_to_track, log(Rvector[do_season]), Rsd)
   }
+  pulse_events[,] <- 0
   save_seasons <- data.frame(time=NA,D1=NA,D2=NA,N1=NA,N2=NA,R=NA,Rstart=NA,season=NA)
   
   for(season_now in 1:seasons){

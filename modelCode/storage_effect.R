@@ -25,13 +25,13 @@ seasons <- 100                   # number of seasons to simulate
 seasons_to_exclude <- 10           # initial seasons to exclude from plots
 days_to_track <- 60               # number of days to simulate in odSolve
 DNR <- c(D=c(1,1),N=c(1,1),R=10)    # initial conditions
-Rmu <- 2                            # mean resource pulse (on log scale)
-Rsd_annual <- 0.1                     # std dev of annual mean resource level
-Rsd <- 0.1                            # std dev of resource pulses (on log scale)
-sigE <- 2                           # environmental cue variability
-rho <- 0                            # environmental cue correlation between species
+Rmu <- 4                           # mean resource pulse (on log scale)
+Rsd <- 0                   # std dev of annual mean resource level
+Rsd_annual <- Rsd                            # std dev of resource pulses (on log scale)
+sigE <- 4                          # environmental cue variability
+rho <- 0                           # environmental cue correlation between species
 parms <- list(
-  r = c(5,5),                     # max growth rate for each species
+  r = c(5,4.9),                     # max growth rate for each species
   alpha = c(5,5),                 # rate parameter for Hill function 
   beta = c(20,20),                  # shape parameter for Hill function
   mN = c(0.5,0.5),                  # live biomass loss (mortality) rates 
@@ -119,6 +119,7 @@ pulse_events <- matrix(nrow=seasons, ncol=days_to_track)
 for(do_season in 1:seasons){
   pulse_events[do_season,] <- rlnorm(days_to_track, log(Rvector[do_season]), Rsd)
 }
+pulse_events[,] <- 0
 save_seasons <- data.frame(time=NA,D1=NA,D2=NA,N1=NA,N2=NA,R=NA,Rstart=NA,season=NA)
 
 for(season_now in 1:seasons){
@@ -160,7 +161,7 @@ mean_of_season <- ddply(save_seasons, .(season), summarise,
 
 
 seasonal_total <- apply(mean_of_season[,c("mean_N1","mean_N2")], 1, sum)
-matplot(mean_of_season$season, mean_of_season[,c("mean_N1","mean_N2")], 
+matplot(mean_of_season$season[20:100], mean_of_season[20:100,c("mean_N1","mean_N2")], 
         type="l", xlab="season", ylab="abundance", ylim=c(0, max(seasonal_total,na.rm=TRUE)),
         col=c("violet", "grey35"), lty=c(2,2), lwd=c(2,2))
 lines(mean_of_season$season, seasonal_total, lwd=3, lty=1)

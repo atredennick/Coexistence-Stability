@@ -68,8 +68,8 @@ Species-specific respones to environmental variation through time is key to unde
 Despite the shared dependence on environmental fluctuations, theory on species coexistence and the relationship between species richness and ecosystem stability have developed independently.
 To formally link the two bodies of theory, we use consumer-resource models where coexistence between two species utilizing a single resource is maintained by two fluctuation-dependent mechanisms: the storage effect and relative nonlinearity.
 We examine how the strength of species coexistence relates to the temporal stability of aggregate ecosystem function and how the effect of environmental variability on stability is mediated by the mechanism of coexistence.
-When species coexisted via the storage effect, the strength of coexistence, as measured by invasion growth rates, was negatively associated with ecosystem variability (rank correlation = ).
-On the other hand, ecosystem variability and the strength of coexistence were positively associated under relative nonlinearity (rank correlation = 0.67) because the ability of an inferior competitor to persist increases with resource variability.
+When species coexisted via the storage effect, the strength of coexistence, as measured by invasion growth rates, was `blank` associated with ecosystem variability (rank correlation = ).
+On the other hand, ecosystem variability and the strength of coexistence were `blank` associated under relative nonlinearity (rank correlation = ) because the ability of an inferior competitor to persist increases with resource variability.
 Total community biomass was always less variable when species coexisted via the storage effect rather than relative nonlinearity.
 Our analysis confirms the intuitive idea that stable coexistence and stable ecosystems go hand-in-hand, but only for the storage effect.
 However, coexistence by relative nonlinearity is likely to be less common in nature, meaning our results from storage effect simulations may be most relevant to field studies.
@@ -120,10 +120,10 @@ We start with a general consumer-resource model where the consumer can be in one
 \begin{align}
 \frac{\text{d}D_{i}}{\text{d}\tau} &= N_{i}a_{i} - (m_{D,i}D_{i})\\
 \frac{\text{d}N_{i}}{\text{d}\tau} &= N_{i}[f_{i}(R) - m_{N,i} - a_{i}]\\
-\frac{\text{d}R}{\text{d}\tau} &= r_{\tau} - \sum\limits_{i=1,2}f_{i}(R)N_{i}
+\frac{\text{d}R}{\text{d}\tau} &= - \sum\limits_{i=1,2}f_{i}(R)N_{i}
 \end{align}
 
-\noindent where $i$ denotes species, $D$ is the dormant (long-lived) biomass state, $N$ is the living biomass (fast-growing, shorter-lived) state, *a* is fraction of life biomass allocated to seed production, and *m* is the biomass loss rate. The growth rate of living biomass is a resource-dependent Hill function, $f_{i}(R) = b_{i}R^{\alpha_{i}} / (\beta_{i}^{\alpha_{i}}+R^{\alpha_{i}})$, where *b* is a species' intrinsic growth rate and $\alpha$ and $\beta$ define the curvature of the function. The single resource *R* is replenished with daily pulse, $r_{\tau}$, randomly drawn from a log normal distribution: $r_{\tau} = \text{LogNormal}(R_\mu, R_\sigma)$. Resource depletion is equal to the sum of each species' consumption, $\sum_{i=1,2}f_{i}(R)N_{i}$. 
+\noindent where $i$ denotes species, $D$ is the dormant (long-lived) biomass state, $N$ is the living biomass (fast-growing, shorter-lived) state, *a* is fraction of life biomass allocated to seed production, and *m* is the biomass loss rate. The growth rate of living biomass is a resource-dependent Hill function, $f_{i}(R) = b_{i}R^{\alpha_{i}} / (\beta_{i}^{\alpha_{i}}+R^{\alpha_{i}})$, where *b* is a species' intrinsic growth rate and $\alpha$ and $\beta$ define the curvature of the function. Resource depletion is equal to the sum of each species' consumption, $\sum_{i=1,2}f_{i}(R)N_{i}$. 
 
 At the beginning of each season we start with initial conditions defined as $V_{t}$, $W_{t}$, and $Z_{t}$ for the dormant state, the live state, and the resource, respectively. So for each season, eqs. 1-3 are solved given the initial conditions:
 \begin{align}
@@ -156,9 +156,8 @@ $a$ & allocation fraction of live biomass to seed bank (constant) \\
 $g$ & dormant-to-live biomass transition fraction (variable) \\ 
 $\rho$ & correlation of species' responses transition cue (constant) \\
 $\sigma^2_{E}$ & variance of transition cue (constant) \\
-$r$ & daily resource supply pulse (variable) \\
 $R_{\mu}$ & mean resource pulse, on log scale (constant) \\
-$R_{\sigma^2}$ & variance of daily resource supply, on log scale (constant) \\
+$R_{\sigma^2}$ & variance of daily resource supply, on log scale (variable) \\
 
 \hline
 \end{tabular}
@@ -181,13 +180,20 @@ Following @Adler2008, we generated sequences of (un)correlated dormant-to-live s
 \noindent where $\sigma^2_{E}$ is the variance and $\rho$ is the correlation between between the two species' transition rates. For environmental variability, here induced as variability in $g$, to promote coexistence via the storage effect, $\rho$ must be less than 1. The inferior competitor has the strongest potential to persist when $\rho=-1$ (perfectly uncorrelated transition rates). 
 
 ### Implementing Relative Nonlinearity
-When considering consumer-resource dynamics, species coexistence by relative nonlinearity requires that each species has different nonlinear responses to resource availability, and resource availability must fluctuate through time. In a constant resource environment, the species with the lowest R* will always exclude the other species. So we can compare this model to the storage effect model, we still allow the germination rate \emph{g} to vary, but both species are perfectly correlate -- that is, $\rho=1$. 
+When considering consumer-resource dynamics, species coexistence by relative nonlinearity requires that each species has different nonlinear responses to resource availability, and resource availability must fluctuate through time. In a constant resource environment, the species with the lowest R* will always exclude the other species. To compare this model to the storage effect model we still allow the germination rate \emph{g} to vary, but both species are perfectly correlated -- that is, $\rho=1$ (fig. 1). 
 
-```{r model_types, cache=FALSE, warning=FALSE, message=FALSE, eval=TRUE, fig.height=4.5, fig.width=8, fig.cap="Resource uptake functions and example time series of (un)correlated germination fractions for the storage effect (*a,b*) and relative nonlinearity (*c,d*) formulations of the consumer-resource model. The resource uptake functions for both species are equivalent for the storage effect, but their germination fractions are uncorrelated in time. The opposite is true for relative nonlinearity: the two species have unique resource uptake functions, but their germination fractions are perfectly correlated in time."}
+```{r model_types, cache=FALSE, warning=FALSE, message=FALSE, eval=TRUE, fig.height=4, fig.width=5, fig.cap="Resource uptake functions and example time series of (un)correlated germination fractions for the storage effect (*a,b*) and relative nonlinearity (*c,d*) formulations of the consumer-resource model. The resource uptake functions for both species are equivalent for the storage effect, but their germination fractions are uncorrelated in time. The opposite is true for relative nonlinearity: the two species have unique resource uptake functions, but their germination fractions are perfectly correlated in time."}
 library(ggplot2)
 library(ggthemes)
 library(mvtnorm)
 library(gridExtra)
+# mycols <- c("#9D6188","#97A861")
+# mycols <- c("black", "grey")
+mycols <- c("red", "blue")
+
+mytheme <- theme(axis.text=element_text(size=8),
+                 axis.title=element_text(size=10))
+
  ##  Resource uptake function (Hill function)
   uptake_R <- function(r, R, alpha, beta){
     return((r*R^alpha) / (beta^alpha + R^alpha))
@@ -202,7 +208,7 @@ library(gridExtra)
 
 ## STORAGE EFFECT PLOTS
 parms <- list(
-  r = c(5,5),         # max growth rate for each species
+  r = c(5,4.9),         # max growth rate for each species
   alpha = c(5,5),     # rate parameter for Hill function 
   beta = c(20,20),    # shape parameter for Hill function
   mN = c(0.5,0.5),    # live biomass loss (mortality) rates 
@@ -221,15 +227,15 @@ strg_uptake <- data.frame(species=rep(c(1:2), each=nrow(out_r)),
                           resource=rep(R, times=2),
                           uptake=c(out_r[,1], out_r[,2]))
 strg_uptake_plot <- ggplot()+
-  geom_line(data=strg_uptake, aes(x=resource, y=uptake, color=as.factor(species), size=as.factor(species), linetype=as.factor(species)))+
+  geom_line(data=strg_uptake, aes(x=resource, y=uptake, color=as.factor(species), linetype=as.factor(species)))+
   theme_few()+
-  scale_color_manual(values=c("#9D6188","#97A861"), name="Species")+
-  scale_size_manual(values=c(3,1))+
+  scale_color_manual(values=mycols, name="", labels=c("Species A", "Species B"))+
   guides(size=FALSE, linetype=FALSE)+
   xlab("Resource")+
   ylab("Resource Uptake Rate")+
   theme(legend.position=c(0.7,0.35))+
-  geom_text(aes(x=1,y=5,label="a"))
+  geom_text(aes(x=1,y=5, label="a", size=8))+
+  mytheme
 
 sigE <- 2   # environmental cue variability
 rho <- 0    # environmental cue correlation between species
@@ -238,13 +244,14 @@ germ_rate <- data.frame(species=rep(c(1:2),each=50),
                         timestep=rep(c(1:50), times=2),
                         germrate=c(gVec[,1], gVec[,2]))
 strg_germ_plot <- ggplot()+
-  geom_line(data=germ_rate,size=1,aes(x=timestep, y=germrate, color=as.factor(species), linetype=as.factor(species)))+
+  geom_line(data=germ_rate,aes(x=timestep, y=germrate, color=as.factor(species), linetype=as.factor(species)))+
   theme_few()+
-  scale_color_manual(values=c("#9D6188","#97A861"), name="Species")+
+  scale_color_manual(values=mycols, name="Species")+
   guides(size=FALSE, linetype=FALSE, color=FALSE)+
   xlab("Simulation Year")+
   ylab("Germination Fraction")+
-  geom_text(aes(x=1,y=1,label="b"))
+  geom_text(aes(x=1,y=1,label="b", size=8))+
+  mytheme
 
 
 ## RELATIVE NONLINEARITY PLOTS
@@ -268,14 +275,14 @@ reln_uptake <- data.frame(species=rep(c(1:2), each=nrow(out_r)),
                           resource=rep(R, times=2),
                           uptake=c(out_r[,1], out_r[,2]))
 reln_uptake_plot <- ggplot()+
-  geom_line(data=reln_uptake, aes(x=resource, y=uptake, color=as.factor(species), size=as.factor(species), linetype=as.factor(species)))+
+  geom_line(data=reln_uptake, aes(x=resource, y=uptake, color=as.factor(species), linetype=as.factor(species)))+
   theme_few()+
-  scale_color_manual(values=c("#9D6188","#97A861"), name="Species")+
-  scale_size_manual(values=c(1,1))+
+  scale_color_manual(values=mycols, name="Species")+
   guides(size=FALSE, linetype=FALSE, color=FALSE)+
   xlab("Resource")+
   ylab("Resource Uptake Rate")+
-  geom_text(aes(x=1,y=5,label="c"))
+  geom_text(aes(x=1,y=5,label="c", size=8))+
+  mytheme
 
 sigE <- 2   # environmental cue variability
 rho <- 1    # environmental cue correlation between species
@@ -284,14 +291,14 @@ germ_rate <- data.frame(species=rep(c(1:2),each=50),
                         timestep=rep(c(1:50), times=2),
                         germrate=c(gVec[,1], gVec[,2]))
 reln_germ_plot <- ggplot()+
-  geom_line(data=germ_rate,size=1,aes(x=timestep, y=germrate, color=as.factor(species), linetype=as.factor(species), size=as.factor(species)))+
+  geom_line(data=germ_rate,aes(x=timestep, y=germrate, color=as.factor(species), linetype=as.factor(species)))+
   theme_few()+
-  scale_color_manual(values=c("#9D6188","#97A861"), name="Species")+
-  scale_size_manual(values=c(4,1))+
+  scale_color_manual(values=mycols, name="Species")+
   guides(size=FALSE, linetype=FALSE, color=FALSE)+
   xlab("Simulation Year")+
   ylab("Germination Fraction")+
-  geom_text(aes(x=1,y=1,label="d"))
+  geom_text(aes(x=1,y=1,label="d", size=8))+
+  mytheme
 
 g_strg <- grid.arrange(strg_uptake_plot, strg_germ_plot, 
                        reln_uptake_plot, reln_germ_plot,
@@ -300,9 +307,9 @@ g_strg <- grid.arrange(strg_uptake_plot, strg_germ_plot,
 
 ### Model Simulations
 For each coexistence mechanism (storage effect, relative nonlinearity), we ran model simulations at different levels of resource variance ($R_{\sigma^2}$), environmental cue variance ($\sigma_E$), and correlation of species responses to the environmental cue ($\rho$). 
-We ran simulations for 2,000 'years' with 60 day growing seasons. 
+We ran simulations for 100 'seasons' with 60 day growing seasons. 
 We averaged biomass over the growing season.
-After discarding an initial 100 years to reduce transient effects on our results, we calculated the stability of summed species biomass through time and species synchrony through time.
+After discarding an initial 100 seasons to reduce transient effects on our results, we calculated the stability of summed species biomass through time and species synchrony through time.
 For storage effect simulations, species were equivalent in their ability to capture and assimilate the resource (*R*) but had different, depending on $\rho$, germination rates.
 For relative nonlinearity simulations, species had equivalent germination rates ($\rho = 1$) but different resource acquisition functions (fig. 1).
 We explored a limited set of parameter space where the storage effect and relative nonlinearity were operating simultaneously.
@@ -310,12 +317,7 @@ Within-season dynamics were solved given initial conditions using the package 'd
 
 Results
 -------
-The stability of coexistence ($1-\rho$) and the coefficient of variation of total biomass were negatively correlated (rank correlation = -0.19) when species coexistence was maintained by the storage effect.
-Species asynchrony decreased as correlations among species' responses to the environmental cue increased (fig. 2a) and the coefficient of variation of total biomass increased (fig. 2b).
-These relationships were unaffected by the variance of the resource, but asynchrony and the coefficient of variation of total biomass were always higher at higher levels of resource variability (fig. 2a-b).
-When species coexistence was maintained by relative nonlinearity in resource consumption, species asynchrony did not vary with resource variability (fig. 3a), but the coefficient of total biomass, mean total biomass, and the standard deviation of total biomass all increased nonlinearly as resource variability increased (fig. 3b-d).
-In general, the coefficient of variation of total biomass was lower when species coexistence is maintained by the storage effect compared to relative nonlinearity (fig. 4).
-The variability of total biomass becomes more equal among the two coexistence mechanisms as the correlations among species' responses to the environmental cue become more positive (fig. 4).
+
 
 <!-- 
 \begin{figure}[!ht]

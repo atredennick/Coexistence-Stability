@@ -296,21 +296,27 @@ rholist <- pretty(seq(-1, 1, length.out=nrho), nrho)
 nsd <- 11
 rsdlist <- pretty(seq(0, 1, length.out=nsd), nsd)
 storage_effect_varvars <- expand.grid(rholist,rsdlist)
-names(storage_effect_varvars) <- c("rho", "Rsd")
+names(storage_effect_varvars) <- c("rho", "sigE")
 prm <- storage_effect_varvars
 sims <- readRDS(paste0(path2results,"storage_effect_invasion_sims.RDS"))
 
 #get D1 growth rate
-out_rinv_strg <- data.frame(rho=NA, rsd=NA, growth_rate=NA)
+out_rinv_strg <- data.frame(rho=NA, sigE=NA, growth_rate=NA)
 for(i in 1:nrow(prm)){
   tmp <- sims[[i]]
   tmpD2 <- sapply(tmp, "[", 2)
   tmpr <- tmpD2 / 1
   meantmpr <- log(mean(tmpr))
-  tmpdf <- data.frame(rho=prm[i,"rho"], rsd=prm[i,"Rsd"], growth_rate=meantmpr)
+  tmpdf <- data.frame(rho=prm[i,"rho"], sigE=prm[i,"sigE"], growth_rate=meantmpr)
   out_rinv_strg <- rbind(out_rinv_strg, tmpdf)
 }
 out_rinv_strg <- out_rinv_strg[2:nrow(out_rinv_strg),]
+
+ggplot(out_rinv_strg, aes(x=sigE, y=growth_rate, 
+                          shape=as.factor(rho), linetype=as.factor(rho)))+
+  geom_line()+
+  geom_point(size=3)
+
 
 igr_df_strg <- merge(out_rinv_strg, strg_stability)
 

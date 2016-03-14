@@ -22,14 +22,14 @@ library(mvtnorm)
 nbcores <- 4 # Set number of cores to match machine
 set.seed(123456789)
 
-nrho <- 11
+nrho <- 3
 rholist <- pretty(seq(-1, 1, length.out=nrho), nrho)
-nsd <- 11
-rsdlist <- pretty(seq(0, 1, length.out=nsd), nsd)
+nsd <- 7
+rsdlist <- pretty(seq(0, 10, length.out=nsd), nsd)
 
-nsims <- 20
+# nsims <- 20
 storage_effect_varvars <- expand.grid(rholist,rsdlist)
-names(storage_effect_varvars) <- c("rho", "Rsd")
+names(storage_effect_varvars) <- c("rho", "sigE")
 prm <- storage_effect_varvars
 strg_outs <- mclapply(seq_len(nrow(prm)), function(i) do.call(simStorageModel, prm[i,]), mc.cores=nbcores)
 
