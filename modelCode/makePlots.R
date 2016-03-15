@@ -34,12 +34,12 @@ path2results <- "../simulationResults/"
 path2figs <- "../manuscript/components/"
 
 # Recreate simulation grid
-nrho <- 11
-rholist <- pretty(seq(-1, 1, length.out=nrho), nrho)
-nsd <- 11
-rsdlist <- pretty(seq(0, 1, length.out=nsd), nsd)
-storage_effect_varvars <- expand.grid(rholist,rsdlist)
-names(storage_effect_varvars) <- c("rho", "Rsd")
+# nrho <- 11
+# rholist <- pretty(seq(-1, 1, length.out=nrho), nrho)
+# nsd <- 11
+# rsdlist <- pretty(seq(0, 1, length.out=nsd), nsd)
+# storage_effect_varvars <- expand.grid(rholist,rsdlist)
+# names(storage_effect_varvars) <- c("rho", "Rsd")
 
 
 
@@ -50,22 +50,29 @@ names(storage_effect_varvars) <- c("rho", "Rsd")
 ##  1. Species asynchrony vs. environmental cue correlation
 sims <- readRDS(paste0(path2results,"storage_effect_sims.RDS"))
 
+nrho <- 3
+rholist <- pretty(seq(-1, 1, length.out=nrho), nrho)
+nsd <- 7
+rsdlist <- pretty(seq(0, 10, length.out=nsd), nsd)
+storage_effect_varvars <- expand.grid(rholist,rsdlist)
+names(storage_effect_varvars) <- c("rho", "sigE")
+
 #take out first couple seasons
 seasons_to_exclude <- 20
 save_seasons <- data.frame(time=NA, D1=NA, D2=NA, N1=NA, N2=NA, R=NA, Rstart=NA,
-                           season=NA, rho=NA, rsd=NA, simnum=NA)
+                           season=NA, rho=NA, sigE=NA, simnum=NA)
 for(i in 1:length(sims)){
   tmp <- sims[[i]]
   tmp <- tmp[2:nrow(tmp),]
   tmp$rho <- storage_effect_varvars[i,"rho"]
-  tmp$rsd <- storage_effect_varvars[i,"Rsd"]
+  tmp$sigE <- storage_effect_varvars[i,"sigE"]
   tmp$simnum <- i
   save_seasons <- rbind(save_seasons, tmp)
 }
 save_seasons <- save_seasons[2:nrow(save_seasons),]
 
 # Analyze average biomass over the season
-mean_of_season <- ddply(save_seasons, .(season, rho, rsd, simnum), summarise,
+mean_of_season <- ddply(save_seasons, .(season, rho, sigE, simnum), summarise,
                         mean_N1 = mean(N1),
                         mean_N2 = mean(N2),
                         mean_D1 = mean(D1),
@@ -78,15 +85,15 @@ for(i in 1:length(sims)){
 }
 
 syncdf <- data.frame(rho=storage_effect_varvars$rho,
-                     rsd=storage_effect_varvars$Rsd,
+                     sigE=storage_effect_varvars$sigE,
                      async=1-tmp.sync)
 
 lowcol <- "black"
 highcol <- "grey"
 
 sync.strg <- ggplot()+
-  geom_line(data=syncdf, aes(x=rho, y=async, color=rsd, group=as.factor(rsd)))+
-  geom_point(data=syncdf, aes(x=rho, y=async, color=rsd, group=as.factor(rsd)),size=2)+
+  geom_line(data=syncdf, aes(x=rho, y=async, color=sigE, group=as.factor(sigE)))+
+  geom_point(data=syncdf, aes(x=rho, y=async, color=sigE, group=as.factor(sigE)),size=2)+
   theme_few()+
   xlab(bquote(rho))+
   ylab("Species Asynchrony")+
@@ -95,9 +102,9 @@ sync.strg <- ggplot()+
   scale_colour_gradient(low=lowcol, high=highcol, name=bquote(sigma[R]))+
   geom_text(aes(x=1, y=1, label="a"))
 
-seasonal_total <- ddply(mean_of_season, .(season, rho, rsd, simnum), summarise,
+seasonal_total <- ddply(mean_of_season, .(season, rho, sigE, simnum), summarise,
                         total_biomass=sum(mean_N1, mean_N2))
-stability <- ddply(seasonal_total, .(rho, rsd, simnum), summarise,
+stability <- ddply(seasonal_total, .(rho, sigE, simnum), summarise,
                    stable = sd(total_biomass)/mean(total_biomass),
                    mubiom = mean(total_biomass),
                    sdbiom = sd(total_biomass))
@@ -106,8 +113,8 @@ stability <- ddply(seasonal_total, .(rho, rsd, simnum), summarise,
 cor((1-stability$rho), stability$stable, method = "spearman")
 
 stab.strg <- ggplot()+
-  geom_line(data=stability, aes(x=rho, y=stable, color=rsd, group=as.factor(rsd)))+
-  geom_point(data=stability, aes(x=rho, y=stable, color=rsd, group=as.factor(rsd)), size=2)+
+  geom_line(data=stability, aes(x=sigE, y=stable, color=rho, group=as.factor(rho)))+
+  geom_point(data=stability, aes(x=sigE, y=stable, color=rho, group=as.factor(rho)), size=2)+
   theme_few()+
   xlab(bquote(rho))+
   ylab("CV of Total Biomass")+
@@ -318,12 +325,18 @@ ggplot(out_rinv_strg, aes(x=sigE, y=growth_rate,
   geom_point(size=3)
 
 
-igr_df_strg <- merge(out_rinv_strg, strg_stability)
+igr_df_strg <- merge(out_rinv_strg, stability)
 
 cor(igr_df_strg$growth_rate, igr_df_strg$stable, method = "spearman")
 
-ggplot(igr_df_strg, aes(color=rho, y=stable, x=rsd))+
-  geom_point()
+ggplot(igr_df_strg, aes(y=stable, x=growth_rate, color=rho))+
+  geom_point(size=4)+
+  stat_smooth(method="lm", se=FALSE, color="black", linetype=2)+
+  facet_wrap("sigE")+
+  xlab("Invasion Growth Rate")+
+  ylab("CV of Total Community Biomass")+
+  theme_few()
+ggsave("../manuscript/components/storage_effect_growthrate_cv.png", width = 8.5, height=4, units = "in", dpi=76)
 
 igr_df_strg <- igr_df_strg[,1:2]
 igr_df_rel$type <- "Relative Nonlinearity"
