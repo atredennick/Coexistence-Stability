@@ -32,7 +32,7 @@ days_to_track <- 20              # number of days to simulate in odSolve
 DNR <- c(D=c(1,1),N=c(1,1),R=10) # initial conditions
 Rmu <- 3                         # mean resource pulse (on log scale)
 Rsd_annual <- 0                  # std dev of resource pulses (on log scale)
-sigE <- 2                        # environmental cue variance
+sigE <- 4                        # environmental cue variance
 rho <- 0                         # environmental cue correlation between species
 
 # Within-season parameters
@@ -45,7 +45,7 @@ parms <- list(
 
 # End-of-season transition parameters
 a1 <- 0.50                       # live-to-dormant biomass fraction; spp1
-a2 <- 0.50                       # live-to-dormant biomass fraction; spp2
+a2 <- 0.49                       # live-to-dormant biomass fraction; spp2
 b1 <- 0                          # adult survivorship; spp1 (0 if annual, >0 if perennial)
 b2 <- 0                          # adult survivorship; spp2 (0 if annual, >0 if perennial)
 m1 <- 0.1                        # dormant mortality; spp1
@@ -72,7 +72,7 @@ updateDNR <- function(t, DNR, parms){
     dD2dt = 0
     dN1dt = N1*eps[1]*(uptake_R(r[1], R, alpha[1], beta[1]))
     dN2dt = N2*eps[2]*(uptake_R(r[2], R, alpha[2], beta[2]))
-    dRdt = -1 * (dN1dt + dN2dt)
+    dRdt = -1 * (dN1dt/eps[1] + dN2dt/eps[2])
     list(c(dD1dt, dD2dt, dN1dt, dN2dt, dRdt)) #output
   })
 }
