@@ -20,8 +20,6 @@
 # Clear the Workspace
 rm(list=ls())
 
-ptm <- proc.time() # start time
-
 
 ####
 #### Initial Conditions, Global Variables, and Parameters ----------------------
@@ -29,7 +27,7 @@ ptm <- proc.time() # start time
 seasons <- 1000                  # number of seasons to simulate
 seasons_to_exclude <- 200        # initial seasons to exclude from plots
 days_to_track <- 20              # number of days to simulate in odSolve
-DNR <- c(D=c(1,1),N=c(1,1),R=10) # initial conditions
+DNR <- c(D=c(0,1),N=c(0,1),R=10) # initial conditions
 Rmu <- 3                         # mean resource pulse (on log scale)
 Rsd_annual <- 0                  # std dev of resource pulses (on log scale)
 sigE <- 2                        # environmental cue variance
@@ -45,7 +43,7 @@ parms <- list(
 
 # End-of-season transition parameters
 alpha1 <- 0.50                   # live-to-dormant biomass fraction; spp1
-alpha2 <- 0.49                   # live-to-dormant biomass fraction; spp2
+alpha2 <- 0.5                   # live-to-dormant biomass fraction; spp2
 beta1 <- 0                       # adult survivorship; spp1 (0 if annual, >0 if perennial)
 beta2 <- 0                       # adult survivorship; spp2 (0 if annual, >0 if perennial)
 eta1 <- 0.1                      # dormant mortality; spp1
@@ -115,6 +113,7 @@ nmsNR <- names(NR)
 gVec <- getG(sigE = sigE, rho = rho, nTime = seasons)
 Rvector <- rlnorm(seasons, Rmu, Rsd_annual)
 saved_outs <- matrix(ncol=5, nrow=seasons)
+ptm <- proc.time() # start time
 for(season_now in 1:seasons){
   output <- ode(y = NR, times=days,
                 func = updateNR, parms = parms)
@@ -131,9 +130,11 @@ for(season_now in 1:seasons){
   NR <- DNR[c("N1", "N2", "R")] 
   names(NR) <- nmsNR
 }
-matplot(saved_outs[101:seasons,c(3:4)], type="l", 
+proc.time() - ptm
+
+matplot(saved_outs[101:seasons,c(1:2)], type="l", 
         xlab="Season", ylab="Abundance",
         main=expression(paste(alpha[1],"= 0.5; ", alpha[2],"=0.49; ", sigma[E],"=0.2")))
+lines(rowSums(saved_outs[101:seasons,c(1:2)]), type="l", col="blue", lwd=3)
 
-
-proc.time() - ptm
+sd(rowSums(saved_outs[101:seasons,c(3:4)]))/mean(rowSums(saved_outs[101:seasons,c(3:4)]))
