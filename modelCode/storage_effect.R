@@ -27,11 +27,11 @@ rm(list=ls())
 seasons <- 1000                  # number of seasons to simulate
 seasons_to_exclude <- 200        # initial seasons to exclude from plots
 days_to_track <- 20              # number of days to simulate in odSolve
-DNR <- c(D=c(0,1),N=c(0,1),R=10) # initial conditions
+DNR <- c(D=c(1,1),N=c(1,1),R=10) # initial conditions
 Rmu <- 3                         # mean resource pulse (on log scale)
 Rsd_annual <- 0                  # std dev of resource pulses (on log scale)
 sigE <- 2                        # environmental cue variance
-rho <- 0                         # environmental cue correlation between species
+rho <- -0.5                         # environmental cue correlation between species
 
 # Within-season parameters
 parms <- list(
@@ -43,7 +43,7 @@ parms <- list(
 
 # End-of-season transition parameters
 alpha1 <- 0.50                   # live-to-dormant biomass fraction; spp1
-alpha2 <- 0.5                   # live-to-dormant biomass fraction; spp2
+alpha2 <- 0.49                   # live-to-dormant biomass fraction; spp2
 beta1 <- 0                       # adult survivorship; spp1 (0 if annual, >0 if perennial)
 beta2 <- 0                       # adult survivorship; spp2 (0 if annual, >0 if perennial)
 eta1 <- 0.1                      # dormant mortality; spp1
@@ -132,9 +132,10 @@ for(season_now in 1:seasons){
 }
 proc.time() - ptm
 
-matplot(saved_outs[101:seasons,c(1:2)], type="l", 
+cols2plot <- c(3,4)
+matplot(saved_outs[101:seasons,cols2plot], type="l", 
         xlab="Season", ylab="Abundance",
         main=expression(paste(alpha[1],"= 0.5; ", alpha[2],"=0.49; ", sigma[E],"=0.2")))
-lines(rowSums(saved_outs[101:seasons,c(1:2)]), type="l", col="blue", lwd=3)
+# lines(rowSums(saved_outs[101:seasons,cols2plot]), type="l", col="blue", lwd=2)
 
 sd(rowSums(saved_outs[101:seasons,c(3:4)]))/mean(rowSums(saved_outs[101:seasons,c(3:4)]))
