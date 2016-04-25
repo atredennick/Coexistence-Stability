@@ -3,9 +3,7 @@
 
 ##  Authors:  Andrew Tredennick, Peter Adler, and Fred Adler
 ##  Email:    atredenn@gmail.com
-##  Date:     4.24.2015 -- Copied over from relative_nonlinearity.R and 
-##                         variable germination included for storage effect.
-##            5.21.2016 -- Updated model to have most dynamics occur at the
+##  Date:     4.25.2016 -- Updated model to have most dynamics occur at the
 ##                         end of season, discrete time intervals
 
 
@@ -24,12 +22,12 @@ rm(list=ls())
 ####
 #### Initial Conditions, Global Variables, and Parameters ----------------------
 ####
-seasons <- 100                  # number of seasons to simulate
-seasons_to_exclude <- 20       # initial seasons to exclude from plots
+seasons <- 500                   # number of seasons to simulate
+seasons_to_exclude <- 20         # initial seasons to exclude from plots
 days_to_track <- 20              # number of days to simulate in odSolve
 DNR <- c(D=c(1,1),N=c(1,1),R=10) # initial conditions
 Rmu <- 3                         # mean resource pulse (on log scale)
-Rsd_annual <- 1                  # std dev of resource pulses (on log scale)
+Rsd_annual <- 0.5                # std dev of resource pulses (on log scale)
 sigE <- 2                        # environmental cue variance
 rho <- 1                         # environmental cue correlation between species
 
@@ -37,7 +35,7 @@ rho <- 1                         # environmental cue correlation between species
 parms <- list(
   r = c(5,1),                    # max growth rate for each species
   a = c(5,2),                    # rate parameter for Hill function 
-  b = c(20,2.5),                  # shape parameter for Hill function
+  b = c(20,2.5),                 # shape parameter for Hill function
   eps = c(0.2,0.2)               # resource-to-biomass efficiency
 )
 
@@ -51,6 +49,8 @@ eta2 <- 0.1                      # dormant mortality; spp2
 theta1 <- 0                      # resource recycling fraction; spp1
 theta2 <- 0                      # resource recycling fraction; spp2
 nu <- 0                          # resource carry-over fraction
+
+
 
 ####
 #### Load relevant libraries ----------------------------------------
@@ -147,7 +147,7 @@ for(i in 1:nrow(out_r)){
   out_r[i,2] <- uptake_R(parms$r[2], R[i], a[2], b[2])
 }
 matplot(R, out_r, type="l", ylab = "resource uptake")
-cols2plot <- c(3,4)
+cols2plot <- c(3,4) # references either dead (1,2) or alive (3,4) biomass
 matplot(saved_outs[1:seasons,cols2plot], type="l", xlab="Season", ylab="Abundance")
-# lines(rowSums(saved_outs[101:seasons,cols2plot]), type="l", col="blue", lwd=2)
+# lines(rowSums(saved_outs[1:seasons,cols2plot]), type="l", col="blue", lwd=2)
 
