@@ -1,5 +1,10 @@
-##  Semi-discrete storage effect model of two species   
-##    coexisting on one essential resource               
+##============================================================================##
+##                                                                            ##
+## A. Tredennick, P. Adler, and F. Adler                                      ##             
+## "How Fluctuation-Dependent Coexistence Mechanisms Affect the Temporal      ##
+##  Stability of Ecosystem Function"                                          ##
+##                                                                       2016 ##
+##============================================================================##            
 
 ##  These are the core model functions that can be called 
 ##    from simulation wrappers.
@@ -9,12 +14,12 @@
 ##  Last update: 4-27-2016
 
 
-sim_relative_nonlinearity <- function(seasons, days_to_track, Rmu, 
-                                      Rsd_annual, sigE, rho, 
-                                      alpha1, alpha2, beta1, beta2,
-                                      eta1,eta2, theta1, theta2, nu, r1,
-                                      r2, a1, a2, b1, b2, eps1, eps2,
-                                      D1, D2, N1, N2, R) {
+simulate_model <- function(seasons, days_to_track, Rmu, 
+                           Rsd_annual, sigE, rho, 
+                           alpha1, alpha2, beta1, beta2,
+                           eta1,eta2, theta1, theta2, nu, r1,
+                           r2, a1, a2, b1, b2, eps1, eps2,
+                           D1, D2, N1, N2, R) {
   require('deSolve') # for solving continuous differential equations
   require('mvtnorm') # for multivariate normal distribution functions
   
