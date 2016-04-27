@@ -24,14 +24,14 @@ rm(list=ls())
 ####
 #### Initial Conditions, Global Variables, and Parameters ----------------------
 ####
-seasons <- 1000                  # number of seasons to simulate
-seasons_to_exclude <- 200        # initial seasons to exclude from plots
+seasons <- 10000                   # number of seasons to simulate
+seasons_to_exclude <- 1000        # initial seasons to exclude from plots
 days_to_track <- 20              # number of days to simulate in odSolve
 DNR <- c(D=c(1,1),N=c(1,1),R=10) # initial conditions
 Rmu <- 3                         # mean resource pulse (on log scale)
 Rsd_annual <- 0                  # std dev of resource pulses (on log scale)
 sigE <- 2                        # environmental cue variance
-rho <- -0.5                         # environmental cue correlation between species
+rho <- 0.5                         # environmental cue correlation between species
 
 # Within-season parameters
 parms <- list(
@@ -133,9 +133,9 @@ for(season_now in 1:seasons){
 proc.time() - ptm
 
 cols2plot <- c(3,4)
-matplot(saved_outs[101:seasons,cols2plot], type="l", 
-        xlab="Season", ylab="Abundance",
-        main=expression(paste(alpha[1],"= 0.5; ", alpha[2],"=0.49; ", sigma[E],"=0.2")))
+par(mfrow=c(1,1),mar=c(4,4,1,1),tcl=-0.2,mgp=c(2,0.5,0))
+matplot(saved_outs[(seasons_to_exclude+1):seasons,cols2plot], type="l", 
+        xlab="Season", ylab="Abundance")
 # lines(rowSums(saved_outs[101:seasons,cols2plot]), type="l", col="blue", lwd=2)
 
 sd(rowSums(saved_outs[101:seasons,c(3:4)]))/mean(rowSums(saved_outs[101:seasons,c(3:4)]))

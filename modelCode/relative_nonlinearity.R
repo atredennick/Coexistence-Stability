@@ -28,7 +28,7 @@ days_to_track <- 20              # number of days to simulate in odSolve
 DNR <- c(D=c(1,1),N=c(1,1),R=10) # initial conditions
 Rmu <- 3                         # mean resource pulse (on log scale)
 Rsd_annual <- 0.5                # std dev of resource pulses (on log scale)
-sigE <- 2                        # environmental cue variance
+sigE <- 0                        # environmental cue variance
 rho <- 1                         # environmental cue correlation between species
 
 # Within-season parameters
