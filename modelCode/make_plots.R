@@ -25,7 +25,7 @@ library(synchrony)
 
 # Check that we are in the correct directory
 testdir <- system("ls storageeffect_sims.R", ignore.stderr=TRUE)
-if(testdir!= 0){
+if(testdir != 0) {
   cat("\n\nWARNING: Make sure that you are in the correct directory before running the script!\n\n\n")
 }
 
@@ -33,19 +33,41 @@ if(testdir!= 0){
 path2results <- "../simulationResults/"
 path2figs <- "../manuscript/components/"
 
-# Recreate simulation grid
-# nrho <- 11
-# rholist <- pretty(seq(-1, 1, length.out=nrho), nrho)
-# nsd <- 11
-# rsdlist <- pretty(seq(0, 1, length.out=nsd), nsd)
-# storage_effect_varvars <- expand.grid(rholist,rsdlist)
-# names(storage_effect_varvars) <- c("rho", "Rsd")
-
+seasons_to_exclude <- 501
 
 
 ####
 ####  PLOT STORAGE EFFECT RESULTS
 ####
+## Define vectors of parameters to vary
+n_sig_e <- 11 # Number of cue variance levels
+sig_e_vec <- pretty(seq(0, 5, length.out=n_sig_e), n_sig_e) # Make a pretty vector
+n_rho <- 11 # Number of seasonal standard deviation levels
+rsd_vec <- pretty(seq(-1, 1, length.out=n_rho), n_rho) # Make a pretty vector
+##  Create matrix with all possible combinations of varying parameters
+storage_effect_varvars <- expand.grid(sig_e_vec, rsd_vec )
+names(storage_effect_varvars) <- c("sigE", "rho")
+storage_effect_varvars <- unique(storage_effect_varvars)
+
+storage_effect_sims <- readRDS(paste0(path2results,"storage_effect_sims.RDS"))
+save_seasons <- list()
+for(i in 1:length(storage_effect_sims)){
+  tmp <- as.data.frame(storage_effect_sims[[i]])
+  names(tmp) <- c("D1", "D2", "N1", "N2", "R")
+  tmp$rho <- storage_effect_varvars[i,"rho"]
+  tmp$sigE <- storage_effect_varvars[i,"sigE"]
+  tmp$simnum <- i
+  tmp$timestep <- 1:nrow(tmp)
+  tmp_out <- tmp[seasons_to_exclude:nrow(tmp), ]
+  save_seasons <- rbind(save_seasons, tmp_out)
+}
+
+full_melt <- melt(save_seasons, id.vars = c("rho", "sigE", "simnum", "timestep"))
+ggplot(subset(full_melt, variable %in% c("N1", "N2")))+
+  geom_line(aes(x=timestep, y=value, color=variable))+
+  facet_grid(rho~sigE)
+
+
 
 ##  1. Species asynchrony vs. environmental cue correlation
 sims <- readRDS(paste0(path2results,"storage_effect_sims.RDS"))
