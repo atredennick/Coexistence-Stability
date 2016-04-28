@@ -37,7 +37,7 @@ simulate_model <- function(seasons, days_to_track, Rmu,
   ####  Sub-Model functions
   ####
   ## Continuous model
-  updateNR <- function(t, NR, parms){
+  updateNR <- function(t, NR, parms) {
     with(as.list(c(NR, parms)), {
       dN1dt = N1*eps[1]*(uptake_R(r[1], R, a[1], b[1]))
       dN2dt = N2*eps[2]*(uptake_R(r[2], R, a[2], b[2]))
@@ -47,12 +47,13 @@ simulate_model <- function(seasons, days_to_track, Rmu,
   }
   
   ##  Resource uptake function (Hill function)
-  uptake_R <- function(r, R, a, b){
+  uptake_R <- function(r, R, a, b) {
     return((r*R^a) / (b^a + R^a))
   }
   
   ## Discrete model
-  update_DNR <- function(t,DNR,gammas,alpha1,alpha2,eta1,eta2,beta1,beta2,theta1,theta2,nu){
+  update_DNR <- function(t,DNR,gammas,alpha1,alpha2,eta1,eta2,
+                         beta1,beta2,theta1,theta2,nu) {
     with (as.list(DNR),{
       g1 <- gammas[1]
       g2 <- gammas[2]
@@ -72,7 +73,7 @@ simulate_model <- function(seasons, days_to_track, Rmu,
   days <- c(1:days_to_track)
   
   # Get "germination" fractions for each year
-  getG <- function(sigE, rho, nTime){
+  getG <- function(sigE, rho, nTime) {
     varcov <- matrix(c(sigE, rho*sigE, rho*sigE, sigE), 2, 2)
     e <- rmvnorm(n = nTime, mean = c(0,0), sigma = varcov)
     g <- exp(e) / (1+exp(e))
@@ -104,7 +105,32 @@ simulate_model <- function(seasons, days_to_track, Rmu,
     names(NR) <- nmsNR
   } # next season
   
-  return(saved_outs)
   
-} #end simulation
+  ### INVASION SIMULATIONS
+  equil_abund_superior <- mean(saved_outs[,1], na.rm = TRUE)
+  DNR <- c(D=c(equil_abund_superior,1),N=c(1, 1), R=10)    # initial conditions
+  inv_results <- matrix(ncol=5, nrow=seasons)
+  for(season_now in 1:seasons){
+    DNR <- update_DNR(season_now, DNR, gVec[season_now,],
+                      alpha1=alpha1,alpha2=alpha2,
+                      eta1=eta1,eta2=eta2,
+                      beta1=beta1,beta2=beta2,
+                      theta1=theta1,theta2=theta2,nu=nu)
+    names(DNR) <- nmsDNR
+    NR <- DNR[c("N1", "N2", "R")] 
+    names(NR) <- nmsNR
+    output <- as.data.frame(ode(y = NR, times=days,
+                                func = updateNR, parms = parms))
+    NR <- output[nrow(output),nmsNR]
+    DNR <- unlist(c(DNR[c("D1","D2")], NR))
+    inv_results[season_now, ] <- DNR # save next year's initial conditions
+    
+    DNR <- c(D=c(equil_abund_superior,1),
+             N=c(1, 1), 
+             R=10) # reset initial conditions
+  } # next invasion season
+  
+  return(list(saved_outs, inv_results))
+  
+} #end simulation function
 

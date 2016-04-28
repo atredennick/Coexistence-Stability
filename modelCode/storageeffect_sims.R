@@ -33,7 +33,7 @@ prm <- unique(varvars)
 
 ##  Define constant parameters in list
 constant_parameters <- list (
-  seasons = 2000,                 # number of seasons to simulate
+  seasons = 5000,                 # number of seasons to simulate
   days_to_track = 20,              # number of days to simulate in odSolve
   Rmu = 3,                         # mean resource pulse (on log scale)
   Rsd_annual = 0.0,               # std dev of resource pulses (on log scale)
@@ -78,5 +78,10 @@ outs <- mclapply(seq_len(nrow(prm)),
                    do.call(simulate_model, parameter_matrix[i,])
                    }, 
                  mc.cores=nbcores) # end apply function
-saveRDS(outs, "../simulationResults/storage_effect_sims.RDS")
+
+equilibrium_runs <- sapply(outs, "[", 1)
+invasion_runs <- sapply(outs, "[", 2)
+
+saveRDS(equilibrium_runs, "../simulationResults/storage_effect_equilibrium_runs.RDS")
+saveRDS(invasion_runs, "../simulationResults/storage_effect_invasion_runs.RDS")
 
