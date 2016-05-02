@@ -10,6 +10,7 @@
 
 ####
 #### STORAGE EFFECT FACTORIAL SIMULATIONS
+#### ISSUE THIE COMMAND IN SHELL BEFORE STARTING R: export OMP_NUM_THREADS=1 
 ####
 
 rm(list=ls())                    # Erase the memory
@@ -33,10 +34,10 @@ prm <- unique(varvars)
 
 ##  Define constant parameters in list
 constant_parameters <- list (
-  seasons = 5000,                 # number of seasons to simulate
+  seasons = 1000,                  # number of seasons to simulate
   days_to_track = 20,              # number of days to simulate in odSolve
   Rmu = 3,                         # mean resource pulse (on log scale)
-  Rsd_annual = 0.0,               # std dev of resource pulses (on log scale)
+  Rsd_annual = 0.0,                # std dev of resource pulses (on log scale)
   # sigE = 0,                        # environmental cue variance
   # rho = 1,                         # environmental cue correlation between species
   alpha1 = 0.50,                   # live-to-dormant biomass fraction; spp1
@@ -55,11 +56,11 @@ grow_parameters <- list (
   r = c(5,5),                   # max growth rate for each species
   a = c(5,5),                   # rate parameter for Hill function 
   b = c(20,20),                 # shape parameter for Hill function
-  eps = c(0.2,0.2)              # resource-to-biomass efficiency
+  eps = c(0.5,0.5)              # resource-to-biomass efficiency
 )
 
 # Initial conditions
-DNR <- c(D=c(1,1),N=c(1,1),R=10) # initial conditions
+DNR <- c(D=c(1,1),N=c(1,1),R=20) # initial conditions
 
 # Make on long vector of named parameters
 constant_param_vec <- c(unlist(constant_parameters), unlist(grow_parameters), unlist(DNR))
