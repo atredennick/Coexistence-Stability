@@ -62,6 +62,11 @@ for(i in 1:length(storage_effect_sims)){
   save_seasons <- rbind(save_seasons, tmp_out)
 }
 
+full_melt <- melt(save_seasons, id.vars = c("rho", "sigE", "simnum", "timestep"))
+ggplot(subset(full_melt, variable %in% c("N1", "N2")))+
+  geom_line(aes(x=timestep, y=value, color=variable))+
+  facet_grid(rho~sigE)
+
 ##  Calculate CV of Total Community Biomass
 save_seasons$total_biomass <- with(save_seasons, N1+N2)
 se_community_biomass_cv <- ddply(save_seasons, .(rho, sigE, simnum), summarise,

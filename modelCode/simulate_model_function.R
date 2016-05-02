@@ -57,12 +57,12 @@ simulate_model <- function(seasons, days_to_track, Rmu,
     with (as.list(DNR),{
       g1 <- gammas[1]
       g2 <- gammas[2]
-      D1 <- alpha1*N1 + D1*(1-g1)*(1-eta1)
-      D2 <- alpha2*N2 + D2*(1-g2)*(1-eta2)
-      N1 <- beta1*(1-alpha1)*N1 + g1*(D1+(alpha1*N1))*(1-eta1)
-      N2 <- beta2*(1-alpha2)*N2 + g2*(D2+(alpha2*N2))*(1-eta2)
-      R <- theta1*(1-alpha1)*N1 + theta2*(1-alpha2)*N2 + nu*R + Rvector[t]
-      return(c(D1, D2, N1, N2, R))
+      D1new <- alpha1*N1 + D1*(1-g1)*(1-eta1)
+      D2new <- alpha2*N2 + D2*(1-g2)*(1-eta2)
+      N1new <- beta1*(1-alpha1)*N1 + g1*(D1+(alpha1*N1))*(1-eta1)
+      N2new <- beta2*(1-alpha2)*N2 + g2*(D2+(alpha2*N2))*(1-eta2)
+      Rnew <- theta1*(1-alpha1)*N1 + theta2*(1-alpha2)*N2 + nu*R + Rvector[t]
+      return(c(D1new, D2new, N1new, N2new, Rnew))
     })
   }
   
@@ -86,14 +86,38 @@ simulate_model <- function(seasons, days_to_track, Rmu,
   nmsNR <- names(NR)
   gVec <- getG(sigE = sigE, rho = rho, nTime = seasons)
   Rvector <- rlnorm(seasons, Rmu, Rsd_annual)
-  saved_outs <- matrix(ncol=5, nrow=seasons)
+  saved_outs <- matrix(ncol=5, nrow=seasons+1)
+  saved_outs[1,] <- DNR 
 
   for(season_now in 1:seasons) {
     output <- ode(y = NR, times=days,
                   func = updateNR, parms = parms)
     NR <- output[nrow(output),nmsNR]
     DNR <- c(DNR[c("D1","D2")], NR)
-    saved_outs[season_now,] <- DNR
+    saved_outs[season_now+1,] <- DNR
+    names(DNR) <- nmsDNR
+    DNR <- update_DNR(season_now, DNR, gVec[season_now,],
+                      alpha1=alpha1,alpha2=alpha2,
+                      eta1=eta1,eta2=eta2,
+                      beta1=beta1,beta2=beta2,
+                      theta1=theta1,theta2=theta2,nu=nu)
+    names(DNR) <- nmsDNR
+    NR <- DNR[c("N1", "N2", "R")] 
+    names(NR) <- nmsNR
+  } # next season
+  
+  ### SINGLE SPECIES, SUPERIOR COMPETITOR, SIMULATIONS
+  DNR <- c(D=c(1,0),N=c(1,0), R=20)
+  nmsDNR <- names(DNR)
+  NR <- DNR[c("N1", "N2", "R")] 
+  nmsNR <- names(NR)
+  single_spp_results <- matrix(ncol=5, nrow=200)
+  for(season_now in 1:200) {
+    output <- ode(y = NR, times=days,
+                  func = updateNR, parms = parms)
+    NR <- output[nrow(output),nmsNR]
+    DNR <- c(DNR[c("D1","D2")], NR)
+    single_spp_results[season_now,] <- DNR
     names(DNR) <- nmsDNR
     DNR <- update_DNR(season_now, DNR, gVec[season_now,],
                       alpha1=alpha1,alpha2=alpha2,
@@ -106,9 +130,10 @@ simulate_model <- function(seasons, days_to_track, Rmu,
   } # next season
   
   
+  
   ### INVASION SIMULATIONS
-  equil_abund_superior <- mean(saved_outs[,1], na.rm = TRUE)
-  DNR <- c(D=c(equil_abund_superior,1),N=c(1, 1), R=10)    # initial conditions
+  equil_abund_superior <- mean(single_spp_results[100:200,1], na.rm = TRUE)
+  DNR <- c(D=c(equil_abund_superior,1),N=c(equil_abund_superior,1), R=20)    # initial conditions
   inv_results <- matrix(ncol=5, nrow=seasons)
   for(season_now in 1:seasons){
     DNR <- update_DNR(season_now, DNR, gVec[season_now,],
@@ -123,11 +148,18 @@ simulate_model <- function(seasons, days_to_track, Rmu,
                                 func = updateNR, parms = parms))
     NR <- output[nrow(output),nmsNR]
     DNR <- unlist(c(DNR[c("D1","D2")], NR))
+    
+    DNR <- update_DNR(season_now, DNR, gVec[season_now,],
+                      alpha1=alpha1,alpha2=alpha2,
+                      eta1=eta1,eta2=eta2,
+                      beta1=beta1,beta2=beta2,
+                      theta1=theta1,theta2=theta2,nu=nu)
+    names(DNR) <- nmsDNR
     inv_results[season_now, ] <- DNR # save next year's initial conditions
     
-    DNR <- c(D=c(equil_abund_superior,1),
-             N=c(1, 1), 
-             R=10) # reset initial conditions
+    DNR <- c(D=c(equil_abund_superior, 1),
+             N=c(equil_abund_superior, 1), 
+             R=20) # reset initial conditions
   } # next invasion season
   
   return(list(saved_outs, inv_results))
