@@ -33,7 +33,7 @@ if(testdir != 0) {
 path2results <- "../simulationResults/"
 path2figs <- "../manuscript/components/"
 
-seasons_to_exclude <- 0
+seasons_to_exclude <- 500
 
 
 ####
@@ -78,7 +78,7 @@ storage_effect_invasions <- readRDS(paste0(path2results,"storage_effect_invasion
 se_invasion_growth_rate <- list()
 for(i in 1:length(storage_effect_sims)){
   tmp <- storage_effect_invasions[[i]]
-  tmpr <- log(tmp[seasons_to_exclude:nrow(tmp),4] / 1)
+  tmpr <- log(tmp[seasons_to_exclude:nrow(tmp),2] / 1)
   meantmpr <- mean(tmpr)
   tmpdf <- data.frame(rho=storage_effect_varvars[i,"rho"], sigE=storage_effect_varvars[i,"sigE"], growth_rate=meantmpr)
   se_invasion_growth_rate <- rbind(se_invasion_growth_rate, tmpdf)
@@ -87,12 +87,15 @@ for(i in 1:length(storage_effect_sims)){
 ##  Merge Growth Rates and Biomass CV; Plot
 se_plot_dat <- merge(se_invasion_growth_rate, se_community_biomass_cv)
 se_plot_dat <- subset(se_plot_dat, sigE>0)
-ggplot(se_plot_dat, aes(x=growth_rate, y=cv_biomass, color=rho))+
-  geom_point()+
-  stat_smooth(method="lm", color="black", se=TRUE)+
-  facet_wrap("sigE", ncol=10)+
+ggplot(se_plot_dat, aes(x=growth_rate, y=cv_biomass, color=as.factor(sigE)))+
+  geom_vline(aes(xintercept=0), linetype=2, alpha=0.5)+
+  geom_point(size=4, alpha=0.5)+
+  stat_smooth(method="lm", se=FALSE, size=1)+
+  xlab("Strength of Coexistence\n(log invasion growth rate)")+
+  ylab("CV of Community Biomass")+
+  scale_color_discrete(name=expression(sigma[E]^2))+
   theme_few()
-
+ggsave(paste0(path2figs,"storage_effect_cv_by_coexistence.png"), width = 5, height = 4, units="in", dpi=100)
 
 
 out <- by(data = se_plot_dat, INDICES = list(se_plot_dat$sigE), FUN = function(x) {

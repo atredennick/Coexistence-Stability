@@ -27,16 +27,16 @@ seasons_to_exclude <- 20         # initial seasons to exclude from plots
 days_to_track <- 20              # number of days to simulate in odSolve
 DNR <- c(D=c(1,1),N=c(1,1),R=10) # initial conditions
 Rmu <- 3                         # mean resource pulse (on log scale)
-Rsd_annual <- 0.5                # std dev of resource pulses (on log scale)
+Rsd_annual <- 1.5                # std dev of resource pulses (on log scale)
 sigE <- 0                        # environmental cue variance
 rho <- 1                         # environmental cue correlation between species
 
 # Within-season parameters
 parms <- list(
-  r = c(5,1),                    # max growth rate for each species
-  a = c(5,2),                    # rate parameter for Hill function 
-  b = c(20,2.5),                 # shape parameter for Hill function
-  eps = c(0.2,0.2)               # resource-to-biomass efficiency
+  r = c(1,5),                    # max growth rate for each species
+  a = c(2,5),                    # rate parameter for Hill function 
+  b = c(2.5,20),                 # shape parameter for Hill function
+  eps = c(0.5,0.5)               # resource-to-biomass efficiency
 )
 
 # End-of-season transition parameters
@@ -79,16 +79,17 @@ uptake_R <- function(r, R, a, b){
 }
 
 ## Discrete model
-update_DNR <- function(t,DNR,gammas,alpha1,alpha2,eta1,eta2,beta1,beta2,theta1,theta2,nu){
+update_DNR <- function(t,DNR,gammas,alpha1,alpha2,eta1,eta2,
+                       beta1,beta2,theta1,theta2,nu) {
   with (as.list(DNR),{
     g1 <- gammas[1]
     g2 <- gammas[2]
-    D1 <- alpha1*N1 + D1*(1-g1)*(1-eta1)
-    D2 <- alpha2*N2 + D2*(1-g2)*(1-eta2)
-    N1 <- beta1*(1-alpha1)*N1 + g1*(D1+(alpha1*N1))*(1-eta1)
-    N2 <- beta2*(1-alpha2)*N2 + g2*(D2+(alpha2*N2))*(1-eta2)
-    R <- theta1*(1-alpha1)*N1 + theta2*(1-alpha2)*N2 + nu*R + Rvector[t]
-    return(c(D1, D2, N1, N2, R))
+    D1new <- alpha1*N1 + D1*(1-g1)*(1-eta1)
+    D2new <- alpha2*N2 + D2*(1-g2)*(1-eta2)
+    N1new <- beta1*(1-alpha1)*N1 + g1*(D1+(alpha1*N1))*(1-eta1)
+    N2new <- beta2*(1-alpha2)*N2 + g2*(D2+(alpha2*N2))*(1-eta2)
+    Rnew <- theta1*(1-alpha1)*N1 + theta2*(1-alpha2)*N2 + nu*R + Rvector[t]
+    return(c(D1new, D2new, N1new, N2new, Rnew))
   })
 }
 
