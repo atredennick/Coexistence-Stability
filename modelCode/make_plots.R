@@ -209,6 +209,7 @@ se2_gr_plot <- ggplot(se2_plot_dat, aes(x=rsd, y=growth_rate, color=as.factor(rh
   stat_smooth(method="lm", se=FALSE, size=0.3)+
   xlab(expression(paste("SD of annual resource (",sigma[R], ")")))+
   ylab("Log invasion growth rate")+
+  scale_y_continuous(breaks=c(-0.1,0,0.1), limits=c(-0.1,0.13))+
   scale_color_manual(name=expression(paste("Correlation of species' environmental response (",rho,")")), values=cc_se)+
   theme_few()+
   theme(legend.title=element_text(size=10),
