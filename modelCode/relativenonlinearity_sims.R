@@ -25,7 +25,7 @@ set.seed(123456789) # Set seed to reproduce random results
 n_sig_e <- 11 # Number of cue variance levels
 sig_e_vec <- pretty(seq(0, 5, length.out=n_sig_e), n_sig_e) # Make a pretty vector
 n_rsd <- 11 # Number of seasonal standard deviation levels
-rsd_vec <- pretty(seq(0, 1.5, length.out=n_rsd), n_rsd) # Make a pretty vector
+rsd_vec <- pretty(seq(0, 1.4, length.out=n_rsd), n_rsd) # Make a pretty vector
 
 ##  Create matrix with all possible combinations of varying parameters
 varvars <- expand.grid(sig_e_vec, rsd_vec )

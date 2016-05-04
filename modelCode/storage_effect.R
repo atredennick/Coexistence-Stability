@@ -24,21 +24,21 @@ rm(list=ls())
 ####
 #### Initial Conditions, Global Variables, and Parameters ----------------------
 ####
-seasons <- 10000                   # number of seasons to simulate
-seasons_to_exclude <- 1000        # initial seasons to exclude from plots
+seasons <- 1000                   # number of seasons to simulate
+seasons_to_exclude <- 100        # initial seasons to exclude from plots
 days_to_track <- 20              # number of days to simulate in odSolve
-DNR <- c(D=c(1,1),N=c(1,1),R=10) # initial conditions
+DNR <- c(D=c(1,1),N=c(1,1),R=20) # initial conditions
 Rmu <- 3                         # mean resource pulse (on log scale)
-Rsd_annual <- 0                  # std dev of resource pulses (on log scale)
+Rsd_annual <- 0.5                  # std dev of resource pulses (on log scale)
 sigE <- 2                        # environmental cue variance
-rho <- 0.5                         # environmental cue correlation between species
+rho <- -1                         # environmental cue correlation between species
 
 # Within-season parameters
 parms <- list(
   r = c(5,5),                    # max growth rate for each species
   a = c(5,5),                    # rate parameter for Hill function 
   b = c(20,20),                  # shape parameter for Hill function
-  eps = c(0.2,0.2)               # resource-to-biomass efficiency
+  eps = c(0.5,0.5)               # resource-to-biomass efficiency
 )
 
 # End-of-season transition parameters
@@ -83,12 +83,12 @@ update_DNR <- function(t,DNR,gammas,alpha1,alpha2,eta1,eta2,beta1,beta2,theta1,t
   with (as.list(DNR),{
     g1 <- gammas[1]
     g2 <- gammas[2]
-    D1 <- alpha1*N1 + D1*(1-g1)*(1-eta1)
-    D2 <- alpha2*N2 + D2*(1-g2)*(1-eta2)
-    N1 <- beta1*(1-alpha1)*N1 + g1*(D1+(alpha1*N1))*(1-eta1)
-    N2 <- beta2*(1-alpha2)*N2 + g2*(D2+(alpha2*N2))*(1-eta2)
-    R <- theta1*(1-alpha1)*N1 + theta2*(1-alpha2)*N2 + nu*R + Rvector[t]
-    return(c(D1, D2, N1, N2, R))
+    D1new <- alpha1*N1 + D1*(1-g1)*(1-eta1)
+    D2new <- alpha2*N2 + D2*(1-g2)*(1-eta2)
+    N1new <- beta1*(1-alpha1)*N1 + g1*(D1+(alpha1*N1))*(1-eta1)
+    N2new <- beta2*(1-alpha2)*N2 + g2*(D2+(alpha2*N2))*(1-eta2)
+    Rnew <- theta1*(1-alpha1)*N1 + theta2*(1-alpha2)*N2 + nu*R + Rvector[t]
+    return(c(D1new, D2new, N1new, N2new, Rnew))
   })
 }
 
@@ -138,4 +138,8 @@ matplot(saved_outs[(seasons_to_exclude+1):seasons,cols2plot], type="l",
         xlab="Season", ylab="Abundance")
 # lines(rowSums(saved_outs[101:seasons,cols2plot]), type="l", col="blue", lwd=2)
 
-sd(rowSums(saved_outs[101:seasons,c(3:4)]))/mean(rowSums(saved_outs[101:seasons,c(3:4)]))
+tot_biomass <- rowSums(saved_outs[,cols2plot])
+sd(tot_biomass)
+mean(tot_biomass)
+sd(tot_biomass)/mean(tot_biomass)
+ 
