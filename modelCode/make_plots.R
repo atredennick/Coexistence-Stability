@@ -383,3 +383,80 @@ png(paste0(path2figs,"relative_nonlinearity_factorial_plots.png"),
     width = 3.5, height=7, units = "in", res=72)
 grid_arrange_shared_legend(rl_cv_plot, rl_gr_plot)
 dev.off()
+
+
+
+####
+####  MAKE STORAGE EFFECT AND RELATIVE NONLINEARITY PROFILE PLOTS
+####
+## Define vectors of parameters to vary
+both_varvars <- matrix(c(-0.5,1,2,2.5,5,5,20,
+                -0.5,5,5,20,5,5,20,
+                0.5,1,2,2.5,5,5,20,
+                0.5,5,5,20,5,5,20), ncol=7, byrow = TRUE)
+colnames(both_varvars) <- c("rho", "r1", "a1", "b1", "r2", "a2", "b2")
+
+both_sims <- readRDS(paste0(path2results,"storageeffect_relativenonlinearity_equilibrium_runs.RDS"))
+save_seasons_both <- list()
+for(i in 1:length(both_sims)){
+  tmp <- as.data.frame(both_sims[[i]])
+  names(tmp) <- c("D1", "D2", "N1", "N2", "R")
+  tmp$rho <- both_varvars[i,"rho"]
+  if(both_varvars[i,"a1"] == both_varvars[i,"a2"]) rel_nonlin <- "no"
+  if(both_varvars[i,"a1"] != both_varvars[i,"a2"]) rel_nonlin <- "yes"
+  tmp$rel_nonlin <- rel_nonlin
+  tmp$simnum <- i
+  tmp$timestep <- 1:nrow(tmp)
+  tmp_out <- tmp[seasons_to_exclude:nrow(tmp), ]
+  save_seasons_both <- rbind(save_seasons_both, tmp_out)
+}
+
+##  Calculate CV of Total Community Biomass
+save_seasons_both$total_biomass <- with(save_seasons_both, N1+N2)
+both_community_biomass_cv <- ddply(save_seasons_both, .(rho, rel_nonlin), summarise,
+                                 cv_biomass = sd(total_biomass)/mean(total_biomass))
+
+##  Calculate Invasion Growth Rate
+both_invasions <- readRDS(paste0(path2results,"storageeffect_relativenonlinearity_invasion_runs.RDS"))
+both_invasion_growth_rate <- list()
+for(i in 1:length(both_invasions)){
+  tmp <- both_invasions[[i]]
+  tmpr <- log(tmp[seasons_to_exclude:nrow(tmp),2] / 1)
+  meantmpr <- mean(tmpr)
+  if(both_varvars[i,"a1"] == both_varvars[i,"a2"]) rel_nonlin <- "no"
+  if(both_varvars[i,"a1"] != both_varvars[i,"a2"]) rel_nonlin <- "yes"
+  tmpdf <- data.frame(rho=both_varvars[i,"rho"], 
+                      rel_nonlin=rel_nonlin, 
+                      growth_rate=meantmpr)
+  both_invasion_growth_rate <- rbind(both_invasion_growth_rate, tmpdf)
+}
+
+both_together <- merge(both_community_biomass_cv, both_invasion_growth_rate)
+
+both1 <- ggplot(both_together, aes(x=as.factor(rho),y=cv_biomass, group=rel_nonlin))+
+  geom_line()+
+  geom_point(size=4,color="white")+
+  geom_point(size=4, aes(shape=rel_nonlin))+
+  ylab("CV of community biomass")+
+  xlab(expression(rho))+
+  theme_few()+
+  scale_shape_manual(values=c(1,19), name="", labels=c("RNL absent", "RNL present"))+
+  theme(legend.position=c(0.75,0.15))+
+  theme(legend.text=element_text(size=10),
+        legend.key.size=unit(0.5, "cm"))+
+  guides(shape = guide_legend(override.aes = list(size=2)))
+
+both2 <- ggplot(both_together, aes(x=as.factor(rho),y=growth_rate, group=rel_nonlin))+
+  geom_hline(aes(yintercept=0))+
+  geom_line()+
+  geom_point(size=4,color="white")+
+  geom_point(size=4, aes(shape=rel_nonlin))+
+  ylab("Log invasion growth rate")+
+  xlab(expression(rho))+  theme_few()+
+  scale_shape_manual(values=c(1,19), name="", labels=c("Relative nonlinearity absen", "Relative nonlinearity absent"))+
+  guides(shape=FALSE)
+
+png(paste0(path2figs,"storage_effect_relative_nonlinearity_anova_plot.png"),
+    width = 3.5, height=7, units = "in", res=72)
+grid.arrange(both1, both2)
+dev.off()
