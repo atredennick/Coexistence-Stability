@@ -224,6 +224,89 @@ dev.off()
 
 
 ####
+####  PLOT STORAGE EFFECT RESULTS -- VARIABLE RESOURCE, VARIABLE CUE
+####
+## Define vectors of parameters to vary
+n_rsd <- 11 # Number of cue variance levels
+rsd_vec <- pretty(seq(0, 1.4, length.out=n_rsd), n_rsd) # Make a pretty vector
+n_sig_e <- 11 # Number of seasonal standard deviation levels
+sig_e_vec <- pretty(seq(0, 5, length.out=n_sig_e), n_sig_e) # Make a pretty vector
+##  Create matrix with all possible combinations of varying parameters
+storage_effect_varvars3 <- expand.grid(rsd_vec, sig_e_vec)
+names(storage_effect_varvars3) <- c("rsd", "sigE")
+storage_effect_varvars3 <- unique(storage_effect_varvars3)
+
+storage_effect_sims3 <- readRDS(paste0(path2results,"storage_effect_equilibrium_varyresource_varycue_runs.RDS"))
+save_seasons_se3 <- list()
+for(i in 1:length(storage_effect_sims3)){
+  tmp <- as.data.frame(storage_effect_sims3[[i]])
+  names(tmp) <- c("D1", "D2", "N1", "N2", "R")
+  tmp$sigE <- storage_effect_varvars3[i,"sigE"]
+  tmp$rsd <- storage_effect_varvars3[i,"rsd"]
+  tmp$simnum <- i
+  tmp$timestep <- 1:nrow(tmp)
+  tmp_out <- tmp[seasons_to_exclude:nrow(tmp), ]
+  save_seasons_se3 <- rbind(save_seasons_se3, tmp_out)
+}
+
+##  Calculate CV of Total Community Biomass
+save_seasons_se3$total_biomass <- with(save_seasons_se3, N1+N2)
+se3_community_biomass_cv <- ddply(save_seasons_se3, .(sigE, rsd, simnum), summarise,
+                                  cv_biomass = sd(total_biomass)/mean(total_biomass))
+
+
+##  Calculate Invasion Growth Rate
+storage_effect_invasions3 <- readRDS(paste0(path2results,"storage_effect_invasion_varyresource_varycue_runs.RDS"))
+se3_invasion_growth_rate <- list()
+for(i in 1:length(storage_effect_invasions3)){
+  tmp <- storage_effect_invasions3[[i]]
+  tmpr <- log(tmp[seasons_to_exclude:nrow(tmp),2] / 1)
+  meantmpr <- mean(tmpr)
+  tmpdf <- data.frame(sigE=storage_effect_varvars3[i,"sigE"], rsd=storage_effect_varvars3[i,"rsd"], growth_rate=meantmpr)
+  se3_invasion_growth_rate <- rbind(se3_invasion_growth_rate, tmpdf)
+}
+
+##  Merge Growth Rates and Biomass CV; Plot
+se3_plot_dat <- merge(se3_invasion_growth_rate, se3_community_biomass_cv)
+se3_plot_dat <- subset(se3_plot_dat, cv_biomass<10)
+
+##  Make plots
+cc_se3 <- get_colors(length(unique(se3_plot_dat$sigE)))
+se3_cv_plot <- ggplot(se3_plot_dat, aes(x=rsd, y=cv_biomass, color=as.factor(sigE)))+
+  geom_point(size=2, alpha=0.5)+
+  geom_point(size=2, alpha=0.8, shape=1)+
+  stat_smooth(method="lm", se=FALSE, size=0.3)+
+  xlab(expression(paste("SD of annual resource (",sigma[R], ")")))+
+  ylab("CV of community biomass")+
+  scale_color_manual(name=expression(paste("Variance of environmental cue (",sigma[E]^2, ")")), values=cc_se3)+
+  theme_few()+
+  theme(legend.title=element_text(size=10),
+        legend.background = element_rect(colour = "grey", size=0.5))+
+  guides(color=guide_legend(nrow=2,byrow=TRUE, title.position = "top"))
+
+se3_gr_plot <- ggplot(se3_plot_dat, aes(x=rsd, y=growth_rate, color=as.factor(sigE)))+
+  geom_hline(aes(yintercept=0), linetype=2, alpha=0.9)+
+  geom_point(size=2, alpha=0.5)+
+  geom_point(size=2, alpha=0.8, shape=1)+
+  stat_smooth(method="lm", se=FALSE, size=0.3)+
+  xlab(expression(paste("SD of annual resource (",sigma[R], ")")))+
+  ylab("Log invasion growth rate")+
+  # scale_y_continuous(breaks=c(-0.1,0,0.1), limits=c(-0.1,0.13))+
+  scale_color_manual(name=expression(paste("Variance of environmental cue (",sigma[E]^2, ")")), values=cc_se3)+
+  theme_few()+
+  theme(legend.title=element_text(size=10),
+        legend.background = element_rect(colour = "grey", size=0.5))+
+  guides(color=guide_legend(nrow=2,byrow=TRUE, title.position = "top"))
+
+png(paste0(path2figs,"storage_effect_factorial_varyresource_varycue_plots.png"),
+    width = 3.5, height=7, units = "in", res=72)
+grid_arrange_shared_legend(se3_cv_plot, se3_gr_plot)
+dev.off()
+
+
+
+
+####
 ####  PLOT RELATIVE NONLINEARITY RESULTS
 ####
 ## Define vectors of parameters to vary
