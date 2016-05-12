@@ -29,7 +29,7 @@ seasons_to_exclude <- 100        # initial seasons to exclude from plots
 days_to_track <- 20              # number of days to simulate in odSolve
 DNR <- c(D=c(1,1,1),N=c(1,1,1),R=20) # initial conditions
 Rmu <- 3                         # mean resource pulse (on log scale)
-Rsd_annual <- 0                  # std dev of resource pulses (on log scale)
+Rsd_annual <- 0.5                 # std dev of resource pulses (on log scale)
 sigE <- 0.01                        # environmental cue variance
 rho12 <- -1                         # environmental cue correlation between species
 rho13 <- -1
@@ -37,9 +37,9 @@ rho23 <- -1
 
 # Within-season parameters
 parms <- list(
-  r = c(5,5,5),                    # max growth rate for each species
-  a = c(5,5,5),                    # rate parameter for Hill function 
-  b = c(20,20,20),                  # shape parameter for Hill function
+  r = c(5,1,1),                    # max growth rate for each species
+  a = c(5,2,2),                    # rate parameter for Hill function 
+  b = c(20,2.5,2.5),                  # shape parameter for Hill function
   eps = c(0.5,0.5,0.5)               # resource-to-biomass efficiency
 )
 
@@ -52,8 +52,8 @@ parms <- list(
 
 # End-of-season transition parameters
 alpha1 <- 0.50                   # live-to-dormant biomass fraction; spp1
-alpha2 <- 0.49                   # live-to-dormant biomass fraction; spp2
-alpha3 <- 0.48
+alpha2 <- 0.50                   # live-to-dormant biomass fraction; spp2
+alpha3 <- 0.50
 beta1 <- 0                       # adult survivorship; spp1 (0 if annual, >0 if perennial)
 beta2 <- 0                       # adult survivorship; spp2 (0 if annual, >0 if perennial)
 beta3 <- 0
