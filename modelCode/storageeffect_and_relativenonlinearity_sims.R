@@ -14,6 +14,7 @@
 ####
 
 rm(list=ls())                    # Erase the memory
+
 fxnfile <- "simulate_model_function.R"
 source(fxnfile)                  # Load the function for the simulations
 require(parallel)                # Load the parallel package
@@ -22,10 +23,15 @@ nbcores <- 4 # Set number of cores to match machine
 set.seed(123456789) # Set seed to reproduce random results
 
 ## Define vectors of parameters to vary
-prm <- matrix(c(-0.5,1,2,2.5,5,5,20,
-              -0.5,3,5,20,3,5,20,
-              0.5,1,2,2.5,5,5,20,
-              0.5,3,5,20,3,5,20), ncol=7, byrow = TRUE)
+prm <- matrix(c(-0.5,1,2,2.5,5,5,20,   # relative nonlinearity present
+                -0.5,3,5,20,3,5,20,    # rln absent; medium start
+                 0.5,1,2,2.5,5,5,20,   # relative nonlinearity present
+                 0.5,3,5,20,3,5,20,    # rln absent; medium start
+                -0.5,1,2,2.5,1,2,2.5,  # rln absent; low start
+                 0.5,1,2,2.5,1,2,2.5,  # rln absent; low start
+                -0.5,5,5,20,5,5,20,    # rln absent; high start
+                 0.5,5,5,20,5,5,20     # rln absent; high start
+                ), ncol=7, byrow = TRUE)
 colnames(prm) <- c("rho", "r1", "a1", "b1", "r2", "a2", "b2")
 
 
