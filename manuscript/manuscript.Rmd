@@ -3,6 +3,7 @@ layout: 12pt
 header-includes:
    - \usepackage{lineno}
    - \linenumbers
+   - \usepackage[font={sf,small}]{caption}
 bibliography: ~/Dropbox/Bibliography/CoexistStability.bib
 csl: components/ecology.csl
 
