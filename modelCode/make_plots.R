@@ -13,9 +13,9 @@ rm(list=ls())
 for(i in dev.list()) dev.off()
 
 # Check that we are in the correct directory
-testdir <- system("ls storageeffect_sims.R", ignore.stderr=TRUE)
+testdir <- system("ls simulate_model_function.R", ignore.stderr=TRUE)
 if(testdir != 0) {
-  cat("\n\nWARNING: Make sure that you are in the correct directory before running the script!\n\n\n")
+  stop("\n\nWARNING: Make sure that you are in the correct directory before running the script!\n\n\n")
 }
 
 ####
@@ -412,32 +412,55 @@ mytheme <- theme(axis.text=element_text(size=6),
                  axis.title=element_text(size=8),
                  legend.text=element_text(size=6),
                  legend.key.size=unit(0.3, "cm"))
+
+make_Ruptake_plot <- function(df, extratheme){
+  require(ggplot2)
+  require(ggthemes)
+  
+  outplot <- ggplot()+
+    geom_line(data=df, aes(x=resource, y=uptake, color=as.factor(species), linetype=as.factor(species)))+
+    theme_few()+
+    scale_color_manual(values=mycols, name="", labels=c("Species A", "Species B"))+
+    guides(size=FALSE, linetype=FALSE)+
+    scale_y_continuous(limits=c(0,5))+
+    xlab("")+
+    ylab("")+
+    guides(color=FALSE)+
+    extratheme
+  
+  return(outplot)
+}
+
+##  Resource uptake function (Hill function)
+uptake_R <- function(r, R, alpha, beta){
+  return((r*R^alpha) / (beta^alpha + R^alpha))
+}
+
+get_Ruptakes <- function(parms){
+  R <- seq(0,100,1)
+  out_r <- matrix(ncol=2, nrow=length(R))
+  alpha <- parms$alpha
+  beta <- parms$beta
+  for(i in 1:nrow(out_r)){
+    out_r[i,1] <- uptake_R(parms$r[1], R[i], alpha[1], beta[1])
+    out_r[i,2] <- uptake_R(parms$r[2], R[i], alpha[2], beta[2])
+  }
+  uptake <- data.frame(species=rep(c(1:2), each=nrow(out_r)),
+                       resource=rep(R, times=2),
+                       uptake=c(out_r[,1], out_r[,2]))
+  return(uptake)
+}
+
+
+##  RELATIVE NONLINEARITY OPERATING
 parms <- list(
   r = c(1,5),         # max growth rate for each species
   alpha = c(2,5),     # rate parameter for Hill function 
   beta = c(2.5,20)    # shape parameter for Hill function
 )
-R <- seq(0,100,1)
-out_r <- matrix(ncol=2, nrow=length(R))
-alpha <- parms$alpha
-beta <- parms$beta
-for(i in 1:nrow(out_r)){
-  out_r[i,1] <- uptake_R(parms$r[1], R[i], alpha[1], beta[1])
-  out_r[i,2] <- uptake_R(parms$r[2], R[i], alpha[2], beta[2])
-}
-uptake <- data.frame(species=rep(c(1:2), each=nrow(out_r)),
-                          resource=rep(R, times=2),
-                          uptake=c(out_r[,1], out_r[,2]))
-rel_on_plot <- ggplot()+
-  geom_line(data=uptake, aes(x=resource, y=uptake, color=as.factor(species), linetype=as.factor(species)))+
-  theme_few()+
-  scale_color_manual(values=mycols, name="", labels=c("Species A", "Species B"))+
-  guides(size=FALSE, linetype=FALSE)+
-  scale_y_continuous(limits=c(0,5))+
-  xlab("")+
-  ylab("")+
-  guides(color=FALSE)+
-  mytheme
+
+relnonlin_uptake <- get_Ruptakes(parms)
+rel_on_plot <- make_Ruptake_plot(relnonlin_uptake, mytheme)
 ggsave("../manuscript/components/Ruptake_relnonlin.png", plot = rel_on_plot, 
        width = 2, height = 1, units = "in", dpi = 72)
 
@@ -447,30 +470,10 @@ parms <- list(
   alpha = c(2,2),     # rate parameter for Hill function 
   beta = c(2.5,2.5)    # shape parameter for Hill function
 )
-R <- seq(0,100,1)
-out_r <- matrix(ncol=2, nrow=length(R))
-alpha <- parms$alpha
-beta <- parms$beta
-for(i in 1:nrow(out_r)){
-  out_r[i,1] <- uptake_R(parms$r[1], R[i], alpha[1], beta[1])
-  out_r[i,2] <- uptake_R(parms$r[2], R[i], alpha[2], beta[2])
-}
-uptake_lo <- data.frame(species=rep(c(1:2), each=nrow(out_r)),
-                     resource=rep(R, times=2),
-                     uptake=c(out_r[,1], out_r[,2]))
-start_lo_plot <- ggplot()+
-  geom_line(data=uptake_lo, aes(x=resource, y=uptake, color=as.factor(species), linetype=as.factor(species)))+
-  theme_few()+
-  scale_color_manual(values=mycols, name="", labels=c("Species A", "Species B"))+
-  guides(size=FALSE, linetype=FALSE)+
-  xlab("")+
-  ylab("")+
-  scale_y_continuous(limits=c(0,5))+
-  guides(color=FALSE)+
-  mytheme
+low_uptake <- get_Ruptakes(parms)
+start_lo_plot <- make_Ruptake_plot(low_uptake, mytheme)
 ggsave("../manuscript/components/start_lo_plot.png", plot = start_lo_plot, 
        width = 2, height = 1, units = "in", dpi = 72)
-
 
 # Start med
 parms <- list(
@@ -478,30 +481,10 @@ parms <- list(
   alpha = c(5,5),     # rate parameter for Hill function 
   beta = c(20,20)    # shape parameter for Hill function
 )
-R <- seq(0,100,1)
-out_r <- matrix(ncol=2, nrow=length(R))
-alpha <- parms$alpha
-beta <- parms$beta
-for(i in 1:nrow(out_r)){
-  out_r[i,1] <- uptake_R(parms$r[1], R[i], alpha[1], beta[1])
-  out_r[i,2] <- uptake_R(parms$r[2], R[i], alpha[2], beta[2])
-}
-uptake_med <- data.frame(species=rep(c(1:2), each=nrow(out_r)),
-                        resource=rep(R, times=2),
-                        uptake=c(out_r[,1], out_r[,2]))
-start_med_plot <- ggplot()+
-  geom_line(data=uptake_med, aes(x=resource, y=uptake, color=as.factor(species), linetype=as.factor(species)))+
-  theme_few()+
-  scale_color_manual(values=mycols, name="", labels=c("Species A", "Species B"))+
-  guides(size=FALSE, linetype=FALSE)+
-  xlab("")+
-  ylab("")+
-  scale_y_continuous(limits=c(0,5))+
-  guides(color=FALSE)+
-  mytheme
-ggsave("../manuscript/components/start_med_plot.png", plot = start_med_plot, 
+med_uptake <- get_Ruptakes(parms)
+start_med_plot <- make_Ruptake_plot(med_uptake, mytheme)
+ggsave("../manuscript/components/start_lo_plot.png", plot = start_med_plot, 
        width = 2, height = 1, units = "in", dpi = 72)
-
 
 # Start high
 parms <- list(
@@ -509,31 +492,14 @@ parms <- list(
   alpha = c(5,5),     # rate parameter for Hill function 
   beta = c(20,20)    # shape parameter for Hill function
 )
-R <- seq(0,100,1)
-out_r <- matrix(ncol=2, nrow=length(R))
-alpha <- parms$alpha
-beta <- parms$beta
-for(i in 1:nrow(out_r)){
-  out_r[i,1] <- uptake_R(parms$r[1], R[i], alpha[1], beta[1])
-  out_r[i,2] <- uptake_R(parms$r[2], R[i], alpha[2], beta[2])
-}
-uptake_hi <- data.frame(species=rep(c(1:2), each=nrow(out_r)),
-                         resource=rep(R, times=2),
-                         uptake=c(out_r[,1], out_r[,2]))
-start_hi_plot <- ggplot()+
-  geom_line(data=uptake_hi, aes(x=resource, y=uptake, color=as.factor(species), linetype=as.factor(species)))+
-  theme_few()+
-  scale_color_manual(values=mycols, name="", labels=c("Species A", "Species B"))+
-  guides(size=FALSE, linetype=FALSE)+
-  xlab("")+
-  ylab("")+
-  scale_y_continuous(limits=c(0,5))+
-  guides(color=FALSE)+
-  mytheme
-ggsave("../manuscript/components/start_hi_plot.png", plot = start_hi_plot, 
+high_uptake <- get_Ruptakes(parms)
+start_hi_plot <- make_Ruptake_plot(high_uptake, mytheme)
+ggsave("../manuscript/components/start_lo_plot.png", plot = start_hi_plot, 
        width = 2, height = 1, units = "in", dpi = 72)
 
 
+
+##  Get simulation results and collate
 both_sims <- readRDS(paste0(path2results,"storageeffect_relativenonlinearity_equilibrium_runs.RDS"))
 save_seasons_both <- list()
 for(i in 1:length(both_sims)){
@@ -554,6 +520,41 @@ for(i in 1:length(both_sims)){
 save_seasons_both$total_biomass <- with(save_seasons_both, N1+N2)
 both_community_biomass_cv <- ddply(save_seasons_both, .(rho, rel_nonlin, sim_code), summarise,
                                  cv_biomass = sd(total_biomass)/mean(total_biomass))
+tmpdf <- rbind(both_community_biomass_cv[which(both_community_biomass_cv$sim_code=="NOPE"),],
+               both_community_biomass_cv[which(both_community_biomass_cv$sim_code=="NOPE"),],
+               both_community_biomass_cv[which(both_community_biomass_cv$sim_code=="NOPE"),])
+tmpdf$sim_code <- c(rep("LOW",2), rep("MED",2), rep("HIGH",2))
+both_community_biomass_cv <- rbind(tmpdf, both_community_biomass_cv[which(both_community_biomass_cv$sim_code!="NOPE"),])
+
+make_cv_plot <- function(df, ylims){
+  require(ggplot2)
+  require(ggthemes)
+  
+  ggplot(df, aes(x=as.factor(rho),y=cv_biomass, group=rel_nonlin))+
+    geom_line()+
+    geom_point(size=4,color="white")+
+    geom_point(size=4, aes(shape=rel_nonlin))+
+    ylab("CV of community biomass")+
+    xlab(expression(rho))+
+    scale_y_continuous(limits=ylims)+
+    theme_few()+
+    scale_shape_manual(values=c(1,19), name="", labels=c("RNL absent", "RNL present"))+
+    theme(legend.position=c(0.75,0.15))+
+    theme(legend.text=element_text(size=10),
+          legend.key.size=unit(0.5, "cm"))+
+    # guides(shape = guide_legend(override.aes = list(size=2)))+
+    guides(shape=FALSE)+
+    theme(axis.text=element_text(size=12),
+          axis.title=element_text(size=15),
+          legend.text=element_text(size=6),
+          legend.key.size=unit(0.3, "cm"))
+}
+
+ylimits <- c(min(both_community_biomass_cv$cv_biomass), max(both_community_biomass_cv$cv_biomass))
+low_gr_rnl_strg_cv <- make_cv_plot(subset(both_community_biomass_cv, sim_code=="LOW"), ylimits)
+med_gr_rnl_strg_cv <- make_cv_plot(subset(both_community_biomass_cv, sim_code=="MED"), ylimits)
+high_gr_rnl_strg_cv <- make_cv_plot(subset(both_community_biomass_cv, sim_code=="HIGH"), ylimits)
+
 
 ##  Calculate Invasion Growth Rate
 both_invasions <- readRDS(paste0(path2results,"storageeffect_relativenonlinearity_invasion_runs.RDS"))
@@ -567,43 +568,53 @@ for(i in 1:length(both_invasions)){
   tmpdf <- data.frame(rho=both_varvars[i,"rho"], 
                       rel_nonlin=rel_nonlin, 
                       growth_rate=meantmpr)
+  tmpdf$sim_code <- sim_start_names[i]
   both_invasion_growth_rate <- rbind(both_invasion_growth_rate, tmpdf)
 }
+tmpdf <- rbind(both_invasion_growth_rate[which(both_invasion_growth_rate$sim_code=="NOPE"),],
+               both_invasion_growth_rate[which(both_invasion_growth_rate$sim_code=="NOPE"),],
+               both_invasion_growth_rate[which(both_invasion_growth_rate$sim_code=="NOPE"),])
+tmpdf$sim_code <- c(rep("LOW",2), rep("MED",2), rep("HIGH",2))
+both_invasion_growth_rate <- rbind(tmpdf, both_invasion_growth_rate[which(both_invasion_growth_rate$sim_code!="NOPE"),])
 
-both_together <- merge(both_community_biomass_cv, both_invasion_growth_rate)
+make_invasion_gr_plot <- function(df, ylims){
+  require(ggplot2)
+  require(ggthemes)
+  
+  ggplot(df, aes(x=as.factor(rho),y=growth_rate, group=rel_nonlin))+
+    geom_hline(aes(yintercept=0))+
+    geom_line()+
+    geom_point(size=4,color="white")+
+    geom_point(size=4, aes(shape=rel_nonlin))+
+    ylab("Log invasion growth rate")+
+    xlab(expression(rho))+  
+    scale_y_continuous(limits=ylims)+
+    theme_few()+
+    scale_shape_manual(values=c(19,1))+
+    guides(shape=FALSE)+
+    theme(axis.text=element_text(size=12),
+          axis.title=element_text(size=15),
+          legend.text=element_text(size=6),
+          legend.key.size=unit(0.3, "cm"))
+}
 
-both1 <- ggplot(both_community_biomass_cv, aes(x=as.factor(rho),y=cv_biomass))+
-  geom_line()+
-  geom_point(size=4,color="white")+
-  geom_point(size=4, aes(shape=rel_nonlin))+
-  ylab("CV of community biomass")+
-  xlab(expression(rho))+
-  theme_few()+
-  scale_shape_manual(values=c(1,19), name="", labels=c("RNL absent", "RNL present"))+
-  theme(legend.position=c(0.75,0.15))+
-  theme(legend.text=element_text(size=10),
-        legend.key.size=unit(0.5, "cm"))+
-  guides(shape = guide_legend(override.aes = list(size=2)))+
-  theme(axis.text=element_text(size=12),
-        axis.title=element_text(size=15),
-        legend.text=element_text(size=6),
-        legend.key.size=unit(0.3, "cm"))
+ylimits <- c(min(both_invasion_growth_rate$growth_rate), max(both_invasion_growth_rate$growth_rate))
+low_gr_rnl_strg_gr <- make_invasion_gr_plot(subset(both_invasion_growth_rate, sim_code=="LOW"), ylimits)
+med_gr_rnl_strg_gr <- make_invasion_gr_plot(subset(both_invasion_growth_rate, sim_code=="MED"), ylimits)
+high_gr_rnl_strg_gr <- make_invasion_gr_plot(subset(both_invasion_growth_rate, sim_code=="HIGH"), ylimits)
 
-both2 <- ggplot(both_together, aes(x=as.factor(rho),y=growth_rate, group=rel_nonlin))+
-  geom_hline(aes(yintercept=0))+
-  geom_line()+
-  geom_point(size=4,color="white")+
-  geom_point(size=4, aes(shape=rel_nonlin))+
-  ylab("Log invasion growth rate")+
-  xlab(expression(rho))+  theme_few()+
-  scale_shape_manual(values=c(1,19), name="", labels=c("Relative nonlinearity absen", "Relative nonlinearity absent"))+
-  guides(shape=FALSE)+
-  theme(axis.text=element_text(size=12),
-        axis.title=element_text(size=15),
-        legend.text=element_text(size=6),
-        legend.key.size=unit(0.3, "cm"))
 
-png(paste0(path2figs,"storage_effect_relative_nonlinearity_anova_plot.png"),
+png(paste0(path2figs,"storage_effect_relative_nonlinearity_anova_plot_low.png"),
     width = 3.5, height=7, units = "in", res=72)
-grid.arrange(both1, both2)
+grid.arrange(low_gr_rnl_strg_cv, low_gr_rnl_strg_gr)
+dev.off()
+
+png(paste0(path2figs,"storage_effect_relative_nonlinearity_anova_plot_med.png"),
+    width = 3.5, height=7, units = "in", res=72)
+grid.arrange(med_gr_rnl_strg_cv, med_gr_rnl_strg_gr)
+dev.off()
+
+png(paste0(path2figs,"storage_effect_relative_nonlinearity_anova_plot_high.png"),
+    width = 3.5, height=7, units = "in", res=72)
+grid.arrange(high_gr_rnl_strg_cv, high_gr_rnl_strg_gr)
 dev.off()
