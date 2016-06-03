@@ -390,11 +390,20 @@ dev.off()
 ####  MAKE STORAGE EFFECT AND RELATIVE NONLINEARITY PROFILE PLOTS
 ####
 ## Define vectors of parameters to vary
-both_varvars <- matrix(c(-0.5,1,2,2.5,5,5,20,
-                -0.5,5,5,20,5,5,20,
-                0.5,1,2,2.5,5,5,20,
-                0.5,5,5,20,5,5,20), ncol=7, byrow = TRUE)
+both_varvars <- matrix(c(-0.5,1,2,2.5,5,5,20,   # relative nonlinearity present
+                         -0.5,3,5,20,3,5,20,    # rln absent; medium start
+                         0.5,1,2,2.5,5,5,20,   # relative nonlinearity present
+                         0.5,3,5,20,3,5,20,    # rln absent; medium start
+                         -0.5,1,2,2.5,1,2,2.5,  # rln absent; low start
+                         0.5,1,2,2.5,1,2,2.5,  # rln absent; low start
+                         -0.5,5,5,20,5,5,20,    # rln absent; high start
+                         0.5,5,5,20,5,5,20     # rln absent; high start
+                        ), ncol=7, byrow = TRUE)
 colnames(both_varvars) <- c("rho", "r1", "a1", "b1", "r2", "a2", "b2")
+sim_start_names <- c("NOPE", "MED", 
+               "NOPE", "MED",
+               "LOW", "LOW", 
+               "HIGH", "HIGH")
 
 ##  Plot the resource uptake curves
 mycols <- c("red", "blue")
@@ -537,12 +546,13 @@ for(i in 1:length(both_sims)){
   tmp$simnum <- i
   tmp$timestep <- 1:nrow(tmp)
   tmp_out <- tmp[seasons_to_exclude:nrow(tmp), ]
+  tmp_out$sim_code <- sim_start_names[i]
   save_seasons_both <- rbind(save_seasons_both, tmp_out)
 }
 
 ##  Calculate CV of Total Community Biomass
 save_seasons_both$total_biomass <- with(save_seasons_both, N1+N2)
-both_community_biomass_cv <- ddply(save_seasons_both, .(rho, rel_nonlin), summarise,
+both_community_biomass_cv <- ddply(save_seasons_both, .(rho, rel_nonlin, sim_code), summarise,
                                  cv_biomass = sd(total_biomass)/mean(total_biomass))
 
 ##  Calculate Invasion Growth Rate
@@ -562,7 +572,7 @@ for(i in 1:length(both_invasions)){
 
 both_together <- merge(both_community_biomass_cv, both_invasion_growth_rate)
 
-both1 <- ggplot(both_together, aes(x=as.factor(rho),y=cv_biomass, group=rel_nonlin))+
+both1 <- ggplot(both_community_biomass_cv, aes(x=as.factor(rho),y=cv_biomass))+
   geom_line()+
   geom_point(size=4,color="white")+
   geom_point(size=4, aes(shape=rel_nonlin))+
