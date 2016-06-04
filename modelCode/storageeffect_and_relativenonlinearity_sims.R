@@ -37,7 +37,7 @@ colnames(prm) <- c("rho", "r1", "a1", "b1", "r2", "a2", "b2")
 
 ##  Define constant parameters in list
 constant_parameters <- list (
-  seasons = 10000,                  # number of seasons to simulate
+  seasons = 20000,                  # number of seasons to simulate
   days_to_track = 20,              # number of days to simulate in odSolve
   Rmu = 3,                         # mean resource pulse (on log scale)
   Rsd_annual = 0.8,                # std dev of resource pulses (on log scale)

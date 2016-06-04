@@ -3,7 +3,7 @@ layout: 12pt
 header-includes:
    - \usepackage{lineno}
    - \linenumbers
-   - \usepackage[font={sf,small}]{caption}
+   - \usepackage[font={footnotesize},labelfont=bf]{caption}
 bibliography: ~/Dropbox/Bibliography/CoexistStability.bib
 csl: components/ecology.csl
 
@@ -109,7 +109,7 @@ Model and Analysis
 ------------------
 ### A General Consumer-Resource Model
 
-We present a semi-discrete, mechanistic consumer-resource model that allows coexistence of two species on one resource by either the storage effect or relative nonlinearity. In our model, the consumer can be in one of two-states: a dormant state $D$ and a live state $N$. Transitions between $N$ and $D$ occur at discrete intervals $\tau$ with continuous-time consumer-resource dynamics between discrete transitions. Thus, our model is formulated as ``pulsed differential equations" [@Pachepsky2008; @Mailleret2009; @Mordecai2016]. For clarity we refer to $\tau$ as years and the growing time between years as seasons with daily ($t$) time steps. 
+We present a semi-discrete, mechanistic consumer-resource model that allows coexistence of two species on one resource by either the storage effect or relative nonlinearity. In our model, the consumer can be in one of two-states: a dormant state $D$ and a live state $N$. Transitions between $N$ and $D$ occur at discrete intervals $\tau$ with continuous-time consumer-resource dynamics between discrete transitions. Thus, our model is formulated as "pulsed differential equations" [@Pachepsky2008; @Mailleret2009; @Mordecai2016]. For clarity we refer to $\tau$ as years and the growing time between years as seasons with daily ($t$) time steps. 
 
 During a growing season, consumer-resource dynamics are modeled as two differential equations:
 
@@ -120,45 +120,55 @@ During a growing season, consumer-resource dynamics are modeled as two different
 
 \noindent where the discrete transitions between $N$ and $D$ occur between seasons at times $\tau_k$, $k = 1,2,3, \dots, K$. The subscript $i$ denotes species, $N$ is the living biomass state, and $\epsilon_i$ is each species' resource-to-biomass conversion efficiency. The growth rate of living biomass is a resource-dependent Hill function, $f_{i}(R) = r_{i}R^{a_{i}} / (b_{i}^{a_{i}}+R^{a_{i}})$, where *r* is a species' intrinsic growth rate and *a* and *b* define the curvature of the function. Resource depletion is equal to the sum of each species' consumption. 
 
-Along with resource uptake, consumer population growth depends on the production dormant biomass ($D$), the activation of dormant biomass to live biomass ($D \rightarrow N$), and the survival of living biomass from one year to the next. At the beginning of each season we start with initial conditions defined as $V_{t}$, $W_{t}$, and $Z_{t}$ for the dormant state, the live state, and the resource, respectively. So for each season, eqs. 1-2 are solved given the initial conditions:
+Along with resource uptake, consumer population growth depends on the production of dormant biomass ($D$), the activation of dormant biomass to live biomass ($D \rightarrow N$), and the survival of living biomass from one year to the next. The biomass of each species' states at the start of a growing season are equal to
 
-\noindent The consumers transition between $N$ and $D$ instantaneously between years. So, at the yearly transition:
 \begin{align}
   D_{i}(\tau_k^+) &= \alpha_i N_{i}(\tau_k) + D_{i}(\tau_k)(1-\gamma_{i,\tau_k})(1-\eta_i) \\
-  N_{i}(\tau_k^+) &= \beta_i(1-\alpha_i)N_{i}(\tau_k) + \gamma_{i,t}[D_{i}(\tau_k) + \alpha_i N_{i}(\tau_k)] (1-\eta_i) \\
-  R(\tau_k^+) &= \theta_i (1-\alpha_i)N_i(\tau_k) + \nu R(\tau_k) + R(\tau_k)
+  N_{i}(\tau_k^+) &= \beta_i(1-\alpha_i)N_{i}(\tau_k) + \gamma_{i,t}[D_{i}(\tau_k) + \alpha_i N_{i}(\tau_k)] (1-\eta_i),
 \end{align}
-\noindent where $D(\tau_k)$, $N(\tau_k)$, and $R(\tau_k)$ are the abundances of each state at the end of growing season *k*, $\tau_k^+$ denotes the beginning of growing season $k=1$, and $g$ is a yearly activation rate that regulates how much dormant biomass is converted to growing-season live biomass each year. $R(T^+)$ is a randomly generated resource pulse from a log-normal distribution with mean $R_\mu$ and variance $R_{\sigma^2}$ (same mean and variance used to generate daily pulses). Our formulation assumes that at the end of each season all accumulated living biomass [$N(T^-)$] is converted to dormant biomass. Parameter notations and definitions are in table 1.
 
-\begin{center}
+\noindent where $D(\tau_k)$, $N(\tau_k)$, and $R(\tau_k)$ are the abundances of each state at the end of growing season *k* and $\tau_k^+$ denotes the beginning of growing season $k=1$. 
+The activation of dormant biomass to live biomass is controlled by $\gamma$, which is year (*k*) and species (*i*) specific.
+Dormant biomass is equal to a constant fraction ($\alpha$) of live biomass at the end of the previous season ($N_{i}(\tau_k)$), plus survival ($1-\eta_i$) of dormant biomass ($D_{i}(\tau_k)$) at the end of the previous year and dormant biomass remaining after live biomass activation ($D_{i}(\tau_k)(1-\gamma_{i,\tau_k})$).
+Live biomass is equal to the survival ($\beta$) of live biomass remaining after converting a fraction of live biomass to dormant biomass ($(1-\alpha_i)N_{i}(\tau_k)$), plus newly activated dormant biomass ($\gamma_{i,t}[D_{i}(\tau_k)$).
+We assume the resource pool is not replenished within a growing season.
+Resource replenishment occurs between growing seasons, and the resource pool (*R*) at the start of the growing season *k*+1 is
+
+\begin{align}
+R(\tau_k^+) &= \theta_i (1-\alpha_i)N_i(\tau_k) + \nu R(\tau_k) + R^+,
+\end{align}
+
+\noindent where $\theta$ is the fraction of live biomass that dies and is recycled into the resource pool, $\nu$ is the fraction of the resource pool carried over from the previous year, and $R^+$ is a random resource pulse. Model parameters and notation are described in table 1.
+
+\begin{centering}
 \begin{table}
-\caption{Definition of model states and parameters. `Constant' parameters do not fluctuate during a simulation, while `variable' parameters do fluctuate through time in a given simulation.}
+\caption{Definition of model states and parameters.}
 \begin{tabular}{l l}
 \hline
 Parameter & Definition \\
 \hline
 $N$ & live biomass \\
 $D$ & dormant biomass \\
-$R$ & resource supply \\
-$m_{D}$ & dormant state mortality rate (constant) \\
-$b$ & live state maximum resource uptake rate (constant) \\
-$m_{N}$ & live state mortality rate (constant) \\
-$a$ & allocation fraction of live biomass to seed bank (constant) \\
-$g$ & dormant-to-live biomass transition fraction (variable) \\ 
-$\rho$ & correlation of species' responses transition cue (constant) \\
-$\sigma^2_{E}$ & variance of transition cue (constant) \\
-$R_{\mu}$ & mean resource pulse, on log scale (constant) \\
-$R_{\sigma^2}$ & variance of daily resource supply, on log scale (variable) \\
-
+$R$ & resource pool \\
+$r$ & maximum per capita growth rate \\
+$a$ & Hill function parameter \\
+$b$ & Hill function parameter \\
+$\epsilon$ & resource-to-biomass conversion efficiency \\
+$\alpha$ & allocation fraction of live biomass to dormant biomass \\
+$\gamma$ & dormant-to-live biomass transition fraction (variable) \\
+$\eta$ & dormant biomass mortality rate \\
+$\beta$ & live biomass survival rate \\
+$\theta$ & resource recycling fraction \\
+$\nu$ & resource carry-over fraction \\
 \hline
 \end{tabular}
 \end{table}
-\end{center}
+\end{centering}
 
 ### Implementing the Storage Effect
 To make this a ``storage-effect" model, we need to satisfy three conditions: (1) the organisms must have a mechanism for persistence under unfavorable conditions, (2) species must respond differently to environmental conditions, and (3) the effects of competition on a species must be more strongly negative in good years relative to unfavorable years. Our model meets condition 1 because we include a dormant stage with very low death rates. We satisfy condition 2 with our model whenever $g$ is not perfectly correlated between species. Lastly, our model meets condition 3 because condition 2 partitions intraspecific and interspecific competition into different years. Thus, during a high $g$ year for one species, resource uptake is also inherently high for that species, which increases intraspecific competition relative to interspecific competition. So, given adequate variability in $g$, the inferior competitor (species with lower $r$) can persist. 
 
-Following @Adler2008, we generated sequences of (un)correlated dormant-to-live state transition rates ($g$) for each species by drawing from multivariate normal distributions with mean 0 and a variance-covariance matrix ($\Sigma_g$) of
+We generated sequences of (un)correlated dormant-to-live state transition rates ($g$) for each species by drawing from multivariate normal distributions with mean 0 and a variance-covariance matrix ($\Sigma_g$) of
 
 \begin{align}
 \Sigma_g = 
@@ -168,7 +178,8 @@ Following @Adler2008, we generated sequences of (un)correlated dormant-to-live s
 \end{bmatrix}
 \end{align}
 
-\noindent where $\sigma^2_{E}$ is the variance and $\rho$ is the correlation between between the two species' transition rates. For environmental variability, here induced as variability in $g$, to promote coexistence via the storage effect, $\rho$ must be less than 1. The inferior competitor has the strongest potential to persist when $\rho=-1$ (perfectly uncorrelated transition rates). 
+\noindent where $\sigma^2_{E}$ is the variance of the environmental cue and $\rho$ is the correlation between between the two species' transition rates. $\rho$ must be less than 1 for stable coexistence.
+The inferior competitor has the strongest potential to persist when $\rho=-1$ (perfectly uncorrelated transition rates). 
 
 ### Implementing Relative Nonlinearity
 When considering consumer-resource dynamics, species coexistence by relative nonlinearity requires that each species has different nonlinear responses to resource availability, and resource availability must fluctuate through time. In a constant resource environment, the species with the lowest R* will always exclude the other species. To compare this model to the storage effect model we still allow the germination rate \emph{g} to vary, but both species are perfectly correlated -- that is, $\rho=1$ (fig. 1). 
@@ -311,6 +322,18 @@ Within-season dynamics were solved given initial conditions using the package 'd
 Results
 -------
 The strength of coexistence is negatively associated with ecosystem variability when species coexistence is maintained by the storage effect (fig. 2).
+
+\begin{figure}[!ht]
+  \centering
+      \includegraphics{./components/fig2_formatted.png}
+  \caption{Variability of community biomass and invasion growth rates of the inferior competitor under different parameter combinations. Points are mean values from 10,000 growing seasons and lines are linear fits to show trends. In \textbf{Storage Effect} plots, resource supply is held constant between growing seasons, whereas resource supply varies each year in \textbf{Relative Nonlinearity} simulations.}
+\end{figure}
+
+\begin{figure}[!ht]
+  \centering
+      \includegraphics{./components/profile_plots_formatted.png}
+  \caption{Variability of total community biomass and invasion growth rates of the inferior competitor when the storage effect is strong ($\rho=-0.5$) and weak ($\rho=0.5$), with (filled circles) and without (open circles) relative nonlinearity contributing to coexistence. Simulations without relative nonlinearity were run with species having (\emph{a}) low, (\emph{b}) moderate, and (\emph{c}) high maximum growth rates. Small plots above the main panels shows species resource uptake curves associated with each simulation.}
+\end{figure}
 
 <!--
 \begin{figure}[!ht]
