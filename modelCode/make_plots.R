@@ -406,7 +406,7 @@ sim_start_names <- c("NOPE", "MED",
                "HIGH", "HIGH")
 
 ##  Plot the resource uptake curves
-mycols <- c("red", "blue")
+mycols <- c("grey", "skyblue")
 
 mytheme <- theme(axis.text=element_text(size=6),
                  axis.title=element_text(size=8),
@@ -483,7 +483,7 @@ parms <- list(
 )
 med_uptake <- get_Ruptakes(parms)
 start_med_plot <- make_Ruptake_plot(med_uptake, mytheme)
-ggsave("../manuscript/components/start_lo_plot.png", plot = start_med_plot, 
+ggsave("../manuscript/components/start_med_plot.png", plot = start_med_plot, 
        width = 2, height = 1, units = "in", dpi = 72)
 
 # Start high
@@ -494,7 +494,7 @@ parms <- list(
 )
 high_uptake <- get_Ruptakes(parms)
 start_hi_plot <- make_Ruptake_plot(high_uptake, mytheme)
-ggsave("../manuscript/components/start_lo_plot.png", plot = start_hi_plot, 
+ggsave("../manuscript/components/start_hi_plot.png", plot = start_hi_plot, 
        width = 2, height = 1, units = "in", dpi = 72)
 
 

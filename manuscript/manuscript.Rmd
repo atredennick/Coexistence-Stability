@@ -191,7 +191,7 @@ library(mvtnorm)
 library(gridExtra)
 # mycols <- c("#9D6188","#97A861")
 # mycols <- c("black", "grey")
-mycols <- c("red", "blue")
+mycols <- c("grey", "skyblue")
 
 mytheme <- theme(axis.text=element_text(size=6),
                  axis.title=element_text(size=8),
