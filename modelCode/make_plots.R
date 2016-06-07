@@ -645,7 +645,8 @@ for(i in 1:length(multispp_strg)){
   livestates <- grep("N", colnames(tmp))
   tmp_totbiomass <- rowSums(tmp[seasons_to_exclude:nrow(tmp),livestates])
   tmp_cv <- sd(tmp_totbiomass) / mean(tmp_totbiomass)
-  tmp_spprich <- length(which(tmp[nrow(tmp),livestates] > 0.1))
+  tmp_sppavg <- colMeans(tmp[seasons_to_exclude:nrow(tmp),livestates])
+  tmp_spprich <- length(which(tmp_sppavg > 1))
   
   tmp_out <- data.frame(rho=varvars[i,"rho"],
                         sigE=varvars[i,"sigE"],
