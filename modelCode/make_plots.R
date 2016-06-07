@@ -618,3 +618,67 @@ png(paste0(path2figs,"storage_effect_relative_nonlinearity_anova_plot_high.png")
     width = 3.5, height=7, units = "in", res=72)
 grid.arrange(high_gr_rnl_strg_cv, high_gr_rnl_strg_gr)
 dev.off()
+
+
+
+
+####
+####  SPECIES RICHNESS - ENVIRONMENTAL VARIABILITY RELATIONSHIP
+####
+### Recreate parameter grid
+## Define vectors of parameters to vary
+n_sig_e <- 11 # Number of cue variance levels
+sig_e_vec <- pretty(seq(0, 5, length.out=n_sig_e), n_sig_e) # Make a pretty vector
+n_rho <- 11 # Number of seasonal standard deviation levels
+rho_vec <- pretty(seq(-1, 1, length.out=n_rho), n_rho) # Make a pretty vector
+
+##  Create matrix with all possible combinations of varying parameters
+varvars <- expand.grid(sig_e_vec, rho_vec )
+names(varvars) <- c("sigE", "rho")
+
+##  Read in simulation results
+multispp_strg <- readRDS(paste0(path2results,"storage_effect_4species.RDS"))
+save_multispp <- list() # empty storage list
+for(i in 1:length(multispp_strg)){
+  tmp <- as.data.frame(multispp_strg[[i]])
+  names(tmp) <- c("D1", "D2", "D3", "D4", "N1", "N2", "N3", "N4", "R")
+  livestates <- grep("N", colnames(tmp))
+  tmp_totbiomass <- rowSums(tmp[seasons_to_exclude:nrow(tmp),livestates])
+  tmp_cv <- sd(tmp_totbiomass) / mean(tmp_totbiomass)
+  tmp_spprich <- length(which(tmp[nrow(tmp),livestates] > 0.1))
+  
+  tmp_out <- data.frame(rho=varvars[i,"rho"],
+                        sigE=varvars[i,"sigE"],
+                        cv=tmp_cv,
+                        spprich=tmp_spprich)
+
+  save_multispp <- rbind(save_multispp, tmp_out)
+}
+
+
+library("plot3D")
+M <- as.matrix(dcast(save_multispp, rho~sigE, value.var = "cv"))
+png(paste0(path2figs,"cv_persp_plot.png"), width = 5, height = 5, units="in", res = 72)
+persp3D(x = unique(save_multispp$rho),
+       y = unique(save_multispp$sigE),
+       z = M[,2:ncol(M)],
+       xlab = expression(rho), bty = "bl2",
+       ylab = expression(sigma[E]), zlab = "CV", clab = "Ecosystem Variability (CV)",
+       expand = 0.5, d = 2, phi = 20, theta = 30, resfac = 5,
+       contour = list(col = "grey", side = c("zmin", "z")),
+       colkey = list(side = 1, length = 0.5),
+       ticktype="detailed")
+dev.off()
+
+Mspp <- as.matrix(dcast(save_multispp, rho~sigE, value.var = "spprich"))
+png(paste0(path2figs,"spprich_persp_plot.png"), width = 5, height = 5, units="in", res = 72)
+persp3D(x = unique(save_multispp$rho),
+        y = unique(save_multispp$sigE),
+        z = Mspp[,2:ncol(M)],
+        xlab = expression(rho), bty = "bl2",
+        ylab = expression(sigma[E]), zlab = "Species Richness", clab = "Number of Species",
+        expand = 0.5, d = 2, phi = 20, theta = 30, resfac = 5,
+        contour = list(col = "grey", side = c("zmin", "z")),
+        colkey = list(side = 1, length = 0.5),
+        ticktype="detailed")
+dev.off()

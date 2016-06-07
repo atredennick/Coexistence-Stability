@@ -335,6 +335,12 @@ The strength of coexistence is negatively associated with ecosystem variability 
   \caption{Variability of total community biomass and invasion growth rates of the inferior competitor when the storage effect is strong ($\rho=-0.5$) and weak ($\rho=0.5$), with (filled circles) and without (open circles) relative nonlinearity contributing to coexistence. Simulations without relative nonlinearity were run with species having (\emph{a}) low, (\emph{b}) moderate, and (\emph{c}) high maximum growth rates. Small plots above the main panels shows species resource uptake curves associated with each simulation.}
 \end{figure}
 
+\begin{figure}[!ht]
+  \centering
+      \includegraphics[width=3in]{./components/persp_plots_formatted.png}
+  \caption{Variability of total community biomass (\emph{a}) and species richness (\emph{b}) as a function of the variance of the environmental cue ($\sigma^2_E$), and the correlation of species responses to the environment ($\rho$). }
+\end{figure}
+
 <!--
 \begin{figure}[!ht]
   \centering
