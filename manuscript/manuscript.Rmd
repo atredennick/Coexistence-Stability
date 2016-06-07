@@ -105,6 +105,8 @@ However, the exact relationship between storage effect strength and ecosystem st
 Unlike the potential interaction between the storage effect and ecosystem stability, how relative nonlinearity might interact with ecosystem stability is less clear.
 
 
+
+
 Model and Analysis
 ------------------
 ### A General Consumer-Resource Model
@@ -138,28 +140,30 @@ Resource replenishment occurs between growing seasons, and the resource pool (*R
 R(\tau_k^+) &= \theta_i (1-\alpha_i)N_i(\tau_k) + \nu R(\tau_k) + R^+,
 \end{align}
 
-\noindent where $\theta$ is the fraction of live biomass that dies and is recycled into the resource pool, $\nu$ is the fraction of the resource pool carried over from the previous year, and $R^+$ is a random resource pulse. Model parameters and notation are described in table 1.
+\noindent where $\theta$ is the fraction of live biomass that dies and is recycled into the resource pool, $\nu$ is the fraction of the resource pool carried over from the previous year, and $R^+$ is a random resource pulse drawn from a log-normal distribution with mean $\mu(R^+)$ and standard deviation $\sigma(R^+)$. Model parameters and notation are described in table 1.
 
 \begin{centering}
 \begin{table}
-\caption{Definition of model states and parameters.}
-\begin{tabular}{l l}
+\footnotesize
+\caption{Default values of model parameters and their descriptions. Parameters that vary depending on the mode and strength of species coexistence or depending on species copmetive hierarchies are labeled as "variable" in parantheses. The dormant-to-live biomass transition fraction ($\gamma$) is a function of other parameters, so has no default value.}
+\begin{tabular}{l l l}
 \hline
-Parameter & Definition \\
+Parameter & Description & Value \\
 \hline
-$N$ & live biomass \\
-$D$ & dormant biomass \\
-$R$ & resource pool \\
-$r$ & maximum per capita growth rate \\
-$a$ & Hill function parameter \\
-$b$ & Hill function parameter \\
-$\epsilon$ & resource-to-biomass conversion efficiency \\
-$\alpha$ & allocation fraction of live biomass to dormant biomass \\
-$\gamma$ & dormant-to-live biomass transition fraction (variable) \\
-$\eta$ & dormant biomass mortality rate \\
-$\beta$ & live biomass survival rate \\
-$\theta$ & resource recycling fraction \\
-$\nu$ & resource carry-over fraction \\
+$r$ & maximum per capita growth rate & 1 (variable) \\
+$a$ & Hill function rate parameter & 2 (variable) \\
+$b$ & Hill function curvature parameter & 2.5 (variable) \\
+$\epsilon$ & resource-to-biomass conversion efficiency & 0.5 \\
+$\alpha$ & allocation fraction of live biomass to dormant biomass & 0.5 (variable) \\
+$\gamma$ & dormant-to-live biomass transition fraction & -- \\
+$\rho$ & correlation of species' response to the environment & 0 (variable) \\
+$\sigma_E$ & variance of the environmental cue & 2 (variable) \\
+$\eta$ & dormant biomass mortality rate & 0.1 \\
+$\beta$ & live biomass survival rate & 0 \\
+$\theta$ & resource recycling fraction & 0 \\
+$\nu$ & resource carry-over fraction & 0 \\
+$\mu(R^+)$ & mean annual resource pulse & 20 (non-log scale) \\
+$\sigma(R^+)$ & standard deviation of annual resource pulse & 0 (variable) \\
 \hline
 \end{tabular}
 \end{table}
@@ -317,7 +321,7 @@ After discarding an initial 20 seasons to reduce transient effects on our result
 For storage effect simulations, species were equivalent in their ability to capture and assimilate the resource (*R*) but had different, depending on $\rho$, germination rates.
 For relative nonlinearity simulations, species had equivalent germination rates ($\rho = 1$) but different resource acquisition functions (fig. 1).
 We explored a limited set of parameter space where the storage effect and relative nonlinearity were operating simultaneously.
-Within-season dynamics were solved given initial conditions using the package 'deSolve' [@Soetaert2010] in R [@Team2013].
+Within-season dynamics were solved given initial conditions using the package ``deSolve`` [@Soetaert2010] in ``R`` [@Team2013].
 
 Results
 -------
@@ -339,6 +343,12 @@ The strength of coexistence is negatively associated with ecosystem variability 
   \centering
       \includegraphics[width=3in]{./components/persp_plots_formatted.png}
   \caption{Variability of total community biomass (\emph{a}) and species richness (\emph{b}) as a function of the variance of the environmental cue ($\sigma^2_E$), and the correlation of species responses to the environment ($\rho$). }
+\end{figure}
+
+\begin{figure}[!ht]
+  \centering
+      \includegraphics{./components/diversity_stability_relationship.png}
+  \caption{Variability of total community biomass as a function of the the number of coexisting species at different levels of correlations of species' responses to environmental conditions ($\rho$).}
 \end{figure}
 
 <!--

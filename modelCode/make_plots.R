@@ -683,3 +683,12 @@ persp3D(x = unique(save_multispp$rho),
         colkey = list(side = 1, length = 0.5),
         ticktype="detailed")
 dev.off()
+
+ggplot(subset(save_multispp, rho!=1), aes(x=spprich, y=cv))+
+  geom_point(shape=21, color="white", fill="black", size=3)+
+  stat_smooth(method="lm", color="black", fill="grey", se=FALSE)+
+  facet_wrap("rho", nrow=2)+
+  xlab("Number of Species")+
+  ylab("Variability of Total Community Biomass (CV)")+
+  theme_few()
+ggsave(paste0(path2figs,"diversity_stability_relationship.png"), width = 8, height = 4, units = "in", dpi = 100)
