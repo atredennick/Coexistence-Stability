@@ -95,12 +95,14 @@ simulate_model <- function(seasons, days_to_track, Rmu,
   days <- c(1:days_to_track)
   
   # Get "germination" fractions for each year
-  varcov <- matrix(rep(rho*sigE,num_spp*2), num_spp, num_spp)
-  diag(varcov) <- sigE
-  if(sigE > 0) { varcov <- Matrix::nearPD(varcov)$mat } # coerce matrix to positive definite
+  num_spp <- length(parms$r)
   
-  getG <- function(sigE, rho, nTime, varcov) {
-    e <- rmvnorm(n = nTime, mean = c(0,0), sigma = varcov)
+  getG <- function(sigE, rho, nTime, num_spp) {
+    varcov <- matrix(rep(rho*sigE,num_spp*2), num_spp, num_spp)
+    diag(varcov) <- sigE
+    if(sigE > 0) { varcov <- Matrix::nearPD(varcov)$mat } # coerce matrix to positive definite
+    varcov <- as.matrix(varcov)
+    e <- rmvnorm(n = nTime, mean = rep(0,num_spp), sigma = varcov)
     g <- exp(e) / (1+exp(e))
     return(g)
   }
@@ -110,7 +112,7 @@ simulate_model <- function(seasons, days_to_track, Rmu,
   dormants <- grep("D", names(DNR))
   NR <- DNR[-dormants] 
   nmsNR <- names(NR)
-  gVec <- getG(sigE = sigE, rho = rho, nTime = seasons)
+  gVec <- getG(sigE = sigE, rho = rho, nTime = seasons, num_spp = num_spp)
   Rvector <- rlnorm(seasons, Rmu, Rsd_annual)
   saved_outs <- matrix(ncol=length(DNR), nrow=seasons+1)
   saved_outs[1,] <- DNR 
