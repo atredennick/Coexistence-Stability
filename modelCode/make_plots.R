@@ -659,12 +659,12 @@ for(i in 1:length(multispp_strg)){
 
 library("plot3D")
 M <- as.matrix(dcast(save_multispp, rho~sigE, value.var = "cv"))
-png(paste0(path2figs,"cv_persp_plot.png"), width = 5, height = 5, units="in", res = 72)
+png(paste0(path2figs,"cv_persp_plot.png"), width = 5, height = 5, units="in", res = 120)
 persp3D(x = unique(save_multispp$rho),
        y = unique(save_multispp$sigE),
        z = M[,2:ncol(M)],
-       xlab = expression(rho), bty = "bl2",
-       ylab = expression(sigma[E]), zlab = "CV", clab = "Ecosystem Variability (CV)",
+       xlab = "", bty = "b2",
+       ylab = "", zlab = "", clab = "",
        expand = 0.5, d = 2, phi = 20, theta = 30, resfac = 5,
        contour = list(col = "grey", side = c("zmin", "z")),
        colkey = list(side = 1, length = 0.5),
@@ -672,12 +672,12 @@ persp3D(x = unique(save_multispp$rho),
 dev.off()
 
 Mspp <- as.matrix(dcast(save_multispp, rho~sigE, value.var = "spprich"))
-png(paste0(path2figs,"spprich_persp_plot.png"), width = 5, height = 5, units="in", res = 72)
+png(paste0(path2figs,"spprich_persp_plot.png"), width = 5, height = 5, units="in", res = 120)
 persp3D(x = unique(save_multispp$rho),
         y = unique(save_multispp$sigE),
         z = Mspp[,2:ncol(M)],
-        xlab = expression(rho), bty = "bl2",
-        ylab = expression(sigma[E]), zlab = "Species Richness", clab = "Number of Species",
+        xlab = "", bty = "b2",
+        ylab = "", zlab = "", clab = "",
         expand = 0.5, d = 2, phi = 20, theta = 30, resfac = 5,
         contour = list(col = "grey", side = c("zmin", "z")),
         colkey = list(side = 1, length = 0.5),
