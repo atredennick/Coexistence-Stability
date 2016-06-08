@@ -623,7 +623,7 @@ dev.off()
 
 
 ####
-####  SPECIES RICHNESS - ENVIRONMENTAL VARIABILITY RELATIONSHIP
+####  SPECIES RICHNESS - ENVIRONMENTAL VARIABILITY RELATIONSHIP; STORAGE EFFECT
 ####
 ### Recreate parameter grid
 ## Define vectors of parameters to vary
@@ -692,3 +692,42 @@ ggplot(subset(save_multispp, rho!=1), aes(x=spprich, y=cv))+
   ylab("Variability of Total Community Biomass (CV)")+
   theme_few()
 ggsave(paste0(path2figs,"diversity_stability_relationship.png"), width = 8, height = 4, units = "in", dpi = 100)
+
+
+
+####
+####  SPECIES RICHNESS - ENVIRONMENTAL VARIABILITY RELATIONSHIP; RELATIVE NONLINEARITY
+####
+### Recreate parameter grid
+## Define vectors of parameters to vary
+n_rsd <- 11 # Number of seasonal standard deviation levels
+rsd_vec <- pretty(seq(0, 1.4, length.out=n_rsd), n_rsd) # Make a pretty vector
+rsd_vec <- as.data.frame(rsd_vec)
+names(rsd_vec) <- "Rsd_annual"
+
+##  Read in simulation results
+multispp_rln <- readRDS(paste0(path2results,"relative_nonlinearity_4species.RDS"))
+save_multispp <- list() # empty storage list
+for(i in 1:length(multispp_rln)){
+  tmp <- as.data.frame(multispp_rln[[i]])
+  names(tmp) <- c("D1", "D2", "D3", "D4", "N1", "N2", "N3", "N4", "R")
+  livestates <- grep("N", colnames(tmp))
+  tmp_totbiomass <- rowSums(tmp[seasons_to_exclude:nrow(tmp),livestates])
+  tmp_cv <- sd(tmp_totbiomass) / mean(tmp_totbiomass)
+  tmp_sppavg <- colMeans(tmp[seasons_to_exclude:nrow(tmp),livestates])
+  tmp_spprich <- length(which(tmp_sppavg > 1))
+  
+  tmp_out <- data.frame(rsd=rsd_vec[i,"Rsd_annual"],
+                        cv=tmp_cv,
+                        spprich=tmp_spprich)
+  
+  save_multispp <- rbind(save_multispp, tmp_out)
+}
+
+ggplot(subset(save_multispp, spprich>0), aes(x=spprich, y=cv))+
+  geom_point(shape=21, color="white", fill="black", size=3)+
+  stat_smooth(method="lm", color="black", fill="grey", se=FALSE)+
+  xlab("Number of Species")+
+  ylab("Variability of Total Community Biomass (CV)")+
+  theme_few()
+ggsave(paste0(path2figs,"diversity_stability_relationship_relnonlin.png"), width = 4, height = 4, units = "in", dpi = 100)

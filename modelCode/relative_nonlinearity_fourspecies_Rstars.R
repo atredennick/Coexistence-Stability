@@ -29,6 +29,16 @@ get_Ruptakes <- function(parms){
 }
 
 outs <- get_Ruptakes(grow_parameters)
-
+mycols <- c("#009953",
+            "#a55bcf",
+            "#efb332",
+            "#4a005f")
 ggplot(outs, aes(x=resource, y=uptake, color=as.factor(species)))+
-  geom_line()
+  geom_line(size=1)+
+  scale_color_manual(values=mycols)+
+  theme_few()+
+  guides(color=FALSE)+
+  xlab("Resource Uptake")+
+  ylab("Resource Level")
+ggsave("../manuscript/components/fourspp_Ruptake_relnonlin.png", width = 4, height = 4, units = "in", dpi = 100)
+
