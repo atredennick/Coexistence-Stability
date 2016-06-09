@@ -1,7 +1,13 @@
-#########################################################################
-##  test_runs.R: does quick simulations of the four species model to   ##
-##  test parameter combinations                                        ##
-#########################################################################
+##################################################################################
+##  relnonlin_sims_div_stability.R: runs simulations of the multispecies        ##
+##  model at a single level of resource variance that allows coexistence of     ##
+##  all four species. Simulations are run with 1, 2, 3, and 4 species to        ##
+##  estimate the diversity-stability relationship when coexistence is possible  ##
+##################################################################################
+
+####
+#### ISSUE THIE COMMAND IN SHELL BEFORE STARTING R: export OMP_NUM_THREADS=1 
+####
 
 rm(list=ls())                    # Erase the memory
 fxnfile <- "simulate_model_function_4species.R"
@@ -11,17 +17,15 @@ require(parallel)                # Load the parallel package
 nbcores <- 4 # Set number of cores to match machine/simulations
 set.seed(123456789) # Set seed to reproduce random results
 
-## Define vectors of parameters to vary
-# Initial conditions
+## Define vectors of parameters to vary -- here, initial conditions to vary richness
 DNR <- rbind(c(D=c(1,1,1,1),N=c(1,1,1,1),R=20),
              c(D=c(1,1,1,0),N=c(1,1,1,0),R=20),
-             c(D=c(1,1,0,0),N=c(1,1,0,0),R=20),
              c(D=c(1,1,0,0),N=c(1,1,0,0),R=20),
              c(D=c(1,0,0,0),N=c(1,0,0,0),R=20))
 
 ##  Define constant parameters in list
 constant_parameters <- list (
-  seasons = 1000,                  # number of seasons to simulate
+  seasons = 5000,                  # number of seasons to simulate
   days_to_track = 20,              # number of days to simulate in odSolve
   Rmu = 3,                         # mean resource pulse (on log scale)
   Rsd_annual = 1.2,                # std dev of resource pulses (on log scale)
@@ -57,13 +61,10 @@ grow_parameters <- list (
 
 
 # Make on long vector of named parameters
-# constant_param_vec <- c(unlist(constant_parameters), unlist(grow_parameters), unlist(DNR))
 constant_param_vec <- c(unlist(constant_parameters), unlist(grow_parameters))
 
 
-# # Add in variable parameters to form parameter matrix
-# constant_param_matrix <- matrix(constant_param_vec, nrow = nrow(rsd_vec), 
-#                                 ncol=length(constant_param_vec), byrow = TRUE)
+# Add in variable parameters to form parameter matrix
 constant_param_matrix <- matrix(constant_param_vec, nrow = nrow(DNR), 
                                 ncol=length(constant_param_vec), byrow = TRUE)
 colnames(constant_param_matrix) <- names(constant_param_vec)
@@ -78,13 +79,5 @@ outs <- mclapply(seq_len(nrow(DNR)),
                  }, 
                  mc.cores=nbcores) # end apply function
 
-
-
-# constant_env <- outs[[1]]
-# variable_env <- outs[[2]]
-# 
-# # Look at the time-series
-# par(mfrow=c(2,1), mgp=c(2.2,0.45,0), tcl=-0.4, mar=c(3.3,3.6,1.1,1.1), las=1)
-# matplot(constant_env[,1:4], type="l", xlab="Growing Season", ylab="Biomass", main="Constant Environment", lty=1)
-# matplot(variable_env[,1:4], type="l", xlab="Growing Season", ylab="Biomass", main="Fluctuating Environment", lty=1)
+saveRDS(outs, "../simulationResults/relnonlin_4species_divstability.RDS")
 

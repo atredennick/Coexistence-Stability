@@ -731,3 +731,63 @@ ggplot(subset(save_multispp, spprich>0), aes(x=spprich, y=cv))+
   ylab("Variability of Total Community Biomass (CV)")+
   theme_few()
 ggsave(paste0(path2figs,"diversity_stability_relationship_relnonlin.png"), width = 4, height = 4, units = "in", dpi = 100)
+
+
+
+####
+####  PRE-DEFINED SPECIES COEXISTENCE, DIVERSITY-STABILITY RELATIONSHIPS
+####
+##  Storage Effect
+##  Read in simulation results
+sppco_strg <- readRDS(paste0(path2results,"storageeffect_4species_divstability.RDS"))
+save_multispp <- list() # empty storage list
+for(i in 1:length(sppco_strg)){
+  tmp <- as.data.frame(sppco_strg[[i]])
+  names(tmp) <- c("D1", "D2", "D3", "D4", "N1", "N2", "N3", "N4", "R")
+  livestates <- grep("N", colnames(tmp))
+  tmp_totbiomass <- rowSums(tmp[seasons_to_exclude:nrow(tmp),livestates])
+  tmp_cv <- sd(tmp_totbiomass) / mean(tmp_totbiomass)
+  tmp_sppavg <- colMeans(tmp[seasons_to_exclude:nrow(tmp),livestates])
+  tmp_spprich <- length(which(tmp_sppavg > 1))
+  
+  tmp_out <- data.frame(cv=tmp_cv,
+                        spprich=tmp_spprich)
+  
+  save_multispp <- rbind(save_multispp, tmp_out)
+}
+
+ggplot(save_multispp, aes(x=spprich, y=cv))+
+  geom_point(shape=21, color="white", fill="black", size=3)+
+  stat_smooth(method="lm", color="black", fill="grey", se=FALSE)+
+  xlab("Number of Species")+
+  ylab("Variability of Total Community Biomass (CV)")+
+  theme_few()
+ggsave(paste0(path2figs,"diversity_stability_relationship_storage_coexist.png"), width = 4, height = 4, units = "in", dpi = 100)
+
+##  Relative Nonlinearity
+##  Read in simulation results
+sppco_relnonlin <- readRDS(paste0(path2results,"relnonlin_4species_divstability.RDS"))
+save_multispp <- list() # empty storage list
+for(i in 1:length(sppco_relnonlin)){
+  tmp <- as.data.frame(sppco_relnonlin[[i]])
+  names(tmp) <- c("D1", "D2", "D3", "D4", "N1", "N2", "N3", "N4", "R")
+  livestates <- grep("N", colnames(tmp))
+  tmp_totbiomass <- rowSums(tmp[seasons_to_exclude:nrow(tmp),livestates])
+  tmp_cv <- sd(tmp_totbiomass) / mean(tmp_totbiomass)
+  tmp_sppavg <- colMeans(tmp[seasons_to_exclude:nrow(tmp),livestates])
+  tmp_spprich <- length(which(tmp_sppavg > 1))
+  
+  tmp_out <- data.frame(cv=tmp_cv,
+                        spprich=tmp_spprich)
+  
+  save_multispp <- rbind(save_multispp, tmp_out)
+}
+
+ggplot(save_multispp, aes(x=spprich, y=cv))+
+  geom_point(shape=21, color="white", fill="black", size=3)+
+  stat_smooth(method="lm", color="black", fill="grey", se=FALSE)+
+  xlab("Number of Species")+
+  ylab("Variability of Total Community Biomass (CV)")+
+  theme_few()
+ggsave(paste0(path2figs,"diversity_stability_relationship_relnonlin_coexist.png"), width = 4, height = 4, units = "in", dpi = 100)
+
