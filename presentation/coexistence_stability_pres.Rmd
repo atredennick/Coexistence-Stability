@@ -1,0 +1,264 @@
+---
+title: "How fluctuation-dependent species coexistence affects ecosystem stability"
+author: "Andrew Tredennick, Peter Adler, & Fred Adler"
+date: ""
+output:
+  beamer_presentation:
+    theme: "metropolis"
+    colortheme: "default"
+    fig_caption: no
+header-includes:
+   - \usepackage{graphicx}
+---
+
+# Environmental variability
+All organisms exist in variable environments, and this provides \alert{challenges} and \alert{opportunities}.
+
+- \alert{Challenges}: organisms have to survive, makes the ecosystem more variable (less predictable)
+- \alert{Opportunities}: can "divvy up" niche space, allowing species to coexist
+
+**Paradox**: environmental variability can maintain biodiversity, and higher biodiversity is predicted to increase ecosystem stability. But, if environemental variability promotes species coexistence, shouldn't more species rich communities also have higher ecosystem variability?
+
+# Fluctuation-dependent coexistence and ecosystem stability
+All theory that predicts a positive relationship between species richness and ecosystem stability either:
+
+1. Ensures coexistence via \alert{fluctuation-independent} mechanisms (e.g., resource partitioning)
+2. Selects parameters that ensure species coexistence, even if coexistence depends, in part, on temporal fluctuations.
+
+# The model
+- Two (or more) plant species coexisting on a single resource that replenishes once at the beginning of the growing season.
+- Plants exist in two states: dormant (e.g., seedbank for annuals) and live.
+- Transitions between the two states occur between growing seasons and depend on plant responses to an environmental cue temperature.
+- Two sources of environmental variation: the resource and the environmental cue.
+
+# The model: growing season dynamics
+Within a growing season, live plant state dynamics are modeled with classic \textcolor{red}{consumer (\emph{N})}-\textcolor{blue}{resource (\emph{R})} dynamics
+
+\begin{align}
+&\textcolor{red}{\frac{\text{d}N_{i}}{\text{d}t} = N_{i}\epsilon_if_{i}(R)}, \quad t \ne \tau_k\\
+&\textcolor{blue}{\frac{\text{d}R}{\text{d}t} = - \sum\limits_{i=1,2}f_{i}(R)N_{i}}, \quad t \ne \tau_k
+\end{align}
+
+- $\epsilon$ = biomass conversion efficiency
+- $f_{i}(R)$ = resource-dependent resource uptake function
+
+# The model: resource uptake function
+
+\begin{equation}
+f_{i}(R) = r_{i}R^{a_{i}} / (b_{i}^{a_{i}}+R^{a_{i}})
+\end{equation}
+
+\begin{figure}
+   \includegraphics[width= 2.5in]{../manuscript/components/fourspp_Ruptake_relnonlin.png}
+\end{figure}
+
+# The model: between growing season dynamics
+Biomasses of each species' state (\textcolor{red}{N}, \textcolor{brown}{D}) at the start of the growing season ($\tau_k^+$) equal to...
+
+\definecolor{darkolivegreen}{rgb}{0.33, 0.42, 0.18}
+
+\begin{align}
+  &\textcolor{brown}{D_{i}(\tau_k^+)} = \textcolor{purple}{\alpha_i N_{i}(\tau_k)}+ \textcolor{darkolivegreen}{D_{i}(\tau_k)(1-\gamma_{i,\tau_k})} + \textcolor{orange}{D_{i}(\tau_k)(1-\eta_i)} \\
+  &\textcolor{red}{N_{i}(\tau_k^+)} = \textcolor{magenta}{\beta_i(1-\alpha_i)N_{i}(\tau_k)} + \textcolor{cyan}{\gamma_{i,t}[D_{i}(\tau_k) + \alpha_i N_{i}(\tau_k)] (1-\eta_i)}
+\end{align}
+
+\textbf{Dormant state population growth}
+- \textcolor{purple}{Some biomass comes in to storage from the live state}, \textcolor{darkolivegreen}{some gets activated to the live state}, \textcolor{orange}{some biomass survives to stay in the dormant state.}
+
+\textbf{Live state population growth}
+- \textcolor{magenta}{Some biomass survives ($\beta$) from $\tau_k$ and is stored ($\alpha$) in the dormant state}, \textcolor{cyan}{some biomass gets activated from the dormant state.} 
+
+
+# Coexistence mechanisms
+1. Storage effect (a,b)
+2. Relative nonlinearity (c,d)
+
+```{r model_types, cache=FALSE, warning=FALSE, message=FALSE, eval=TRUE, fig.height=3, fig.width=5, echo=FALSE}
+library(ggplot2)
+library(ggthemes)
+library(mvtnorm)
+library(gridExtra)
+# mycols <- c("#9D6188","#97A861")
+# mycols <- c("black", "grey")
+mycols <- c("grey", "skyblue")
+
+mytheme <- theme(axis.text=element_text(size=6),
+                 axis.title=element_text(size=8),
+                 legend.text=element_text(size=6),
+                 legend.key.size=unit(0.3, "cm"))
+
+ ##  Resource uptake function (Hill function)
+  uptake_R <- function(r, R, alpha, beta){
+    return((r*R^alpha) / (beta^alpha + R^alpha))
+  }
+  # Get "germination" fractions for each year
+  getG <- function(sigE, rho, nTime){
+    varcov <- matrix(c(sigE, rho*sigE, rho*sigE, sigE), 2, 2)
+    e <- rmvnorm(n = nTime, mean = c(0,0), sigma = varcov)
+    g <- exp(e) / (1+exp(e))
+    return(g)
+  }
+
+## STORAGE EFFECT PLOTS
+parms <- list(
+  r = c(5,5),         # max growth rate for each species
+  alpha = c(5,5),     # rate parameter for Hill function 
+  beta = c(20,20),    # shape parameter for Hill function
+  mN = c(0.5,0.5),    # live biomass loss (mortality) rates 
+  mD = c(0.01, 0.01), # dormant biomass loss (mortality) rates
+  a = c(0.5,0.5)      # allocation fraction of live biomass to seed bank
+)
+R <- seq(0,100,1)
+out_r <- matrix(ncol=2, nrow=length(R))
+alpha <- parms$alpha
+beta <- parms$beta
+for(i in 1:nrow(out_r)){
+  out_r[i,1] <- uptake_R(parms$r[1], R[i], alpha[1], beta[1])
+  out_r[i,2] <- uptake_R(parms$r[2], R[i], alpha[2], beta[2])
+}
+strg_uptake <- data.frame(species=rep(c(1:2), each=nrow(out_r)),
+                          resource=rep(R, times=2),
+                          uptake=c(out_r[,1], out_r[,2]))
+strg_uptake_plot <- ggplot()+
+  geom_line(data=strg_uptake, aes(x=resource, y=uptake, color=as.factor(species), linetype=as.factor(species)))+
+  theme_few()+
+  scale_color_manual(values=mycols, name="", labels=c("Species A", "Species B"))+
+  guides(size=FALSE, linetype=FALSE)+
+  xlab("Resource")+
+  ylab("Resource Uptake Rate")+
+  theme(legend.position=c(0.7,0.35))+
+  geom_text(aes(x=1,y=5, label="a", size=8))+
+  mytheme
+
+sigE <- 2   # environmental cue variability
+rho <- 0    # environmental cue correlation between species
+gVec <- getG(sigE = sigE, rho = rho, nTime = 20)
+germ_rate <- data.frame(species=rep(c(1:2),each=20),
+                        timestep=rep(c(1:20), times=2),
+                        germrate=c(gVec[,1], gVec[,2]))
+strg_germ_plot <- ggplot()+
+  geom_line(data=germ_rate,aes(x=timestep, y=germrate, color=as.factor(species), linetype=as.factor(species)))+
+  theme_few()+
+  scale_color_manual(values=mycols, name="Species")+
+  guides(size=FALSE, linetype=FALSE, color=FALSE)+
+  xlab("Simulation Year")+
+  ylab("Germination Fraction")+
+  geom_text(aes(x=1,y=1,label="b", size=8))+
+  mytheme
+
+
+## RELATIVE NONLINEARITY PLOTS
+parms <- list(
+  r = c(5,1),          # max growth rate for each species
+  alpha = c(5,2),      # rate parameter for Hill function 
+  beta = c(20,2.5),    # shape parameter for Hill function
+  mN = c(0.5,0.5),     # live biomass loss (mortality) rates 
+  mD = c(0.01, 0.01),  # dormant biomass loss (mortality) rates
+  a = c(0.5,0.5)       # allocation fraction of live biomass to seed bank
+)
+R <- seq(0,100,1)
+out_r <- matrix(ncol=2, nrow=length(R))
+alpha <- parms$alpha
+beta <- parms$beta
+for(i in 1:nrow(out_r)){
+  out_r[i,1] <- uptake_R(parms$r[1], R[i], alpha[1], beta[1])
+  out_r[i,2] <- uptake_R(parms$r[2], R[i], alpha[2], beta[2])
+}
+reln_uptake <- data.frame(species=rep(c(1:2), each=nrow(out_r)),
+                          resource=rep(R, times=2),
+                          uptake=c(out_r[,1], out_r[,2]))
+reln_uptake_plot <- ggplot()+
+  geom_line(data=reln_uptake, aes(x=resource, y=uptake, color=as.factor(species), linetype=as.factor(species)))+
+  theme_few()+
+  scale_color_manual(values=mycols, name="Species")+
+  guides(size=FALSE, linetype=FALSE, color=FALSE)+
+  xlab("Resource")+
+  ylab("Resource Uptake Rate")+
+  geom_text(aes(x=1,y=5,label="c", size=8))+
+  mytheme
+
+sigE <- 2   # environmental cue variability
+rho <- 1    # environmental cue correlation between species
+gVec <- getG(sigE = sigE, rho = rho, nTime = 20)
+germ_rate <- data.frame(species=rep(c(1:2),each=20),
+                        timestep=rep(c(1:20), times=2),
+                        germrate=c(gVec[,1], gVec[,2]))
+reln_germ_plot <- ggplot()+
+  geom_line(data=germ_rate,aes(x=timestep, y=germrate, color=as.factor(species), linetype=as.factor(species)))+
+  theme_few()+
+  scale_color_manual(values=mycols, name="Species")+
+  guides(size=FALSE, linetype=FALSE, color=FALSE)+
+  xlab("Simulation Year")+
+  ylab("Germination Fraction")+
+  geom_text(aes(x=1,y=1,label="d", size=8))+
+  mytheme
+
+g_strg <- grid.arrange(strg_uptake_plot, strg_germ_plot, 
+                       reln_uptake_plot, reln_germ_plot,
+                       ncol=2, nrow=2)
+```
+
+# Questions
+
+1. How do the storage effect and relative nonlinearity affect ecosystem stability in a 2-species community at various levels of resource and envrionmental variance?
+
+2. How do the storage effect and relative nonlinearity affect the diversity-stability relationship?
+
+# Question 1: Results
+
+\begin{figure}
+   \includegraphics[]{../manuscript/components/fig2_formatted.png}
+\end{figure}
+
+# Question 1: Results
+
+\begin{figure}
+   \includegraphics[]{../manuscript/components/profile_plots_formatted.png}
+\end{figure}
+
+# Question 2: Methods
+1. Create four unique species
+2. Start with all of them in the community
+3. See which ones survive
+
+\begin{figure}
+   \includegraphics[height=2in]{../manuscript/components/fourspecies_comp_hierarchy.png}
+\end{figure}
+
+
+# Question 2: Results: Storage Effect
+
+\begin{figure}
+   \includegraphics[]{../manuscript/components/persp_plots_formatted.png}
+\end{figure}
+
+# Question 2: Results: Storage Effect
+
+The diversity-variability relationship is positive across a natural diversity gradient!
+
+\begin{figure}
+   \includegraphics[]{../manuscript/components/diversity_stability_relationship.png}
+\end{figure}
+
+# Question 2: Results: Relative Nonlinearity
+
+The diversity-variability relationship is positive across a natural diversity gradient!
+
+\begin{figure}
+   \includegraphics[]{../manuscript/components/diversity_stability_relationship_relnonlin.png}
+\end{figure}
+
+# Question 2: Results: "Within-sites"
+
+Within a level of environmental variance, more species is always better, as predicted by other theories and found in BEF experiments (whew!).
+
+\begin{figure}
+   \includegraphics[]{../manuscript/components/neg_div_stab_coexistence.png}
+\end{figure}
+
+# Conclusions
+- Deviations from expected negative diversity-stability relationship probably due to fluctuation-dependent coexistence mechanisms.
+
+- Given that plant coexistence is probably maintained by some mixture of fluctuation-indpendent and fluctuation-dependent mechanisms, we should not be surprised to find all sorts of patterns between diversity and stability in natural systems with natural diversity gradients.
+
+- However, at a give level of environmental variability, more species is always better. 

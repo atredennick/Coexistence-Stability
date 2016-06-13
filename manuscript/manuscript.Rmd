@@ -125,8 +125,8 @@ During a growing season, consumer-resource dynamics are modeled as two different
 Along with resource uptake, consumer population growth depends on the production of dormant biomass ($D$), the activation of dormant biomass to live biomass ($D \rightarrow N$), and the survival of living biomass from one year to the next. The biomass of each species' states at the start of a growing season are equal to
 
 \begin{align}
-  D_{i}(\tau_k^+) &= \alpha_i N_{i}(\tau_k) + D_{i}(\tau_k)(1-\gamma_{i,\tau_k})(1-\eta_i) \\
-  N_{i}(\tau_k^+) &= \beta_i(1-\alpha_i)N_{i}(\tau_k) + \gamma_{i,t}[D_{i}(\tau_k) + \alpha_i N_{i}(\tau_k)] (1-\eta_i),
+  D_{i}(\tau_k^+) &= (1-\gamma_{i,\tau_k})(\alpha_i N_{i}(\tau_k) + D_{i}(\tau_k))(1-\eta_i) \\
+  N_{i}(\tau_k^+) &= \beta_i(1-\alpha_i)N_{i}(\tau_k) + \gamma_{i,t}(D_{i}(\tau_k) + \alpha_i N_{i}(\tau_k)) (1-\eta_i),
 \end{align}
 
 \noindent where $D(\tau_k)$, $N(\tau_k)$, and $R(\tau_k)$ are the abundances of each state at the end of growing season *k* and $\tau_k^+$ denotes the beginning of growing season $k=1$. 
