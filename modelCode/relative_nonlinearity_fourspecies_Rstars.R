@@ -44,7 +44,7 @@ ggplot(outs, aes(x=resource, y=uptake, color=as.factor(species)))+
   scale_color_manual(values=mycols)+
   theme_few()+
   guides(color=FALSE)+
-  xlab("Resource Uptake")+
-  ylab("Resource Level")
+  xlab("Resource Level")+
+  ylab("Resource Uptake")
 ggsave("../manuscript/components/fourspp_Ruptake_relnonlin.png", width = 4, height = 4, units = "in", dpi = 100)
 
