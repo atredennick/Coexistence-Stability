@@ -20,8 +20,19 @@ set.seed(123456789) # Set seed to reproduce random results
 ## Define vectors of parameters to vary -- here, initial conditions to vary richness
 DNR <- rbind(c(D=c(1,1,1,1),N=c(1,1,1,1),R=20),
              c(D=c(1,1,1,0),N=c(1,1,1,0),R=20),
+             c(D=c(1,1,0,1),N=c(1,1,0,1),R=20),
+             c(D=c(1,0,1,1),N=c(1,0,1,1),R=20),
+             c(D=c(0,1,1,1),N=c(0,1,1,1),R=20),
              c(D=c(1,1,0,0),N=c(1,1,0,0),R=20),
-             c(D=c(1,0,0,0),N=c(1,0,0,0),R=20))
+             c(D=c(1,0,1,0),N=c(1,0,1,0),R=20),
+             c(D=c(1,0,0,1),N=c(1,0,0,1),R=20),
+             c(D=c(0,1,1,0),N=c(0,1,1,0),R=20),
+             c(D=c(0,1,0,1),N=c(0,1,0,1),R=20),
+             c(D=c(0,0,1,1),N=c(0,0,1,1),R=20),
+             c(D=c(1,0,0,0),N=c(1,0,0,0),R=20),
+             c(D=c(0,1,0,0),N=c(0,1,0,0),R=20),
+             c(D=c(0,0,1,0),N=c(0,0,1,0),R=20),
+             c(D=c(0,0,0,1),N=c(0,0,1,0),R=20))
 
 ##  Define constant parameters in list
 constant_parameters <- list (

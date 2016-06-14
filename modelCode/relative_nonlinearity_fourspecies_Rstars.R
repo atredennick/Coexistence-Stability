@@ -1,3 +1,9 @@
+################################################################################
+##  relative_nonlinearity_fourspecies_Rstars.R: makes a plot of four species' ##
+##  resource uptake curves when coexisting via relative nonlinearity          ##
+################################################################################
+
+
 # Growth function parameters
 grow_parameters <- list (
   r = c(1,5,10,25),           # max growth rate for each species
