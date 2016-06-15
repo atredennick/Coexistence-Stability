@@ -125,8 +125,8 @@ During a growing season, consumer-resource dynamics are modeled as two different
 Along with resource uptake, consumer population growth depends on the production of dormant biomass ($D$), the activation of dormant biomass to live biomass ($D \rightarrow N$), and the survival of living biomass from one year to the next. The biomass of each species' states at the start of a growing season are equal to
 
 \begin{align}
-  D_{i}(\tau_k^+) &= (1-\gamma_{i,\tau_k})(\alpha_i N_{i}(\tau_k) + D_{i}(\tau_k))(1-\eta_i) \\
-  N_{i}(\tau_k^+) &= \beta_i(1-\alpha_i)N_{i}(\tau_k) + \gamma_{i,t}(D_{i}(\tau_k) + \alpha_i N_{i}(\tau_k)) (1-\eta_i),
+  D_{i}(\tau_k^+) &= (1-\gamma_{i,\tau_k})[\alpha_i N_{i}(\tau_k) + D_{i}(\tau_k)](1-\eta_i) \\
+  N_{i}(\tau_k^+) &= (1-\alpha_i)N_{i}(\tau_k) + \gamma_{i,t}[\alpha_i N_{i}(\tau_k) + D_{i}(\tau_k)] (1-\eta_i),
 \end{align}
 
 \noindent where $D(\tau_k)$, $N(\tau_k)$, and $R(\tau_k)$ are the abundances of each state at the end of growing season *k* and $\tau_k^+$ denotes the beginning of growing season $k=1$. 
@@ -137,7 +137,7 @@ We assume the resource pool is not replenished within a growing season.
 Resource replenishment occurs between growing seasons, and the resource pool (*R*) at the start of the growing season *k*+1 is
 
 \begin{align}
-R(\tau_k^+) &= \theta_i (1-\alpha_i)N_i(\tau_k) + \nu R(\tau_k) + R^+,
+R(\tau_k^+) &= R^+,
 \end{align}
 
 \noindent where $\theta$ is the fraction of live biomass that dies and is recycled into the resource pool, $\nu$ is the fraction of the resource pool carried over from the previous year, and $R^+$ is a random resource pulse drawn from a log-normal distribution with mean $\mu(R^+)$ and standard deviation $\sigma(R^+)$. Model parameters and notation are described in table 1.
@@ -159,9 +159,6 @@ $\gamma$ & dormant-to-live biomass transition fraction & -- \\
 $\rho$ & correlation of species' response to the environment & 0 (variable) \\
 $\sigma_E$ & variance of the environmental cue & 2 (variable) \\
 $\eta$ & dormant biomass mortality rate & 0.1 \\
-$\beta$ & live biomass survival rate & 0 \\
-$\theta$ & resource recycling fraction & 0 \\
-$\nu$ & resource carry-over fraction & 0 \\
 $\mu(R^+)$ & mean annual resource pulse & 20 (non-log scale) \\
 $\sigma(R^+)$ & standard deviation of annual resource pulse & 0 (variable) \\
 \hline
