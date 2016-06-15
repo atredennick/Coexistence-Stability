@@ -326,6 +326,13 @@ The strength of coexistence is negatively associated with ecosystem variability 
 
 \begin{figure}[!ht]
   \centering
+      \includegraphics[height=6in]{./components/main_figure.png}
+  \caption{Variability of total community as function of species richness when coexistence is maintained by the storage effect (a,c) or relative nonlinearity (b,d). Top panels show results from simulations where environmental or resource variance determine the number species that coexist in a community. Bottom panels show results from simulations where environmental or resource variance is fixed at a level that allows coexistence of all four species, but speces are removed to manipulate diversity. In the most general sense, the top panels represent regional diversity-stability relationships across natural diversity gradients, whereas the bottom panels represent local diversity-stability relationships.}
+\end{figure}
+
+<!---
+\begin{figure}[!ht]
+  \centering
       \includegraphics{./components/fig2_formatted.png}
   \caption{Variability of community biomass and invasion growth rates of the inferior competitor under different parameter combinations. Points are mean values from 10,000 growing seasons and lines are linear fits to show trends. In \textbf{Storage Effect} plots, resource supply is held constant between growing seasons, whereas resource supply varies each year in \textbf{Relative Nonlinearity} simulations.}
 \end{figure}
@@ -348,15 +355,12 @@ The strength of coexistence is negatively associated with ecosystem variability 
   \caption{Variability of total community biomass as a function of the the number of coexisting species at different levels of correlations of species' responses to environmental conditions ($\rho$).}
 \end{figure}
 
-<!--
 \begin{figure}[!ht]
   \centering
       \includegraphics{./components/storage_effect_growthrate_cv.png}
   \caption{Relationship between the strength of coexistence (invasion growth rate of inferior competitor) and ecosystem variability. Panels show different levels of environmental cue variability (denoted by number at top of each panel). Color bar shows the correlation between species' germination rates.}
 \end{figure}
 
-
-<!-- 
 \begin{figure}[!ht]
   \centering
       \includegraphics{./components/storage_effect_synchstability.png}

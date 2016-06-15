@@ -1,3 +1,9 @@
+################################################################################
+##  relative_nonlinearity_fourspecies_Rstars.R: makes a plot of four species' ##
+##  resource uptake curves when coexisting via relative nonlinearity          ##
+################################################################################
+
+
 # Growth function parameters
 grow_parameters <- list (
   r = c(1,5,10,25),           # max growth rate for each species
@@ -38,7 +44,7 @@ ggplot(outs, aes(x=resource, y=uptake, color=as.factor(species)))+
   scale_color_manual(values=mycols)+
   theme_few()+
   guides(color=FALSE)+
-  xlab("Resource Uptake")+
-  ylab("Resource Level")
+  xlab("Resource Level")+
+  ylab("Resource Uptake")
 ggsave("../manuscript/components/fourspp_Ruptake_relnonlin.png", width = 4, height = 4, units = "in", dpi = 100)
 

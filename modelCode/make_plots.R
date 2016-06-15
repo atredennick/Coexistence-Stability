@@ -691,7 +691,16 @@ ggplot(subset(save_multispp, rho!=1), aes(x=spprich, y=cv))+
   xlab("Number of Species")+
   ylab("Variability of Total Community Biomass (CV)")+
   theme_few()
-ggsave(paste0(path2figs,"diversity_stability_relationship.png"), width = 8, height = 4, units = "in", dpi = 100)
+# ggsave(paste0(path2figs,"diversity_stability_relationship.png"), width = 8, height = 4, units = "in", dpi = 100)
+
+ggplot(subset(save_multispp, rho==0), aes(x=spprich, y=cv))+
+  geom_point(shape=21, color="black", fill="dodgerblue", size=3)+
+  stat_smooth(method="lm", color="black", fill="grey", se=FALSE)+
+  stat_smooth(data=subset(save_multispp, rho==0&spprich>1), aes(x=spprich, y=cv), method="lm", color="black", fill="grey", se=FALSE, linetype=2)+
+  xlab("Number of Species")+
+  ylab("Variability of Total Community Biomass (CV)")+
+  theme_few()
+ggsave(paste0(path2figs,"diversity_stability_relationship_storage_effect.png"), width = 4, height = 4, units = "in", dpi = 120)
 
 
 
@@ -725,12 +734,12 @@ for(i in 1:length(multispp_rln)){
 }
 
 ggplot(subset(save_multispp, spprich>0), aes(x=spprich, y=cv))+
-  geom_point(shape=21, color="white", fill="black", size=3)+
+  geom_point(shape=21, color="black", fill="coral", size=3)+
   stat_smooth(method="lm", color="black", fill="grey", se=FALSE)+
   xlab("Number of Species")+
   ylab("Variability of Total Community Biomass (CV)")+
   theme_few()
-ggsave(paste0(path2figs,"diversity_stability_relationship_relnonlin.png"), width = 4, height = 4, units = "in", dpi = 100)
+ggsave(paste0(path2figs,"diversity_stability_relationship_relnonlin.png"), width = 4, height = 4, units = "in", dpi = 120)
 
 
 
@@ -757,12 +766,13 @@ for(i in 1:length(sppco_strg)){
 }
 
 ggplot(save_multispp, aes(x=spprich, y=cv))+
-  geom_point(shape=21, color="white", fill="black", size=3)+
+  # stat_summary(fun.y = "mean", fill = "coral", size = 4, geom = "point", shape=21)+
+  geom_point(shape=21, color="black", fill="dodgerblue", size=3)+
   stat_smooth(method="lm", color="black", fill="grey", se=FALSE)+
   xlab("Number of Species")+
   ylab("Variability of Total Community Biomass (CV)")+
   theme_few()
-ggsave(paste0(path2figs,"diversity_stability_relationship_storage_coexist.png"), width = 4, height = 4, units = "in", dpi = 100)
+ggsave(paste0(path2figs,"diversity_stability_relationship_storage_coexist.png"), width = 4, height = 4, units = "in", dpi = 120)
 
 ##  Relative Nonlinearity
 ##  Read in simulation results
@@ -784,10 +794,12 @@ for(i in 1:length(sppco_relnonlin)){
 }
 
 ggplot(save_multispp, aes(x=spprich, y=cv))+
-  geom_point(shape=21, color="white", fill="black", size=3)+
+  geom_point(shape=21, color="black", fill="coral", size=3)+
+  # stat_summary(fun.y = "mean", fill = "coral", size = 5, geom = "point", shape=21)+
   stat_smooth(method="lm", color="black", fill="grey", se=FALSE)+
+  scale_x_continuous(limits=c(1,4))+
   xlab("Number of Species")+
   ylab("Variability of Total Community Biomass (CV)")+
   theme_few()
-ggsave(paste0(path2figs,"diversity_stability_relationship_relnonlin_coexist.png"), width = 4, height = 4, units = "in", dpi = 100)
+ggsave(paste0(path2figs,"diversity_stability_relationship_relnonlin_coexist.png"), width = 4, height = 4, units = "in", dpi = 120)
 
