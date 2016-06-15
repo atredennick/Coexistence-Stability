@@ -20,7 +20,7 @@ urlcolor: black
 
 \begin{centering}
 
-\textbf{\large{How Fluctuation-Dependent Coexistence Mechanisms Affect the Temporal Stability of Ecosystem Functioning}}
+\textbf{\large{Fluctuation-dependent coexistence mechanisms generate positive and negative relationships between species richness and ecosystem stability}}
 
 
 
@@ -78,6 +78,14 @@ Blah, blah, blah...
 
 Introduction
 ------------
+The alarming rate of local species loss across the globe prompted three decades of theoretical and experimental work to understand the consequences of diversity loss [@Hooper2005].
+One important consequence is that ecosystems may become more variable through time because species richness tends to confer ecosystem stability [@Loreau2013].
+The prediction that the diversity-stability relationship is positive (richness begets stability) 
+
+
+Hints of the idea that diverse ecosystems are more stable through time than species-poor ecosystems go back as far as Darwin [@Darwin1859], who, in passing, mentions the `division of labor' that arises from niche differentiation among species [@Turnbull2013].
+
+
 Species-specific responses to non-constant environmental conditions can stabilize species coexistence [@Chesson2000] and ecosystem function [@Loreau2010].
 This means that fluctuation-dependent mechanisms of species coexistence are the very same mechanisms that link biodiversity and ecosystem function.
 Yet, the theory that has developed over the past 20 years to explain the, generally, positive relationship between species richness and stability of ecosystem function has implicitly assumed species coexistence [@Loreau2010], or, when explicitly considered, coexistence is maintained by fluctuation-independent mechanisms [@Turnbull2013].
@@ -106,12 +114,14 @@ Unlike the potential interaction between the storage effect and ecosystem stabil
 
 
 
-
 Model and Analysis
 ------------------
-### A General Consumer-Resource Model
-
-We present a semi-discrete, mechanistic consumer-resource model that allows coexistence of two species on one resource by either the storage effect or relative nonlinearity. In our model, the consumer can be in one of two-states: a dormant state $D$ and a live state $N$. Transitions between $N$ and $D$ occur at discrete intervals $\tau$ with continuous-time consumer-resource dynamics between discrete transitions. Thus, our model is formulated as "pulsed differential equations" [@Pachepsky2008; @Mailleret2009; @Mordecai2016]. For clarity we refer to $\tau$ as years and the growing time between years as seasons with daily ($t$) time steps. 
+To discover how fluctuation-dependent coexistence mechanisms affect the diversity-stability relationship, we developed a semi-discrete, mechanistic consumer-resource model that allows coexistence of two species on one resource by either the storage effect or relative nonlinearity. 
+In our model, the consumer can be in one of two-states: a dormant state $D$ and a live state $N$.
+The dormant state could represent, for example, the seedbank of an annual plant.
+Transitions between $N$ and $D$ occur at discrete intervals $\tau$ with continuous-time consumer-resource dynamics between discrete transitions. 
+Thus, our model is formulated as "pulsed differential equations" [@Pachepsky2008; @Mailleret2009; @Mordecai2016]. 
+For clarity we refer to $\tau$ as years and the growing time between years as seasons with daily ($t$) time steps. 
 
 During a growing season, consumer-resource dynamics are modeled as two differential equations:
 
@@ -132,7 +142,7 @@ Along with resource uptake, consumer population growth depends on the production
 \noindent where $D(\tau_k)$, $N(\tau_k)$, and $R(\tau_k)$ are the abundances of each state at the end of growing season *k* and $\tau_k^+$ denotes the beginning of growing season $k=1$. 
 The activation of dormant biomass to live biomass is controlled by $\gamma$, which is year (*k*) and species (*i*) specific.
 Dormant biomass is equal to a constant fraction ($\alpha$) of live biomass at the end of the previous season ($N_{i}(\tau_k)$), plus survival ($1-\eta_i$) of dormant biomass ($D_{i}(\tau_k)$) at the end of the previous year and dormant biomass remaining after live biomass activation ($D_{i}(\tau_k)(1-\gamma_{i,\tau_k})$).
-Live biomass is equal to the survival ($\beta$) of live biomass remaining after converting a fraction of live biomass to dormant biomass ($(1-\alpha_i)N_{i}(\tau_k)$), plus newly activated dormant biomass ($\gamma_{i,t}[D_{i}(\tau_k)$).
+Live biomass is equal to newly activated dormant biomass ($\gamma_{i,t}[D_{i}(\tau_k)$), minus some fraction of live biomass that is converted to dormant biomass ($(1-\alpha_i)N_{i}(\tau_k)$)
 We assume the resource pool is not replenished within a growing season.
 Resource replenishment occurs between growing seasons, and the resource pool (*R*) at the start of the growing season *k*+1 is
 
@@ -140,7 +150,7 @@ Resource replenishment occurs between growing seasons, and the resource pool (*R
 R(\tau_k^+) &= R^+,
 \end{align}
 
-\noindent where $\theta$ is the fraction of live biomass that dies and is recycled into the resource pool, $\nu$ is the fraction of the resource pool carried over from the previous year, and $R^+$ is a random resource pulse drawn from a log-normal distribution with mean $\mu(R^+)$ and standard deviation $\sigma(R^+)$. Model parameters and notation are described in table 1.
+\noindent $R^+$ is a random resource pulse drawn from a log-normal distribution with mean $\mu(R^+)$ and standard deviation $\sigma(R^+)$. Model parameters and notation are described in table 1.
 
 \begin{centering}
 \begin{table}
@@ -167,12 +177,18 @@ $\sigma(R^+)$ & standard deviation of annual resource pulse & 0 (variable) \\
 \end{centering}
 
 ### Implementing the Storage Effect
-To make this a ``storage-effect" model, we need to satisfy three conditions: (1) the organisms must have a mechanism for persistence under unfavorable conditions, (2) species must respond differently to environmental conditions, and (3) the effects of competition on a species must be more strongly negative in good years relative to unfavorable years. Our model meets condition 1 because we include a dormant stage with very low death rates. We satisfy condition 2 with our model whenever $g$ is not perfectly correlated between species. Lastly, our model meets condition 3 because condition 2 partitions intraspecific and interspecific competition into different years. Thus, during a high $g$ year for one species, resource uptake is also inherently high for that species, which increases intraspecific competition relative to interspecific competition. So, given adequate variability in $g$, the inferior competitor (species with lower $r$) can persist. 
+To make this a ``storage effect" model, we need to satisfy three conditions: (1) the organisms must have a mechanism for persistence under unfavorable conditions, (2) species must respond differently to environmental conditions, and (3) the effects of competition on a species must be more strongly negative in good years relative to unfavorable years. 
+Our model meets condition 1 because we include a dormant stage with very low death rates. 
+We satisfy condition 2 with our model whenever $\gamma$ is not perfectly correlated between species. 
+Lastly, our model meets condition 3 because condition 2 partitions intraspecific and interspecific competition into different years. 
+Thus, during a high $\gamma$ year for one species, resource uptake is also inherently high for that species, which increases intraspecific competition relative to interspecific competition. 
+So, given adequate variability in $\gamma$, the inferior competitor can persist. 
+We created competitive hierarchies in the storage effect version of the model by altering species' biomass conversion efficiencies ($\epsilon$)
 
-We generated sequences of (un)correlated dormant-to-live state transition rates ($g$) for each species by drawing from multivariate normal distributions with mean 0 and a variance-covariance matrix ($\Sigma_g$) of
+We generated sequences of (un)correlated dormant-to-live state transition rates ($\gamma$) for each species by drawing from multivariate normal distributions with mean 0 and a variance-covariance matrix ($\Sigma(\gamma)$) of
 
 \begin{align}
-\Sigma_g = 
+\Sigma(\gamma) = 
 \begin{bmatrix}
 \sigma^2_{E} & \rho\sigma^2_{E} \\
 \rho\sigma^2_{E} & \sigma^2_{E}
@@ -183,7 +199,11 @@ We generated sequences of (un)correlated dormant-to-live state transition rates 
 The inferior competitor has the strongest potential to persist when $\rho=-1$ (perfectly uncorrelated transition rates). 
 
 ### Implementing Relative Nonlinearity
-When considering consumer-resource dynamics, species coexistence by relative nonlinearity requires that each species has different nonlinear responses to resource availability, and resource availability must fluctuate through time. In a constant resource environment, the species with the lowest R* will always exclude the other species. To compare this model to the storage effect model we still allow the germination rate \emph{g} to vary, but both species are perfectly correlated -- that is, $\rho=1$ (fig. 1). 
+When considering consumer-resource dynamics, species coexistence by relative nonlinearity requires that each species has different nonlinear responses to resource availability, and resource availability must fluctuate through time.
+In a constant resource environment, the species with the lowest $R*$ will always exclude the other species. 
+To create competitive hierarchies among species we altered species resource uptake curves (Fig. SX).
+We still allow the germination rate ($\gamma$) to vary, but both species are perfectly correlated -- that is, $\rho=1$ (Fig. 1). 
+
 
 ```{r model_types, cache=FALSE, warning=FALSE, message=FALSE, eval=TRUE, fig.height=3, fig.width=5, fig.cap="Resource uptake functions and example time series of (un)correlated germination fractions for the storage effect (*a,b*) and relative nonlinearity (*c,d*) formulations of the consumer-resource model. The resource uptake functions for both species are equivalent for the storage effect, but their germination fractions are uncorrelated in time. The opposite is true for relative nonlinearity: the two species have unique resource uptake functions, but their germination fractions are perfectly correlated in time."}
 library(ggplot2)
@@ -192,7 +212,7 @@ library(mvtnorm)
 library(gridExtra)
 # mycols <- c("#9D6188","#97A861")
 # mycols <- c("black", "grey")
-mycols <- c("grey", "skyblue")
+mycols <- c("grey35", "steelblue")
 
 mytheme <- theme(axis.text=element_text(size=6),
                  axis.title=element_text(size=8),
@@ -311,24 +331,39 @@ g_strg <- grid.arrange(strg_uptake_plot, strg_germ_plot,
 ```
 
 ### Model Simulations
-For each coexistence mechanism (storage effect, relative nonlinearity), we ran model simulations at different levels of resource variance ($R_{\sigma^2}$), environmental cue variance ($\sigma_E$), and correlation of species responses to the environmental cue ($\rho$). 
-We ran simulations for 100 'seasons' with 60 day growing seasons. 
+We simulated the model with four species under two scenarios for each coexistence mechanism.
+First, we allowed the variance of the environment to determine how many species can coexist.
+This required simulating communities with all species initially present across a gradient of annual resource variability (for relative nonlinearity) or environmental cue variability (for the storage effect).
+Second, we chose parameter values that allowed coexistence of all four species, and performed species removals.
+We ran simulations for 10,000 seasons with 20 day growing seasons. 
 We averaged biomass over the growing season.
-After discarding an initial 20 seasons to reduce transient effects on our results, we calculated the stability of summed species biomass through time and species synchrony through time.
-For storage effect simulations, species were equivalent in their ability to capture and assimilate the resource (*R*) but had different, depending on $\rho$, germination rates.
-For relative nonlinearity simulations, species had equivalent germination rates ($\rho = 1$) but different resource acquisition functions (fig. 1).
-We explored a limited set of parameter space where the storage effect and relative nonlinearity were operating simultaneously.
+After discarding an initial 1,000 seasons to reduce transient effects on our results, we calculated the coffecient of variation of summed species biomass through time.
+For simulations where environmental variability determined species coexistence, we calculated species richness as the number of species whose average biomass was greater than 1 over the course of the simulation.
 Within-season dynamics were solved given initial conditions using the package ``deSolve`` [@Soetaert2010] in ``R`` [@Team2013].
 
-Results
--------
-The strength of coexistence is negatively associated with ecosystem variability when species coexistence is maintained by the storage effect (fig. 2).
+Results and Discussion
+----------------------
+The direction of the diversity-variability relationship can be positive and negative (Fig. 2).
+Ecosystem variability is positively correlated with species richness when species richness is measured across a gradient of envrionmental variability, which maintains diversity and promotes ecosystem variability (Fig. 2a,b).
+If environmental conditions are sufficient to maintain coexistence, removing species increases ecosystem variability (Fig. 2c,d).
+Thus, our results both confirm and contrast with theoretical and experimental findings that diversity begets stability.
 
 \begin{figure}[!ht]
   \centering
-      \includegraphics[height=6in]{./components/main_figure.png}
+      \includegraphics[height=5in]{./components/main_figure.png}
   \caption{Variability of total community as function of species richness when coexistence is maintained by the storage effect (a,c) or relative nonlinearity (b,d). Top panels show results from simulations where environmental or resource variance determine the number species that coexist in a community. Bottom panels show results from simulations where environmental or resource variance is fixed at a level that allows coexistence of all four species, but speces are removed to manipulate diversity. In the most general sense, the top panels represent regional diversity-stability relationships across natural diversity gradients, whereas the bottom panels represent local diversity-stability relationships.}
 \end{figure}
+
+When we held environmental variability constant and removed species, we produced the typical negative diversity-variability relationship (Fig. 2c,d), consistent with theoretical expecations from models with species coexistence maintained by fluctuation-dependent mechanisms.
+Likewise, our results from the species removal simulations are consistent with results from biodiversity-ecosystem functioning experiments showing a negative relationship between species richness and ecosystem variability.
+This is encouraging because species almost certainly coexist by some combination of fluctuation-independent (e.g., resource partitioning) and fluctuation-dependent mechanisms.
+By extending theory to communities where species richness is explicitly maintained by temporal variability, we have gained confidence that experimental findings are generalizable to many communities.
+In other words, in local settings where environmental variability is relatively homogenous, reductions in the number of species will reduce the stability of ecosystem functioning, regardless of how coexistence is maintained.
+
+When we allowed a gradient of environmental variability to determine species coexistence, we discoverd a positive relationship between species richness and ecosystem variability (Fig. 2a,b).
+While surprising when viewed through the lens of previous theory and experimental findings, such a relationship is a direct consequence of how diversity can be maintained in fluctuating environments.
+The storage effect and relative nonlinearity both require envrionmental fluctuations to allow niche differentiation between species pairs [@Chesson2000].
+Therefore, species coexistence gains strength, for both mechanisms, as the envrionment becomes more variable (Fig. SX).
 
 <!---
 \begin{figure}[!ht]
@@ -388,11 +423,10 @@ The strength of coexistence is negatively associated with ecosystem variability 
 
 -->
 
-Discussion
-----------
-
-
 \pagebreak{}
+
+Acknowledgments
+---------------
 
 \setlength{\parindent}{0ex}
 
