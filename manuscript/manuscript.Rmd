@@ -20,7 +20,7 @@ urlcolor: black
 
 \begin{centering}
 
-\textbf{\large{Fluctuation-dependent coexistence mechanisms generate positive and negative relationships between species richness and ecosystem stability}}
+\textbf{\large{Revisiting species coexistence reveals positive and negative relationships between species richness and ecosystem stability}}
 
 
 
@@ -60,17 +60,15 @@ opts_chunk$set(dev='pdf', dev.args=c(version="1.3"))
 ```
 
 \begin{abstract}
-
 For biodiversity to increase the temporal stability of ecosystem function in the long-term, coexistence must be stable.
 Species-specific respones to environmental variation through time is key to understanding fluctuation-dependent coexistence mechanisms and how asynchrony in species dynamics can arise to stabilize ecosystem function.
 Despite the shared dependence on environmental fluctuations, theory on species coexistence and the relationship between species richness and ecosystem stability have developed independently.
 To formally link the two bodies of theory, we use consumer-resource models where coexistence between two species utilizing a single resource is maintained by two fluctuation-dependent mechanisms: the storage effect and relative nonlinearity.
 We examine how the strength of species coexistence relates to the temporal stability of aggregate ecosystem function and how the effect of environmental variability on stability is mediated by the mechanism of coexistence.
 Blah, blah, blah...
-
 \vspace{2em}
 
-\noindent \textit{Keywords}: coexistence, storage effect, relative nonlinearity, diversity-stability hypothesis, pulsed differential equation, consumer-resource dynamics, synchrony
+\noindent \textbf{Keywords}: coexistence, storage effect, relative nonlinearity, diversity-stability hypothesis, pulsed differential equation, consumer-resource dynamics, synchrony
 
 \end{abstract}
 
@@ -343,7 +341,7 @@ Within-season dynamics were solved given initial conditions using the package ``
 
 Results and Discussion
 ----------------------
-The direction of the diversity-variability relationship can be positive and negative (Fig. 2).
+The direction of the diversity-variability relationship can be positive and negative when species coexistence is maintained by fluctuation-dependent mechanisms (Fig. 2).
 Ecosystem variability is positively correlated with species richness when species richness is measured across a gradient of envrionmental variability, which maintains diversity and promotes ecosystem variability (Fig. 2a,b).
 If environmental conditions are sufficient to maintain coexistence, removing species increases ecosystem variability (Fig. 2c,d).
 Thus, our results both confirm and contrast with theoretical and experimental findings that diversity begets stability.
@@ -364,6 +362,16 @@ When we allowed a gradient of environmental variability to determine species coe
 While surprising when viewed through the lens of previous theory and experimental findings, such a relationship is a direct consequence of how diversity can be maintained in fluctuating environments.
 The storage effect and relative nonlinearity both require envrionmental fluctuations to allow niche differentiation between species pairs [@Chesson2000].
 Therefore, species coexistence gains strength, for both mechanisms, as the envrionment becomes more variable (Fig. SX).
+
+Our results may explain why deviations from the negative diversity-variability relationship often come from observational studies.
+Observational studies must rely on natural diversity gradients, and if species richness depends environmental variability, it is entirely possible to observed positive diversity-variability relationships.
+For example, Sasaki and Lauenroth (2011) found a negative relationship between species richness and the temporal stability of plant abundance (a positive diversity-variability relationship) in a semi-arid grassland.
+Their data came from a six sites that were 6 km apart.
+Thus, it is possible that each site experienced slightly different levels of environmental variability that influenced species coexistence.
+Indeed, fluctuation-dependent coexistence mechanisms are particularly common in arid and semi-arid environments (CITATIONS).
+
+
+
 
 <!---
 \begin{figure}[!ht]
@@ -427,6 +435,7 @@ Therefore, species coexistence gains strength, for both mechanisms, as the envri
 
 Acknowledgments
 ---------------
+The National Science Foundation provided funding for this work through a Postdoctoral Research Fellowship in Biology to ATT (DBI-######) and a CAREER award to PBA (DEB-#######).
 
 \setlength{\parindent}{0ex}
 
