@@ -322,7 +322,7 @@ relative_nonlinearity_varvars <- unique(relative_nonlinearity_varvars)
 
 relative_nonlinearity_sims <- readRDS(paste0(path2results,"relative_nonlinearity_equilibrium_runs.RDS"))
 save_seasons_rl <- list()
-for(i in 1:length(storage_effect_sims)){
+for(i in 1:length(relative_nonlinearity_sims)){
   tmp <- as.data.frame(relative_nonlinearity_sims[[i]])
   names(tmp) <- c("D1", "D2", "N1", "N2", "R")
   tmp$Rsd <- relative_nonlinearity_varvars[i,"Rsd"]
@@ -341,7 +341,7 @@ rl_community_biomass_cv <- ddply(save_seasons_rl, .(Rsd, sigE, simnum), summaris
 ##  Calculate Invasion Growth Rate
 relative_nonlinearity_invasions <- readRDS(paste0(path2results,"relative_nonlinearity_invasion_runs.RDS"))
 rl_invasion_growth_rate <- list()
-for(i in 1:length(storage_effect_sims)){
+for(i in 1:length(relative_nonlinearity_invasions)){
   tmp <- relative_nonlinearity_invasions[[i]]
   tmpr <- log(tmp[seasons_to_exclude:nrow(tmp),2] / 1)
   meantmpr <- mean(tmpr)
@@ -368,6 +368,7 @@ rl_cv_plot <- ggplot(rl_plot_dat, aes(x=Rsd, y=cv_biomass, color=as.factor(sigE)
   guides(color=guide_legend(nrow=2,byrow=TRUE, title.position = "top"))
 
 rl_gr_plot <- ggplot(rl_plot_dat, aes(x=Rsd, y=growth_rate, color=as.factor(sigE)))+
+  geom_hline(aes(yintercept=0), linetype=2, alpha=0.9)+
   geom_point(size=2, alpha=0.5)+
   geom_point(size=2, alpha=0.8, shape=1)+
   stat_smooth(method="lm", se=FALSE, size=0.3)+
@@ -670,6 +671,7 @@ persp3D(x = unique(save_multispp$rho),
        colkey = list(side = 1, length = 0.5),
        ticktype="detailed")
 dev.off()
+
 
 Mspp <- as.matrix(dcast(save_multispp, rho~sigE, value.var = "spprich"))
 png(paste0(path2figs,"spprich_persp_plot.png"), width = 5, height = 5, units="in", res = 120)

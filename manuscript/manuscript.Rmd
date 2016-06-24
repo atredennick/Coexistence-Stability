@@ -20,7 +20,7 @@ urlcolor: black
 
 \begin{centering}
 
-\textbf{\large{Revisiting species coexistence reveals positive and negative relationships between species richness and ecosystem stability}}
+\textbf{\large{Revisiting how species coexist reveals positive and negative relationships between species richness and ecosystem stability}}
 
 
 
@@ -114,7 +114,7 @@ Unlike the potential interaction between the storage effect and ecosystem stabil
 
 Model and Analysis
 ------------------
-To discover how fluctuation-dependent coexistence mechanisms affect the diversity-stability relationship, we developed a semi-discrete, mechanistic consumer-resource model that allows coexistence of two species on one resource by either the storage effect or relative nonlinearity. 
+To discover how fluctuation-dependent coexistence mechanisms affect the diversity-stability relationship, we developed a semi-discrete consumer-resource model that allows many species to coexist on one resource by either the storage effect or relative nonlinearity. 
 In our model, the consumer can be in one of two-states: a dormant state $D$ and a live state $N$.
 The dormant state could represent, for example, the seedbank of an annual plant.
 Transitions between $N$ and $D$ occur at discrete intervals $\tau$ with continuous-time consumer-resource dynamics between discrete transitions. 
@@ -142,13 +142,8 @@ The activation of dormant biomass to live biomass is controlled by $\gamma$, whi
 Dormant biomass is equal to a constant fraction ($\alpha$) of live biomass at the end of the previous season ($N_{i}(\tau_k)$), plus survival ($1-\eta_i$) of dormant biomass ($D_{i}(\tau_k)$) at the end of the previous year and dormant biomass remaining after live biomass activation ($D_{i}(\tau_k)(1-\gamma_{i,\tau_k})$).
 Live biomass is equal to newly activated dormant biomass ($\gamma_{i,t}[D_{i}(\tau_k)$), minus some fraction of live biomass that is converted to dormant biomass ($(1-\alpha_i)N_{i}(\tau_k)$)
 We assume the resource pool is not replenished within a growing season.
-Resource replenishment occurs between growing seasons, and the resource pool (*R*) at the start of the growing season *k*+1 is
-
-\begin{align}
-R(\tau_k^+) &= R^+,
-\end{align}
-
-\noindent $R^+$ is a random resource pulse drawn from a log-normal distribution with mean $\mu(R^+)$ and standard deviation $\sigma(R^+)$. Model parameters and notation are described in table 1.
+Resource replenishment occurs between growing seasons, and the resource pool (*R*) at the start of the growing season *k*+1 is $R(\tau_k^+) = R^+$, where $R^+$ is a random resource pulse drawn from a log-normal distribution with mean $\mu(R^+)$ and standard deviation $\sigma(R^+)$. 
+Model parameters and notation are described in table 1.
 
 \begin{centering}
 \begin{table}
@@ -175,7 +170,7 @@ $\sigma(R^+)$ & standard deviation of annual resource pulse & 0 (variable) \\
 \end{centering}
 
 ### Implementing the Storage Effect
-To make this a ``storage effect" model, we need to satisfy three conditions: (1) the organisms must have a mechanism for persistence under unfavorable conditions, (2) species must respond differently to environmental conditions, and (3) the effects of competition on a species must be more strongly negative in good years relative to unfavorable years. 
+To make this a storage effect model, we need to satisfy three conditions: (1) the organisms must have a mechanism for persistence under unfavorable conditions, (2) species must respond differently to environmental conditions, and (3) the effects of competition on a species must be more strongly negative in good years relative to unfavorable years. 
 Our model meets condition 1 because we include a dormant stage with very low death rates. 
 We satisfy condition 2 with our model whenever $\gamma$ is not perfectly correlated between species. 
 Lastly, our model meets condition 3 because condition 2 partitions intraspecific and interspecific competition into different years. 
