@@ -719,7 +719,7 @@ for(i in 1:length(rho0_storage_effect)){
 
 ggplot(save_multispp_rho0, aes(x=spprich, y=cv))+
   geom_point(shape=21, color="black", fill="dodgerblue", size=3)+
-  stat_smooth(method="lm", color="black", fill="grey", se=FALSE)+
+  stat_smooth(method="lm", color="skyblue", fill="grey", se=FALSE)+
   # stat_smooth(data=subset(save_multispp_rho0, rho==0&spprich>1), aes(x=spprich, y=cv), method="lm", color="black", fill="grey", se=FALSE, linetype=2)+
   xlab("Number of Species")+
   ylab("Variability of Total Community Biomass (CV)")+
@@ -731,8 +731,8 @@ ggplot(save_multispp_rho0, aes(x=sigE, y=spprich))+
   ylab("S")+
   xlab(expression(sigma[E]^2))+
   theme_classic()+
-  theme(axis.title.y = element_text(angle=0, face="italic"),
-        axis.title.x = element_text(face="italic"))
+  theme(axis.title.y = element_text(angle=0, face="italic", size=22),
+        axis.title.x = element_text(face="italic", size=22))
 ggsave(paste0(path2figs,"diversity_envvar_relationship_storage_effect.png"), width = 3, height = 1.5, units = "in", dpi = 72)
 
 
@@ -741,7 +741,7 @@ ggsave(paste0(path2figs,"diversity_envvar_relationship_storage_effect.png"), wid
 ####
 ### Recreate parameter grid
 ## Define vectors of parameters to vary
-n_rsd <- 11 # Number of seasonal standard deviation levels
+n_rsd <- 50 # Number of seasonal standard deviation levels
 rsd_vec <- pretty(seq(0, 1.4, length.out=n_rsd), n_rsd) # Make a pretty vector
 rsd_vec <- as.data.frame(rsd_vec)
 names(rsd_vec) <- "Rsd_annual"
@@ -767,12 +767,20 @@ for(i in 1:length(multispp_rln)){
 
 ggplot(subset(save_multispp, spprich>0), aes(x=spprich, y=cv))+
   geom_point(shape=21, color="black", fill="coral", size=3)+
-  stat_smooth(method="lm", color="black", fill="grey", se=FALSE)+
+  stat_smooth(method="lm", color="orange", fill="grey", se=FALSE)+
   xlab("Number of Species")+
   ylab("Variability of Total Community Biomass (CV)")+
   theme_few()
 ggsave(paste0(path2figs,"diversity_stability_relationship_relnonlin.png"), width = 4, height = 4, units = "in", dpi = 120)
 
+ggplot(subset(save_multispp, spprich>0), aes(x=rsd, y=spprich))+
+  geom_point()+
+  ylab("S")+
+  xlab(expression(sigma[R]))+
+  theme_classic()+
+  theme(axis.title.y = element_text(angle=0, face="italic", size=22),
+        axis.title.x = element_text(face="italic", size=22))
+ggsave(paste0(path2figs,"diversity_envvar_relationship_relnonlin.png"), width = 3, height = 1.5, units = "in", dpi = 72)
 
 
 ####
@@ -800,7 +808,7 @@ for(i in 1:length(sppco_strg)){
 ggplot(save_multispp, aes(x=spprich, y=cv))+
   # stat_summary(fun.y = "mean", fill = "coral", size = 4, geom = "point", shape=21)+
   geom_point(shape=21, color="black", fill="dodgerblue", size=3)+
-  stat_smooth(method="lm", color="black", fill="grey", se=FALSE)+
+  stat_smooth(method="lm", color="lightblue", fill="grey", se=FALSE)+
   xlab("Number of Species")+
   ylab("Variability of Total Community Biomass (CV)")+
   theme_few()
@@ -828,7 +836,7 @@ for(i in 1:length(sppco_relnonlin)){
 ggplot(save_multispp, aes(x=spprich, y=cv))+
   geom_point(shape=21, color="black", fill="coral", size=3)+
   # stat_summary(fun.y = "mean", fill = "coral", size = 5, geom = "point", shape=21)+
-  stat_smooth(method="lm", color="black", fill="grey", se=FALSE)+
+  stat_smooth(method="lm", color="orange", fill="grey", se=FALSE)+
   scale_x_continuous(limits=c(1,4))+
   xlab("Number of Species")+
   ylab("Variability of Total Community Biomass (CV)")+

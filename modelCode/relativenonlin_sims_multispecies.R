@@ -22,7 +22,7 @@ nbcores <- 4 # Set number of cores to match machine
 set.seed(123456789) # Set seed to reproduce random results
 
 ## Define vectors of parameters to vary
-n_rsd <- 11 # Number of seasonal standard deviation levels
+n_rsd <- 50 # Number of seasonal standard deviation levels
 rsd_vec <- pretty(seq(0, 1.4, length.out=n_rsd), n_rsd) # Make a pretty vector
 rsd_vec <- as.data.frame(rsd_vec)
 names(rsd_vec) <- "Rsd_annual"
