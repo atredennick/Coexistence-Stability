@@ -695,15 +695,45 @@ ggplot(subset(save_multispp, rho!=1), aes(x=spprich, y=cv))+
   theme_few()
 # ggsave(paste0(path2figs,"diversity_stability_relationship.png"), width = 8, height = 4, units = "in", dpi = 100)
 
-ggplot(subset(save_multispp, rho==0), aes(x=spprich, y=cv))+
+
+rho0_storage_effect <- readRDS(paste0(path2results,"storage_effect_4species_rho0.RDS"))
+n_sig_e <- 100 # Number of cue variance levels
+sig_e_vec <- pretty(seq(0, 3, length.out=n_sig_e), n_sig_e) # Make a pretty vector
+save_multispp_rho0 <- list() # empty storage list
+for(i in 1:length(rho0_storage_effect)){
+  tmp <- as.data.frame(rho0_storage_effect[[i]])
+  names(tmp) <- c("D1", "D2", "D3", "D4", "N1", "N2", "N3", "N4", "R")
+  livestates <- grep("N", colnames(tmp))
+  tmp_totbiomass <- rowSums(tmp[seasons_to_exclude:nrow(tmp),livestates])
+  tmp_cv <- sd(tmp_totbiomass) / mean(tmp_totbiomass)
+  tmp_sppavg <- colMeans(tmp[seasons_to_exclude:nrow(tmp),livestates])
+  tmp_spprich <- length(which(tmp_sppavg > 1))
+  
+  tmp_out <- data.frame(rho=0,
+                        sigE=sig_e_vec[i],
+                        cv=tmp_cv,
+                        spprich=tmp_spprich)
+  
+  save_multispp_rho0 <- rbind(save_multispp_rho0, tmp_out)
+}
+
+ggplot(save_multispp_rho0, aes(x=spprich, y=cv))+
   geom_point(shape=21, color="black", fill="dodgerblue", size=3)+
   stat_smooth(method="lm", color="black", fill="grey", se=FALSE)+
-  stat_smooth(data=subset(save_multispp, rho==0&spprich>1), aes(x=spprich, y=cv), method="lm", color="black", fill="grey", se=FALSE, linetype=2)+
+  # stat_smooth(data=subset(save_multispp_rho0, rho==0&spprich>1), aes(x=spprich, y=cv), method="lm", color="black", fill="grey", se=FALSE, linetype=2)+
   xlab("Number of Species")+
   ylab("Variability of Total Community Biomass (CV)")+
   theme_few()
 ggsave(paste0(path2figs,"diversity_stability_relationship_storage_effect.png"), width = 4, height = 4, units = "in", dpi = 120)
 
+ggplot(save_multispp_rho0, aes(x=sigE, y=spprich))+
+  geom_point()+
+  ylab("S")+
+  xlab(expression(sigma[E]^2))+
+  theme_classic()+
+  theme(axis.title.y = element_text(angle=0, face="italic"),
+        axis.title.x = element_text(face="italic"))
+ggsave(paste0(path2figs,"diversity_envvar_relationship_storage_effect.png"), width = 3, height = 1.5, units = "in", dpi = 72)
 
 
 ####

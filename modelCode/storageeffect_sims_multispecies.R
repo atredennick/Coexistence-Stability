@@ -22,15 +22,17 @@ nbcores <- 4 # Set number of cores to match machine
 set.seed(123456789) # Set seed to reproduce random results
 
 ## Define vectors of parameters to vary
-n_sig_e <- 11 # Number of cue variance levels
-sig_e_vec <- pretty(seq(0, 5, length.out=n_sig_e), n_sig_e) # Make a pretty vector
-n_rho <- 11 # Number of seasonal standard deviation levels
-rho_vec <- pretty(seq(-1, 1, length.out=n_rho), n_rho) # Make a pretty vector
+n_sig_e <- 100 # Number of cue variance levels
+sig_e_vec <- pretty(seq(0, 3, length.out=n_sig_e), n_sig_e) # Make a pretty vector
+# n_rho <- 11 # Number of seasonal standard deviation levels
+# rho_vec <- pretty(seq(-1, 1, length.out=n_rho), n_rho) # Make a pretty vector
 
 ##  Create matrix with all possible combinations of varying parameters
-varvars <- expand.grid(sig_e_vec, rho_vec )
-names(varvars) <- c("sigE", "rho")
-prm <- unique(varvars)
+# varvars <- expand.grid(sig_e_vec, rho_vec )
+# names(varvars) <- c("sigE", "rho")
+# prm <- unique(varvars)
+prm <- as.matrix(sig_e_vec)
+colnames(prm) <- "sigE"
 
 ##  Define constant parameters in list
 constant_parameters <- list (
@@ -39,7 +41,7 @@ constant_parameters <- list (
   Rmu = 3,                         # mean resource pulse (on log scale)
   Rsd_annual = 0.0,                # std dev of resource pulses (on log scale)
   # sigE = 0,                        # environmental cue variance
-  # rho = 1,                         # environmental cue correlation between species
+  rho = 0,                         # environmental cue correlation between species
   alpha1 = 0.50,                   # live-to-dormant biomass fraction; spp1
   alpha2 = 0.49,                   # live-to-dormant biomass fraction; spp2
   alpha3 = 0.48,                   # live-to-dormant biomass fraction; spp3
@@ -84,9 +86,10 @@ parameter_matrix <- cbind(constant_param_matrix, prm)
 # Returns list of simulation time series with dims = c(nrow(prm), seasons, length(DNR))
 outs <- mclapply(seq_len(nrow(prm)), 
                  function(i) {
-                   do.call(simulate_model, parameter_matrix[i,])
+                   do.call(simulate_model, as.list(parameter_matrix[i,]))
                  }, 
                  mc.cores=nbcores) # end apply function
 
-saveRDS(outs, "../simulationResults/storage_effect_4species.RDS")
+# saveRDS(outs, "../simulationResults/storage_effect_4species.RDS")
+saveRDS(outs, "../simulationResults/storage_effect_4species_rho0.RDS")
 
