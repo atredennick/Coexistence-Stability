@@ -80,9 +80,10 @@ The alarming rate of local species loss across the globe prompted three decades 
 One important consequence is that ecosystems may become more variable through time because species richness tends to confer ecosystem stability [@Loreau2013].
 The prediction that the diversity-stability relationship is positive (richness begets stability) 
 
-
-Hints of the idea that diverse ecosystems are more stable through time than species-poor ecosystems go back as far as Darwin [@Darwin1859], who, in passing, mentions the `division of labor' that arises from niche differentiation among species [@Turnbull2013].
-
+Empirical tests of the prediction that species richness increases ecosystem stability have relied on both experimental and observational approaches.
+Experimental tests involve manipulating the number of species present in a plot by randomly drawing a specific number of species from a pre-defined species pool [@Hector1999; @Tilman2001].
+Results from such experimental tests, which have focused on plant species richness and the temporal stability of aboveground biomass production, have been surprisingly consistent: temporal stability is greater in communities with more species [@Tilman2006; @Hector2010].
+Observational tests of the DSR require sampling across natural diversity gradients
 
 Species-specific responses to non-constant environmental conditions can stabilize species coexistence [@Chesson2000] and ecosystem function [@Loreau2010].
 This means that fluctuation-dependent mechanisms of species coexistence are the very same mechanisms that link biodiversity and ecosystem function.
