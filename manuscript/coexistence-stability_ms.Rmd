@@ -76,6 +76,12 @@ Blah, blah, blah...
 
 Introduction
 ------------
+Concern over the rapid rate of contemporary biodiversity loss [@Barnosky2011] prompted 20 years of research on the links between biodiversity and ecosystem functioning [@Cardinale2012].
+In particular, considerable effort has been dedicated to asking whether communities with more species are more stable through time.
+The question was not new, having its roots in May's classical work on complexity and stability, but it took on new relevance as local species richness declines became a worldwide phenomenon.
+At first, theory far outpaced empirical tests, and nearly all theoretical models suggested that the relationship between diversity and stability should be positive, even if the underlying mechanisms were debatable.
+Nonetheless, theory identified an important mechanism that can stabilize ecosystem functioning: species complementarity.
+
 Empirical tests of the prediction that species richness increases ecosystem stability have relied on both experimental and observational approaches.
 Experimental tests involve manipulating the number of species present in a plot by randomly drawing a specific number of species from a pre-defined species pool [@Hector1999; @Tilman2001].
 Results from such experimental tests, which have focused on plant species richness and the temporal stability of aboveground biomass production, have been surprisingly consistent: temporal stability is greater in communities with more species [@Tilman2006; @Hector2010].
@@ -90,7 +96,7 @@ Among the dizzying array of mechanisms that can maintain diversity, @Chesson2000
 Both classes of mechanisms rely on niche differences being greater than relative fitness differences for all species pairs in a community [@Chesson2000; @Adler2007a].
 In a fluctuation-independent case, species coexistence can be maintained by resource partitioning so long as each species is limited by a different resource [@Tilman1982].
 Much of the theoretical literature aimed at deciphering the mechanisms behind the diversity-stability relationship implicitly assumes fluctuation-independent coexistence [reviewed in @Loreau2010].
-For example, Lotka-Volterra models have been widely used and include coexistence by keeping competition coefficients less than one [e.g., @Lehman2010; @Loreau2013].
+For example, Lotka-Volterra models have been widely used and include coexistence by keeping competition coefficients less than one [e.g., @Lehman2000; @Loreau2013].
 Our focus, on the other hand, is on the interaction between species coexistence and ecosystem stability in communities where coexistence is dependent on environmental fluctuations.
 
 There are two ways that species coexist in temporally fluctuating environments.
