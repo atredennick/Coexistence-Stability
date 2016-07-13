@@ -1,9 +1,14 @@
 ---
 layout: 12pt
 header-includes:
-   - \usepackage{lineno}
-   - \linenumbers
-   - \usepackage[font={footnotesize},labelfont=bf]{caption}
+  - \usepackage{lineno}
+  - \linenumbers
+  - \usepackage{setspace}
+  - \usepackage{todonotes}
+  - \doublespacing
+  - \usepackage{rotating}
+  - \usepackage{color, soul}
+  - \usepackage[font={footnotesize},labelfont=bf]{caption}
 bibliography: ~/Dropbox/Bibliography/CoexistStability.bib
 csl: components/ecology.csl
 
@@ -76,63 +81,47 @@ Blah, blah, blah...
 
 Introduction
 ------------
-All ecosystems are subject to environmental conditions that fluctuate over time, providing opportunities and challenges.
-Environmental variability can promote species coexistence by expanding niche opportunities in a temporal dimension.
-For example, some years may be wet, favoring certain species, and some years may be dry, favoring other species.
-Such species-specific responses to environmental conditions help stabilize species coexistence.
-While environmental variability can stabilize species coexistence, it can destabilize ecosystem functioning through time.
-However, 
+Environmental variability is a ubiquitous feature of ecosystems.
+On the one hand, environmental fluctuations are disruptive, creating year-to-year variability that decreases the stability of ecosystem functions like annual productivity [@Isbell2015].
+On the other hand, environmental fluctuations are stabilizing, providing opportunities for species to coexist [@Chesson2000].
+While seemingly unrelated, the countervailing effects of environmental variability become inexorably linked when we consider the relationship between biodiversity and ecosystem stability.
+The emerging consensus is that species rich ecosystems are more stable than species poor ecosystems, implying a positive relationship between biodiversity and stability [@Loreau2013].
+For the benefits of biodiversity to be realized in the long term, species coexistence, which maintains biodiversity, must be stable [@Turnbull2013].
+Yet, contemporary coexistence theory is largely absent from theoretical studies aimed toward understanding the diversity-stability relationship [reviewed in @Loreau2010].
 
-Why consider the mechanism of diversity maintenance?
-Stable species coexistece, however maintained, is a preqrequisite for biodiversity to confer stability of ecosystem function in the long term [@Turnbull2013].
-If species coexistence is not stable, and thus transient, any benefits provided by biodiversity will also be transient.
+A compelling reason to revisit how species coexist in the context of the diversity-stability relationship is their shared dependence on species-specific responses to environmental conditions, and environmental variability more generally.
+Modern coexistence theory can be divided into two broad classes: fluctuation-dependent mechanisms and fluctuation-independent mechanisms [@Chesson2000].
+Classic work on resource partitioning [@Tilman1982] describes fluctuation-independent species coexistence, where stable coexistence depends on limiting resource requirements, not fluctuations in population abundances or environmental conditions.
+In contrast, fluctuation-dependent coexistence mechanisms require the environment to fluctuate over time for species to coexist.
+Indeed, the two most well-known fluctuation-dependent coexistence mechanisms, the storage effect and relative nonlinearity, depend on species-specific responses to environmental conditions, among other things, for species to stably coexist (Box 1).
+Thus, two forces can strengthen species coexistence: 1) the uniqueness of their environmental responses and 2) the variability of environmental conditions.
+In other words, there is reason to expect environmental variability to promote species richness when coexistence is maintained by a fluctuation-dependent mechanism [@Adler2008].
+Why, then, does nearly all theoretical work on the diversity-stability relationship predict a positive relationship?
+In short, because such work has ignored fluctuation-dependent coexistence [@Loreau2010].
 
-
-
-
-1. Env. fluctuations
-2. opportunity -- coexistence
-3. challenge -- ecosystem stability
-4. why consider coexistence?
-5. evidence for it mattering?
-6. what we're doing here...
-
-
-The rapid rate of contemporary biodiversity loss [@Barnosky2011] has prompted ecologists to understand and detect the relationship between biodiversity and ecosystem functioning [@Cardinale2012].
-In particular, the dual threats of declining biodiversity and increasing climate variability beg the question of whether ecosystems with more species are more stable through time.
-Theoretical work has shown that more biodiverse ecosystems should be more stable through time, primarily due to species-specific responses to environmental conditions.
-Results from empirical work, on the other hand, have been equivical [@Jiang2009].
+Theory on the diversity-stability relationship has mainly employed modeling approaches that separate species interactions and species' responses to the environment [@Loreau2010; @Loreau2013].
+For example, population dynamical approaches that follow Lotka-Volterra dynamics typically include determinstic species interactions, which in turn determine species coexistence, and an additive, stochastic environmental component [e.g., @Ives1999; @Lehman2000; @Loreau2013].
+In such models, species coexistence is pre-determined by the pairwise interaction coeffecients and environmental variability does not impact whether species coexist or not.
+Therefore, so long as species' environmental responses are not perfectly correlated, increasing the number of species at a given level of environmental variability generally increases ecosystem stability [@Ives2002b; @Loreau2013]
+Because there is no interaction between species coexistence and environmental variability, only the correlation of species' environmental responses determines ecosystem stability.
+Despite the lack of fluctuation-dependent coexistence in theor on the diversity-stability relationship, several large experiments have confirmed theoretical predictions [@Tilman2006; @Hector2010].
+But, the balance of evidence from all empirical tests is less consistent [@Jiang2009].
 
 Empirical tests of the theoretical prediction that species richness increases ecosystem stability have relied on both experimental and observational approaches.
 Experimental tests involve manipulating the number of species present in a plot by randomly drawing a specific number of species from a pre-defined species pool [@Hector1999; @Tilman2001].
 Results from such experimental tests, which have focused on plant species richness and the temporal stability of aboveground biomass production, have been surprisingly consistent: temporal stability is greater in communities with more species [@Tilman2006; @Hector2010].
-Observational tests of the DSR, which require sampling across natural diversity gradients, have been less consistent.
-Postive, neutral, and negative DSRs have all been reported from observational studies.
-Indeed, in a meta-analysis of DSRs @Jiang2009 found no significant evidence for an effect of species richness on ecosystem stability from observational studies in terrestrial ecosystems.
-Why, given the consistent positive DSRs from biodiversity-ecosystem functioning experiments and theory, do positive DSRs not consistently emerge from observational studies?
-Resolving this paradox may require revisiting the process that maintains biodiversity: species coexistence.
+Observational tests of the diversity-stability relationship, which require sampling across natural diversity gradients, have been less consistent.
+Positive, neutral, and negative diversity-stability relationships have all been reported from observational studies.
+Indeed, in a meta-analysis of diversity-stability relationships @Jiang2009 found no significant evidence for an effect of species richness on ecosystem stability from observational studies in terrestrial ecosystems.
+Thus, there appears to be a gap between the consistency of theoretical studies and the equivocation of empirical studies.
 
-Stable species coexistece, however maintained, is a preqrequisite for biodiversity to confer stability of ecosystem function in the long term [@Turnbull2013].
-Among the dizzying array of mechanisms that can maintain diversity, @Chesson2000 formalized two broad classes: fluctuation-independent and fluctuation-dependent mechanisms.
-Both classes of mechanisms rely on niche differences being greater than relative fitness differences for all species pairs in a community [@Chesson2000; @Adler2007a].
-In a fluctuation-independent case, species coexistence can be maintained by resource partitioning so long as each species is limited by a different resource [@Tilman1982].
-Much of the theoretical literature aimed at deciphering the mechanisms behind the diversity-stability relationship implicitly assumes fluctuation-independent coexistence [reviewed in @Loreau2010].
-For example, Lotka-Volterra models have been widely used and ensure coexistence by keeping pairwise competition coefficients less than one [e.g., @Lehman2000; @Loreau2013].
-However, what are the consequences for ecosystem stability when species coexistence if dependent on environmental fluctuations?
-
-Our focus, on the other hand, is on the interaction between species coexistence and ecosystem stability in communities where coexistence is dependent on environmental fluctuations.
-
-There are two ways that species can coexist in temporally fluctuating environments.
-First, there is the storage effect, where species coexistence is stable if the following three conditions are met: (i) have unique responses to environmental conditions, (ii) have some way to persist in unfavorable years, and (iii) the effects of competition must be greater in 'good' years relative to 'bad' years [@Chesson2000].
-Second, there is relative nonlinearity, where species have unique, nonlinear responses to a shared resource that fluctuates through time [@Chesson2000].
-Both the storage effect and relative nonlinearity require that species have unique responses to environmental conditions.
-Not only do such species-specific responses stabilize coexistence, they can also stabilize ecosystem function by creating compensatory dynamics.
-All else being equal, ecosystem stability is highest when species responses to the environment are perfectly uncorrelated.
-Under the storage effect, uncorrelated species responses to the environment also results in the most stable conditions for coexistence.
-It stands to reason, then, that the strength of the storage effect should predict the degree to which species asynchrony stabilizes ecosystem function.
-However, the exact relationship between storage effect strength and ecosystem stability could take many, unknown, forms.
-Species-specific responses to non-constant environmental conditions can stabilize species coexistence [@Chesson2000] and ecosystem function [@Loreau2010].
-This means that fluctuation-dependent mechanisms of species coexistence are the very same mechanisms that link biodiversity and ecosystem function.
+We argue this gap exists because the two bodies of theory that have developed to explain species coexistence on the one hand, and diversity-stability relationships on the other, have diverged.
+Thus, we require a synthetic theory that fully accounts for the linkages among environmental variability, species coexistence, and ecosystem stability.
+Here, we extend theory on the relationship between species richness and ecosystem stability to cases in which species coexistence explicitly depends on environmental fluctuations and species-specific responses to environmental conditions.
+We focus on the storage effect and relative nonlinearity using a general consumer-resource model.
+Counter to common expectations, we find that negative diversity-stability relationships should be expected when sampling occurs over natural diversity gradients and species coexistence is fluctuation-dependent.
+Importantly, and in line with previous theory [@Ives2002b; @Loreau2010; @DeMazancourt2013], at a given level of environmental variability, increasing species richness stabilizes ecosystem function, even when coexistence is fluctuation-dependent.
+By revisiting species coexistence, our results help to reconcile why observed diversity-stability relationships are both positive and negative.
 
 
 Model and Analysis
