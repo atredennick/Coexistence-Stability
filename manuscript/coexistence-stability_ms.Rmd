@@ -123,16 +123,22 @@ INTRODUCTION
 This idea underlies the "insurance hypothesis" [@Yachi1999], which suggests stability increases with diversity because species respond dissimilarly to environmental conditions – species A has highest growth rates under conditions X whereas species B has highest growth rates under conditions Y. 
 More species confer temporal stability by broadening the range of conditions under which the community maintains function [@Loreau2010].
 Diverse models all predict a positive relationship between species richness and ecosystem stability [@Lehman2000; @Ives2002b; @Loreau2013], and experimental tests tend to support such a prediction [@Tilman2006; @Hector2010].
-However, empirical support for a positive diversity-stability relationship is not unequivocal [@Jiang2009], and theory on the relationship between biodiversity and ecosystem stability often ignores the processes that determine species coexistence in variable environments [@Loreau2010].
+However, empirical support for a positive diversity-stability relationship is not unequivocal [@Jiang2009].
+Furthermore, theory on the relationship between biodiversity and ecosystem stability often ignores the processes that determine species coexistence in variable environments [Loreau 2010, but see @Chesson2001].
 
+Theoretical [@Chesson2000; @Chesson2004] and empirical [@Caceres1997; @Descamps-Julien2005; @Adler2006; @Angert2009] work has identified temporally fluctuating environmental conditions as an important ingredient for stable species coexistence.
+Such "fluctuation-dependent" coexistence [@Chesson2000] requires that species have unique environmental responses and that environmental conditions vary enough for each coexisting species to experience good and bad conditions.
+Thus, there is reason to expect environmental variability to promote species richness when coexistence is maintained by a fluctuation-dependent mechanism [@Adler2008].
+Of course, increasing environmental variability may also decrease ecosystem stability through time by increasing the fluctuations of individual species, regardless of species richness.
+
+<!--
 For the benefits of biodiversity to be realized in the long term, species coexistence, which maintains biodiversity, must be stable [@Turnbull2013].
 Contemporary coexistence theory can be divided into two broad classes: fluctuation-dependent mechanisms and fluctuation-independent mechanisms [@Chesson2000].
-Classic work on resource partitioning [@Tilman1982] describes fluctuation-independent species coexistence, where stable coexistence depends on limiting resource requirements, not fluctuations in population abundances or environmental conditions.
 In contrast, fluctuation-dependent coexistence mechanisms require the environment to fluctuate over time for species to coexist.
 Indeed, the two most well-known fluctuation-dependent coexistence mechanisms, the storage effect and relative nonlinearity, depend on species-specific responses to environmental conditions, among other things, for species to stably coexist [@Chesson2004].
 Thus, two forces can strengthen species coexistence: the uniqueness of their environmental responses and the variability of environmental conditions.
-In other words, there is reason to expect environmental variability to promote species richness when coexistence is maintained by a fluctuation-dependent mechanism [@Adler2008].
-Of course, increasing environmental variability may also decrease ecosystem stability through time by increasing the fluctuations of individual species, regardless of species richness.
+In other words, 
+-->
 
 The countervailing effects of environmental variability present an interesting paradox: increasing variability should decrease ecosystem stability, but may also increase richness, which may offset the decrease in stability.
 Such a paradox complicates predictions about how ecosystems will respond as environmental conditions exceed historical ranges of variability because we do not know the net effect of environmental variability on ecosystem stability when species coexistence is fluctuation-dependent.
@@ -437,8 +443,8 @@ For simulations where environmental variability determined species coexistence, 
 Within-season dynamics were solved given initial conditions using the package ``deSolve`` [@Soetaert2010] in ``R`` [@Team2013].
 All model code has been deposited on Dryad (*link*) and is available on GitHub at http://github.com/atredennick/Coexistence-Stability.
 
-RESULTS
--------
+RESULTS AND DISCUSSION
+----------------------
 
 \begin{figure}[!ht]
   \centering
@@ -446,8 +452,7 @@ RESULTS
   \caption{Variability of total community as function of species richness when coexistence is maintained by the storage effect (a,c) or relative nonlinearity (b,d). Top panels show results from simulations where environmental or resource variance determine the number species that coexist in a community. Bottom panels show results from simulations where environmental or resource variance is fixed at a level that allows coexistence of all four species, but speces are removed to manipulate diversity. In the most general sense, the top panels represent regional diversity-stability relationships across natural diversity gradients, whereas the bottom panels represent local diversity-stability relationships.}
 \end{figure}
 
-DISCUSSION
-----------
+### The diversity-stability relationship
 The direction of the diversity-variability relationship can be positive and negative when species coexistence is maintained by fluctuation-dependent mechanisms (Fig. 2).
 Ecosystem variability is positively correlated with species richness when species richness is measured across a gradient of envrionmental variability, which maintains diversity and promotes ecosystem variability (Fig. 2a,b).
 If environmental conditions are sufficient to maintain coexistence, removing species increases ecosystem variability (Fig. 2c,d).
@@ -471,6 +476,7 @@ Their data came from a six sites that were 6 km apart.
 Thus, it is possible that each site experienced slightly different levels of environmental variability that influenced species coexistence.
 Indeed, fluctuation-dependent coexistence mechanisms are particularly common in arid and semi-arid environments (CITATIONS).
 
+### The impact of increasing environmental variability on ecosystem stability
 
 
 
