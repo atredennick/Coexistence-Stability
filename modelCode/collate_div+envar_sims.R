@@ -49,39 +49,39 @@ parameter_matrix <- cbind(DNR_repped, prm_repped)
 ####
 ####  Read in the simulation results -- a BIG list
 ####
-file_to_get <- "../simulationResults/storageeffect_div+envvar_stability.RDS"
-sims_list <- readRDS(file_to_get)
-list_elements <- length(sims_list)
-
-
-
-####
-####  Function for calculating CV from list elements
-####
-get_cv <- function(x){
-  seasons_to_exclude <- 500
-  x <- as.data.frame(x)
-  names(x) <- c("D1", "D2", "D3", "D4", "N1", "N2", "N3", "N4", "R")
-  livestates <- grep("N", colnames(x))
-  tmp_totbiomass <- rowSums(x[seasons_to_exclude:nrow(x),livestates])
-  tmp_cv <- sd(tmp_totbiomass) / mean(tmp_totbiomass)
-  tmp_sppavg <- colMeans(x[seasons_to_exclude:nrow(x),livestates])
-  tmp_spprich <- length(which(tmp_sppavg > 1))
-  
-  tmp_out <- c(tmp_cv, tmp_spprich)
-}
-
-
-
-####
-####  Apply the get_cv function over the simulation list
-####
-out_cvs <- lapply(sims_list, get_cv) # apply the function
-out_cvs_df <- do.call(rbind.data.frame, out_cvs) # convert to data frame
-colnames(out_cvs_df) <- c("cv", "spprichness") # give the columns names
-cvs_params <- cbind(parameter_matrix, out_cvs_df) # combine with parameter values
-saveRDS(cvs_params, file = "../simulationResults/storageeffect_div+envvar_cv_collated.RDS")
-
+# file_to_get <- "../simulationResults/storageeffect_div+envvar_stability.RDS"
+# sims_list <- readRDS(file_to_get)
+# list_elements <- length(sims_list)
+# 
+# 
+# 
+# ####
+# ####  Function for calculating CV from list elements
+# ####
+# get_cv <- function(x){
+#   seasons_to_exclude <- 500
+#   x <- as.data.frame(x)
+#   names(x) <- c("D1", "D2", "D3", "D4", "N1", "N2", "N3", "N4", "R")
+#   livestates <- grep("N", colnames(x))
+#   tmp_totbiomass <- rowSums(x[seasons_to_exclude:nrow(x),livestates])
+#   tmp_cv <- sd(tmp_totbiomass) / mean(tmp_totbiomass)
+#   tmp_sppavg <- colMeans(x[seasons_to_exclude:nrow(x),livestates])
+#   tmp_spprich <- length(which(tmp_sppavg > 1))
+#   
+#   tmp_out <- c(tmp_cv, tmp_spprich)
+# }
+# 
+# 
+# 
+# ####
+# ####  Apply the get_cv function over the simulation list
+# ####
+# out_cvs <- lapply(sims_list, get_cv) # apply the function
+# out_cvs_df <- do.call(rbind.data.frame, out_cvs) # convert to data frame
+# colnames(out_cvs_df) <- c("cv", "spprichness") # give the columns names
+# cvs_params <- cbind(parameter_matrix, out_cvs_df) # combine with parameter values
+# saveRDS(cvs_params, file = "../simulationResults/storageeffect_div+envvar_cv_collated.RDS")
+cvs_params <- readRDS(file = "../simulationResults/storageeffect_div+envvar_cv_collated.RDS")
 
 
 ####
@@ -105,8 +105,24 @@ ggplot(cvs_params, aes(x=sigE, y=cv, color=as.factor(spprichness)))+
 
 
 
+####
+####  Look at just one nested species pool
+####
+cvs_pool <- rbind(subset(cvs_params, N1==1 & N2==1 & N3==1 & N4==1),
+                  subset(cvs_params, N1==1 & N2==1 & N3==1 & N4==0),
+                  subset(cvs_params, N1==1 & N2==0 & N3==0 & N4==0),
+                  subset(cvs_params, N1==1 & N2==0 & N3==0 & N4==0))
 
-
+ggplot(cvs_pool, aes(x=sigE, y=cv, shape=as.factor(spprichness)))+
+  geom_point(size=2, alpha=0.3)+
+  geom_point(size=2, alpha=0.5, shape=1)+
+  # stat_smooth(method="lm", se=FALSE, size=1)+
+  scale_color_manual(values = mycols, name = "Species\nRichness")+
+  xlab(expression(paste("Variance of environmental cue (",sigma[E]^2, ")")))+
+  ylab("CV of community biomass")+
+  theme_bw()+
+  theme(legend.title=element_text(size=10),
+        legend.background = element_rect(colour = "grey", size=0.5))
 
 
 
