@@ -33,8 +33,8 @@ DNR <- rbind(c(D=c(1,1,1,1),N=c(1,1,1,1),R=20),
              c(D=c(0,0,1,0),N=c(0,0,1,0),R=20),
              c(D=c(0,0,0,1),N=c(0,0,1,0),R=20))
 
-n_sig_e <- 100 # Number of cue variance levels
-sig_e_vec <- pretty(seq(1, 3, length.out=n_sig_e), n_sig_e) # Make a pretty vector
+n_sig_e <- 50 # Number of cue variance levels
+sig_e_vec <- pretty(seq(0, 2, length.out=n_sig_e), n_sig_e) # Make a pretty vector
 prm <- as.matrix(sig_e_vec)
 colnames(prm) <- "sigE"
 
@@ -90,7 +90,7 @@ parameter_matrix <- cbind(constant_param_matrix, DNR_repped, prm_repped)
 
 ##  Run all parameter combinations in paralell
 # Returns list of simulation time series with dims = c(nrow(prm), seasons, length(DNR))
-outs <- mclapply(seq_len(nrow(parameter)), 
+outs <- mclapply(seq_len(nrow(parameter_matrix)), 
                  function(i) {
                    do.call(simulate_model, as.list(parameter_matrix[i,]))
                  }, 
