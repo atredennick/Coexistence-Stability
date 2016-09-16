@@ -17,26 +17,31 @@ nbcores <- 4 # Set number of cores to match machine/simulations
 set.seed(123456789) # Set seed to reproduce random results
 
 ## Define vectors of parameters to vary -- here, initial conditions to vary richness
+# DNR <- rbind(c(D=c(1,1,1,1),N=c(1,1,1,1),R=20),
+#              c(D=c(1,1,1,0),N=c(1,1,1,0),R=20),
+#              c(D=c(1,1,0,1),N=c(1,1,0,1),R=20),
+#              c(D=c(1,0,1,1),N=c(1,0,1,1),R=20),
+#              c(D=c(0,1,1,1),N=c(0,1,1,1),R=20),
+#              c(D=c(1,1,0,0),N=c(1,1,0,0),R=20),
+#              c(D=c(1,0,1,0),N=c(1,0,1,0),R=20),
+#              c(D=c(1,0,0,1),N=c(1,0,0,1),R=20),
+#              c(D=c(0,1,1,0),N=c(0,1,1,0),R=20),
+#              c(D=c(0,1,0,1),N=c(0,1,0,1),R=20),
+#              c(D=c(0,0,1,1),N=c(0,0,1,1),R=20),
+#              c(D=c(1,0,0,0),N=c(1,0,0,0),R=20),
+#              c(D=c(0,1,0,0),N=c(0,1,0,0),R=20),
+#              c(D=c(0,0,1,0),N=c(0,0,1,0),R=20),
+#              c(D=c(0,0,0,1),N=c(0,0,1,0),R=20))
 DNR <- rbind(c(D=c(1,1,1,1),N=c(1,1,1,1),R=20),
              c(D=c(1,1,1,0),N=c(1,1,1,0),R=20),
-             c(D=c(1,1,0,1),N=c(1,1,0,1),R=20),
-             c(D=c(1,0,1,1),N=c(1,0,1,1),R=20),
-             c(D=c(0,1,1,1),N=c(0,1,1,1),R=20),
              c(D=c(1,1,0,0),N=c(1,1,0,0),R=20),
-             c(D=c(1,0,1,0),N=c(1,0,1,0),R=20),
-             c(D=c(1,0,0,1),N=c(1,0,0,1),R=20),
-             c(D=c(0,1,1,0),N=c(0,1,1,0),R=20),
-             c(D=c(0,1,0,1),N=c(0,1,0,1),R=20),
-             c(D=c(0,0,1,1),N=c(0,0,1,1),R=20),
-             c(D=c(1,0,0,0),N=c(1,0,0,0),R=20),
-             c(D=c(0,1,0,0),N=c(0,1,0,0),R=20),
-             c(D=c(0,0,1,0),N=c(0,0,1,0),R=20),
-             c(D=c(0,0,0,1),N=c(0,0,1,0),R=20))
+             c(D=c(1,0,0,0),N=c(1,0,0,0),R=20))
 
 n_sig_e <- 50 # Number of cue variance levels
 sig_e_vec <- pretty(seq(0, 2, length.out=n_sig_e), n_sig_e) # Make a pretty vector
-prm <- as.matrix(sig_e_vec)
-colnames(prm) <- "sigE"
+rho <- as.matrix(c(-1,0,1))
+prm <- expand.grid(as.matrix(sig_e_vec), rho)
+colnames(prm) <- c("sigE", "rho")
 
 ##  Define constant parameters in list
 constant_parameters <- list (
@@ -45,11 +50,11 @@ constant_parameters <- list (
   Rmu = 3,                         # mean resource pulse (on log scale)
   Rsd_annual = 0,                  # std dev of resource pulses (on log scale)
   # sigE = 4,                        # environmental cue variance
-  rho = -1,                        # environmental cue correlation between species
+  # rho = 0,                        # environmental cue correlation between species
   alpha1 = 0.50,                   # live-to-dormant biomass fraction; spp1
-  alpha2 = 0.49,                   # live-to-dormant biomass fraction; spp2
-  alpha3 = 0.48,                   # live-to-dormant biomass fraction; spp3
-  alpha4 = 0.47,                   # live-to-dormant biomass fraction; spp4
+  alpha2 = 0.495,                   # live-to-dormant biomass fraction; spp2
+  alpha3 = 0.490,                   # live-to-dormant biomass fraction; spp3
+  alpha4 = 0.485,                   # live-to-dormant biomass fraction; spp4
   beta1 = 0,                       # adult survivorship; spp1 (0 if annual, >0 if perennial)
   beta2 = 0,                       # adult survivorship; spp2 (0 if annual, >0 if perennial)
   beta3 = 0,                       # adult survivorship; spp3 (0 if annual, >0 if perennial)
@@ -96,5 +101,5 @@ outs <- mclapply(seq_len(nrow(parameter_matrix)),
                  }, 
                  mc.cores=nbcores) # end apply function
 
-saveRDS(outs, "../simulationResults/storageeffect_div+envvar_stability.RDS")
+saveRDS(outs, "../simulationResults/storageeffect_div+envvar_stability_asymcomp1.RDS")
 
