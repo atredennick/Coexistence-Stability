@@ -103,12 +103,12 @@ opts_chunk$set(dev='pdf', dev.args=c(version="1.3"))
 \newpage{}
 
 \begin{abstract}
-For biodiversity to increase the temporal stability of ecosystem function in the long-term, coexistence must be stable.
-Species-specific respones to environmental variation through time is key to understanding fluctuation-dependent coexistence mechanisms and how asynchrony in species dynamics can arise to stabilize ecosystem function.
-Despite the shared dependence on environmental fluctuations, theory on species coexistence and the relationship between species richness and ecosystem stability have developed independently.
-To formally link the two bodies of theory, we use consumer-resource models where coexistence between two species utilizing a single resource is maintained by two fluctuation-dependent mechanisms: the storage effect and relative nonlinearity.
-We examine how the strength of species coexistence relates to the temporal stability of aggregate ecosystem function and how the effect of environmental variability on stability is mediated by the mechanism of coexistence.
-Blah, blah, blah...
+Theory relating species richness to ecosystem stability typically ignores interactions between environmental variability and species coexistence, or fluctuation-dependent coexistence.
+This may explain why we lack general explanations for observed deviations from the predicted positive diversity-stability relationship, and it limits our ability to predict the consequences of increasing environmental variability.
+Here we use a consumer-resource model to explore how fluctuation-dependent coexistence via the storage effect and relative nonlinearity affects ecosystem stability.
+First, we find that a negative, rather than positive, diversity-stability relationship is possible when ecosystem function is sampled across a natural diversity gradient.
+Second, we find that fluctuation-dependent coexistence can buffer ecosystem functioning against increasing environmental variability because species richness increases with environmental variability, which helps to stabilize ecosystem function via the portfolio effect.
+Our work provides a general explanation for non-positive diversity-stability relationships, and highlights the importance of conserving regional species pools so that species can be added to fluctuation-dependent communities as environmental variability increases.
 \vspace{2em}
 \end{abstract}
 
@@ -407,18 +407,34 @@ Observational studies must rely on natural diversity gradients, and if species r
 For example, Sasaki and Lauenroth (2011) found a negative relationship between species richness and the temporal stability of plant abundance (a positive diversity-variability relationship) in a semi-arid grassland.
 Their data came from a six sites that were 6 km apart.
 Thus, it is possible that each site experienced slightly different levels of environmental variability that influenced species coexistence.
-Indeed, fluctuation-dependent coexistence mechanisms may be common in arid and semi-arid environments [@Chesson2004; @Angert2009[.
-
-### The impact of increasing environmental variability on ecosystem variability
-The magnitude of environmental variability directly influences the variability of aggregate ecosystem properties, such as net primary production, when species' population growth and community dynamics track environmental conditions.
-It is clear that, at a given level of environmental variabilty, species richness begets ecosystem stability [@Tilman2006; @Hector2010; @Loreau2013], and our work adds support for the traditional diversity-stability relationship in cases where coexistence is fluctuation-dependent.
-However, we also find that increasing environmental variability has the potential to decrease ecosystem variability by allowing for more species to coexist (Fig. 3).
+Indeed, fluctuation-dependent coexistence mechanisms may be common in arid and semi-arid environments [@Chesson2004; @Angert2009].
 
 \begin{figure}[!ht]
   \centering
       \includegraphics[height=5in]{./components/stability_variability_diversity.png}
   \caption{The effect of environmental variability on ecosystem variability with associated effects of species richness when species coexist via the storage effect. Panels (a-c) show simulation results where species have symmetrical competitive effects, whereas panels (d-f) show results when competition is assymetric (that is, in the absence of environmental fluctuations, all species but the superior competitor would be competitively excluded). We show results for different levels of correlations of species' environmental responses, $\rho$. At a given level of environmental variability, it is always better to have more species, as also shown in Fig. 2. Likewise, increasing environmental variance can, in some cases, actually decrease ecosystem variability if the increase is enough to allow species from the regional pool to enter the community. In essence, increasing environmental variance allows ecosystems to jump from one line to another as species are added. Note that the \emph{x} and \emph{y} axes are on the log scale for visual clarity.}
 \end{figure}
+
+### The impact of increasing environmental variability on ecosystem variability
+The magnitude of environmental variability directly influences the variability of aggregate ecosystem properties, such as net primary production, when species' population growth and community dynamics track environmental conditions.
+It is clear that, at a given level of environmental variabilty, species richness begets ecosystem stability [@Tilman2006; @Hector2010; @Loreau2013], and our work adds support for the traditional diversity-stability relationship in cases where coexistence is fluctuation-dependent.
+Likewise, at fixed species richness, increasing environmental variability increases ecosystem variability (Fig. 3a-c).
+But, what if species richness is not fixed, and we allow environmental variability to determine species coexistence?
+
+In Fig. 3d-f we show simulation results where environmental variability determines species coexistence from a regional species pool of four species.
+We also show results from nested subsets of the four species pool (e.g., only two species in the pool instead of four) to show the trajectory of ecosystem variability if new species are not present to join the local community.
+In accordance with coexistence theory, we find that species richness increases with environmental variability and, in some cases, increasing variability can actually lead to a decrease in ecosystem stability.
+For example, consider the single species local community at log($\sigma^2_E$) = -2 in Fig. 3d.
+If a global change causes environmental variability to increase to log($\sigma^2_E$) = -0.5, then there is a chance for four species to coexist, rather than one, and the *CV* of total community biomass remains almost constant.
+Thus, depending on the specific traits (parameter values) of the species in the regional pool, increasing environmental variability need not cause increases in environmental variability, and there is potential for ecosystem variability to actually decrease.
+
+CONCLUSIONS
+-----------
+How does fluctuation-dependent coexistence affect the diversity-stability relationship?
+At a given level of environmental variability, the typical negative diversity-stability relationship holds because having more species always stabilizes ecosystem functioning.
+However, counter other theoretical studies, we found that a positive diversity-stability relationship could be encountered if sampling occurs across a natural diversity gradient and species coexistence is dependent on environmental fluctuations.
+We also found that fluctuation-dependent species coexistence may help ecosystems buffer increasing environmental variability because environmental variability promotes species richness, which, in turn, promotes stability.
+Where fluctuation-dependent species coexistence prevails, our findings suggest that conserving regional species pools and conduits of dispersal between local communities is especially important as environmental variability increases.
 
 
 
