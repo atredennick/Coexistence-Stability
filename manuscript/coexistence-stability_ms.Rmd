@@ -409,24 +409,52 @@ Their data came from a six sites that were 6 km apart.
 Thus, it is possible that each site experienced slightly different levels of environmental variability that influenced species coexistence.
 Indeed, fluctuation-dependent coexistence mechanisms may be common in arid and semi-arid environments [@Chesson2004; @Angert2009].
 
+### The impact of increasing environmental variability on ecosystem variability
+Whether coexistence is fluctuation-independent or fluctuation-dependent becomes especially important when we consider how ecosystem stability responds to increasing environmental variability.
+In the fluctuation-independent case, species richness is essentially fixed because the species' inequalities that determine coexistence (niche and fitness differences) are not linked to environmental variability.
+Therefore, increasing environmental variability will always increase ecosystem variability.
+We can examine one example of this situation with the storage effect version of our model where all species are equivalent.
+We find that the rate at which ecosystem variability increases with environmental variability is constant regardless of species richness, but that, as expected, more species rich communities are more stable on average (Fig. 3a-c).
+The difference in ecosystem variability among communities of different diversity depends on the strength of the correlations of their environmental responses (Fig. 3a-c).
+
+When species coexistence is fluctuation-dependent, increasing environmental variability has much more interesting effects on ecosystem variability.
+In Fig. 3d-f we show simulation results where environmental variability determines species coexistence from a regional species pool of four species.
+We also show results from nested subsets of the four species pool (e.g., only two species in the pool instead of four) to show the trajectory of ecosystem variability if new species are not present to join the local community.
+In accordance with coexistence theory, we find that species richness increases with environmental variability and, in some cases, increasing variability can actually completely temper the effect of increasing environmental variability.
+For example, consider the single species local community at log($\sigma^2_E$) = -2 in Fig. 3d.
+If a global change causes environmental variability to increase to log($\sigma^2_E$) = -0.5, then there is a chance for four species to coexist, rather than one, and the *CV* of total community biomass remains almost constant.
+Thus, depending on the specific traits (parameter values) of the species in the regional pool, increasing environmental variability need not cause increases in environmental variability.
+There is potential for ecosystem variability to actually decrease, but this case may be rare because it would require a very large increase in environmental variability.
+
 \begin{figure}[!ht]
   \centering
       \includegraphics[height=5in]{./components/stability_variability_diversity.png}
   \caption{The effect of environmental variability on ecosystem variability with associated effects of species richness when species coexist via the storage effect. Panels (a-c) show simulation results where species have symmetrical competitive effects, whereas panels (d-f) show results when competition is assymetric (that is, in the absence of environmental fluctuations, all species but the superior competitor would be competitively excluded). We show results for different levels of correlations of species' environmental responses, $\rho$. At a given level of environmental variability, it is always better to have more species, as also shown in Fig. 2. Likewise, increasing environmental variance can, in some cases, actually decrease ecosystem variability if the increase is enough to allow species from the regional pool to enter the community. In essence, increasing environmental variance allows ecosystems to jump from one line to another as species are added. Note that the \emph{x} and \emph{y} axes are on the log scale for visual clarity.}
 \end{figure}
 
-### The impact of increasing environmental variability on ecosystem variability
-The magnitude of environmental variability directly influences the variability of aggregate ecosystem properties, such as net primary production, when species' population growth and community dynamics track environmental conditions.
-It is clear that, at a given level of environmental variabilty, species richness begets ecosystem stability [@Tilman2006; @Hector2010; @Loreau2013], and our work adds support for the traditional diversity-stability relationship in cases where coexistence is fluctuation-dependent.
-Likewise, at fixed species richness, increasing environmental variability increases ecosystem variability (Fig. 3a-c).
-But, what if species richness is not fixed, and we allow environmental variability to determine species coexistence?
+Our simulation results lead to two conclusions.
+First, when predicting the impacts of increasing environmental variability on ecosystem stability, the mechanism of coexistence in the community matters.
+Fluctuation-dependent coexistence can buffer ecosystems from increasing environmental variability by allowing for species additions.
+As shown in previous work [@Loreau2013], the stabilizing effect of species additions depends on the correlations of their environmental responses (Fig. 3e-f).
+Whether our theoretical predictions hold in real communities is unknown and requires empirical tests.
+Doing so would require manipulating environmental variability in communities where coexistence is known to be fluctuation-dependent, at least in part.
+Such data do exist [@Angert2009], and a coupled modeling-experimental approach could determine if our predictions hold true in real communities.
 
-In Fig. 3d-f we show simulation results where environmental variability determines species coexistence from a regional species pool of four species.
-We also show results from nested subsets of the four species pool (e.g., only two species in the pool instead of four) to show the trajectory of ecosystem variability if new species are not present to join the local community.
-In accordance with coexistence theory, we find that species richness increases with environmental variability and, in some cases, increasing variability can actually lead to a decrease in ecosystem stability.
-For example, consider the single species local community at log($\sigma^2_E$) = -2 in Fig. 3d.
-If a global change causes environmental variability to increase to log($\sigma^2_E$) = -0.5, then there is a chance for four species to coexist, rather than one, and the *CV* of total community biomass remains almost constant.
-Thus, depending on the specific traits (parameter values) of the species in the regional pool, increasing environmental variability need not cause increases in environmental variability, and there is potential for ecosystem variability to actually decrease.
+Second, whether local fluctuation-dependent communities can receive the benefit of additional species depends on a diverse regional species pool.
+If the regional pool is not greater in size than the local species pool, than ecosystem stability will decline with environmental variability in a similar manner as in fluctuation-independent communities because species richness will be fixed.
+Metacommunity theory has made clear the importance of rescue effects to avoid species extinctions [@Brown1997; @Leibold2004].
+Here, instead of local immigration by a resident species working to rescue a species from extinction, immigration to the local community by a new species rescues ecosystem processes from becoming less stable.
+Thus, our results reinforce the importance of both local and regional biodiversity conservation.
+Just as declines in local species richness can destabilize ecosystem functioning [@Tilman2006; @Hector2010; @Hautier2014], species losses at larger spatial scales can also weaken stability.
+@Wang2014 show that regional ecosystem stability depends on regional biodiversity through its effects on beta diversity and, in turn, the asynchrony of functioning in local communities.
+Our results show that, when coexistence is fluctuation-dependent, regional biodiversity declines could also affect local ecosystem functioning by limiting local species additions that could be possible under scenarios of increasing environmental variability.
+
+Species coexistence in real ecological communities probably emerges from some combination of fluctuation-independent and fluctuation-dependent mechanisms [@Chesson2000; @Clark2010].
+Likewise, environmental conditions in real ecosystems are unlikely to change only in their variability without an associated change in the mean [@Avolio2015].
+Therefore, environmental change has the potential to alter the niche and fitness differences among species in multiple ways, some of which were not present in our current analysis.
+Mean changes in environmental conditions could reorder competitive hierarchies (CITATION) and/or alter the availability of niches [@Harpole2016].
+Associated changes in ecosystem stability will depend upon the magnitude of environmental change, each species response to the particular environmental driver, and biotic interactions [@Hallett2014a].
+Thus, it is becoming clear that understanding how ecosystem stability will respond to global change will require a traits-based approach [@Adler2013].
 
 CONCLUSIONS
 -----------
