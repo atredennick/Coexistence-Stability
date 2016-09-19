@@ -10,6 +10,7 @@ library("plyr")
 library("reshape2")
 library("ggplot2")
 library("ggthemes")
+library("viridis")
 
 
 
@@ -40,9 +41,9 @@ parameter_matrix <- cbind(DNR_repped, prm_repped)
 ####  Read in the simulation results -- a BIG list
 ####
 # file_to_get <- "../../../Desktop/storageeffect_div+envvar_stability_asymcomp1.RDS"
-file_to_get <- "../../../Desktop/storageeffect_div+envvar_stability.RDS"
-sims_list <- readRDS(file_to_get)
-list_elements <- length(sims_list)
+# file_to_get <- "../../../Desktop/storageeffect_div+envvar_stability.RDS"
+# sims_list <- readRDS(file_to_get)
+# list_elements <- length(sims_list)
 # 
 # 
 # 
@@ -67,15 +68,19 @@ get_cv <- function(x){
 ####
 ####  Apply the get_cv function over the simulation list
 ####
-out_cvs <- lapply(sims_list, get_cv) # apply the function
-out_cvs_df <- do.call(rbind.data.frame, out_cvs) # convert to data frame
-colnames(out_cvs_df) <- c("cv", "spprichness") # give the columns names
-cvs_params <- cbind(parameter_matrix, out_cvs_df) # combine with parameter values
-saveRDS(cvs_params, file = "../simulationResults/storageeffect_div+envvar_cv_collated.RDS")
-cvs_params <- readRDS(file = "../simulationResults/storageeffect_div+envvar_cv_collated.RDS")
+# out_cvs <- lapply(sims_list, get_cv) # apply the function
+# out_cvs_df <- do.call(rbind.data.frame, out_cvs) # convert to data frame
+# colnames(out_cvs_df) <- c("cv", "spprichness") # give the columns names
+# cvs_params <- cbind(parameter_matrix, out_cvs_df) # combine with parameter values
+# saveRDS(cvs_params, file = "../simulationResults/storageeffect_div+envvar_cv_collated.RDS")
 # saveRDS(cvs_params, file = "../simulationResults/storageeffect_div+envvar_cv_collated_asymmetric.RDS")
-# cvs_params <- readRDS(file = "../simulationResults/storageeffect_div+envvar_cv_collated_asymmetric.RDS")
 
+####  READ IN COLLATED RESULTS
+cvs_params_symm <- readRDS(file = "../simulationResults/storageeffect_div+envvar_cv_collated.RDS")
+cvs_params_asymm <- readRDS(file = "../simulationResults/storageeffect_div+envvar_cv_collated_asymmetric.RDS")
+cvs_params_symm$comp <- "1symmetrical"
+cvs_params_asymm$comp <- "2asymmetrical"
+cvs_params <- rbind(cvs_params_symm, cvs_params_asymm)
 
 ####
 #### Summarize and plot results
@@ -85,44 +90,29 @@ get_colors <- function(n_cols){
 }
 mycols <- get_colors(4)
 
-cvs_plots <- ddply(cvs_params, .(sigE, rho, spprichness), summarise,
+cvs_plots <- ddply(cvs_params, .(sigE, rho, spprichness, comp), summarise,
               cv = mean(cv))
 
-# ggplot(cvs_plots, aes(x=sigE, y=cv, color=as.factor(spprichness)))+
-# #   geom_line(size=0.7)+
-#   geom_point(size=2, alpha=0.3)+
-#   geom_point(size=2, alpha=0.5, shape=1)+
-#   stat_smooth(method="loess", se=FALSE, size=1)+
-#   scale_color_manual(values = mycols, name = "Species\nRichness")+
-#   xlab(expression(paste("Variance of environmental cue (",sigma[E]^2, ")")))+
-#   ylab("CV of community biomass")+
-#   facet_wrap("rho", nrow=1)+
-#   theme_bw()+
-#   theme(legend.title=element_text(size=10),
-#         legend.background = element_rect(colour = "grey", size=0.5),
-#         legend.key = element_blank(),
-#         legend.key.size = unit(0.5, "cm"),
-#         legend.position = c(0.95, 0.35))+
-#   theme(strip.background = element_blank())
-
 cvs_plots2 <- subset(cvs_plots, sigE!=0)
-ggplot(cvs_plots2, aes(x=log(sigE), y=log(cv), color=as.factor(spprichness)))+
+ggplot(cvs_plots2, aes(x=sigE, y=cv, color=as.factor(spprichness)))+
   #   geom_line(size=0.7)+
   geom_point(size=2, alpha=0.3)+
   geom_point(size=2, alpha=0.5, shape=1)+
-  stat_smooth(method="lm", se=FALSE, size=1)+
-  scale_color_manual(values = mycols, name = "Species\nRichness")+
+  stat_smooth(method="loess", se=FALSE, size=1)+
+  # scale_color_manual(values = mycols, name = "Species\nRichness")+
+  scale_color_viridis(discrete = TRUE, name = "Species\nRichness")+
   xlab(expression(paste("Variance of environmental cue (",sigma[E]^2, ")")))+
   ylab("CV of community biomass")+
-  facet_wrap("rho", nrow=1)+
-  theme_bw()+
-  theme(legend.title=element_text(size=10),
-        legend.background = element_rect(colour = "grey", size=0.5),
+  facet_grid(comp~rho)+
+  theme_few()+
+  theme(legend.title=element_text(size=8),
+        legend.text=element_text(size=8),
+        legend.background = element_rect(colour = "white", size=0.5),
         legend.key = element_blank(),
-        legend.key.size = unit(0.5, "cm"),
-        legend.position = c(0.95, 0.35))+
+        legend.key.size = unit(0.3, "cm"),
+        legend.position = c(0.95, 0.15))+
   theme(strip.background = element_blank())
-
+ggsave(filename = "../manuscript/components/storage_effect_div+envar.png", width = 8, height=4, units = "in", dpi = 82)
 
 
 ####

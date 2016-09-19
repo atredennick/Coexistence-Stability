@@ -184,7 +184,7 @@ Dormant biomass is equal to a constant fraction ($\alpha$) of live biomass at th
 Live biomass is equal to newly activated dormant biomass ($\gamma_{i,t}[D_{i}(\tau_k)$), minus some fraction of live biomass that is converted to dormant biomass ($(1-\alpha_i)N_{i}(\tau_k)$)
 We assume the resource pool is not replenished within a growing season.
 Resource replenishment occurs between growing seasons, and the resource pool (*R*) at the start of the growing season *k*+1 is $R(\tau_k^+) = R^+$, where $R^+$ is a random resource pulse drawn from a log-normal distribution with mean $\mu(R^+)$ and standard deviation $\sigma(R^+)$. 
-Model parameters and notation are described in table 1.
+Model parameters and notation are described in Table 1.
 
 \begin{centering}
 \begin{table}
@@ -293,7 +293,7 @@ strg_uptake_plot <- ggplot()+
   xlab("Resource")+
   ylab("Resource Uptake Rate")+
   theme(legend.position=c(0.7,0.35))+
-  geom_text(aes(x=1,y=5, label="a", size=8))+
+  geom_text(aes(x=1,y=5, label="(a)"), size=2.5)+
   mytheme
 
 sigE <- 2   # environmental cue variability
@@ -309,7 +309,7 @@ strg_germ_plot <- ggplot()+
   guides(size=FALSE, linetype=FALSE, color=FALSE)+
   xlab("Simulation Year")+
   ylab("Germination Fraction")+
-  geom_text(aes(x=1,y=1,label="b", size=8))+
+  geom_text(aes(x=1,y=1,label="(b)"), size=2.5)+
   mytheme
 
 
@@ -340,7 +340,7 @@ reln_uptake_plot <- ggplot()+
   guides(size=FALSE, linetype=FALSE, color=FALSE)+
   xlab("Resource")+
   ylab("Resource Uptake Rate")+
-  geom_text(aes(x=1,y=5,label="c", size=8))+
+  geom_text(aes(x=1,y=5,label="(c)"), size=2.5)+
   mytheme
 
 sigE <- 2   # environmental cue variability
@@ -356,7 +356,7 @@ reln_germ_plot <- ggplot()+
   guides(size=FALSE, linetype=FALSE, color=FALSE)+
   xlab("Simulation Year")+
   ylab("Germination Fraction")+
-  geom_text(aes(x=1,y=1,label="d", size=8))+
+  geom_text(aes(x=1,y=1,label="(d)"), size=2.5)+
   mytheme
 
 g_strg <- grid.arrange(strg_uptake_plot, strg_germ_plot, 
@@ -364,15 +364,25 @@ g_strg <- grid.arrange(strg_uptake_plot, strg_germ_plot,
                        ncol=2, nrow=2)
 ```
 
-### Model simulations
-We simulated the model with four species under two scenarios for each coexistence mechanism.
+### Numerical simulations
+To understand how fluctuation-dependent coexist can affect the diversity-stability relationship, we simulated the model with four species under two scenarios for each coexistence mechanism.
 First, we allowed the variance of the environment to determine how many species can coexist, akin to a community assembly experiment with a species pool of four species.
 This required simulating communities with all species initially present across a gradient of annual resource variability (for relative nonlinearity) or environmental cue variability (for the storage effect).
 Second, we chose parameter values that allowed coexistence of all four species and performed species removals.
-We ran simulations for 10,000 seasons with 20 day growing seasons. 
-We averaged biomass over the growing season.
+The two simulation experiments correspond to (i) sampling ecosystem function across a natural gradient of species richness and (ii) sampling ecosystem function across diversity treatments within a site.
+
+To understand how increasing environmental variability will impact ecosystem stability when coexistence is fluctuation-dependent, we simulated the model over a range of environmental cue variability and species pool sizes.
+Thus, for each size of species pool (1, 2, 3, or 4 species), we simulated the model at 41 evenly-spaced levels of environmental cue (range = 0,2) or resource variability (range = 0,1.5).
+We also explored the influence of species assymetries in competitive ability and species' correlations of environmental responses in the storage effect model.
+Under the storage effect, if all species are perfectly symmetrical, that is, there is no superior competitor, then coexistence is fluctuation-independent.
+We use one such parameterization of our model to contrast the response of ecosystem stability in fluctuation-dependent and fluctation-independent communities to environmental variation.
+
+All simulations were run for 5,000 seasons with 20-day growing seasons. 
+We averaged biomass over the growing season, and those yearly values were used to calculate total community biomass in each year.
 After discarding an initial 1,000 seasons to reduce transient effects on our results, we calculated the coffecient of variation of summed species biomass through time.
-For simulations where environmental variability determined species coexistence, we calculated species richness as the number of species whose average biomass was greater than 1 over the course of the simulation.
+Therefore, in our results we refer to ecosystem variability, which is the inverse of ecosystem stability.
+We calculated species richness as the number of species whose average biomass was greater than 1 over the course of the simulation.
+Parameter values for specific results are given in figure captions.
 Within-season dynamics were solved given initial conditions using the package ``deSolve`` [@Soetaert2010] in ``R`` [@Team2013].
 All model code has been deposited on Dryad (*link*) and is available on GitHub at http://github.com/atredennick/Coexistence-Stability.
 
@@ -381,11 +391,11 @@ RESULTS AND DISCUSSION
 
 \begin{figure}[!ht]
   \centering
-      \includegraphics[height=5in]{./components/main_figure.png}
+      \includegraphics[height=4in]{./components/main_figure.png}
   \caption{Variability of total community as function of species richness when coexistence is maintained by the storage effect (a,c) or relative nonlinearity (b,d). Top panels show results from simulations where environmental or resource variance determine the number species that coexist in a community. Bottom panels show results from simulations where environmental or resource variance is fixed at a level that allows coexistence of all four species, but speces are removed to manipulate diversity. In the most general sense, the top panels represent regional diversity-stability relationships across natural diversity gradients, whereas the bottom panels represent local diversity-stability relationships.}
 \end{figure}
 
-### The diversity-stability relationship
+### The diversity-variability relationship
 The direction of the diversity-variability relationship can be positive and negative when species coexistence is maintained by fluctuation-dependent mechanisms (Fig. 2).
 Ecosystem variability is positively correlated with species richness when species richness is measured across a gradient of envrionmental variability, which maintains diversity and promotes ecosystem variability (Fig. 2a,b).
 If environmental conditions are sufficient to maintain coexistence, removing species increases ecosystem variability (Fig. 2c,d).
@@ -407,7 +417,7 @@ Observational studies must rely on natural diversity gradients, and if species r
 For example, Sasaki and Lauenroth (2011) found a negative relationship between species richness and the temporal stability of plant abundance (a positive diversity-variability relationship) in a semi-arid grassland.
 Their data came from a six sites that were 6 km apart.
 Thus, it is possible that each site experienced slightly different levels of environmental variability that influenced species coexistence.
-Indeed, fluctuation-dependent coexistence mechanisms may be common in arid and semi-arid environments [@Chesson2004; @Angert2009].
+Fluctuation-dependent coexistence mechanisms may be most common in arid and semi-arid environments [@Chesson2004; @Angert2009], making them particularly well-suited for future efforts aimed at empirically testing our theoretical results.
 
 ### The impact of increasing environmental variability on ecosystem variability
 Whether coexistence is fluctuation-independent or fluctuation-dependent becomes especially important when we consider how ecosystem stability responds to increasing environmental variability.
@@ -417,20 +427,20 @@ We can examine one example of this situation with the storage effect version of 
 We find that the rate at which ecosystem variability increases with environmental variability is constant regardless of species richness, but that, as expected, more species rich communities are more stable on average (Fig. 3a-c).
 The difference in ecosystem variability among communities of different diversity depends on the strength of the correlations of their environmental responses (Fig. 3a-c).
 
+\begin{figure}[!ht]
+  \centering
+      \includegraphics[height=5in]{./components/storage_effect_div+envar_FORMATTED.png}
+  \caption{The effect of environmental variability on ecosystem variability with associated effects of species richness when species coexist via the storage effect. Panels (a-c) show simulation results where species have symmetrical competitive effects, whereas panels (d-f) show results when competition is assymetric (that is, in the absence of environmental fluctuations, all species but the superior competitor would be competitively excluded). We show results for different levels of correlations of species' environmental responses, $\rho$. At a given level of environmental variability, it is always better to have more species, as also shown in Fig. 2. Likewise, increasing environmental variance can, in some cases, actually decrease ecosystem variability if the increase is enough to allow species from the regional pool to enter the community. In essence, increasing environmental variance allows ecosystems to jump from one line to another as species are added.}
+\end{figure}
+
 When species coexistence is fluctuation-dependent, increasing environmental variability has much more interesting effects on ecosystem variability.
 In Fig. 3d-f we show simulation results where environmental variability determines species coexistence from a regional species pool of four species.
 We also show results from nested subsets of the four species pool (e.g., only two species in the pool instead of four) to show the trajectory of ecosystem variability if new species are not present to join the local community.
 In accordance with coexistence theory, we find that species richness increases with environmental variability and, in some cases, increasing variability can actually completely temper the effect of increasing environmental variability.
-For example, consider the single species local community at log($\sigma^2_E$) = -2 in Fig. 3d.
-If a global change causes environmental variability to increase to log($\sigma^2_E$) = -0.5, then there is a chance for four species to coexist, rather than one, and the *CV* of total community biomass remains almost constant.
+For example, consider the single species local community at $\sigma^2_E$ = 0.14 in Fig. 3d.
+If a global change causes environmental variability to increase to $\sigma^2_E$ = 0.6, then there is a chance for four species to coexist, rather than one, and the *CV* of total community biomass remains almost constant.
 Thus, depending on the specific traits (parameter values) of the species in the regional pool, increasing environmental variability need not cause increases in environmental variability.
 There is potential for ecosystem variability to actually decrease, but this case may be rare because it would require a very large increase in environmental variability.
-
-\begin{figure}[!ht]
-  \centering
-      \includegraphics[height=5in]{./components/stability_variability_diversity.png}
-  \caption{The effect of environmental variability on ecosystem variability with associated effects of species richness when species coexist via the storage effect. Panels (a-c) show simulation results where species have symmetrical competitive effects, whereas panels (d-f) show results when competition is assymetric (that is, in the absence of environmental fluctuations, all species but the superior competitor would be competitively excluded). We show results for different levels of correlations of species' environmental responses, $\rho$. At a given level of environmental variability, it is always better to have more species, as also shown in Fig. 2. Likewise, increasing environmental variance can, in some cases, actually decrease ecosystem variability if the increase is enough to allow species from the regional pool to enter the community. In essence, increasing environmental variance allows ecosystems to jump from one line to another as species are added. Note that the \emph{x} and \emph{y} axes are on the log scale for visual clarity.}
-\end{figure}
 
 Our simulation results lead to two conclusions.
 First, when predicting the impacts of increasing environmental variability on ecosystem stability, the mechanism of coexistence in the community matters.
@@ -454,7 +464,7 @@ Likewise, environmental conditions in real ecosystems are unlikely to change onl
 Therefore, environmental change has the potential to alter the niche and fitness differences among species in multiple ways, some of which were not present in our current analysis.
 Mean changes in environmental conditions could reorder competitive hierarchies (CITATION) and/or alter the availability of niches [@Harpole2016].
 Associated changes in ecosystem stability will depend upon the magnitude of environmental change, each species response to the particular environmental driver, and biotic interactions [@Hallett2014a].
-Thus, it is becoming clear that understanding how ecosystem stability will respond to global change will require a traits-based approach [@Adler2013].
+Thus, it is becoming clear that understanding how ecosystem stability will respond to global change will require a traits-based approach.
 
 CONCLUSIONS
 -----------
@@ -526,11 +536,9 @@ Where fluctuation-dependent species coexistence prevails, our findings suggest t
 
 -->
 
-\pagebreak{}
-
 ACKNOWLEDGMENTS
 ---------------
-The National Science Foundation provided funding for this work through a Postdoctoral Research Fellowship in Biology to ATT (DBI-######) and a CAREER award to PBA (DEB-#######).
+The National Science Foundation provided funding for this work through a Postdoctoral Research Fellowship in Biology to ATT (DBI-1400370) and a CAREER award to PBA (DEB-1054040).
 
 \setlength{\parindent}{0ex}
 
