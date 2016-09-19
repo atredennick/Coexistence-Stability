@@ -13,6 +13,27 @@ library("ggthemes")
 library("viridis")
 
 
+####
+####  Function for calculating CV from list elements
+####
+get_cv <- function(x){
+  seasons_to_exclude <- 500
+  x <- as.data.frame(x)
+  names(x) <- c("D1", "D2", "D3", "D4", "N1", "N2", "N3", "N4", "R")
+  livestates <- grep("N", colnames(x))
+  tmp_totbiomass <- rowSums(x[seasons_to_exclude:nrow(x),livestates])
+  tmp_cv <- sd(tmp_totbiomass) / mean(tmp_totbiomass)
+  tmp_sppavg <- colMeans(x[seasons_to_exclude:nrow(x),livestates])
+  tmp_spprich <- length(which(tmp_sppavg > 1))
+  
+  tmp_out <- c(tmp_cv, tmp_spprich)
+}
+
+
+#######                            #######
+####### STORAGE EFFECT SIMULATIONS #######
+#######                            #######
+
 
 ####
 ####  Re-define the parameter matrix 
@@ -44,24 +65,6 @@ parameter_matrix <- cbind(DNR_repped, prm_repped)
 # file_to_get <- "../../../Desktop/storageeffect_div+envvar_stability.RDS"
 # sims_list <- readRDS(file_to_get)
 # list_elements <- length(sims_list)
-# 
-# 
-# 
-# ####
-# ####  Function for calculating CV from list elements
-# ####
-get_cv <- function(x){
-  seasons_to_exclude <- 500
-  x <- as.data.frame(x)
-  names(x) <- c("D1", "D2", "D3", "D4", "N1", "N2", "N3", "N4", "R")
-  livestates <- grep("N", colnames(x))
-  tmp_totbiomass <- rowSums(x[seasons_to_exclude:nrow(x),livestates])
-  tmp_cv <- sd(tmp_totbiomass) / mean(tmp_totbiomass)
-  tmp_sppavg <- colMeans(x[seasons_to_exclude:nrow(x),livestates])
-  tmp_spprich <- length(which(tmp_sppavg > 1))
-  
-  tmp_out <- c(tmp_cv, tmp_spprich)
-}
 
 
 
@@ -114,6 +117,84 @@ ggplot(cvs_plots2, aes(x=sigE, y=cv, color=as.factor(spprichness)))+
   theme(strip.background = element_blank())
 ggsave(filename = "../manuscript/components/storage_effect_div+envar.png", width = 8, height=4, units = "in", dpi = 82)
 
+
+
+
+
+#######                                   #######
+####### RELATIVE NONLINEARITY SIMULATIONS #######
+#######                                   #######
+
+##  Recreate parameter matrix
+DNR <- rbind(c(D=c(1,1,1,1),N=c(1,1,1,1),R=20),
+             c(D=c(1,1,1,0),N=c(1,1,1,0),R=20),
+             c(D=c(1,1,0,0),N=c(1,1,0,0),R=20),
+             c(D=c(1,0,0,0),N=c(1,0,0,0),R=20))
+
+## Define vectors of parameters to vary
+n_rsd <- 50 # Number of seasonal standard deviation levels
+rsd_vec <- pretty(seq(0, 1.4, length.out=n_rsd), n_rsd) # Make a pretty vector
+prm <- as.data.frame(rsd_vec)
+colnames(prm) <- "Rsd_annual"
+# Add in variable parameters to form parameter matrix
+DNR_repped <- do.call("rbind", replicate(nrow(prm), DNR,  simplify = FALSE))
+prm_repped <- do.call("rbind", replicate(nrow(DNR), prm,  simplify = FALSE))
+parameter_matrix <- cbind(DNR_repped, prm_repped)
+
+
+####
+####  Read in the simulation results -- a BIG list
+####
+# file_to_get <- "../../../Desktop/relnonlin_div+envvar_stability.RDS"
+# sims_list <- readRDS(file_to_get)
+# list_elements <- length(sims_list)
+# 
+# 
+# 
+# ####
+# ####  Apply the get_cv function over the simulation list
+# ####
+# out_cvs <- lapply(sims_list, get_cv) # apply the function
+# out_cvs_df <- do.call(rbind.data.frame, out_cvs) # convert to data frame
+# colnames(out_cvs_df) <- c("cv", "spprichness") # give the columns names
+# cvs_params <- cbind(parameter_matrix, out_cvs_df) # combine with parameter values
+# saveRDS(cvs_params, file = "../simulationResults/relnonlin_div+envvar_cv_collated.RDS")
+
+####  READ IN COLLATED RESULTS
+cvs_params_symm <- readRDS(file = "../simulationResults/relnonlin_div+envvar_cv_collated.RDS")
+
+cvs_plots <- ddply(cvs_params, .(Rsd_annual, spprichness), summarise,
+                   cv = mean(cv))
+
+cvs_plots2 <- subset(cvs_plots, Rsd_annual<1.2 & spprichness>0)
+ggplot(cvs_plots2, aes(x=Rsd_annual, y=cv, color=as.factor(spprichness)))+
+  #   geom_line(size=0.7)+
+  geom_point(size=2, alpha=0.3)+
+  geom_point(size=2, alpha=0.5, shape=1)+
+  stat_smooth(method="loess", se=FALSE, size=1)+
+  # scale_color_manual(values = mycols, name = "Species\nRichness")+
+  scale_color_viridis(discrete = TRUE, name = "Species\nRichness")+
+  xlab(expression(paste("SD of resource (",sigma[R], ")")))+
+  ylab("CV of community biomass")+
+  # facet_grid(comp~rho)+
+  theme_few()+
+  theme(legend.title=element_text(size=8),
+        legend.text=element_text(size=8),
+        legend.background = element_rect(colour = "white", size=0.5),
+        legend.key = element_blank(),
+        legend.key.size = unit(0.3, "cm"),
+        legend.position = c(0.2, 0.75))+
+  theme(strip.background = element_blank())
+ggsave(filename = "../manuscript/components/relative_nonlinearity_div+envar.png", width = 3, height=3, units = "in", dpi = 120)
+
+
+
+
+
+
+#######                             #######
+####### EXTRAS EXTRAS EXTRAS EXTRAS #######
+#######                             #######
 
 ####
 ####  Look at just one nested species pool
