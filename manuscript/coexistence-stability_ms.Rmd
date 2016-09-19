@@ -376,6 +376,10 @@ Thus, for each size of species pool (1, 2, 3, or 4 species), we simulated the mo
 We also explored the influence of species assymetries in competitive ability and species' correlations of environmental responses in the storage effect model.
 Under the storage effect, if all species are perfectly symmetrical, that is, there is no superior competitor, then coexistence is fluctuation-independent.
 We use one such parameterization of our model to contrast the response of ecosystem stability in fluctuation-dependent and fluctation-independent communities to environmental variation.
+Likewise, under relative nonlinearity, species' resource response curves (Fig. SX) reflect traits that determine the intrinsic stability of each species.
+Therefore, we ran two sets of simulations for relative nonlinearity: one where the species pools increased from stable to unstable species and vice versa.
+For example, if species A is the most stable species and species D is the least stable we ran simulations where the species pool increased from one to four species as A then B then C then D.
+We then ran simulations with that order reversed.
 
 All simulations were run for 5,000 seasons with 20-day growing seasons. 
 We averaged biomass over the growing season, and those yearly values were used to calculate total community biomass in each year.
@@ -433,14 +437,29 @@ The difference in ecosystem variability among communities of different diversity
   \caption{The effect of environmental variability on ecosystem variability with associated effects of species richness when species coexist via the storage effect. Panels (a-c) show simulation results where species have symmetrical competitive effects, whereas panels (d-f) show results when competition is assymetric (that is, in the absence of environmental fluctuations, all species but the superior competitor would be competitively excluded). We show results for different levels of correlations of species' environmental responses, $\rho$. At a given level of environmental variability, it is always better to have more species, as also shown in Fig. 2. Likewise, increasing environmental variance can, in some cases, actually decrease ecosystem variability if the increase is enough to allow species from the regional pool to enter the community. In essence, increasing environmental variance allows ecosystems to jump from one line to another as species are added.}
 \end{figure}
 
-When species coexistence is fluctuation-dependent, increasing environmental variability has much more interesting effects on ecosystem variability.
-In Fig. 3d-f we show simulation results where environmental variability determines species coexistence from a regional species pool of four species.
+When species coexistence is fluctuation-dependent via the storage effect, increasing environmental variability has much more interesting effects on ecosystem variability.
+In Fig. 3d-f we show storage effect simulation results where environmental variability determines species coexistence from a regional species pool of four species.
 We also show results from nested subsets of the four species pool (e.g., only two species in the pool instead of four) to show the trajectory of ecosystem variability if new species are not present to join the local community.
 In accordance with coexistence theory, we find that species richness increases with environmental variability and, in some cases, increasing variability can actually completely temper the effect of increasing environmental variability.
 For example, consider the single species local community at $\sigma^2_E$ = 0.14 in Fig. 3d.
 If a global change causes environmental variability to increase to $\sigma^2_E$ = 0.6, then there is a chance for four species to coexist, rather than one, and the *CV* of total community biomass remains almost constant.
 Thus, depending on the specific traits (parameter values) of the species in the regional pool, increasing environmental variability need not cause increases in environmental variability.
 There is potential for ecosystem variability to actually decrease, but this case may be rare because it would require a very large increase in environmental variability.
+
+In communities where species coexist via relative nonlinearity, whether or not the direct impact of environmental variability on ecosystem variability is tempered by species additions depends on the species traits of immigrating species.
+When additional species, which immigrate from the regional pool, are less intrinsically stable than the resident species, ecosystem variability increases at a constant rate even as species are added (Fig. 4a).
+On the contrary, if more stable species are added, there is potential for species additions to buffer ecosystems from increasing environmental variability (Fig. 4b).
+The stability of individual species in our relative nonlinearity model is determined by their respective resource response curves (Fig. SX).
+Trait differences among species affects the degree to which species additions can buffer ecosystems under the storage effect (Fig. 3d-f).
+Under relative nonlinearity, we find that the buffering effect of species additions depends on species traits, and the order in which species enter the local community.
+Indeed, if all species in the regional pool are less stable than the resident species, then no stabilization occurs as species are added (Fig. 4a).
+
+
+\begin{figure}[!ht]
+  \centering
+      \includegraphics[height=2.5in]{./components/relative_nonlinearity_div+envar_FORMATTED.png}
+  \caption{The effect of environmental variability on ecosystem variability with associated effects of species richness when species coexist via relative nonlinearity. (a) The species pool increases from 1-4 four species, with the fourth species being most unstable. Increasing environmental variability (the SD of annual resource availability) allows for greater species richness, but species additions do not modulate the effect of environmental variability on ecosystem variability. (b) The species pool increases from 1-4 four species, with the fourth species being most stable. In this case increaseing environmental variability allows for greater realized species richness and can temper the effect of environmental variability.}
+\end{figure}
 
 Our simulation results lead to two conclusions.
 First, when predicting the impacts of increasing environmental variability on ecosystem stability, the mechanism of coexistence in the community matters.

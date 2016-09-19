@@ -126,10 +126,15 @@ ggsave(filename = "../manuscript/components/storage_effect_div+envar.png", width
 #######                                   #######
 
 ##  Recreate parameter matrix
+# DNR <- rbind(c(D=c(1,1,1,1),N=c(1,1,1,1),R=20),
+#              c(D=c(1,1,1,0),N=c(1,1,1,0),R=20),
+#              c(D=c(1,1,0,0),N=c(1,1,0,0),R=20),
+#              c(D=c(1,0,0,0),N=c(1,0,0,0),R=20))
+
 DNR <- rbind(c(D=c(1,1,1,1),N=c(1,1,1,1),R=20),
-             c(D=c(1,1,1,0),N=c(1,1,1,0),R=20),
-             c(D=c(1,1,0,0),N=c(1,1,0,0),R=20),
-             c(D=c(1,0,0,0),N=c(1,0,0,0),R=20))
+             c(D=c(0,1,1,1),N=c(0,1,1,1),R=20),
+             c(D=c(0,0,1,1),N=c(0,0,1,1),R=20),
+             c(D=c(0,0,0,1),N=c(0,0,0,1),R=20))
 
 ## Define vectors of parameters to vary
 n_rsd <- 50 # Number of seasonal standard deviation levels
@@ -145,7 +150,7 @@ parameter_matrix <- cbind(DNR_repped, prm_repped)
 ####
 ####  Read in the simulation results -- a BIG list
 ####
-# file_to_get <- "../../../Desktop/relnonlin_div+envvar_stability.RDS"
+# file_to_get <- "../../../Desktop/relnonlin_div+envvar_stability_revpool.RDS"
 # sims_list <- readRDS(file_to_get)
 # list_elements <- length(sims_list)
 # 
@@ -158,12 +163,16 @@ parameter_matrix <- cbind(DNR_repped, prm_repped)
 # out_cvs_df <- do.call(rbind.data.frame, out_cvs) # convert to data frame
 # colnames(out_cvs_df) <- c("cv", "spprichness") # give the columns names
 # cvs_params <- cbind(parameter_matrix, out_cvs_df) # combine with parameter values
-# saveRDS(cvs_params, file = "../simulationResults/relnonlin_div+envvar_cv_collated.RDS")
+# saveRDS(cvs_params, file = "../simulationResults/relnonlin_div+envvar_cv_revpool_collated.RDS")
 
 ####  READ IN COLLATED RESULTS
 cvs_params_symm <- readRDS(file = "../simulationResults/relnonlin_div+envvar_cv_collated.RDS")
+cvs_params_symm_revpool <- readRDS(file = "../simulationResults/relnonlin_div+envvar_cv_revpool_collated.RDS")
+cvs_params_symm$pool <- 1
+cvs_params_symm_revpool$pool <- 2
+cvs_params <- rbind(cvs_params_symm, cvs_params_symm_revpool)
 
-cvs_plots <- ddply(cvs_params, .(Rsd_annual, spprichness), summarise,
+cvs_plots <- ddply(cvs_params, .(Rsd_annual, spprichness, pool), summarise,
                    cv = mean(cv))
 
 cvs_plots2 <- subset(cvs_plots, Rsd_annual<1.2 & spprichness>0)
@@ -176,20 +185,44 @@ ggplot(cvs_plots2, aes(x=Rsd_annual, y=cv, color=as.factor(spprichness)))+
   scale_color_viridis(discrete = TRUE, name = "Species\nRichness")+
   xlab(expression(paste("SD of resource (",sigma[R], ")")))+
   ylab("CV of community biomass")+
-  # facet_grid(comp~rho)+
+  facet_wrap("pool", ncol=2)+
   theme_few()+
   theme(legend.title=element_text(size=8),
         legend.text=element_text(size=8),
         legend.background = element_rect(colour = "white", size=0.5),
         legend.key = element_blank(),
         legend.key.size = unit(0.3, "cm"),
-        legend.position = c(0.2, 0.75))+
+        legend.position = c(0.08, 0.7))+
   theme(strip.background = element_blank())
-ggsave(filename = "../manuscript/components/relative_nonlinearity_div+envar.png", width = 3, height=3, units = "in", dpi = 120)
+ggsave(filename = "../manuscript/components/relative_nonlinearity_div+envar.png", width = 6, height=3, units = "in", dpi = 82)
 
 
+### Look at plots based on initial pool
+cvs_params_symm_revpool$sppstart <- rowSums(cvs_params_symm_revpool[,1:4])
+# cvs_plots <- ddply(cvs_params_symm_revpool, .(Rsd_annual, sppstart, pool, spprichness), summarise,
+#                    cv = mean(cv))
 
+cvs_plots3 <- subset(cvs_params_symm_revpool, Rsd_annual<1.2)
 
+ggplot(cvs_plots3, aes(x=Rsd_annual, y=cv, color=as.factor(sppstart)))+
+  #   geom_line(size=0.7)+
+  geom_point(size=2, alpha=0.3)+
+  geom_point(size=2, alpha=0.5, shape=1)+
+  # stat_smooth(method="loess", se=FALSE, size=1)+
+  # scale_color_manual(values = mycols, name = "Species\nRichness")+
+  scale_color_viridis(discrete = TRUE, name = "Species\nRichness")+
+  xlab(expression(paste("SD of resource (",sigma[R], ")")))+
+  ylab("CV of community biomass")+
+  facet_wrap("pool", ncol=1)+
+  theme_few()+
+  scale_y_continuous(limits=c(0,2))+
+  theme(legend.title=element_text(size=8),
+        legend.text=element_text(size=8),
+        legend.background = element_rect(colour = "white", size=0.5),
+        legend.key = element_blank(),
+        legend.key.size = unit(0.3, "cm"),
+        legend.position = c(0.2, 0.85))+
+  theme(strip.background = element_blank())
 
 
 #######                             #######
