@@ -37,11 +37,15 @@ DNR <- rbind(c(D=c(1,1,1,1),N=c(1,1,1,1),R=20),
              c(D=c(1,1,0,0),N=c(1,1,0,0),R=20),
              c(D=c(1,0,0,0),N=c(1,0,0,0),R=20))
 
-n_sig_e <- 50 # Number of cue variance levels
-sig_e_vec <- pretty(seq(0, 2, length.out=n_sig_e), n_sig_e) # Make a pretty vector
+n_sig_e <- 15 # Number of cue variance levels
+sig_e_vec <- pretty(seq(0.1, 2, length.out=n_sig_e), n_sig_e) # Make a pretty vector
 rho <- as.matrix(c(-1,0,1))
 prm <- expand.grid(as.matrix(sig_e_vec), rho)
 colnames(prm) <- c("sigE", "rho")
+loweta <- 0.2
+hieta <- 0.8
+etas <- rbind(c(eta1=loweta, eta2=loweta, eta3=loweta, eta4=loweta),
+              c(eta1=hieta, eta2=hieta, eta3=hieta, eta4=hieta))
 
 ##  Define constant parameters in list
 constant_parameters <- list (
@@ -59,10 +63,10 @@ constant_parameters <- list (
   beta2 = 0,                       # adult survivorship; spp2 (0 if annual, >0 if perennial)
   beta3 = 0,                       # adult survivorship; spp3 (0 if annual, >0 if perennial)
   beta4 = 0,                       # adult survivorship; spp4 (0 if annual, >0 if perennial)
-  eta1 = 0.1,                      # dormant mortality; spp1
-  eta2 = 0.1,                      # dormant mortality; spp2
-  eta3 = 0.1,                      # dormant mortality; spp3
-  eta4 = 0.1,                      # dormant mortality; spp4
+#   eta1 = 0.1,                      # dormant mortality; spp1
+#   eta2 = 0.1,                      # dormant mortality; spp2
+#   eta3 = 0.1,                      # dormant mortality; spp3
+#   eta4 = 0.1,                      # dormant mortality; spp4
   theta1 = 0,                      # resource recycling fraction; spp1
   theta2 = 0,                      # resource recycling fraction; spp2
   theta3 = 0,                      # resource recycling fraction; spp3
@@ -85,12 +89,13 @@ constant_param_vec <- c(unlist(constant_parameters), unlist(grow_parameters))
 
 
 # Add in variable parameters to form parameter matrix
-DNR_repped <- do.call("rbind", replicate(nrow(prm), DNR,  simplify = FALSE))
-prm_repped <- do.call("rbind", replicate(nrow(DNR), prm,  simplify = FALSE))
+DNR_repped <- do.call("rbind", replicate(nrow(prm)*nrow(etas), DNR,  simplify = FALSE))
+prm_repped <- do.call("rbind", replicate(nrow(DNR)*nrow(etas), prm,  simplify = FALSE))
+etas_repped <- do.call("rbind", replicate(nrow(DNR)*nrow(prm), etas, simplify = FALSE))
 constant_param_matrix <- matrix(constant_param_vec, nrow = nrow(DNR_repped), 
                                 ncol=length(constant_param_vec), byrow = TRUE)
 colnames(constant_param_matrix) <- names(constant_param_vec)
-parameter_matrix <- cbind(constant_param_matrix, DNR_repped, prm_repped)
+parameter_matrix <- cbind(constant_param_matrix, DNR_repped, prm_repped, etas_repped)
 
 
 ##  Run all parameter combinations in paralell
