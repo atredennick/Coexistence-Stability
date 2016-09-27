@@ -208,7 +208,7 @@ ggplot(cvs_plots3, aes(x=Rsd_annual, y=cv, color=as.factor(sppstart)))+
   #   geom_line(size=0.7)+
   geom_point(size=2, alpha=0.3)+
   geom_point(size=2, alpha=0.5, shape=1)+
-  # stat_smooth(method="loess", se=FALSE, size=1)+
+  stat_smooth(method="loess", se=FALSE, size=1)+
   # scale_color_manual(values = mycols, name = "Species\nRichness")+
   scale_color_viridis(discrete = TRUE, name = "Species\nRichness")+
   xlab(expression(paste("SD of resource (",sigma[R], ")")))+
