@@ -8,7 +8,7 @@ header-includes:
   - \doublespacing
   - \usepackage{rotating}
   - \usepackage{color, soul}
-  - \usepackage[font={footnotesize},labelfont=bf,labelsep=space]{caption}
+  - \usepackage[font={footnotesize},labelfont={sf,bf},labelsep=space]{caption}
   - \usepackage{times} 
   - \usepackage{sectsty}
 bibliography: ~/Dropbox/Bibliography/CoexistStability.bib
@@ -478,12 +478,20 @@ Just as declines in local species richness can destabilize ecosystem functioning
 @Wang2014 show that regional ecosystem stability depends on regional biodiversity through its effects on beta diversity and, in turn, the asynchrony of functioning in local communities.
 Our results show that, when coexistence is fluctuation-dependent, regional biodiversity declines could also affect local ecosystem functioning by limiting local species additions that could be possible under scenarios of increasing environmental variability.
 
+\begin{figure}[!ht]
+  \centering
+      \includegraphics[height=4in]{./components/coexistence_stability_infographic_v2.png}
+  \caption{Example of how species additions under increasing environmental variability can buffer ecosystem stability when species coexistence is fluctuation-dependent via the storage effect. Environmental variability ($\sigma^2_E$) increases linearly with time. (a) Time series of total community biomass in a closed community where colonization of new species is not possible and (b) its associated coefficient of variation (Rolling CV; calculated over 100-yr moving window) through time. (c) Time series of total community biomass (dark purple) and constituent species (other, semi-transparent colors) in an open community where colonization by new species from the regional pool of 4 species becomes possible as environmental variation increases. The trajectory of total biomass CV in the open community (d) asymptotes at lower variability than in the closed community (b) due to the buffering effect of species richness.}
+\end{figure}
+
 Species coexistence in real ecological communities probably emerges from some combination of fluctuation-independent and fluctuation-dependent mechanisms [@Chesson2000; @Clark2010].
 Likewise, environmental conditions in real ecosystems are unlikely to change only in their variability without an associated change in the mean [@Avolio2015].
 Therefore, environmental change has the potential to alter the niche and fitness differences among species in multiple ways, some of which were not present in our current analysis.
 Mean changes in environmental conditions could reorder competitive hierarchies (CITATION) and/or alter the availability of niches [@Harpole2016].
 Associated changes in ecosystem stability will depend upon the magnitude of environmental change, each species response to the particular environmental driver, and biotic interactions [@Hallett2014a].
 Thus, it is becoming clear that understanding how ecosystem stability will respond to global change will require a traits-based approach.
+
+
 
 CONCLUSIONS
 -----------

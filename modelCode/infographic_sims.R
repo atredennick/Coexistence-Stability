@@ -4,7 +4,7 @@
 #########################################################################
 
 rm(list=ls())                    # Erase the memory
-
+library('mvtnorm')
 
 ####
 ####  THE MODEL FUNCTION -------------------------------------------
@@ -247,11 +247,13 @@ ggplot(rolling_cv, aes(x=iteration, y=cv))+
         axis.title = element_text(size=16))
 ggsave(paste0("../manuscript/components/open_community_infographic_cv.png"), width = 3, height = 3, units = "in", dpi = 72)
   
-
-ggplot(dosim_long, aes(x=iteration, y=value, color=variable, alpha=variable))+
+mycols <- c("#890584","#b1cb3d","#12205b","#0085dc", rgb(52, 0, 66, maxColorValue = 255))
+mycols <- c("orange","blue","red", "green", "grey25")
+ggplot(dosim_long, aes(x=iteration, y=value, color=variable))+
       geom_line()+
-      scale_color_viridis(discrete=TRUE, direction = -1, end = 0.9, name="")+
-  scale_alpha_manual(values = c(0.5,0.5,0.5,0.5,1))+
+  scale_color_manual(values=mycols)+
+      # scale_color_viridis(discrete=TRUE, direction = -1, end = 0.9, name="")+
+  # scale_alpha_manual(values = c(0.5,0.5,0.5,0.5,1))+
       xlab("Time")+
       ylab("Biomass")+
   scale_y_continuous(limits=c(0,50))+
@@ -281,10 +283,11 @@ colnames(dosim_close)[5] <- "Total Biomass"
 dosim_close$iteration <- 1:2900
 dosim_long_close <- melt(dosim_close, id.vars = "iteration")
 
-ggplot(dosim_long_close, aes(x=iteration, y=value, color=variable, alpha=variable))+
+ggplot(dosim_long_close, aes(x=iteration, y=value, color=variable))+
   geom_line()+
-  scale_color_viridis(discrete=TRUE, direction = -1, end = 0.9, name="")+
-  scale_alpha_manual(values = c(0.5,0.5,0.5,0.5,1))+
+  scale_color_manual(values=mycols)+
+  # scale_color_viridis(discrete=TRUE, direction = -1, end = 0.9, name="")+
+  # scale_alpha_manual(values = c(0.5,0.5,0.5,0.5,1))+
   xlab("Time")+
   ylab("Biomass")+
   scale_y_continuous(limits=c(0,50))+
