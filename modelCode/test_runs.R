@@ -9,28 +9,29 @@ source(fxnfile)                  # Load the function for the simulations
 require(parallel)                # Load the parallel package
 
 nbcores <- 4 # Set number of cores to match machine/simulations
-set.seed(123456789) # Set seed to reproduce random results
+# set.seed(123456789) # Set seed to reproduce random results
 
 ## Define vectors of parameters to vary
 # Initial conditions
-DNR <- rbind(c(D=c(1,1,1,1),N=c(1,1,1,1),R=20),
-             c(D=c(1,1,1,0),N=c(1,1,1,0),R=20),
-             c(D=c(1,1,0,0),N=c(1,1,0,0),R=20),
-             c(D=c(1,1,0,0),N=c(1,1,0,0),R=20),
-             c(D=c(1,0,0,0),N=c(1,0,0,0),R=20))
+# DNR <- rbind(c(D=c(1,1,1,1),N=c(1,1,1,1),R=20),
+#              c(D=c(1,1,1,0),N=c(1,1,1,0),R=20),
+#              c(D=c(1,1,0,0),N=c(1,1,0,0),R=20),
+#              c(D=c(1,1,0,0),N=c(1,1,0,0),R=20),
+#              c(D=c(1,0,0,0),N=c(1,0,0,0),R=20))
+DNR <- rbind(c(D=c(1,1,1,1),N=c(1,1,1,1),R=20))
 
 ##  Define constant parameters in list
 constant_parameters <- list (
   seasons = 1000,                  # number of seasons to simulate
   days_to_track = 20,              # number of days to simulate in odSolve
   Rmu = 3,                         # mean resource pulse (on log scale)
-  Rsd_annual = 1.2,                # std dev of resource pulses (on log scale)
-  sigE = 0,                        # environmental cue variance
+  Rsd_annual = 0,                # std dev of resource pulses (on log scale)
+  sigE = 0.5,                        # environmental cue variance
   rho = 1,                         # environmental cue correlation between species
   alpha1 = 0.50,                   # live-to-dormant biomass fraction; spp1
-  alpha2 = 0.50,                   # live-to-dormant biomass fraction; spp2
-  alpha3 = 0.50,                   # live-to-dormant biomass fraction; spp3
-  alpha4 = 0.50,                   # live-to-dormant biomass fraction; spp4
+  alpha2 = 0.495,                   # live-to-dormant biomass fraction; spp2
+  alpha3 = 0.49,                   # live-to-dormant biomass fraction; spp3
+  alpha4 = 0.485,                   # live-to-dormant biomass fraction; spp4
   beta1 = 0,                       # adult survivorship; spp1 (0 if annual, >0 if perennial)
   beta2 = 0,                       # adult survivorship; spp2 (0 if annual, >0 if perennial)
   beta3 = 0,                       # adult survivorship; spp3 (0 if annual, >0 if perennial)
@@ -84,7 +85,9 @@ outs <- mclapply(seq_len(nrow(DNR)),
 # variable_env <- outs[[2]]
 # 
 # # Look at the time-series
-# par(mfrow=c(2,1), mgp=c(2.2,0.45,0), tcl=-0.4, mar=c(3.3,3.6,1.1,1.1), las=1)
-# matplot(constant_env[,1:4], type="l", xlab="Growing Season", ylab="Biomass", main="Constant Environment", lty=1)
+par(mfrow=c(1,1), mgp=c(2.2,0.45,0), tcl=-0.4, mar=c(3.3,3.6,1.1,1.1), las=1)
+matplot(outs[[1]][,5:8], type="l", xlab="Growing Season", ylab="Biomass", lty=1)
 # matplot(variable_env[,1:4], type="l", xlab="Growing Season", ylab="Biomass", main="Fluctuating Environment", lty=1)
 
+sd(rowSums(outs[[1]][,5:8])) / mean(rowSums(outs[[1]][,5:8]))
+tail(outs[[1]])

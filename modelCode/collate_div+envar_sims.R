@@ -40,6 +40,7 @@ get_cv <- function(x){
 ####  (from storageeffect_sims_div+envar_stability.R)
 ####
 ## Define vectors of parameters to vary -- here, initial conditions to vary richness
+## Define vectors of parameters to vary -- here, initial conditions to vary richness
 DNR <- rbind(c(D=c(1,1,1,1),N=c(1,1,1,1),R=20),
              c(D=c(1,1,1,0),N=c(1,1,1,0),R=20),
              c(D=c(1,1,0,0),N=c(1,1,0,0),R=20),
@@ -48,18 +49,21 @@ DNR <- rbind(c(D=c(1,1,1,1),N=c(1,1,1,1),R=20),
 n_sig_e <- 15 # Number of cue variance levels
 sig_e_vec <- pretty(seq(0.1, 2, length.out=n_sig_e), n_sig_e) # Make a pretty vector
 rho <- as.matrix(c(-1,0,1))
-prm <- expand.grid(as.matrix(sig_e_vec), rho)
-colnames(prm) <- c("sigE", "rho")
-loweta <- 0.1
+prm <- expand.grid(as.matrix(sig_e_vec), rho, 1:4)
+DNR_repped <- matrix(rep(DNR,each=(nrow(prm)/nrow(DNR))),ncol=ncol(DNR))
+colnames(prm) <- c("sigE", "rho", "dnr_id")
+colnames(DNR_repped) <- colnames(DNR)
+prm <- cbind(prm, DNR_repped)
+prm <- subset(prm, select = -c(dnr_id))
+
+loweta <- 0.2
 hieta <- 0.8
 etas <- rbind(c(eta1=loweta, eta2=loweta, eta3=loweta, eta4=loweta),
               c(eta1=hieta, eta2=hieta, eta3=hieta, eta4=hieta))
-
-# Add in variable parameters to form parameter matrix
-DNR_repped <- do.call("rbind", replicate(nrow(prm)*nrow(etas), DNR,  simplify = FALSE))
-prm_repped <- do.call("rbind", replicate(nrow(DNR)*nrow(etas), prm,  simplify = FALSE))
-etas_repped <- do.call("rbind", replicate(nrow(DNR)*nrow(prm), etas, simplify = FALSE))
-parameter_matrix <- cbind(DNR_repped, prm_repped, etas_repped)
+prm_repped <- do.call("rbind", replicate(2, prm,  simplify = FALSE))
+etas_repped <- matrix(rep(etas, each=nrow(prm)), ncol=ncol(etas))
+colnames(etas_repped) <- colnames(etas)
+parameter_matrix <- cbind(prm_repped, etas_repped)
 
 
 
@@ -80,7 +84,7 @@ parameter_matrix <- cbind(DNR_repped, prm_repped, etas_repped)
 # out_cvs_df <- do.call(rbind.data.frame, out_cvs) # convert to data frame
 # colnames(out_cvs_df) <- c("cv", "spprichness") # give the columns names
 # cvs_params <- cbind(parameter_matrix, out_cvs_df) # combine with parameter values
-# saveRDS(cvs_params, file = "../simulationResults/storageeffect_div+envvar_cv_collated.RDS")
+# # saveRDS(cvs_params, file = "../simulationResults/storageeffect_div+envvar_cv_collated.RDS")
 # saveRDS(cvs_params, file = "../simulationResults/storageeffect_div+envvar_cv_collated_asymmetric.RDS")
 
 ####  READ IN COLLATED RESULTS
@@ -136,17 +140,20 @@ ggplot(cvs_plots, aes(x=sigE, y=cv, color=as.factor(spprichness)))+
   geom_point(size=2, alpha=0.5, shape=1)+
   # stat_smooth(method="loess", se=FALSE, size=1)+
   # scale_color_manual(values = mycols, name = "Species\nRichness")+
-  scale_color_viridis(discrete = TRUE, name = "Species\nRichness")+
+  # scale_color_viridis(discrete = TRUE, name = "Species\nRichness")+
+  scale_color_brewer(palette = "Set1", name = "Species\nRichness")+
   xlab(expression(paste("Variance of environmental cue (",sigma[E]^2, ")")))+
   ylab("CV of community biomass")+
-  facet_grid(eta1~rho)+
-  theme_few()+
+  facet_grid(eta1~rho, scales="free_y")+
+  theme_bw()+
   theme(legend.title=element_text(size=8),
         legend.text=element_text(size=8),
         legend.background = element_rect(colour = "white", size=0.5),
         legend.key = element_blank(),
         legend.key.size = unit(0.3, "cm"),
-        legend.position = c(0.95, 0.15))+
+        legend.position = c(0.95, 0.35),
+        panel.grid.major = element_line(colour = "grey25", linetype = "dotted"),
+        panel.grid.minor = element_line(colour = "white", linetype = "dotted"))+
   theme(strip.background = element_blank())
 
 
