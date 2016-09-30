@@ -244,16 +244,19 @@ ggplot(rolling_cv, aes(x=iteration, y=cv))+
         panel.background = element_rect("white"),
         axis.line.x = element_line("grey50"),
         axis.line.y = element_line("grey50"),
-        axis.title = element_text(size=16))
+        axis.title = element_text(size=16))+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ggsave(paste0("../manuscript/components/open_community_infographic_cv.png"), width = 3, height = 3, units = "in", dpi = 72)
   
-mycols <- c("#890584","#b1cb3d","#12205b","#0085dc", rgb(52, 0, 66, maxColorValue = 255))
-mycols <- c("orange","blue","red", "green", "grey25")
+# mycols <- c("#890584","#b1cb3d","#12205b","#0085dc", rgb(52, 0, 66, maxColorValue = 255))
+mycols <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+mycols <- c("#E69F00", "#56B4E9", "#009E73", "#CC79A7", "grey25")
+# mycols <- c("orange","blue","red", "green", "grey25")
 ggplot(dosim_long, aes(x=iteration, y=value, color=variable))+
-      geom_line()+
+      geom_line(size=0.35)+
   scale_color_manual(values=mycols)+
       # scale_color_viridis(discrete=TRUE, direction = -1, end = 0.9, name="")+
-  # scale_alpha_manual(values = c(0.5,0.5,0.5,0.5,1))+
+  # scale_alpha_manual(values = c(0.7,0.7,0.7,0.7,1))+
       xlab("Time")+
       ylab("Biomass")+
   scale_y_continuous(limits=c(0,50))+
@@ -313,7 +316,8 @@ ggplot(rolling_cv_close, aes(x=iteration, y=cv))+
         panel.background = element_rect("white"),
         axis.line.x = element_line("grey50"),
         axis.line.y = element_line("grey50"),
-        axis.title = element_text(size=16))
+        axis.title = element_text(size=16))+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ggsave(paste0("../manuscript/components/closed_community_infographic_cv.png"), width = 3, height = 3, units = "in", dpi = 72)
 
 
