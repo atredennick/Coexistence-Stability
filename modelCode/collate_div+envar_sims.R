@@ -155,9 +155,73 @@ ggplot(cvs_plots, aes(x=sigE, y=cv, color=as.factor(spprichness)))+
         panel.grid.major = element_line(colour = "grey25", linetype = "dotted"),
         panel.grid.minor = element_line(colour = "white", linetype = "dotted"))+
   theme(strip.background = element_blank())
+ggsave("../manuscript/components/SI_storageeffect_varyetas.png", width = 8, height=4, units = "in", dpi = 82)
 
+## Now log-log to look at slopes
+ggplot(cvs_plots, aes(x=log(sigE), y=log(cv), color=as.factor(spprichness)))+
+  # geom_line(size=0.7)+
+  geom_point(size=2, alpha=0.3)+
+  geom_point(size=2, alpha=0.5, shape=1)+
+  stat_smooth(method="lm", se=FALSE, size=1)+
+  # scale_color_manual(values = mycols, name = "Species\nRichness")+
+  # scale_color_viridis(discrete = TRUE, name = "Species\nRichness")+
+  scale_color_brewer(palette = "Set1", name = "Species\nRichness")+
+  xlab(expression(paste("Variance of environmental cue (",sigma[E]^2, ")")))+
+  ylab("CV of community biomass")+
+  facet_grid(eta1~rho, scales="free_y")+
+  theme_bw()+
+  theme(legend.title=element_text(size=8),
+        legend.text=element_text(size=8),
+        legend.background = element_rect(colour = "white", size=0.5),
+        legend.key = element_blank(),
+        legend.key.size = unit(0.3, "cm"),
+        legend.position = c(0.95, 0.35),
+        panel.grid.major = element_line(colour = "grey25", linetype = "dotted"),
+        panel.grid.minor = element_line(colour = "white", linetype = "dotted"))+
+  theme(strip.background = element_blank())
+ggsave("../manuscript/components/SI_storageeffect_varyetas_loglog.png", width = 8, height=4, units = "in", dpi = 82)
 
-subset(cvs_params_asymm, rho==-1 & eta1==0.1)
+## Calculate slopes and plot
+get_slope <- function(df_subset) {
+  mod <- lm(log(cv) ~ log(sigE), data = df_subset)
+  slope <- c(coef(mod)[2], confint(mod)[2,1], confint(mod)[2,2])
+  return(slope)
+}
+
+slope_df <- list()
+for(do_eta in unique(cvs_plots$eta1)){
+  for(do_rho in c(-1,0)){
+    for(do_spprich in unique(cvs_plots$spprichness)){
+      tmp_df <- subset(cvs_plots, eta1==do_eta & spprichness==do_spprich & rho==do_rho)
+      tmp_slope <- get_slope(tmp_df)
+      tmpout <- data.frame(eta=do_eta, spprich=do_spprich, rho=do_rho, 
+                           slope=tmp_slope[1], lowslope=tmp_slope[2], hislope=tmp_slope[3])
+      slope_df <- rbind(slope_df, tmpout)
+    }
+  }
+}
+
+ylabel <- bquote("Slope (CV vs." ~ sigma[E] ~ ")")
+
+ggplot(slope_df, aes(x=spprich, y=slope, color=as.factor(eta)))+
+  geom_ribbon(aes(ymin=lowslope, ymax=hislope, fill=as.factor(eta)), alpha=0.2, color=NA)+
+  geom_point()+
+  geom_line()+
+  facet_wrap("rho")+
+  ylab(ylabel)+
+  xlab("Realized species richness")+
+  scale_fill_manual(values=c("red", "blue"), name=expression(eta))+
+  scale_color_manual(values=c("red", "blue"), name=expression(eta))+
+  theme_bw()+
+  theme(legend.title=element_text(size=12, face="bold"),
+        legend.text=element_text(size=10),
+        legend.background = element_rect(colour = "white", size=0.5),
+        legend.key = element_blank(),
+        legend.key.size = unit(0.5, "cm"),
+        panel.grid.major = element_line(colour = "grey25", linetype = "dotted"),
+        panel.grid.minor = element_line(colour = "white", linetype = "dotted"))+
+  theme(strip.background = element_blank())
+ggsave("../manuscript/components/SI_storageeffect_varyetas_loglog_slopes.png", width = 8, height=4, units = "in", dpi = 82)
 
 #######                                   #######
 ####### RELATIVE NONLINEARITY SIMULATIONS #######
