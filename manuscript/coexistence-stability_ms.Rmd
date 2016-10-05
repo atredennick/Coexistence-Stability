@@ -9,7 +9,6 @@ header-includes:
   - \usepackage{rotating}
   - \usepackage{color, soul}
   - \usepackage[font={footnotesize},labelfont={sf,bf},labelsep=space]{caption}
-  - \usepackage{times} 
   - \usepackage{sectsty}
 bibliography: ~/Dropbox/Bibliography/CoexistStability.bib
 csl: components/ecology.csl
@@ -104,11 +103,12 @@ opts_chunk$set(dev='pdf', dev.args=c(version="1.3"))
 
 \begin{abstract}
 Theory relating species richness to ecosystem stability typically ignores interactions between environmental variability and species coexistence, or fluctuation-dependent coexistence.
-This may explain why we lack general explanations for observed deviations from the predicted positive diversity-stability relationship, and it limits our ability to predict the consequences of increasing environmental variability.
-Here we use a consumer-resource model to explore how fluctuation-dependent coexistence via the storage effect and relative nonlinearity affects ecosystem stability.
-First, we find that a negative, rather than positive, diversity-stability relationship is possible when ecosystem function is sampled across a natural diversity gradient.
-Second, we find that fluctuation-dependent coexistence can buffer ecosystem functioning against increasing environmental variability because species richness increases with environmental variability, which helps to stabilize ecosystem function via the portfolio effect.
-Our work provides a general explanation for non-positive diversity-stability relationships, and highlights the importance of conserving regional species pools so that species can be added to fluctuation-dependent communities as environmental variability increases.
+This may explain why we lack general explanations for observed deviations from the predicted positive diversity-stability relationship.
+It also limits our ability to predict the consequences of increasing environmental variability.
+We use a consumer-resource model to explore how fluctuation-dependent coexistence via the storage effect and relative nonlinearity affects ecosystem stability.
+We show that a negative, rather than positive, diversity-stability relationship is possible when ecosystem function is sampled across a natural diversity gradient.
+We also describe how fluctuation-dependent coexistence can buffer ecosystem functioning against increasing environmental variability by allowing more species to coexist and thus contribute to portfolio effects.
+Our work provides a general explanation for non-positive diversity-stability relalationships and highlights the importance of conserving regional species pools so that species can be added to fluctuation-dependent communities as environmental variability increases.
 \vspace{2em}
 \end{abstract}
 
@@ -126,13 +126,13 @@ Diverse models all predict a positive relationship between species richness and 
 However, empirical support for a positive diversity-stability relationship is not unequivocal [@Jiang2009].
 Furthermore, theory on the relationship between biodiversity and ecosystem stability often ignores the processes that determine species coexistence in variable environments [Loreau 2010, but see @Chesson2001].
 
-Theoretical [@Chesson2000; @Chesson2004] and empirical [@Caceres1997; @Descamps-Julien2005; @Adler2006; @Angert2009] work has identified temporally fluctuating environmental conditions as an important ingredient for stable species coexistence.
+Temporally fluctuating environmental conditions are an important ingredient for stable species coexistence, both in theoretical models [@Chesson2000; @Chesson2004] and in natural communities [@Caceres1997; @Descamps-Julien2005; @Adler2006; @Angert2009].
 Such "fluctuation-dependent" coexistence [@Chesson2000] requires that species have unique environmental responses and that environmental conditions vary enough for each coexisting species to experience good and bad conditions.
 Thus, there is reason to expect environmental variability to promote species richness when coexistence is maintained by a fluctuation-dependent mechanism [@Adler2008].
 Of course, increasing environmental variability may also decrease ecosystem stability through time by increasing the fluctuations of individual species, regardless of species richness.
 
 The countervailing effects of environmental variability present an interesting paradox: increasing variability should decrease ecosystem stability, but may also increase richness, which may offset the decrease in stability.
-Such a paradox complicates predictions about how ecosystems will respond as environmental conditions exceed historical ranges of variability because we do not know the net effect of environmental variability on ecosystem stability when species coexistence is fluctuation-dependent.
+Such a paradox complicates predictions about how ecosystems will respond as environmental conditions exceed historical ranges of variability.
 The unknown net effect of environment variability may be reflected in the mixed results from empirical studies on the diversity-stability relationship.
 Observational tests of the diversity-stability relationship, which require sampling across natural diversity gradients, have yielded positive [@Hautier2014], neutral [@Valone2003; @Cusson2015], and negative [@Sasaki2011] relationships.
 In a meta-analysis of diversity-stability relationships, @Jiang2009 found no significant evidence for an effect of species richness on ecosystem stability from observational studies in terrestrial ecosystems.
@@ -142,15 +142,14 @@ We argue this gap exists because the two bodies of theory that have developed to
 One reason these two disciplines have diverged is because they have focused on slightly different questions.
 Biodiversity-ecosystem stability studies typically ask how ecosystem variability responds to different levels of species richness at a given level of environmental variability [reviewed in @Kinzig2001; @Loreau2010], whereas coexistence studies ask how the long term stability of species coexistence responds to different levels of environmental variability [@Chesson1981a].
 
-To reconcile these two bodies of theory, we require a synthetic theory that fully accounts for the linkages among environmental variability, species coexistence, and ecosystem stability.
-Here, we extend theory on the relationship between species richness and ecosystem stability to cases in which species coexistence explicitly depends on environmental fluctuations and species-specific responses to environmental conditions.
+To reconcile these two bodies of theory, we extend theory on the relationship between species richness and ecosystem stability to cases in which species coexistence explicitly depends on environmental fluctuations and species-specific responses to environmental conditions.
 We focus on the storage effect and relative nonlinearity using a general consumer-resource model.
 First, we use model simulations to investigate the diversity-stability relationship across a gradient of environmental variability.
-Counter to common expectations, we find that a negative diversity-stability relationship should be expected when sampling occurs over natural diversity gradients and species coexistence is fluctuation-dependent.
-Importantly, and in line with previous theory [@Ives2002b; @Loreau2010; @DeMazancourt2013], at a given level of environmental variability, increasing species richness stabilizes ecosystem function, even when coexistence is fluctuation-dependent.
+Counter to common expectations, we find that a negative diversity-stability relationship should be expected when sampling occurs over natural diversity gradients and species coexistence is fluctuation dependent.
+Importantly, and in line with previous theory [@Ives2002b; @Loreau2010; @DeMazancourt2013], at a given level of environmental variability, increasing species richness stabilizes ecosystem function, even when coexistence is fluctuation dependent.
 Second, we explore the net effect of increasing environmental variability on ecosystem stability by isolating the gain in stability due to increased richness and the loss in stability due to increased amplitude of species fluctuations.
-We find that increasing environmental variability does not always lead to a decrease in ecosystem stability because stabilization via species' additions can potentially offset destabilization via increased species fluctuations.
-However, whether or not increasing environmental variability results in species gains depends on the traits of resident species and the traits of the species in the regional pool.
+We find that increasing environmental variability does not always lead to a decrease in ecosystem stability: environmental variability promotes species richness, which stabilizes ecosystem functioning via portfolio effects even as the environment becaomes more variable.
+Whether or not increasing environmental variability results in species gains depends on the specific coexistence mechanism, the traits of resident species, and the traits of the species in the regional pool.
 
 MATERIALS AND METHODS
 ---------------------
@@ -224,18 +223,25 @@ We generated sequences of (un)correlated dormant-to-live state transition rates 
 \begin{align}
 \Sigma(\gamma) = 
 \begin{bmatrix}
-\sigma^2_{E} & \rho\sigma^2_{E} \\
-\rho\sigma^2_{E} & \sigma^2_{E}
+\sigma^2_{E} & \rho_{1,2}\sigma^2_{E} & \rho_{1,3}\sigma^2_{E} & \rho_{1,4}\sigma^2_{E} \\
+\rho_{2,1}\sigma^2_{E} & \sigma^2_{E} & \rho_{2,3}\sigma^2_{E} & \rho_{2,4}\sigma^2_{E} \\
+\rho_{3,1}\sigma^2_{E} & \rho_{3,2}\sigma^2_{E} & \sigma^2_{E}  & \rho_{3,4}\sigma^2_{E} \\
+\rho_{4,1}\sigma^2_{E} & \rho_{4,2}\sigma^2_{E} & \rho_{4,3}\sigma^2_{E} & \sigma^2_{E}  \\
 \end{bmatrix}
 \end{align}
 
-\noindent where $\sigma^2_{E}$ is the variance of the environmental cue and $\rho$ is the correlation between between the two species' transition rates. $\rho$ must be less than 1 for stable coexistence.
+\noindent where $\sigma^2_{E}$ is the variance of the environmental cue and $\rho_{i,j}$ is the correlation between between the species *i*'s and species *j*'s transition rates. 
+$\rho$ must be less than 1 for stable coexistence, and in all simulations we placed that constraint that $\rho_{i,j} = \rho_{j,i}$ for each species pair.
 The inferior competitor has the strongest potential to persist when $\rho=-1$ (perfectly uncorrelated transition rates). 
+We used the ```R``` function ```mvrnorm``` to generate sequences of (un)correlated variates *E* that we converted to germination rates in the 0-1 range: $\gamma = e^E / 1 + e^E$.
+Note that $\Sigma(\gamma)$ must be positive definite.
+So, after defining $\Sigma(\gamma)$ with all $\rho_{i,j}$s and $\sigma^2_{E}$, we used the ```nearPD``` function from the ```Matrix``` package in ```R``` to coerce the variance-covariance matrix to be positive definite.
 
 #### Implementing Relative Nonlinearity
 When considering consumer-resource dynamics, species coexistence by relative nonlinearity requires that each species has different nonlinear responses to resource availability, and resource availability must fluctuate through time.
-In a constant resource environment, the species with the lowest $R*$ will always exclude the other species. 
-To create competitive hierarchies among species we altered species resource uptake curves (Fig. SX).
+In a constant resource environment, the species with the lowest $R^*$ will always exclude the other species. 
+To create competitive hierarchies among species we manipulated species resource uptake curves such that the species with the lowest $R^*$ also had the lowest maximum growth rate at high resource levels (e.g., low *r*, low *a*, and low *b* values relative to other species in the Hill equation; Fig. SX).
+Thus, our simulated species represent a continuum from resource-conservative to resource-acquisitive.
 We still allow the germination rate ($\gamma$) to vary, but both species are perfectly correlated -- that is, $\rho=1$ (Fig. 1). 
 
 
@@ -245,8 +251,8 @@ library(ggthemes)
 library(mvtnorm)
 library(gridExtra)
 # mycols <- c("#9D6188","#97A861")
-# mycols <- c("black", "grey")
-mycols <- c("grey35", "steelblue")
+mycols <- c("black", "red")
+# mycols <- c("grey35", "steelblue")
 
 mytheme <- theme(axis.text=element_text(size=6),
                  axis.title=element_text(size=8),
@@ -373,8 +379,8 @@ The two simulation experiments correspond to (i) sampling ecosystem function acr
 
 To understand how increasing environmental variability will impact ecosystem stability when coexistence is fluctuation-dependent, we simulated the model over a range of environmental cue variability and species pool sizes.
 Thus, for each size of species pool (1, 2, 3, or 4 species), we simulated the model at 41 evenly-spaced levels of environmental cue (range = 0,2) or resource variability (range = 0,1.5).
-We also explored the influence of species assymetries in competitive ability and species' correlations of environmental responses in the storage effect model.
-Under the storage effect, if all species are perfectly symmetrical, that is, there is no superior competitor, then coexistence is fluctuation-independent.
+We also explored the influence of species asymmetries in competitive ability and species' correlations of environmental responses in the storage effect model.
+Under the storage effect, if all species are perfectly symmetrical, that is, there is no superior competitor, then coexistence is fluctuation independent.
 We use one such parameterization of our model to contrast the response of ecosystem stability in fluctuation-dependent and fluctation-independent communities to environmental variation.
 Likewise, under relative nonlinearity, species' resource response curves (Fig. SX) reflect traits that determine the intrinsic stability of each species.
 Therefore, we ran two sets of simulations for relative nonlinearity: one where the species pools increased from stable to unstable species and vice versa.
@@ -401,7 +407,7 @@ RESULTS AND DISCUSSION
 
 ### The diversity-variability relationship
 The direction of the diversity-variability relationship can be positive and negative when species coexistence is maintained by fluctuation-dependent mechanisms (Fig. 2).
-Ecosystem variability is positively correlated with species richness when species richness is measured across a gradient of envrionmental variability, which maintains diversity and promotes ecosystem variability (Fig. 2a,b).
+Ecosystem variability is positively correlated with species richness when species richness is measured across a gradient of environmental variability, which maintains diversity and promotes ecosystem variability (Fig. 2a,b).
 If environmental conditions are sufficient to maintain coexistence, removing species increases ecosystem variability (Fig. 2c,d).
 Thus, our results both confirm and contrast with theoretical and experimental findings that diversity begets stability.
 
@@ -411,10 +417,10 @@ This is encouraging because species almost certainly coexist by some combination
 By extending theory to communities where species richness is explicitly maintained by temporal variability, we have gained confidence that experimental findings are generalizable to many communities.
 In other words, in local settings where environmental variability is relatively homogenous, reductions in the number of species will reduce the stability of ecosystem functioning, regardless of how coexistence is maintained.
 
-When we allowed a gradient of environmental variability to determine species coexistence, we discoverd a positive relationship between species richness and ecosystem variability (Fig. 2a,b).
+When we allowed a gradient of environmental variability to determine species coexistence, we discovered a positive relationship between species richness and ecosystem variability (Fig. 2a,b).
 While surprising when viewed through the lens of previous theory and experimental findings, such a relationship is a direct consequence of how diversity can be maintained in fluctuating environments.
 The storage effect and relative nonlinearity both require envrionmental fluctuations to allow niche differentiation between species pairs [@Chesson2000].
-Therefore, species coexistence gains strength, for both mechanisms, as the envrionment becomes more variable (Fig. SX).
+Therefore, species coexistence gains strength, for both mechanisms, as the environment becomes more variable (Fig. SX).
 
 Our results may explain why deviations from the negative diversity-variability relationship often come from observational studies [@Jiang2009].
 Observational studies must rely on natural diversity gradients, and if species richness depends on environmental variability, it is entirely possible to observe positive diversity-variability relationships.
@@ -442,8 +448,8 @@ The difference in ecosystem variability among communities of different diversity
 
 \begin{figure}[!ht]
   \centering
-      \includegraphics[height=5in]{./components/storage_effect_div+envar_FORMATTED.png}
-  \caption{The effect of environmental variability on ecosystem variability with associated effects of species richness when species coexist via the storage effect. Panels (a-c) show simulation results where species have symmetrical competitive effects, whereas panels (d-f) show results when competition is assymetric (that is, in the absence of environmental fluctuations, all species but the superior competitor would be competitively excluded). We show results for different levels of correlations of species' environmental responses, $\rho$. At a given level of environmental variability, it is always better to have more species, as also shown in Fig. 2. Likewise, increasing environmental variance can, in some cases, actually decrease ecosystem variability if the increase is enough to allow species from the regional pool to enter the community. In essence, increasing environmental variance allows ecosystems to jump from one line to another as species are added.}
+      \includegraphics[height=5in]{./components/storage_effect_div+envar_varycomp_FORMATTED.png}
+  \caption{The effect of environmental variability on ecosystem variability with associated effects of species richness when species coexist via the storage effect. Panels (a-c) show simulation results where species have symmetrical competitive effects, whereas panels (d-f) show results when competition is asymmetric (that is, in the absence of environmental fluctuations, all species but the superior competitor would be competitively excluded). We show results for different levels of correlations of species' environmental responses, $\rho$. At a given level of environmental variability, it is always better to have more species, as also shown in Fig. 2. Likewise, increasing environmental variance can, in some cases, actually decrease ecosystem variability if the increase is enough to allow species from the regional pool to enter the community. In essence, increasing environmental variance allows ecosystems to jump from one line to another as species are added.}
 \end{figure}
 
 When species coexistence is fluctuation-dependent via the storage effect, increasing environmental variability has much more interesting effects on ecosystem variability.
@@ -466,7 +472,7 @@ Indeed, if all species in the regional pool are less stable than the resident sp
 
 \begin{figure}[!ht]
   \centering
-      \includegraphics[height=2.5in]{./components/relative_nonlinearity_div+envar_FORMATTED.png}
+      \includegraphics[height=2.5in]{./components/relative_nonlinearity_div+envar.png}
   \caption{The effect of environmental variability on ecosystem variability with associated effects of species richness when species coexist via relative nonlinearity. (a) The species pool increases from 1-4 four species, with the fourth species being most unstable. Increasing environmental variability (the SD of annual resource availability) allows for greater species richness, but species additions do not modulate the effect of environmental variability on ecosystem variability. (b) The species pool increases from 1-4 four species, with the fourth species being most stable. In this case increaseing environmental variability allows for greater realized species richness and can temper the effect of environmental variability.}
 \end{figure}
 
@@ -498,7 +504,7 @@ Likewise, environmental conditions in real ecosystems are unlikely to change onl
 Therefore, environmental change has the potential to alter the niche and fitness differences among species in multiple ways, some of which were not present in our current analysis.
 Mean changes in environmental conditions could reorder competitive hierarchies [@Klanderud2005] and/or alter the availability of niches [@Harpole2016].
 Associated changes in ecosystem stability will depend upon the magnitude of environmental change, each species' response to the particular environmental driver, and biotic interactions [@Hallett2014a].
-Thus, it is becoming clear that understanding how ecosystem stability will respond to global change will require a traits-based approach.
+Thus, it is becoming clear that understanding how ecosystem stability will respond to global change will require a trait-based approach.
 
 
 
@@ -507,8 +513,8 @@ CONCLUSIONS
 How does fluctuation-dependent coexistence affect the diversity-stability relationship?
 At a given level of environmental variability, the typical positive diversity-stability relationship holds because having more species always stabilizes ecosystem functioning.
 However, counter to other theoretical studies, we found that a negative diversity-stability relationship is also possible if sampling occurs across a natural diversity gradient and species coexistence is dependent on environmental fluctuations.
-We also found that fluctuation-dependent species coexistence may help ecosystems buffer increasing environmental variability because environmental variability promotes species richness, which, in turn, promotes stability.
-Where fluctuation-dependent species coexistence prevails, our findings suggest that conserving regional species pools and dispersal corridors between local communities will be important as environmental variability increases.
+We also found that fluctuation-dependent species coexistence may help buffer ecosystems from increasing environmental variability because environmental variability promotes species richness, which, in turn, promotes stability.
+Where fluctuation-dependent species coexistence prevails and environmental variability is projected to increase, our findings suggest that conserving regional species pools and dispersal corridors between local communities will be important.
 
 
 

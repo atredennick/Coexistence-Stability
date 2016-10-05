@@ -17,29 +17,14 @@ nbcores <- 4 # Set number of cores to match machine/simulations
 set.seed(123456789) # Set seed to reproduce random results
 
 ## Define vectors of parameters to vary -- here, initial conditions to vary richness
-# DNR <- rbind(c(D=c(1,1,1,1),N=c(1,1,1,1),R=20),
-#              c(D=c(1,1,1,0),N=c(1,1,1,0),R=20),
-#              c(D=c(1,1,0,1),N=c(1,1,0,1),R=20),
-#              c(D=c(1,0,1,1),N=c(1,0,1,1),R=20),
-#              c(D=c(0,1,1,1),N=c(0,1,1,1),R=20),
-#              c(D=c(1,1,0,0),N=c(1,1,0,0),R=20),
-#              c(D=c(1,0,1,0),N=c(1,0,1,0),R=20),
-#              c(D=c(1,0,0,1),N=c(1,0,0,1),R=20),
-#              c(D=c(0,1,1,0),N=c(0,1,1,0),R=20),
-#              c(D=c(0,1,0,1),N=c(0,1,0,1),R=20),
-#              c(D=c(0,0,1,1),N=c(0,0,1,1),R=20),
-#              c(D=c(1,0,0,0),N=c(1,0,0,0),R=20),
-#              c(D=c(0,1,0,0),N=c(0,1,0,0),R=20),
-#              c(D=c(0,0,1,0),N=c(0,0,1,0),R=20),
-#              c(D=c(0,0,0,1),N=c(0,0,1,0),R=20))
 DNR <- rbind(c(D=c(1,1,1,1),N=c(1,1,1,1),R=20),
              c(D=c(0,1,1,1),N=c(0,1,1,1),R=20),
              c(D=c(0,0,1,1),N=c(0,0,1,1),R=20),
              c(D=c(0,0,0,1),N=c(0,0,0,1),R=20))
 
 ## Define vectors of parameters to vary
-n_rsd <- 50 # Number of seasonal standard deviation levels
-rsd_vec <- pretty(seq(0, 1.4, length.out=n_rsd), n_rsd) # Make a pretty vector
+n_rsd <- 25 # Number of seasonal standard deviation levels
+rsd_vec <- pretty(seq(0.1, 1.4, length.out=n_rsd), n_rsd) # Make a pretty vector
 prm <- as.data.frame(rsd_vec)
 colnames(prm) <- "Rsd_annual"
 
@@ -103,5 +88,5 @@ outs <- mclapply(seq_len(nrow(parameter_matrix)),
                  }, 
                  mc.cores=nbcores) # end apply function
 
-saveRDS(outs, "../simulationResults/relnonlin_div+envvar_stability_revpool.RDS")
+saveRDS(outs, "../simulationResults/relnonlin_div+envvar_cv_unstable2stable.RDS")
 
