@@ -32,8 +32,8 @@ colnames(DNR_repped) <- colnames(DNR)
 prm <- cbind(prm, DNR_repped)
 prm <- subset(prm, select = -c(dnr_id))
 
-alphas <- rbind(c(alpha1=0.5, alpha2=0.5, alpha3=0.5, alpha4=0.5),
-              c(alpha1=0.5, alpha2=0.495, alpha3=0.49, alpha4=0.485))
+alphas <- rbind(c(alpha1=0.5, alpha2=0.495, alpha3=0.49, alpha4=0.485),
+              c(alpha1=0.5, alpha2=0.49, alpha3=0.48, alpha4=0.47))
 prm_repped <- do.call("rbind", replicate(2, prm,  simplify = FALSE))
 alphas_repped <- matrix(rep(alphas, each=nrow(prm)), ncol=ncol(alphas))
 colnames(alphas_repped) <- colnames(alphas)
