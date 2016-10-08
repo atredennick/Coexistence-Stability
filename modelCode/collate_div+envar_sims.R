@@ -43,7 +43,7 @@ collate_sims <- function(in_file, parameter_matrix, save_file){
   colnames(out_cvs_df) <- c("cv", "spprichness")    # give the columns names
   cvs_params <- cbind(parameter_matrix, out_cvs_df) # combine with parameter values
   saveRDS(cvs_params, file = save_file)             # save the file
-  file.remove(in_file)                              # delete the large, raw file
+  # file.remove(in_file)                              # delete the large, raw file
 }
 
 
@@ -101,8 +101,8 @@ colnames(prm) <- c("sigE", "rho", "dnr_id")
 colnames(DNR_repped) <- colnames(DNR)
 prm <- cbind(prm, DNR_repped)
 prm <- subset(prm, select = -c(dnr_id))
-alphas <- rbind(c(alpha1=0.5, alpha2=0.5, alpha3=0.5, alpha4=0.5),
-                c(alpha1=0.5, alpha2=0.495, alpha3=0.49, alpha4=0.485))
+alphas <- rbind(c(alpha1=0.5, alpha2=0.495, alpha3=0.49, alpha4=0.485),
+                c(alpha1=0.5, alpha2=0.49, alpha3=0.48, alpha4=0.47))
 prm_repped <- do.call("rbind", replicate(2, prm,  simplify = FALSE))
 alphas_repped <- matrix(rep(alphas, each=nrow(prm)), ncol=ncol(alphas))
 colnames(alphas_repped) <- colnames(alphas)
@@ -122,7 +122,7 @@ if(file.exists(strg_comp_file) == FALSE) {
 ##  Read in collated results and do some housekeeping columns
 strg_comp_cvs <- readRDS(strg_comp_file)
 strg_comp_cvs$comp <- "1symmetric"
-strg_comp_cvs[which(strg_comp_cvs$alpha4==0.485), "comp"] <- "2asymmetric"
+strg_comp_cvs[which(strg_comp_cvs$alpha4==0.47), "comp"] <- "2asymmetric"
 
 ##  Summarise by taking mean CV at different realized richness
 strg_comp_cvs_mean <- ddply(strg_comp_cvs, .(sigE, rho, spprichness, comp), 
@@ -171,8 +171,9 @@ ggsave(filename = "../manuscript/components/storage_effect_div+envar_varycomp_lo
 strg_comp_cvs_slopes <- list()
 for(do_comp in unique(strg_comp_cvs_mean$comp)){
   for(do_rho in c(-1,0)){
-    for(do_spprich in unique(strg_comp_cvs_mean$spprichness)){
-      tmp_df <- subset(strg_comp_cvs_mean, comp==do_comp & spprichness==do_spprich & rho==do_rho)
+    tmp1 <- subset(strg_comp_cvs_mean, comp==do_comp & rho==do_rho)
+    for(do_spprich in unique(tmp1$spprichness)){
+      tmp_df <- subset(tmp1, spprichness==do_spprich)
       tmp_slope <- get_slope(tmp_df)
       tmpout <- data.frame(comp=do_comp, spprich=do_spprich, rho=do_rho, 
                            slope=tmp_slope[1], lowslope=tmp_slope[2], hislope=tmp_slope[3])
