@@ -250,7 +250,7 @@ ggsave(paste0("../manuscript/components/open_community_infographic_cv.png"), wid
   
 # mycols <- c("#890584","#b1cb3d","#12205b","#0085dc", rgb(52, 0, 66, maxColorValue = 255))
 mycols <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
-mycols <- c("#E69F00", "#56B4E9", "#009E73", "#CC79A7", "grey25")
+mycols <- c("#E69F00", "#56B4E9", "#009E73", "#CC79A7", NA)
 # mycols <- c("orange","blue","red", "green", "grey25")
 ggplot(dosim_long, aes(x=iteration, y=value, color=variable))+
       geom_line(size=0.35)+
@@ -371,3 +371,22 @@ plot(dosim$`Total Biomass`, dosim_close$`Total Biomass`)
 #   
 # }
 # 
+
+# plot(sig_e_vec[101:3000], type="l")
+sig_df <- data.frame(variance = sig_e_vec[101:3000],
+                     years = 101:3000)
+ggplot(sig_df, aes(x=years, y=variance))+
+  geom_point(size=2)+
+  ylab(expression(paste("Environmental variance (", sigma[E]^2, ")")))+
+  xlab("Time")+
+  theme(panel.grid.major = element_line(colour = "grey", linetype = "dotted"),
+        panel.grid.minor = element_line(colour = "white", linetype = "dotted"),
+        panel.background = element_rect("white"),
+        axis.line.x = element_line("grey50"),
+        axis.line.y = element_line("grey50"),
+        axis.title = element_text(size=16))+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+ggsave(paste0("../manuscript/components/infographic_variance.png"), width = 8, height = 2, units = "in", dpi = 72)
+
+
+
