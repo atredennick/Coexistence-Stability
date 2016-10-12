@@ -34,7 +34,7 @@ get_cv <- function(x){
 
 
 ####
-####  Function for collateing raw simulation lists
+####  Function for collating raw simulation lists
 ####
 collate_sims <- function(in_file, parameter_matrix, save_file){
   sims_list <- readRDS(in_file)                     # read in the large simulation output
@@ -148,8 +148,14 @@ ggplot()+
   facet_grid(comp~rho)+
   theme_bw()+
   my_theme+
-  theme(legend.position = c(0.95, 0.15))
-ggsave(filename = "../manuscript/components/storage_effect_div+envar_varycomp.png", width = 8, height=4, units = "in", dpi = 82)
+  theme(legend.position = c(0.94, 0.155))+
+  theme(legend.title=element_text(size=6, face="bold"),
+        legend.text=element_text(size=6),
+        legend.background = element_rect(colour = "grey45", size=0.5),
+        legend.key = element_blank(),
+        legend.key.size = unit(0.2, "cm"))+
+  guides(colour = guide_legend(override.aes = list(size=1)))
+ggsave(filename = "../manuscript/components/storage_effect_div+envar_varycomp.png", width = 133, height=80, units = "mm", dpi = 600)
 
 
 ## Log-log plot and save
@@ -199,7 +205,7 @@ ggsave("../manuscript/components/storage_effect_div+envar_varycomp_loglog_slopes
 
 
 ####
-####  Compare high and low domarnt mortality
+####  Compare high and low dormant mortality
 ####
 DNR <- rbind(c(D=c(1,1,1,1),N=c(1,1,1,1),R=20),
              c(D=c(1,1,1,0),N=c(1,1,1,0),R=20),
@@ -319,7 +325,7 @@ DNR <- rbind(c(D=c(1,1,1,1),N=c(1,1,1,1),R=20),
              c(D=c(1,0,0,0),N=c(1,0,0,0),R=20))
 
 ## Define vectors of parameters to vary
-n_rsd <- 15 # Number of seasonal standard deviation levels
+n_rsd <- 25 # Number of seasonal standard deviation levels
 rsd_vec <- pretty(seq(0.1, 1.4, length.out=n_rsd), n_rsd) # Make a pretty vector
 prm <- as.data.frame(rsd_vec)
 colnames(prm) <- "Rsd_annual"
@@ -345,7 +351,7 @@ DNR <- rbind(c(D=c(1,1,1,1),N=c(1,1,1,1),R=20),
              c(D=c(0,0,0,1),N=c(0,0,0,1),R=20))
 
 ## Define vectors of parameters to vary
-n_rsd <- 15 # Number of seasonal standard deviation levels
+n_rsd <- 25 # Number of seasonal standard deviation levels
 rsd_vec <- pretty(seq(0.1, 1.4, length.out=n_rsd), n_rsd) # Make a pretty vector
 prm <- as.data.frame(rsd_vec)
 colnames(prm) <- "Rsd_annual"
@@ -372,8 +378,13 @@ rnonlin_unstable2stable_cvs <- readRDS(rnonlin_unstable2stable_file)
 rnonlin_unstable2stable_cvs$spporder <- "unstable2stable"
 rnonlin_cvs <- rbind(rnonlin_stable2unstable_cvs, rnonlin_unstable2stable_cvs)
 
+##  Calculate initial species richness for each simulation
+rnonlin_cvs$init_spprich <- rowSums(rnonlin_cvs[c("N1","N2","N3","N4")])
+ids_to_keep <- which(rnonlin_cvs$spprichness == rnonlin_cvs$init_spprich)
+rnonlin_cvs_eqrich <- rnonlin_cvs[ids_to_keep,]
+
 ##  Summarise by taking mean CV at different realized richness
-rnonlin_cvs_mean_full <- ddply(rnonlin_cvs, .(Rsd_annual, spprichness, spporder), 
+rnonlin_cvs_mean_full <- ddply(rnonlin_cvs_eqrich, .(Rsd_annual, spprichness, spporder), 
                                summarise,
                                cv = mean(cv))
 rnonlin_cvs_mean <- subset(rnonlin_cvs_mean_full, Rsd_annual<1.2 & Rsd_annual>0  & spprichness>0)
@@ -398,8 +409,8 @@ ggplot()+
   facet_wrap("spporder", ncol=2)+
   theme_bw()+
   my_theme+
-  theme( legend.position = c(0.08, 0.7))
-ggsave(filename = "../manuscript/components/relative_nonlinearity_div+envar.png", width = 6, height=3, units = "in", dpi = 82)
+  theme(legend.position = c(0.1, 0.7))
+ggsave(filename = "../manuscript/components/relative_nonlinearity_div+envar.png", width = 110, height=60, units = "mm", dpi = 600)
 
 ## Log-log plot and save
 ggplot(rnonlin_cvs_mean, aes(x=log(Rsd_annual), y=log(cv), color=as.factor(spprichness)))+
