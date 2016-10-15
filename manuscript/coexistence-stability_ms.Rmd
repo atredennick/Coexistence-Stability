@@ -123,8 +123,10 @@ INTRODUCTION
 This idea underlies the "insurance hypothesis" [@Yachi1999], which suggests stability increases with diversity because species respond dissimilarly to environmental conditions – species A has highest growth rates under conditions X whereas species B has highest growth rates under conditions Y. 
 More species confer temporal stability by broadening the range of conditions under which the community maintains function [@Loreau2010].
 Diverse models all predict a positive relationship between species richness and ecosystem stability [@Lehman2000; @Ives2002b; @Loreau2013], and experimental tests tend to support such a prediction [@Tilman2006; @Hector2010].
-However, empirical support for a positive diversity-stability relationship is not unequivocal [@Jiang2009].
-Furthermore, theory on the relationship between biodiversity and ecosystem stability often ignores the processes that determine species coexistence in variable environments [Loreau 2010, but see @Chesson2001].
+
+However, the ability of biodiversity-ecosystem functioning (BEF) experiments to represent real-world dynamics is the subject of debate [@Wardle2016; @Eisenhauer2016].
+Much of the debate centers around the fact that species losses in BEF experiments are not allowed to be offset by species gains.
+Theory typically suffers from the same limitation, in that it often ignores the processes that could lead to species gains in temporally variable environments [Loreau 2010, but see @Chesson2001].
 
 Temporally fluctuating environmental conditions are an important ingredient for stable species coexistence, both in theoretical models [@Chesson2000; @Chesson2004] and in natural communities [@Caceres1997; @Descamps-Julien2005; @Adler2006; @Angert2009].
 Such "fluctuation-dependent" coexistence [@Chesson2000] requires that species have unique environmental responses and that environmental conditions vary enough for each coexisting species to experience good and bad conditions.
@@ -144,13 +146,12 @@ Biodiversity-ecosystem stability studies typically ask how ecosystem variability
 
 To reconcile these two bodies of theory, we extend theory on the relationship between species richness and ecosystem stability to cases in which species coexistence explicitly depends on environmental fluctuations and species-specific responses to environmental conditions.
 We focus on the storage effect and relative nonlinearity using a general consumer-resource model.
-First, we use model simulations to investigate the diversity-stability relationship across a gradient of environmental variability.
-Counter to common expectations, we find that a negative diversity-stability relationship should be expected when sampling occurs over natural diversity gradients and species coexistence is fluctuation dependent.
-Importantly, and in line with previous theory [@Ives2002b; @Loreau2010; @DeMazancourt2013], at a given level of environmental variability, increasing species richness stabilizes ecosystem function, even when coexistence is fluctuation dependent.
+We use the model to investigate two questions:
 
-Second, we explore the net effect of increasing environmental variability on ecosystem stability by isolating the gain in stability due to increased richness and the loss in stability due to increased amplitude of species fluctuations.
-We find that increasing environmental variability does not always lead to a decrease in ecosystem stability: environmental variability promotes species richness, which stabilizes ecosystem functioning via portfolio effects even as the environment becaomes more variable.
-Whether or not increasing environmental variability results in species gains depends on the specific coexistence mechanism, the traits of resident species, and the traits of the species in the regional pool.
+1. Does the direction of the diversity-stability relationship remain positive when species coexistence is fluctuation-dependent? And,
+
+2. When species coexistence is fluctuation-dependent, how does increasing environmental variability impact ecosystem stability?
+
 
 MATERIALS AND METHODS
 ---------------------
