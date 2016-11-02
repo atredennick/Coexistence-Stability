@@ -188,7 +188,7 @@ Resource replenishment occurs between growing seasons, and the resource pool (*R
 Model parameters and notation are described in Table 1.
 
 #### Implementing the Storage Effect
-For the storage effect to operate, we need species-specific responses to environmental variability, positive environment-competition (EC) covariance, and subadditive population growth (@Chesson1994; @Chesson2000a). 
+For the storage effect to operate, we need species-specific responses to environmental variability, positive environment-competition (EC) covariance, and subadditive population growth [@Chesson1994; @Chesson2000a]. 
 EC covariance limits population growth of residents: in a favorable year, they are limited by strong intraspecific competition because their populations are large. 
 However, a species at very low abundance can escape the limitations of EC covariance if it experiences favorable conditions when the residents it is competiting against experience (relatively) unfavorable conditions. 
 Subadditive population growth buffers populations against large population decreases in unfavorable years. 
