@@ -1,19 +1,47 @@
-##============================================================================##
-##                                                                            ##
-## A. Tredennick, P. Adler, and F. Adler                                      ##             
-## "How Fluctuation-Dependent Coexistence Mechanisms Affect the Temporal      ##
-##  Stability of Ecosystem Function"                                          ##
-##                                                                       2016 ##
-##============================================================================##            
+---
+layout: 12pt
+header-includes:
+  - \usepackage{lineno}
+  - \linenumbers
+  - \usepackage{setspace}
+  - \usepackage{todonotes}
+  - \onehalfspacing
+  - \usepackage{rotating}
+  - \usepackage{color, soul}
+  - \usepackage[font={small},labelfont={sf,bf},labelsep=space]{caption}
+  - \usepackage{tikz}
+bibliography: ~/Dropbox/Bibliography/CoexistStability.bib
+csl: components/ecology.csl
 
-##  These are the core model functions that can be called 
-##  from simulation wrappers. This is the four species version.
+## rmarkdown render options
+output:
+  pdf_document:
+    fig_caption: true
+    keep_tex: true
+    number_sections: true
+fontsize: 11pt
+geometry: margin=1in
+linkcolor: black
+urlcolor: black
+---
 
-##  Author: Andrew Tredennick
-##  Email:  atredenn@gmail.com
-##  Last update: 6-06-2016
+\newcommand{\tikzcircle}[2][red,fill=red]{\tikz[baseline=-0.5ex]\draw[#1,radius=#2] (0,0) circle ;}
+\renewcommand\linenumberfont{\normalfont\tiny\sffamily\color{gray}}
+\renewcommand\thefigure{S1-\arabic{figure}}  
+\renewcommand\thetable{S1-\arabic{table}}  
+\renewcommand\thesection{Section S1.\arabic{section}}
 
+\begin{center}
+\textbf{\Large{Supporting Information Appendix S1}} \\
+A.T. Tredennick, P.B. Adler, \& F.R. Adler, ``How species coexistence affects...'' \\
+\emph{Journal Title}
+\end{center}
 
+\section{R Code for Consumer-Resource Model}
+Below is the R code for our model function, which is represented mathematically in the main text in Equations 1-4.
+The same code, along with all the code to reproduce our results, has been archived on Figshare (link) and is available on GitHub (http://github.com/atredennick/Coexistence-Stability/releases).
+
+```{r mod_function, eval=F, echo=TRUE}
 simulate_model <- function(seasons, days_to_track, Rmu, 
                            Rsd_annual, sigE, rho, 
                            alpha1, alpha2, alpha3, alpha4,
@@ -46,7 +74,7 @@ simulate_model <- function(seasons, days_to_track, Rmu,
   ####
   ####  Sub-Model functions ----------------------------------------------------
   ####
-  ## Continuous model
+  ## Continuous model (Equations 1-2)
   updateNR <- function(t, NR, parms){
     with(as.list(c(NR, parms)), {
       dN1dt = N1*eps[1]*(uptake_R(r[1], R, a[1], b[1]))
@@ -58,7 +86,7 @@ simulate_model <- function(seasons, days_to_track, Rmu,
     })
   } # end continuous function
   
-  ## Discrete model
+  ## Discrete model (Equations 3-4)
   update_DNR <- function(t, DNR, gammas,
                          alpha1, alpha2, alpha3, alpha4,
                          eta1, eta2, eta3, eta4,
@@ -144,5 +172,41 @@ simulate_model <- function(seasons, days_to_track, Rmu,
   
   return(saved_outs)
   
-} #end simulation function
+} ##  End simulation function
+```
+
+\newpage{}
+
+\section{Additional Figures}
+
+\begin{figure}[!ht]
+  \centering
+      \includegraphics[width=3in]{./components/fourspp_Ruptake_relnonlin.png}
+  \caption{Resource uptake curves for each species (represented by different colors) as used in relative nonlinearity simulations.}
+\end{figure}
+
+\newpage{}
+
+
+\begin{figure}[!ht]
+  \centering
+      \includegraphics[width=6.5in]{./components/SI_invasion_factorials.png}
+  \caption{Variability of community biomass and invasion growth rates of the inferior competitor under different parameter combinations. Points are mean values from 10,000 growing seasons and lines are linear fits to show trends. In \textbf{Storage Effect} plots, resource supply is held constant between growing seasons, whereas resource supply varies each year in \textbf{Relative Nonlinearity} simulations.}
+\end{figure}
+
+\newpage{}
+
+\begin{figure}[!ht]
+  \centering
+      \includegraphics[width=5in]{./components/storage_effect_div+envar_varycomp_loglog_slopes.png}
+  \caption{Slopes of linear fits for the relationship between log(\emph{CV}) and log($\sigma_E$) at different levels of realized species richness from storage effect simulations. The slopes come from linear models fit to log-transformed versions of Figure 3 in the main text. For these simulations, ``symmetric competion'' (\tikzcircle{1.5pt}) refers to similar live-to-dormant biomass allocation fractions ($\boldsymbol{\alpha} = [0.5, 0.495, 0.49, 0.485]$ for the four species), and ``asymmetric competition'' (\tikzcircle[fill=blue]{1.5pt}) refers to more dissimilar live-to-dormant biomass allocation fractions ($\boldsymbol{\alpha} = [0.5, 0.49, 0.48, 0.47]$ for the four species).}
+\end{figure}
+
+\newpage{}
+
+\begin{figure}[!ht]
+  \centering
+      \includegraphics[width=5in]{./components/relative_nonlinearity_div+envar_loglog_slopes.png}
+  \caption{Slopes of linear fits for the relationship between log(\emph{CV}) and log($\sigma_R$) at different levels of realized species richness from relative nonlinearity simulations. The slopes come from linear models fit to log-transformed versions of Figure 4 in the main text.}
+\end{figure}
 

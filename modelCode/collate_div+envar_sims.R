@@ -431,10 +431,12 @@ rnonlin_cvs_slopes <- list()
 for(do_order in unique(rnonlin_cvs_mean$spporder)){
   for(do_spprich in unique(rnonlin_cvs_mean$spprichness)){
     tmp_df <- subset(rnonlin_cvs_mean, spporder==do_order & spprichness==do_spprich)
-    tmp_slope <- get_slope_rnonlin(tmp_df)
-    tmpout <- data.frame(spporder=do_order, spprich=do_spprich, 
-                         slope=tmp_slope[1], lowslope=tmp_slope[2], hislope=tmp_slope[3])
-    rnonlin_cvs_slopes <- rbind(rnonlin_cvs_slopes, tmpout)
+    if(nrow(tmp_df)>2){
+      tmp_slope <- get_slope_rnonlin(tmp_df)
+      tmpout <- data.frame(spporder=do_order, spprich=do_spprich, 
+                           slope=tmp_slope[1], lowslope=tmp_slope[2], hislope=tmp_slope[3])
+      rnonlin_cvs_slopes <- rbind(rnonlin_cvs_slopes, tmpout)
+    }
   }
 }
 
