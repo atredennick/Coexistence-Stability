@@ -96,13 +96,11 @@
 
 \renewcommand\linenumberfont{\normalfont\tiny\sffamily\color{gray}}
 
-\allsectionsfont{\normalfont\sffamily\bfseries}
-
 \begin{singlespace}
 
 \begin{centering}
 
-\textsf{\large{\textbf{How fluctuation-dependent species coexistence affects the diversity-stability relationship}}}
+\Large{How fluctuation-dependent species coexistence affects the diversity-stability relationship}
 
 
 
@@ -110,7 +108,7 @@
 
 \renewcommand*{\thefootnote}{\fnsymbol{footnote}}
 
-Andrew T. Tredennick\textsuperscript{1}, Peter B. Adler\textsuperscript{1}, and Frederick R. Adler\textsuperscript{2}
+\normalsize{Andrew T. Tredennick\textsuperscript{1}, Peter B. Adler\textsuperscript{1}, and Frederick R. Adler\textsuperscript{2}}
 
 \vspace{1.5em}
 
@@ -325,32 +323,29 @@ in Table 1.
 Effect}\label{implementing-the-storage-effect}
 
 For the storage effect to operate, we need species-specific responses to
-environmental variability, positive environment-competition (EC)
-covariance, and subadditive population growth (Chesson 1994, 2000b). EC
-covariance limits population growth of residents: in a favorable year,
-they are limited by strong intraspecific competition because their
-populations are large. However, a species at very low abundance can
-escape the limitations of EC covariance if it experiences favorable
-conditions when the residents it is competiting against experience
-(relatively) unfavorable conditions. Subadditive population growth
-buffers populations against large population decreases in unfavorable
-years.
+environmental variability, density-dependent covariance between
+environmental conditions and competition (\emph{EC} covariance), and
+subadditive population growth (Chesson 1994, 2000b). Regardless of the
+mechanism, long-term coexistence is possible when all species can
+increase when rare. In the storage effect, rare species increase by
+escaping the effects of \emph{EC} covariance. This happens because
+common species will experience greater than average competition
+(\emph{C}) in good environment (\emph{E}) years because common species
+cannot avoid intraspecific competition. Rare species do not have this
+problem and can increase rapdily in a good \emph{E} year. \emph{EC}
+covariance is included in our model because dormant-to-live transition
+rates (\(\gamma\)) are species-specific and vary through time. In a high
+\(\gamma\) year for a common species, resource uptake will be above
+average, while in a high \(\gamma\) year for a rare species, resource
+uptake will be below average.
 
-Our model includes subadditive population growth because we include a
-dormant stage with very low death rates, which limits large population
-declines. Our model includes EC covariance through the effect of the
-dormant-to-live transition rate, \(\gamma\), on population growth. A
-high \(\gamma\) year for a species represents a good \emph{E} year in
-which live biomass, and thus resource uptake, is above average. These
-conditions correspond to \emph{C} also being above average because a
-common species, by definition, cannot escape intraspecific competition.
-
-In our model, rare species are rare because they are inferior
-competitors. So, given adequate variability in \(\gamma\), the inferior
-competitor can persist because its rarity allows it to take advantage of
-favorable envrionmental conditions. We created competitive hierarchies
-in the storage effect version of the model by altering species' biomass
-conversion efficiencies (\(\epsilon\))
+Subadditive population growth buffers populations against large
+population decreases in unfavorable years. It is included in our model
+because we include a dormant stage with very low death rates, which
+limits large population declines. In combination, subadditive population
+growth limits population declines in bad \emph{E} years, and \emph{EC}
+covariance ensures species can increase rapidly when rare but suffer
+when common.
 
 We generated sequences of (un)correlated dormant-to-live state
 transition rates (\(\gamma\)) for each species by drawing from
