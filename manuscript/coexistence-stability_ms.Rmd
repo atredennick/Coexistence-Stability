@@ -223,16 +223,18 @@ Note that $\Sigma(\gamma)$ must be positive definite.
 So, after defining $\Sigma(\gamma)$ with all $\rho_{i,j}$s and $\sigma^2_{E}$, we used the ```nearPD``` function from the ```Matrix``` package in ```R``` to coerce the variance-covariance matrix to be positive definite.
 
 #### Implementing Relative Nonlinearity
+In the absence of environmental fluctuations, the outcome of competition between two species limited by the same resource is determined by the shape of their resource uptake curves.
+That is, at constant resource supply, whichever species has the lowest resource requirement at equilibrium ($R^*$) will exclude all other species [@Tilman1982].
+Resource fluctuations create opportunities for species coexistence because the resource level is then not fixed at the $R^*$ of the superior competitor.
+If the resource uptake curves of each species are relatively nonlinear, then some species will be able to take advantage of resource levels that other species cannot [@Chesson1994].
 
-
-
-\textcolor{red}{YOU NEED TO REMIND READERS ABOUT THE STANDARD RESOURCE COMPETITION MODELS, MACARTHUR, TILMAN, ETC. IN GENERAL, I THINK THIS PARAGRAPH NEEDS TO BE EXPANDED AND EXPLAINED MORE SLOWLY, STEP BY STEP.}
-
-When considering consumer-resource dynamics, species coexistence by relative nonlinearity requires that each species has different nonlinear responses to resource availability, and resource availability must fluctuate through time.
-In a constant resource environment, the species with the lowest $R^*$ will always exclude the other species. 
-To create competitive hierarchies among species we manipulated species resource uptake curves such that the species with the lowest $R^*$ also had the lowest maximum growth rate at high resource levels (e.g., low *r*, low *a*, and low *b* values relative to other species in the Hill equation; Fig. SX).
-Thus, our simulated species represent a continuum from resource-conservative to resource-acquisitive.
-We still allow the germination rate ($\gamma$) to vary, but both species are perfectly correlated -- that is, $\rho=1$ (Fig. 1). 
+For example, in Fig. 1C we show two species' resource uptake curves that are relatively nonlinear.
+Species B has the lowest $R^*$ and would competitively exclude species A in the absence of environmental fluctuations.
+But, fluctuating resource supplies can benefit species A because it can take advantage of relatively high resource levels due its higher saturation point.
+Stable coexistence is only possible, however, if each species creates a disadvantage for itself when abundant.
+This occurs in our model because when a resource conservative species (e.g., species B in Fig. 1C) is abundant, resource levels will remain high for a longer period of time because its draw down of resources starates.
+Likwise, when a resource acquisative species (e.g., species A in Fig. 1C) is abundant it quickly draws down resources to levels that favor resource conservative species.
+Such reciprocity ensures species can increase when rare and stablizes coexistence [@Armstrong1980; @Chesson2000; @Chesson2004].
 
 ### Numerical simulations
 To explore how fluctuation-dependent coexistence can affect the diversity-stability relationship, we simulated the model with four species under two scenarios for each coexistence mechanism.
