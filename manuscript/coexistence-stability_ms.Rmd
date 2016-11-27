@@ -173,7 +173,7 @@ During a growing season, consumer-resource dynamics are modeled as two different
 
 \begin{align}
 \frac{\text{d}N_{i}}{\text{d}t} &= N_{i}\epsilon_if_{i}(R), \quad t \ne \tau_k\\
-\frac{\text{d}R}{\text{d}t} &= - \sum\limits_{i=1,2}f_{i}(R)N_{i}, \quad t \ne \tau_k
+\frac{\text{d}R}{\text{d}t} &= - \sum\limits_{i}f_{i}(R)N_{i}, \quad t \ne \tau_k
 \end{align}
 
 \noindent where the discrete transitions between $N$ and $D$ occur between seasons at times $\tau_k$, $k = 1,2,3, \dots, K$. The subscript $i$ denotes species, $N$ is the living biomass state, and $\epsilon_i$ is each species' resource-to-biomass conversion efficiency. The growth rate of living biomass is a resource-dependent Hill function, $f_{i}(R) = r_{i}R^{a_{i}} / (b_{i}^{a_{i}}+R^{a_{i}})$, where *r* is a species' intrinsic growth rate and *a* and *b* define the curvature of the function. Resource depletion is equal to the sum of each species' consumption. 
