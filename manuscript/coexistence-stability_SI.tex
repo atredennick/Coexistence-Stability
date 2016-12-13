@@ -47,6 +47,15 @@
 \newcommand{\RegionMarkerTok}[1]{{#1}}
 \newcommand{\ErrorTok}[1]{\textbf{{#1}}}
 \newcommand{\NormalTok}[1]{{#1}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
 \ifxetex
   \usepackage[setpagesize=false, % page size defined by xetex
               unicode=false, % unicode breaks when used with xetex
@@ -209,7 +218,10 @@ Figshare (link) and is available on GitHub
   \NormalTok{getG <-}\StringTok{ }\NormalTok{function(sigE, rho, nTime, num_spp) \{}
     \NormalTok{varcov       <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{rep}\NormalTok{(rho*sigE,num_spp*}\DecValTok{2}\NormalTok{), num_spp, num_spp)}
     \KeywordTok{diag}\NormalTok{(varcov) <-}\StringTok{ }\NormalTok{sigE}
-    \NormalTok{if(sigE >}\StringTok{ }\DecValTok{0}\NormalTok{) \{ varcov <-}\StringTok{ }\NormalTok{Matrix::}\KeywordTok{nearPD}\NormalTok{(varcov)$mat \} }\CommentTok{# coerce matrix to PD }
+    
+    \CommentTok{# crank through nearPD to fix rounding errors}
+    \NormalTok{if(sigE >}\StringTok{ }\DecValTok{0}\NormalTok{) \{ varcov <-}\StringTok{ }\NormalTok{Matrix::}\KeywordTok{nearPD}\NormalTok{(varcov)$mat \}  }
+    
     \NormalTok{varcov <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(varcov)}
     \NormalTok{e      <-}\StringTok{ }\KeywordTok{rmvnorm}\NormalTok{(}\DataTypeTok{n =} \NormalTok{nTime, }\DataTypeTok{mean =} \KeywordTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,num_spp), }\DataTypeTok{sigma =} \NormalTok{varcov)}
     \NormalTok{g      <-}\StringTok{ }\KeywordTok{exp}\NormalTok{(e) /}\StringTok{ }\NormalTok{(}\DecValTok{1}\NormalTok{+}\KeywordTok{exp}\NormalTok{(e))}
@@ -271,7 +283,7 @@ Figshare (link) and is available on GitHub
 \begin{figure}[!ht]
   \centering
       \includegraphics[width=3in]{./components/fourspp_Ruptake_relnonlin.png}
-  \caption{Resource uptake curves for each species (represented by different colors) as used in relative nonlinearity simulations.}
+  \caption{Resource uptake curves for each species (represented by different colors) as used in relative nonlinearity simulations. The equation for resource uptake is: $f_{i}(R) = r_{i}R^{a_{i}} / (b_{i}^{a_{i}}+R^{a_{i}})$. Parameter values are as follows. Species 1: \emph{r} = 0.2, \emph{a} = 2, \emph{b} = 2.5; Species 2: \emph{r} = 1, \emph{a} = 5, \emph{b} = 20; Species 3: \emph{r} = 2, \emph{a} = 10, \emph{b} = 30; Species 4: \emph{r} = 5, \emph{a} = 25, \emph{b} = 45.}
 \end{figure}
 
 \newpage{}

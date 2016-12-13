@@ -3,10 +3,12 @@
 ##  resource uptake curves when coexisting via relative nonlinearity          ##
 ################################################################################
 
+library(ggplot2)
+library(ggthemes)
 
 # Growth function parameters
 grow_parameters <- list (
-  r = c(1,5,10,25),           # max growth rate for each species
+  r = c(1,5,10,25)/5,           # max growth rate for each species
   a = c(2,5,10,25),           # rate parameter for Hill function 
   b = c(2.5,20,30,45),   # shape parameter for Hill function
   eps = c(0.5,0.5,0.5,0.5)  # resource-to-biomass efficiency

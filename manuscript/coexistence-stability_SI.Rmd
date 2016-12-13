@@ -121,7 +121,10 @@ simulate_model <- function(seasons, days_to_track, Rmu,
   getG <- function(sigE, rho, nTime, num_spp) {
     varcov       <- matrix(rep(rho*sigE,num_spp*2), num_spp, num_spp)
     diag(varcov) <- sigE
-    if(sigE > 0) { varcov <- Matrix::nearPD(varcov)$mat } # coerce matrix to PD 
+    
+    # crank through nearPD to fix rounding errors
+    if(sigE > 0) { varcov <- Matrix::nearPD(varcov)$mat }  
+    
     varcov <- as.matrix(varcov)
     e      <- rmvnorm(n = nTime, mean = rep(0,num_spp), sigma = varcov)
     g      <- exp(e) / (1+exp(e))
@@ -182,7 +185,7 @@ simulate_model <- function(seasons, days_to_track, Rmu,
 \begin{figure}[!ht]
   \centering
       \includegraphics[width=3in]{./components/fourspp_Ruptake_relnonlin.png}
-  \caption{Resource uptake curves for each species (represented by different colors) as used in relative nonlinearity simulations.}
+  \caption{Resource uptake curves for each species (represented by different colors) as used in relative nonlinearity simulations. The equation for resource uptake is: $f_{i}(R) = r_{i}R^{a_{i}} / (b_{i}^{a_{i}}+R^{a_{i}})$. Parameter values are as follows. Species 1: \emph{r} = 0.2, \emph{a} = 2, \emph{b} = 2.5; Species 2: \emph{r} = 1, \emph{a} = 5, \emph{b} = 20; Species 3: \emph{r} = 2, \emph{a} = 10, \emph{b} = 30; Species 4: \emph{r} = 5, \emph{a} = 25, \emph{b} = 45.}
 \end{figure}
 
 \newpage{}
@@ -191,7 +194,7 @@ simulate_model <- function(seasons, days_to_track, Rmu,
 \begin{figure}[!ht]
   \centering
       \includegraphics[width=6.5in]{./components/SI_invasion_factorials.png}
-  \caption{Variability of community biomass and invasion growth rates of the inferior competitor under different parameter combinations. Points are mean values from 10,000 growing seasons and lines are linear fits to show trends. In \textbf{Storage Effect} plots, resource supply is held constant between growing seasons, whereas resource supply varies each year in \textbf{Relative Nonlinearity} simulations.}
+  \caption{Variability of community biomass and invasion growth rates of the inferior competitor in a two-species community under different parameter combinations. Points are mean values from 10,000 growing seasons and lines are linear fits to show trends. In \textbf{Storage Effect} plots, resource supply is held constant between growing seasons, whereas resource supply varies each year in \textbf{Relative Nonlinearity} simulations.}
 \end{figure}
 
 \newpage{}
