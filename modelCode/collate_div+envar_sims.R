@@ -13,7 +13,8 @@ rm(list=ls(all.names = TRUE))
 library("plyr")
 library("reshape2")
 library("ggplot2")
-
+library("ggthemes")
+library("viridis")
 
 
 ####
@@ -76,6 +77,21 @@ my_theme <- theme(legend.title=element_text(size=8, face="bold"),
                   panel.grid.major = element_line(colour = "grey25", linetype = "dotted"),
                   panel.grid.minor = element_line(colour = "white", linetype = "dotted"),
                   strip.background = element_blank())
+my_theme2 <- theme_bw()+
+  theme(panel.grid.major.x = element_blank(), 
+        panel.grid.minor.x = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        panel.grid.major.y = element_line(color="white"),
+        panel.background   = element_rect(fill = "#EFEFEF"),
+        axis.text          = element_text(size=10, color="grey35", family = "Arial Narrow"),
+        axis.title         = element_text(size=12, family = "Arial Narrow", face = "bold"),
+        panel.border       = element_blank(),
+        axis.line.x        = element_line(color="black"),
+        axis.line.y        = element_line(color="black"),
+        strip.background   = element_blank(),
+        strip.text         = element_text(size=8, color="grey35", family = "Arial Narrow"),
+        legend.title       = element_text(size=8, family = "Arial Narrow"),
+        legend.text        = element_text(size=6, color="grey35", family = "Arial Narrow"))
 
 
 
@@ -140,14 +156,15 @@ firstones <- ddply(strg_comp_cvs_mean,
 ggplot()+
   geom_segment(data=firstones, aes(x=sigE, y=cv, xend=sigE, yend=0, color=as.factor(spprichness)), size=0.5, alpha=0.7)+
   geom_line(data=strg_comp_cvs_mean, aes(x=sigE, y=cv, color=as.factor(spprichness)), size=0.7, alpha=0.7)+
-  geom_point(data=strg_comp_cvs_mean, aes(x=sigE, y=cv, color=as.factor(spprichness)), size=2, alpha=1)+
-  geom_point(data=strg_comp_cvs_mean, aes(x=sigE, y=cv, color=as.factor(spprichness)), size=2, alpha=1, shape=1, color="grey15")+
-  scale_color_brewer(palette = "Set1", name = "Species\nRichness")+
-  xlab(expression(paste("Variance of environmental cue (",sigma[E]^2, ")")))+
-  ylab("CV of community biomass")+
+  geom_point(data=strg_comp_cvs_mean, aes(x=sigE, y=cv, color=as.factor(spprichness)), size=1.5, alpha=1)+
+  geom_point(data=strg_comp_cvs_mean, aes(x=sigE, y=cv, color=as.factor(spprichness)), size=1.5, alpha=1, shape=1, color="grey15")+
+  # scale_color_brewer(palette = "Set1", name = "Species\nRichness")+
+  scale_color_viridis(end=0.8, discrete=TRUE, name = "Species\nRichness")+
+  xlab(expression(bold(paste("Variance of environmental cue (",sigma[E]^2, ")"))))+
+  ylab("CV of Community Biomass")+
   facet_grid(comp~rho)+
   theme_bw()+
-  my_theme+
+  my_theme2+
   theme(legend.position = c(0.94, 0.155))+
   theme(legend.title=element_text(size=6, face="bold"),
         legend.text=element_text(size=6),
@@ -401,15 +418,22 @@ firstones_rnonlin <- ddply(rnonlin_cvs_mean,
 ggplot()+
   geom_segment(data=firstones_rnonlin, aes(x=Rsd, y=cv, xend=Rsd, yend=0, color=as.factor(spprichness)), size=0.5, alpha=0.7)+
   geom_line(data=rnonlin_cvs_mean, aes(x=Rsd_annual, y=cv, color=as.factor(spprichness)), size=0.7, alpha=0.7)+
-  geom_point(data=rnonlin_cvs_mean, aes(x=Rsd_annual, y=cv, color=as.factor(spprichness)), size=2, alpha=1)+
-  geom_point(data=rnonlin_cvs_mean, aes(x=Rsd_annual, y=cv, color=as.factor(spprichness)), size=2, alpha=1, shape=1, color="grey15")+
-  scale_color_brewer(palette = "Set1", name = "Species\nRichness")+
-  xlab(expression(paste("SD of annual resource (",sigma[R], ")")))+
-  ylab("CV of community biomass")+
+  geom_point(data=rnonlin_cvs_mean, aes(x=Rsd_annual, y=cv, color=as.factor(spprichness)), size=1.5, alpha=1)+
+  geom_point(data=rnonlin_cvs_mean, aes(x=Rsd_annual, y=cv, color=as.factor(spprichness)), size=1.5, alpha=1, shape=1, color="grey15")+
+  # scale_color_brewer(palette = "Set1", name = "Species\nRichness")+
+  scale_color_viridis(end=0.8, discrete=TRUE, name = "Species\nRichness")+
+  xlab(expression(bold(paste("SD of annual resource (",sigma[R], ")"))))+
+  ylab("CV of Community Biomass")+
   facet_wrap("spporder", ncol=2)+
   theme_bw()+
-  my_theme+
-  theme(legend.position = c(0.1, 0.7))
+  my_theme2+
+  theme(legend.position = c(0.1, 0.7))+
+  theme(legend.title=element_text(size=6, face="bold"),
+        legend.text=element_text(size=6),
+        legend.background = element_rect(colour = "grey45", size=0.5),
+        legend.key = element_blank(),
+        legend.key.size = unit(0.2, "cm"))+
+  guides(colour = guide_legend(override.aes = list(size=1)))
 ggsave(filename = "../manuscript/components/relative_nonlinearity_div+envar.png", width = 110, height=60, units = "mm", dpi = 600)
 
 ## Log-log plot and save

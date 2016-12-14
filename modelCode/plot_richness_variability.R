@@ -26,7 +26,7 @@ path2figs <- "../manuscript/components/"
 seasons_to_exclude <- 500
 mycols <- brewer.pal(3, "Set1")
 mycols <- viridis(2, begin=0.25, end=0.7)
-mycols <- c("#9CCEB7", "#1E4B58")
+mycols <- c("#15E7A0", "#13CFE8")
 my_theme <- theme(legend.title=element_text(size=8, face="bold"),
                   legend.text=element_text(size=8),
                   legend.background = element_rect(colour = "grey45", size=0.5),

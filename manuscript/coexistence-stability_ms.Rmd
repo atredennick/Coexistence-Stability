@@ -34,7 +34,7 @@ urlcolor: black
 
 \begin{centering}
 
-\Large{The diversity-stability relationship is shaped by the mechanism of coexistence}
+\Large{Fluctuation-dependent coexistence and the diversity-stability relationship}
 
 \vspace{2.5em}
 
@@ -284,14 +284,16 @@ Realized species richness increased with environmental variability and, in some 
 More species rich communities were less variable on average and increased in ecosystem *CV* at a slower rate than communities with fewer species (e.g., lower slopes in log-log space; Fig. S1-3). 
 
 The dampening effect of fluctuation-dependent coexistence on increasing environmental variability depends on the specific traits (parameter values) of the species in the regional pool.
-Asymmetric competition makes it more difficult for new species to enter the local community, but once they do enter, variability is similar (Fig. 3; compare top and bottom panels).
-Relatively high competition also increases the rate at which ecosystem *CV* increases with environmental variance (Fig. S1-3).
-This is because the abundance of inferior competitors is reduced and do not influence ecosystem *CV* as much as when competition is symmetric.
+Moderate competition makes it more difficult for new species to enter the local community, but once they do enter, variability is similar (Fig. 3; compare top and bottom panels).
+Moderate competition also increases the rate at which ecosystem *CV* increases with environmental variance (Fig. S1-3).
+This is because the abundance of inferior competitors is reduced and do not influence ecosystem *CV* as much as when competition is low.
 The correlation of species' environmental responses also mediates the relationship between environmental variance, species richness, and ecosystem *CV*: lower correlations make it easier for new species to enter the community and unique environmental responses are always stabilizing (Fig. 3).
 
 In communities where species coexist via relative nonlinearity, whether or not the direct impact of environmental variability on ecosystem variability is tempered by species additions depends on the species traits of immigrating species.
 When additional species, which immigrate from the regional pool, are less intrinsically stable than the resident species, ecosystem variability increases at a constant rate even as species are added (Fig. 4A).
 On the contrary, if more stable species are added, species additions buffer the ecosystem from increasing environmental variability (Fig. 4B).
+When just the most unstable (resource acquisitive) species is present, ecosystem variability initially declines as resource variability increases (Fig. 4B).
+This is because fluctuations between very low and very high biomass become less frequent as the species' resource uptake is more consistently high.
 The stability of individual species in our relative nonlinearity model is determined by their respective resource response curves (Fig. S1-1).
 Under relative nonlinearity, we find that the buffering effect of species additions depends on species traits, and the order in which species enter the local community.
 Indeed, if all species in the regional pool are less stable than the resident species, then no stabilization occurs as species are added (Fig. 4A).
@@ -393,19 +395,40 @@ $\sigma(R^+)$ & standard deviation of annual resource pulse & 0 (variable) \\
 
 FIGURES
 -------
-```{r model_types, cache=FALSE, warning=FALSE, message=FALSE, eval=TRUE, fig.height=3, fig.width=5, fig.cap="Resource uptake functions and example time series of (un)correlated germination fractions for the storage effect (A,B) and relative nonlinearity (C,D) formulations of the consumer-resource model. The resource uptake functions for both species are equivalent for the storage effect, but their germination fractions are uncorrelated in time. The opposite is true for relative nonlinearity: the two species have unique resource uptake functions, but their germination fractions are perfectly correlated in time."}
+```{r model_types, cache=FALSE, warning=FALSE, message=FALSE, eval=TRUE, dev="png", fig.height=3, fig.width=5, dpi=300,fig.cap="Resource uptake functions and example time series of (un)correlated germination fractions for the storage effect (A,B) and relative nonlinearity (C,D) formulations of the consumer-resource model. The resource uptake functions for both species are equivalent for the storage effect, but their germination fractions are uncorrelated in time. The opposite is true for relative nonlinearity: the two species have unique resource uptake functions, but their germination fractions are perfectly correlated in time."}
 library(ggplot2)
 library(ggthemes)
 library(mvtnorm)
 library(gridExtra)
-# mycols <- c("#9D6188","#97A861")
-mycols <- c("black", "red")
-# mycols <- c("grey35", "steelblue")
+library(viridis)
 
-mytheme <- theme(axis.text=element_text(size=6),
-                 axis.title=element_text(size=8),
-                 legend.text=element_text(size=6),
-                 legend.key.size=unit(0.3, "cm"))
+mytheme <- theme_bw()+
+  theme(panel.grid.major.x = element_blank(), 
+        panel.grid.minor.x = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        panel.grid.major.y = element_line(color="white"),
+        panel.background   = element_rect(fill = "#EFEFEF"),
+        axis.text          = element_text(size=6, color="grey35", family = "Arial Narrow"),
+        axis.title         = element_text(size=8, family = "Arial Narrow", face = "bold"),
+        panel.border       = element_blank(),
+        axis.line.x        = element_line(color="black"),
+        axis.line.y        = element_line(color="black"),
+        strip.background   = element_blank(),
+        strip.text         = element_text(size=8, color="grey35", family = "Arial Narrow"),
+        legend.title       = element_text(size=8, family = "Arial Narrow"),
+        legend.text        = element_text(size=6, color="grey35", family = "Arial Narrow"),
+        legend.key.size    = unit(0.3, "cm"))
+
+
+# mycols <- c("#9D6188","#97A861")
+# mycols <- c("black", "red")
+# mycols <- c("grey35", "steelblue")
+mycols <- viridis(2, end = 0.8)
+
+# mytheme <- theme(axis.text=element_text(size=6),
+#                  axis.title=element_text(size=8),
+#                  legend.text=element_text(size=6),
+#                  legend.key.size=unit(0.3, "cm"))
 
  ##  Resource uptake function (Hill function)
   uptake_R <- function(r, R, alpha, beta){
@@ -446,9 +469,13 @@ strg_uptake_plot <- ggplot()+
   guides(size=FALSE, linetype=FALSE)+
   xlab("Resource")+
   ylab("Resource Uptake Rate")+
-  theme(legend.position=c(0.7,0.35))+
   geom_text(aes(x=1,y=5, label="A"), size=2.5)+
-  mytheme
+  mytheme+
+  theme(legend.position=c(0.7,0.35))+
+  theme(legend.title=element_text(size=6, face="bold"),
+        legend.text=element_text(size=6),
+        legend.background = element_blank(),
+        legend.key = element_blank())
 
 sigE <- 2   # environmental cue variability
 rho <- 0    # environmental cue correlation between species
@@ -516,13 +543,16 @@ reln_germ_plot <- ggplot()+
 g_strg <- grid.arrange(strg_uptake_plot, strg_germ_plot, 
                        reln_uptake_plot, reln_germ_plot,
                        ncol=2, nrow=2)
+
 ```
+
+
 
 \newpage{}
 
 \begin{figure}[!ht]
   \centering
-      \includegraphics{./components/main_figure_hires.png}
+      \includegraphics[height=5in]{/Users/atredenn/Google_Drive/coexistence-stability_submission/figures/coex_stability_figure1.png}
   \caption{Variability of total community as function of species richness when coexistence is maintained by the storage effect (A,B) or relative nonlinearity (C,D). Top panels show results from simulations where environmental or resource variance determine the number species that coexist in a community. Bottom panels show results from simulations where environmental or resource variance is fixed at a level that allows coexistence of all four species, but species are removed to manipulate diversity. The top panels represent regional diversity-stability relationships across natural diversity gradients, whereas the bottom panels represent local diversity-stability relationships.}
 \end{figure}
 
@@ -530,7 +560,7 @@ g_strg <- grid.arrange(strg_uptake_plot, strg_germ_plot,
 
 \begin{figure}[!ht]
   \centering
-      \includegraphics[height=5in]{./components/storage_effect_div+envar_varycomp.png}
+      \includegraphics[height=5in]{/Users/atredenn/Google_Drive/coexistence-stability_submission/figures/coex_stability_figure2.png}
   \caption{The effect of environmental variability on ecosystem variability with associated effects of species richness when species coexist via the storage effect. Panels (A-C) show simulation results where species have slightly asymmetrical competitive effects, whereas panels (D-F) show results when competition is more asymmetric. We show results for different levels of correlations of species' environmental responses, $\rho$. Colored vertical lines show the level of environmental variability at which each level of species richness first occurs.}
 \end{figure}
 
@@ -538,8 +568,8 @@ g_strg <- grid.arrange(strg_uptake_plot, strg_germ_plot,
 
 \begin{figure}[!ht]
   \centering
-      \includegraphics[height=2.5in]{./components/relative_nonlinearity_div+envar.png}
-  \caption{The effect of environmental variability on ecosystem variability with associated effects of species richness when species coexist via relative nonlinearity. (A) The species pool increases from 1-4 four species, with the fourth species being most unstable. Increasing environmental variability (the SD of annual resource availability) allows for greater species richness, but species additions do not modulate the effect of environmental variability on ecosystem variability. (B) The species pool increases from 1-4 four species, with the fourth species being most stable (though, the fourth species was unable to coexist under these parameter values). In this case increasing environmental variability allows for greater realized species richness and can temper the effect of environmental variability.}
+      \includegraphics[height=2.5in]{/Users/atredenn/Google_Drive/coexistence-stability_submission/figures/coex_stability_figure3.png}
+  \caption{The effect of environmental variability on ecosystem variability with associated effects of species richness when species coexist via relative nonlinearity. (A) The species pool increases from one to four species, with the fourth species being most unstable (e.g., resource conservative to resource acquisitive). Increasing environmental variability (the SD of annual resource availability) allows for greater species richness, but species additions do not modulate the effect of environmental variability on ecosystem variability. (B) The species pool increases from one to four species, with the fourth species being most stable (e.g., resource acquisitive to resrouce conservative). In this case increasing environmental variability allows for greater realized species richness and can temper the effect of environmental variability. In (B), there is limited parameter space under which only three species coexist, which is why a three species community is missing.}
 \end{figure}
 
 \newpage{}
@@ -552,63 +582,6 @@ g_strg <- grid.arrange(strg_uptake_plot, strg_germ_plot,
 
 \newpage{}
 
-<!---
-\begin{figure}[!ht]
-  \centering
-      \includegraphics{./components/fig2_formatted.png}
-  \caption{Variability of community biomass and invasion growth rates of the inferior competitor under different parameter combinations. Points are mean values from 10,000 growing seasons and lines are linear fits to show trends. In \textbf{Storage Effect} plots, resource supply is held constant between growing seasons, whereas resource supply varies each year in \textbf{Relative Nonlinearity} simulations.}
-\end{figure}
-
-\begin{figure}[!ht]
-  \centering
-      \includegraphics{./components/profile_plots_formatted.png}
-  \caption{Variability of total community biomass and invasion growth rates of the inferior competitor when the storage effect is strong ($\rho=-0.5$) and weak ($\rho=0.5$), with (filled circles) and without (open circles) relative nonlinearity contributing to coexistence. Simulations without relative nonlinearity were run with species having (\emph{a}) low, (\emph{b}) moderate, and (\emph{c}) high maximum growth rates. Small plots above the main panels shows species resource uptake curves associated with each simulation.}
-\end{figure}
-
-\begin{figure}[!ht]
-  \centering
-      \includegraphics[width=3in]{./components/persp_plots_formatted.png}
-  \caption{Variability of total community biomass (\emph{a}) and species richness (\emph{b}) as a function of the variance of the environmental cue ($\sigma^2_E$), and the correlation of species responses to the environment ($\rho$). }
-\end{figure}
-
-\begin{figure}[!ht]
-  \centering
-      \includegraphics{./components/diversity_stability_relationship.png}
-  \caption{Variability of total community biomass as a function of the the number of coexisting species at different levels of correlations of species' responses to environmental conditions ($\rho$).}
-\end{figure}
-
-\begin{figure}[!ht]
-  \centering
-      \includegraphics{./components/storage_effect_growthrate_cv.png}
-  \caption{Relationship between the strength of coexistence (invasion growth rate of inferior competitor) and ecosystem variability. Panels show different levels of environmental cue variability (denoted by number at top of each panel). Color bar shows the correlation between species' germination rates.}
-\end{figure}
-
-\begin{figure}[!ht]
-  \centering
-      \includegraphics{./components/storage_effect_synchstability.png}
-  \caption{Results from storage effect simulations showing the relationships between the correlation of species' responses to the environmental cue for germination and simulated species asynchrony (\textit{a}), coefficient of variation of total community biomass (\textit{b}), mean total community biomass (\textit{c}), and standard deviation of total community biomass (\textit{d}). Color ramps indicate the value of resource variability ($\sigma_R$) for a given simulation.}
-\end{figure}
-
-\begin{figure}[!ht]
-  \centering
-      \includegraphics{./components/relative_nonlinearity_synchstability.png}
-  \caption{Results from relative nonlinearity simulations showing the relationships between tresource variability ($\sigma_R$) and simulated species asynchrony (\textit{a}), coefficient of variation of total community biomass (\textit{b}), mean total community biomass (\textit{c}), and standard deviation of total community biomass (\textit{d}). The correlation of species' responses to the environmental cue for germination was equal to one for all relative nonlinearity simulations ($\rho=1$).}
-\end{figure}
-
-
-\begin{figure}[!ht]
-  \centering
-      \includegraphics[width=3in]{./components/strength_v_cv.png}
-  \caption{Relationship between the strength of coexistence (invasion growth rate of inferior competitor) and ecosystem variability.}
-\end{figure}
-
-\begin{figure}[!ht]
-  \centering
-      \includegraphics{./components/compare_plots.png}
-  \caption{Relationship between resource variability ($\sigma_R$) and the coefficient of variation of total community biomass for both coexistence mechanisms. Each panel shows results from different levels of environmental cue correlations ($\rho$) for the storage effect; $\rho=1$ across all panels for relative nonlinearity results. On average, the storage effect leads to less variable biomass production through time.}
-\end{figure}
-
--->
 
 
 
