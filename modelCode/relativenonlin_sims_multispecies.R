@@ -30,7 +30,7 @@ names(rsd_vec) <- "Rsd_annual"
 ##  Define constant parameters in list
 constant_parameters <- list (
   seasons = 5000,                  # number of seasons to simulate
-  days_to_track = 20,              # number of days to simulate in odSolve
+  days_to_track = 100,              # number of days to simulate in odSolve
   Rmu = 3,                         # mean resource pulse (on log scale)
   # Rsd_annual = 0.0,                # std dev of resource pulses (on log scale)
   sigE = 0,                        # environmental cue variance
@@ -56,7 +56,7 @@ constant_parameters <- list (
 
 # Growth function parameters
 grow_parameters <- list (
-  r = c(1,5,10,25),           # max growth rate for each species
+  r = c(1,5,10,25)/5,           # max growth rate for each species
   a = c(2,5,10,25),           # rate parameter for Hill function 
   b = c(2.5,20,30,45),   # shape parameter for Hill function
   eps = c(0.5,0.5,0.5,0.5)  # resource-to-biomass efficiency

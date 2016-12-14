@@ -12,6 +12,7 @@ library(plyr)
 library(reshape2)
 library(synchrony)
 library(RColorBrewer)
+library(viridis)
 
 
 
@@ -24,7 +25,8 @@ path2figs <- "../manuscript/components/"
 
 seasons_to_exclude <- 500
 mycols <- brewer.pal(3, "Set1")
-
+mycols <- viridis(2, begin=0.25, end=0.7)
+mycols <- c("#9CCEB7", "#1E4B58")
 my_theme <- theme(legend.title=element_text(size=8, face="bold"),
                   legend.text=element_text(size=8),
                   legend.background = element_rect(colour = "grey45", size=0.5),
@@ -33,6 +35,22 @@ my_theme <- theme(legend.title=element_text(size=8, face="bold"),
                   panel.grid.major = element_line(colour = "white", linetype = "dotted"),
                   panel.grid.minor = element_line(colour = "white", linetype = "dotted"),
                   strip.background = element_blank())
+
+my_theme <- theme_bw()+
+  theme(panel.grid.major.x = element_blank(), 
+        panel.grid.minor.x = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        panel.grid.major.y = element_line(color="white"),
+        panel.background   = element_rect(fill = "#EFEFEF"),
+        axis.text          = element_text(size=10, color="grey35", family = "Arial Narrow"),
+        axis.title         = element_text(size=12, family = "Arial Narrow", face = "bold"),
+        panel.border       = element_blank(),
+        axis.line.x        = element_line(color="black"),
+        axis.line.y        = element_line(color="black"),
+        strip.background   = element_blank(),
+        strip.text         = element_text(size=8, color="grey35", family = "Arial Narrow"),
+        legend.title       = element_text(size=8, family = "Arial Narrow"),
+        legend.text        = element_text(size=6, color="grey35", family = "Arial Narrow"))
 
 
 ####
@@ -89,9 +107,11 @@ ggplot(save_multispp_rho0, aes(x=sigE, y=spprich))+
   geom_point(shape=1, col=mycols[1])+
   ylab("S")+
   xlab(expression(sigma[E]^2))+
-  theme_few()+
+  my_theme+
   theme(axis.title.y = element_text(angle=0, face="italic"),
-        axis.title.x = element_text(face="italic"))
+        axis.title.x = element_text(face="italic"),
+        panel.border = element_rect(fill=NA),
+        plot.background = element_rect(fill = "#EFEFEF"))
 ggsave(paste0(path2figs,"diversity_envvar_relationship_storage_effect.png"), width = 60, height = 35, units = "mm", dpi = 600)
 
 
@@ -137,10 +157,12 @@ ggsave(paste0(path2figs,"diversity_stability_relationship_relnonlin.png"), width
 ggplot(subset(save_multispp, spprich>0), aes(x=rsd, y=spprich))+
   geom_point(shape=1, col=mycols[2])+
   ylab("S")+
-  xlab(expression(sigma[R]))+
-  theme_few()+
+  xlab(expression(sigma[R]^phantom(0)))+
+  my_theme+
   theme(axis.title.y = element_text(angle=0, face="italic"),
-        axis.title.x = element_text(face="italic"))
+        axis.title.x = element_text(face="italic"),
+        panel.border = element_rect(fill=NA),
+        plot.background = element_rect(fill = "#EFEFEF"))
 ggsave(paste0(path2figs,"diversity_envvar_relationship_relnonlin.png"), width = 60, height = 35, units = "mm", dpi = 600)
 
 
