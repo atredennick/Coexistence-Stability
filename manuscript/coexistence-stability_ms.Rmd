@@ -401,6 +401,7 @@ library(ggthemes)
 library(mvtnorm)
 library(gridExtra)
 library(viridis)
+library(RColorBrewer)
 
 # mytheme <- theme_bw()+
 #   theme(panel.grid.major.x = element_blank(), 
@@ -431,7 +432,8 @@ mytheme <- theme_few()+
 # mycols <- c("#9D6188","#97A861")
 # mycols <- c("black", "red")
 # mycols <- c("grey35", "steelblue")
-mycols <- viridis(2, end = 0.6)
+# mycols <- viridis(2, end = 0.6)
+mycols <- brewer.pal(3, "Set2")
 
 # mytheme <- theme(axis.text=element_text(size=6),
 #                  axis.title=element_text(size=8),

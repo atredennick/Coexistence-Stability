@@ -24,9 +24,9 @@ path2results <- "../simulationResults/"
 path2figs <- "../manuscript/components/"
 
 seasons_to_exclude <- 500
-mycols <- brewer.pal(3, "Set1")
-mycols <- viridis(2, begin=0.25, end=0.7)
-mycols <- c("#15E7A0", "#13CFE8")
+mycols <- brewer.pal(3, "Set2")
+# mycols <- viridis(2, begin=0.25, end=0.7)
+# mycols <- c("#15E7A0", "#13CFE8")
 my_theme <- theme(legend.title=element_text(size=8, face="bold"),
                   legend.text=element_text(size=8),
                   legend.background = element_rect(colour = "grey45", size=0.5),
@@ -52,6 +52,13 @@ my_theme <- theme_bw()+
         legend.title       = element_text(size=8, family = "Arial Narrow"),
         legend.text        = element_text(size=6, color="grey35", family = "Arial Narrow"))
 
+my_theme <- theme_few()+
+  theme(axis.text          = element_text(size=6, color="grey35"),
+        axis.title         = element_text(size=8),
+        strip.text         = element_text(size=8, color="grey35"),
+        legend.title       = element_text(size=8),
+        legend.text        = element_text(size=6, color="grey35"),
+        legend.key.size    = unit(0.3, "cm"))
 
 ####
 ####  SPECIES RICHNESS - ENVIRONMENTAL VARIABILITY RELATIONSHIP; STORAGE EFFECT
@@ -94,7 +101,7 @@ for(i in 1:length(rho0_storage_effect)){
 
 
 ggplot(save_multispp_rho0, aes(x=spprich, y=cv))+
-  geom_point(shape=21, color="black", fill=mycols[1], size=2)+
+  geom_point(shape=21, color="darkgrey", fill=mycols[1], size=2)+
   stat_smooth(method="lm", color=mycols[1], se=FALSE, size=0.6)+
   xlab("Number of Species")+
   ylab("Variability of Total\nCommunity Biomass (CV)")+
@@ -103,16 +110,16 @@ ggplot(save_multispp_rho0, aes(x=spprich, y=cv))+
 fig.width <- 133/2
 ggsave(paste0(path2figs,"diversity_stability_relationship_storage_effect.png"), width = fig.width, height = 60, units = "mm", dpi = 600)
 
-ggplot(save_multispp_rho0, aes(x=sigE, y=spprich))+
-  geom_point(shape=1, col=mycols[1])+
-  ylab("S")+
-  xlab(expression(sigma[E]^2))+
-  my_theme+
-  theme(axis.title.y = element_text(angle=0, face="italic"),
-        axis.title.x = element_text(face="italic"),
-        panel.border = element_rect(fill=NA),
-        plot.background = element_rect(fill = "#EFEFEF"))
-ggsave(paste0(path2figs,"diversity_envvar_relationship_storage_effect.png"), width = 60, height = 35, units = "mm", dpi = 600)
+# ggplot(save_multispp_rho0, aes(x=sigE, y=spprich))+
+#   geom_point(shape=1, col=mycols[1])+
+#   ylab("S")+
+#   xlab(expression(sigma[E]^2))+
+#   my_theme+
+#   theme(axis.title.y = element_text(angle=0, face="italic"),
+#         axis.title.x = element_text(face="italic"),
+#         panel.border = element_rect(fill=NA),
+#         plot.background = element_rect(fill = "#EFEFEF"))
+# ggsave(paste0(path2figs,"diversity_envvar_relationship_storage_effect.png"), width = 60, height = 35, units = "mm", dpi = 600)
 
 
 ####
@@ -145,7 +152,7 @@ for(i in 1:length(multispp_rln)){
 }
 
 ggplot(subset(save_multispp, spprich>0), aes(x=spprich, y=cv))+
-  geom_point(shape=21, color="black", fill=mycols[2], size=2)+
+  geom_point(shape=21, color="darkgrey", fill=mycols[2], size=2)+
   stat_smooth(method="lm", color=mycols[2], se=FALSE, size=0.6)+
   xlab("Number of Species")+
   ylab("Variability of Total\nCommunity Biomass (CV)")+
@@ -154,16 +161,16 @@ ggplot(subset(save_multispp, spprich>0), aes(x=spprich, y=cv))+
 fig.width <- 133/2
 ggsave(paste0(path2figs,"diversity_stability_relationship_relnonlin.png"), width = fig.width, height = 60, units = "mm", dpi = 600)
 
-ggplot(subset(save_multispp, spprich>0), aes(x=rsd, y=spprich))+
-  geom_point(shape=1, col=mycols[2])+
-  ylab("S")+
-  xlab(expression(sigma[R]^phantom(0)))+
-  my_theme+
-  theme(axis.title.y = element_text(angle=0, face="italic"),
-        axis.title.x = element_text(face="italic"),
-        panel.border = element_rect(fill=NA),
-        plot.background = element_rect(fill = "#EFEFEF"))
-ggsave(paste0(path2figs,"diversity_envvar_relationship_relnonlin.png"), width = 60, height = 35, units = "mm", dpi = 600)
+# ggplot(subset(save_multispp, spprich>0), aes(x=rsd, y=spprich))+
+#   geom_point(shape=1, col=mycols[2])+
+#   ylab("S")+
+#   xlab(expression(sigma[R]^phantom(0)))+
+#   my_theme+
+#   theme(axis.title.y = element_text(angle=0, face="italic"),
+#         axis.title.x = element_text(face="italic"),
+#         panel.border = element_rect(fill=NA),
+#         plot.background = element_rect(fill = "#EFEFEF"))
+# ggsave(paste0(path2figs,"diversity_envvar_relationship_relnonlin.png"), width = 60, height = 35, units = "mm", dpi = 600)
 
 
 ####
@@ -189,7 +196,7 @@ for(i in 1:length(sppco_strg)){
 }
 
 ggplot(save_multispp, aes(x=spprich, y=cv))+
-  geom_point(shape=21, color="black", fill=mycols[1], size=2)+
+  geom_point(shape=21, color="darkgrey", fill=mycols[1], size=2)+
   stat_smooth(method="lm", color=mycols[1], se=FALSE, size=0.6)+
   xlab("Number of Species")+
   ylab("Variability of Total\nCommunity Biomass (CV)")+
@@ -218,7 +225,7 @@ for(i in 1:length(sppco_relnonlin)){
 
 save_multispp <- subset(save_multispp, spprich > 0)
 ggplot(save_multispp, aes(x=spprich, y=cv))+
-  geom_point(shape=21, color="black", fill=mycols[2], size=2)+
+  geom_point(shape=21, color="darkgrey", fill=mycols[2], size=2)+
   stat_smooth(method="lm", color=mycols[2], se=FALSE, size=0.6)+
   xlab("Number of Species")+
   ylab("Variability of Total\nCommunity Biomass (CV)")+
