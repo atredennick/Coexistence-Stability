@@ -273,7 +273,7 @@ All model code has been deposited on Figshare (*link*) and is available on GitHu
 RESULTS
 -------
 When we allowed the variance of the environment to determine which of four initial species coexisted, similar to a community assembly experiment, we found a positive relationship between richness and variability (Fig. 2A,C).
-This was true for the storage effect, where coexistence is maintained by fluctuating live-to-dormant transition rates ($\gamma$), and for relative nonlinearity, where coexistence is maintained by annual resource pulses.
+This was true for the storage effect, where coexistence is maintained by fluctuating dormant-to-live transition rates ($\gamma$), and for relative nonlinearity, where coexistence is maintained by annual resource pulses.
 The relationship is driven by the fact that increasing environmental variability increases the strength of both coexistence mechanisms (Fig. S1-2).
 More variable conditions promoted species richness, creating a positive relationship between diversity and variability.
 
@@ -394,7 +394,7 @@ $\sigma(R^+)$ & standard deviation of annual resource pulse & 0 (variable) \\
 
 FIGURES
 -------
-```{r model_types, cache=FALSE, warning=FALSE, message=FALSE, eval=TRUE, dev="png", fig.height=3, fig.width=5, dpi=300,fig.cap="Resource uptake functions and example time series of (un)correlated germination fractions for the storage effect (A,B) and relative nonlinearity (C,D) formulations of the consumer-resource model. The resource uptake functions for both species are equivalent for the storage effect, but their live-to-dormant transition fractions ($gamma$) are uncorrelated in time. The opposite is true for relative nonlinearity: the two species have unique resource uptake functions, but their live-to-dormant transition fractions ($gamma$) are perfectly correlated in time."}
+```{r model_types, cache=FALSE, warning=FALSE, message=FALSE, eval=TRUE, dev="png", fig.height=3, fig.width=5, dpi=300,fig.cap="Resource uptake functions and example time series of (un)correlated germination fractions for the storage effect (A,B) and relative nonlinearity (C,D) formulations of the consumer-resource model. The resource uptake functions for both species are equivalent for the storage effect, but their dormant-to-live transition fractions ($\\gamma$) are uncorrelated in time. The opposite is true for relative nonlinearity: the two species have unique resource uptake functions, but their dormant-to-live transition fractions ($\\gamma$) are perfectly correlated in time."}
 library(ggplot2)
 library(ggthemes)
 library(mvtnorm)
