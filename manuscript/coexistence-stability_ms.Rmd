@@ -402,28 +402,36 @@ library(mvtnorm)
 library(gridExtra)
 library(viridis)
 
-mytheme <- theme_bw()+
-  theme(panel.grid.major.x = element_blank(), 
-        panel.grid.minor.x = element_blank(),
-        panel.grid.minor.y = element_blank(),
-        panel.grid.major.y = element_line(color="white"),
-        panel.background   = element_rect(fill = "#EFEFEF"),
-        axis.text          = element_text(size=6, color="grey35", family = "Arial Narrow"),
-        axis.title         = element_text(size=8, family = "Arial Narrow", face = "bold"),
-        panel.border       = element_blank(),
-        axis.line.x        = element_line(color="black"),
-        axis.line.y        = element_line(color="black"),
-        strip.background   = element_blank(),
-        strip.text         = element_text(size=8, color="grey35", family = "Arial Narrow"),
-        legend.title       = element_text(size=8, family = "Arial Narrow"),
-        legend.text        = element_text(size=6, color="grey35", family = "Arial Narrow"),
+# mytheme <- theme_bw()+
+#   theme(panel.grid.major.x = element_blank(), 
+#         panel.grid.minor.x = element_blank(),
+#         panel.grid.minor.y = element_blank(),
+#         panel.grid.major.y = element_blank(),
+#         panel.background   = element_rect(fill = "white"),
+#         axis.text          = element_text(size=6, color="grey35", family = "Arial Narrow"),
+#         axis.title         = element_text(size=8, family = "Arial Narrow", face = "bold"),
+#         panel.border       = element_blank(),
+#         axis.line.x        = element_line(color="black"),
+#         axis.line.y        = element_line(color="black"),
+#         strip.background   = element_blank(),
+#         strip.text         = element_text(size=8, color="grey35", family = "Arial Narrow"),
+#         legend.title       = element_text(size=8, family = "Arial Narrow"),
+#         legend.text        = element_text(size=6, color="grey35", family = "Arial Narrow"),
+#         legend.key.size    = unit(0.3, "cm"))
+
+mytheme <- theme_few()+
+  theme(axis.text          = element_text(size=6, color="grey35"),
+        axis.title         = element_text(size=8),
+        strip.text         = element_text(size=8, color="grey35"),
+        legend.title       = element_text(size=8),
+        legend.text        = element_text(size=6, color="grey35"),
         legend.key.size    = unit(0.3, "cm"))
 
 
 # mycols <- c("#9D6188","#97A861")
 # mycols <- c("black", "red")
 # mycols <- c("grey35", "steelblue")
-mycols <- viridis(2, end = 0.8)
+mycols <- viridis(2, end = 0.6)
 
 # mytheme <- theme(axis.text=element_text(size=6),
 #                  axis.title=element_text(size=8),
