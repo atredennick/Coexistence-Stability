@@ -101,7 +101,7 @@ for(i in 1:length(rho0_storage_effect)){
 
 
 ggplot(save_multispp_rho0, aes(x=spprich, y=cv))+
-  geom_point(shape=21, color="darkgrey", fill=mycols[1], size=2)+
+  geom_point(shape=21, color="grey40", fill=mycols[1], size=2)+
   stat_smooth(method="lm", color=mycols[1], se=FALSE, size=0.6)+
   xlab("Number of Species")+
   ylab("Variability of Total\nCommunity Biomass (CV)")+
@@ -152,7 +152,7 @@ for(i in 1:length(multispp_rln)){
 }
 
 ggplot(subset(save_multispp, spprich>0), aes(x=spprich, y=cv))+
-  geom_point(shape=21, color="darkgrey", fill=mycols[2], size=2)+
+  geom_point(shape=21, color="grey40", fill=mycols[2], size=2)+
   stat_smooth(method="lm", color=mycols[2], se=FALSE, size=0.6)+
   xlab("Number of Species")+
   ylab("Variability of Total\nCommunity Biomass (CV)")+
@@ -196,7 +196,7 @@ for(i in 1:length(sppco_strg)){
 }
 
 ggplot(save_multispp, aes(x=spprich, y=cv))+
-  geom_point(shape=21, color="darkgrey", fill=mycols[1], size=2)+
+  geom_point(shape=21, color="grey40", fill=mycols[1], size=2)+
   stat_smooth(method="lm", color=mycols[1], se=FALSE, size=0.6)+
   xlab("Number of Species")+
   ylab("Variability of Total\nCommunity Biomass (CV)")+
@@ -225,7 +225,7 @@ for(i in 1:length(sppco_relnonlin)){
 
 save_multispp <- subset(save_multispp, spprich > 0)
 ggplot(save_multispp, aes(x=spprich, y=cv))+
-  geom_point(shape=21, color="darkgrey", fill=mycols[2], size=2)+
+  geom_point(shape=21, color="grey40", fill=mycols[2], size=2)+
   stat_smooth(method="lm", color=mycols[2], se=FALSE, size=0.6)+
   xlab("Number of Species")+
   ylab("Variability of Total\nCommunity Biomass (CV)")+
