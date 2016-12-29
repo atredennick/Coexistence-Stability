@@ -63,7 +63,7 @@ Last compile: \today
 
 \noindent \textbf{Article Type}: Letter
 
-\noindent \textbf{Number of Words}: 3,698
+\noindent \textbf{Number of Words}: 3,699
 
 \noindent \textbf{Number of References}: 40
 
@@ -141,7 +141,7 @@ Theoretical work on diversity-variability relationships typically suffers from t
 Fluctuating environmental conditions are an important ingredient for stable species coexistence, both in theoretical models [@Chesson2000; @Chesson2004] and in natural communities [@Caceres1997; @Descamps-Julien2005; @Adler2006; @Angert2009].
 Such "fluctuation-dependent" coexistence requires that species have unique environmental responses and that environmental conditions vary so that each species in a community experiences favorable and unfavorable conditions, which prevents competitive exclusion [@Chesson2000].
 When coexistence is maintained by a fluctuation-dependent mechanism, an increase in environmental variability might lead to an increase in species richness and, consequently, a decrease in ecosystem variability.
-However, increasing environmental variability may also increase ecosystem variability by increasing the fluctuations of individual species, regardless of species richness. These countervailing effects of environmental variability present an interesting paradox: while increasing variability should increase ecosystem variability, that decrease might be offset by an increase in richness. Such a paradox complicates predictions about how ecosystems will respond to predicted departures from historical ranges of environmental variability.
+However, increasing environmental variability may also increase ecosystem variability by increasing the fluctuations of individual species, regardless of species richness. These countervailing effects of environmental variability present an interesting paradox: while increasing environmental variability should increase ecosystem variability, that increase might be offset by an increase in richness. Such a paradox complicates predictions about how ecosystems will respond to predicted departures from historical ranges of environmental variability.
 
 The opposing effects of environmental variability on ecosystem variability might explain the mixed results from empirical studies on the diversity-variability relationship.
 Observational tests of the diversity-variability relationship, which require sampling across natural diversity gradients, have yielded negative [@Hautier2014], neutral [@Valone2003; @Cusson2015], and positive [@Sasaki2011] relationships.
