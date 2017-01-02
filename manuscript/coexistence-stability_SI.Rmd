@@ -33,8 +33,8 @@ urlcolor: black
 
 \begin{center}
 \textbf{\Large{Supporting Information Appendix S1}} \\
-A.T. Tredennick, P.B. Adler, \& F.R. Adler, ``How species coexistence affects...'' \\
-\emph{Journal Title}
+A.T. Tredennick, P.B. Adler, \& F.R. Adler, ``The relationship between species richness and...'' \\
+\emph{Ecology Letters}
 \end{center}
 
 \section{R Code for Consumer-Resource Model}
