@@ -11,7 +11,7 @@ header-includes:
   - \usepackage[font={small},labelfont={sf,bf},labelsep=space]{caption}
   - \usepackage{tikz}
 bibliography: ~/Dropbox/Bibliography/CoexistStability.bib
-csl: components/ecology.csl
+csl: components/ecology_letters.csl
 
 ## rmarkdown render options
 output:
