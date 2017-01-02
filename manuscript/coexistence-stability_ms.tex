@@ -179,8 +179,8 @@ experimental tests tend to support such a prediction (Tilman et al.
 
 However, the ability of biodiversity-ecosystem functioning (BEF)
 experiments to accurately represent real-world dynamics is debated
-(Eisenhauer et al. 2016; Wardle 2016). Much of the debate centers around
-the fact that BEF experimental protocols do not allow species gains to
+(Eisenhauer et al. 2016; Wardle 2016). Much of the debate centers on the
+fact that BEF experimental protocols do not allow species gains to
 offset species losses. Theoretical work on diversity-variability
 relationships typically suffers from the same limitation: it recognizes
 the role of environmental variability in driving population fluctuations
@@ -203,8 +203,9 @@ variability. However, increasing environmental variability may also
 increase ecosystem variability by increasing the fluctuations of
 individual species, regardless of species richness. These countervailing
 effects of environmental variability present an interesting paradox:
-while increasing environmental variability should increase ecosystem
-variability, that increase might be offset by an increase in richness.
+while we should expect an increase in environmental fluctuations to
+increase ecosystem variability, this increase might be buffered if
+fluctuation-dependent coexistence adds new species to the community.
 Such a paradox complicates predictions about how ecosystems will respond
 to predicted departures from historical ranges of environmental
 variability.
@@ -218,9 +219,10 @@ natural diversity gradients, have yielded negative (Hautier et al.
 positive (Sasaki \& Lauenroth 2011) relationships. In a meta-analysis of
 diversity-variability relationships based on observational studies in
 terrestrial ecosystems, Jiang \& Pu (2009) found no significant evidence
-for an effect of species richness on ecosystem variability.
-\tc{blue}{This may be because environmental variability varies across natural diversity gradients, affecting both richness and ecosystem variability.}
-The idiosyncratic results of these empirical studies contrast with the
+for an effect of species richness on ecosystem variability, perhaps
+because environmental variability varies across natural diversity
+gradients, affecting both richness and ecosystem variability. The
+idiosyncratic results of these empirical studies contrast with the
 consistent conclusions from theoretical work that ignores feedbacks
 between variability and richness.
 
@@ -332,21 +334,20 @@ environmental conditions and competition (\emph{EC} covariance), and
 subadditive population growth (Chesson 1994, 2000b). Long-term
 coexistence is possible when all species can increase when rare. In the
 storage effect, rare species increase by escaping the effects of
-\emph{EC} covariance. This happens because common species will
-experience greater than average competition (\emph{C}) in good
-environment (\emph{E}) years because common species cannot avoid
-intraspecific competition. Rare species can escape intraspecific
-competition and have the potential to increase rapidly in a good
-\emph{E} year. \emph{EC} covariance emerges in our model because
-dormant-to-live transition rates (\(\gamma\)) are species-specific and
-vary through time. In a high \(\gamma\) year for a common species,
-resource uptake will be above average, while in a high \(\gamma\) year
-for a rare species, resource uptake will be below average, as long as
-\(\gamma\)s are not perfectly correlated between species. Subadditive
-population growth buffers populations against large population decreases
-in unfavorable years. It is included in our model through a dormant
-stage with very low death rates, which limits large population declines
-in bad \emph{E} years.
+\emph{EC} covariance. Common species will experience greater than
+average competition (\emph{C}) in good environment (\emph{E}) years
+because common species cannot avoid intraspecific competition. However,
+rare species can escape intraspecific competition and have the potential
+to increase rapidly in a good \emph{E} year. \emph{EC} covariance
+emerges in our model because dormant-to-live transition rates
+(\(\gamma\)) are species-specific and vary through time. In a high
+\(\gamma\) year for a common species, resource uptake will be above
+average, while in a high \(\gamma\) year for a rare species, resource
+uptake will be below average, as long as \(\gamma\)s are not perfectly
+correlated between species. Subadditive population growth buffers
+populations against large population decreases in unfavorable years. It
+is included in our model through a dormant stage with very low death
+rates, which limits large population declines in bad \emph{E} years.
 
 We generated sequences of (un)correlated dormant-to-live state
 transition rates (\(\gamma\)) for each species by drawing from
@@ -367,9 +368,9 @@ matrix (\(\Sigma(\gamma)\)) of \vspace{-3em}
 \noindent where \(\sigma^2_{E}\) is the variance of the environmental
 cue and \(\rho_{i,j}\) is the correlation between species \emph{i}'s and
 species \emph{j}'s transition rates. \(\rho\) must be less than 1 for
-stable coexistence, and in all simulations constrained all
+stable coexistence, and in all simulations we constrained all
 \(\rho_{i,j}\)'s to be equal. In a two-species community, the inferior
-competitor has the strongest potential to persist when \(\rho=-1\)
+competitor has the greatest potential to persist when \(\rho=-1\)
 (perfectly uncorrelated transition rates). However, in a four-species
 community the minimum possible correlation among species is -1/3 given
 our constraints that all \(\rho\)'s are equal and that
@@ -387,26 +388,27 @@ shape of their resource uptake curves. That is, at constant resource
 supply, whichever species has the lowest resource requirement at
 equilibrium (\(R^*\)) will exclude all other species (Tilman 1982).
 Resource fluctuations create opportunities for species coexistence
-because the resource level is then not fixed at the \(R^*\) of the
+because the resource level will sometimes exceed the \(R^*\) of the
 superior competitor. If the resource uptake curves of each species are
 relatively nonlinear, then some species will be able to take advantage
 of resource levels that other species cannot (Chesson 1994).
 
-For example, in Fig. 1C we show two species' resource uptake curves that
-are relatively nonlinear. Species B has the lowest \(R^*\) and would
-competitively exclude species A in the absence of environmental
-fluctuations. But, fluctuating resource supplies can benefit species A
+For example, in Fig. 1C we show uptake curves of two species with
+different degrees of nonlinearity. Species B has the lowest \(R^*\) and
+would competitively exclude species A in the absence of environmental
+fluctuations. But fluctuating resource supplies can benefit species A
 because it can take advantage of relatively high resource levels due its
 higher saturation point. Stable coexistence is only possible, however,
-if each species creates a disadvantage for itself when abundant. This
-occurs in our model because when a resource conservative species (e.g.,
-species B in Fig. 1C) is abundant, resource levels will remain high for
-a longer period of time after a pulse because its draw down of resources
-saturates. Likewise, when a resource acquisitive species (e.g., species
-A in Fig. 1C) is abundant, it quickly draws down resources to levels
-that favor resource conservative species. Such reciprocity ensures
-species can increase when rare and stabilizes coexistence (Armstrong \&
-McGehee 1980; Chesson 2000a; Chesson et al. 2004).
+if when each species is dominant it improves conditions for its
+competitor. This occurs in our model because when a resource
+conservative species (e.g., species B in Fig. 1C) is abundant, it will
+draw resources down slowly after a pulse, and its competitor can take
+advantage of that period of high resource availability. Likewise, when a
+resource acquisitive species (e.g., species A in Fig. 1C) is abundant,
+after a pulse it quickly draws down resources to levels that favor
+resource conservative species. Such reciprocity helps each species to
+increase when rare, stabilizing coexistence (Armstrong \& McGehee 1980;
+Chesson 2000a; Chesson et al. 2004).
 
 \subsubsection{Numerical simulations}\label{numerical-simulations}
 
@@ -471,9 +473,9 @@ deposited on Figshare (\emph{link}) and is available on GitHub at
 \subsection{RESULTS}\label{results}
 
 When we allowed the variance of the environment to determine which of
-four initial species coexisted, similar to a community assembly
-experiment, we found a positive relationship between richness and
-variability (Fig. 2A,C). This was true for the storage effect, where
+four initial species coexisted, similar to a study across a natural
+diversity gradient, we found a positive relationship between richness
+and variability (Fig. 2A,C). This was true for the storage effect, where
 coexistence is maintained by fluctuating dormant-to-live transition
 rates (\(\gamma\)), and for relative nonlinearity, where coexistence is
 maintained by annual resource pulses. The relationship is driven by the
@@ -486,12 +488,12 @@ When we performed species removals but held environmental variability at
 a level that allows coexistence of all four species, similar to a
 biodiversity-ecosystem functioning experiment, we found a negative
 diversity-variability relationship (Fig. 2B,D). Scatter around the
-relationship was small for the storage effect because all species has
+relationship was small for the storage effect because all species have
 similar temporal variances. Regardless of species identity, the presence
-of more species always stabilizes ecosystem functioning through
+of more species always stabilized ecosystem functioning through
 portfolio effects. In contrast, scatter around the relationship was
 larger for relative nonlinearity (Fig. 2D) because species with
-different resource uptake curves have different population variances.
+different resource uptake curves had different population variances.
 Depending on which species were present, two-species communities were
 sometimes less variable than three-species communities.
 
@@ -531,8 +533,8 @@ variability increases at a constant rate even as species are added (Fig.
 ecosystem from increasing environmental variability (Fig. 4B). When only
 the most unstable (resource acquisitive) species is present, ecosystem
 variability initially declines as resource variability increases (Fig.
-4B).
-\tc{blue}{This occurs because community biomass is very low at low average resource levels for this species, which inflates the *CV*.}
+4B) because for this species' monoculture biomass is very low at low
+average resource levels for this species, inflating the \emph{CV}.
 
 \subsection{DISCUSSION}\label{discussion}
 
@@ -541,21 +543,20 @@ emphasizes that increases in species richness should reduce ecosystem
 variability. Consistent with theoretical expectations from models and
 with results from biodiversity-ecosystem functioning experiments, in
 which species coexistence is maintained by fluctuation-independent
-mechanisms, we produced a negative diversity-variability relationship
-(Fig. 2B,D) from a model with fluctuation-dependent species coexistence
-(also see Chesson et al. 2001). This agreement is encouraging because
-species almost certainly coexist by some combination of
-fluctuation-independent (e.g., resource partitioning) and
-fluctuation-dependent mechanisms. By extending theory to communities
-where species richness is explicitly maintained by temporal variability,
-we have gained confidence that experimental findings are generalizable
-to many communities. In local settings where environmental variability
-is relatively homogeneous, reductions in the number of species should
-increase the variability of ecosystem functioning, regardless of how
-coexistence is maintained.
+mechanisms, our model of fluctuation-dependent species coexistence (also
+see Chesson et al. 2001) produced a negative diversity-variability
+relationship (Fig. 2B,D). This agreement is encouraging because species
+almost certainly coexist by some combination of fluctuation-independent
+(e.g., resource partitioning) and fluctuation-dependent mechanisms. By
+extending theory to communities where species richness is explicitly
+maintained by temporal variability, we have gained confidence that
+experimental findings are generalizable to many communities. In local
+settings where environmental variability is relatively homogeneous,
+reductions in the number of species should increase the variability of
+ecosystem functioning, regardless of how coexistence is maintained.
 
 When we allowed communities to assemble at sites across a gradient of
-environmental variability we discovered a positive relationship between
+environmental variability, we discovered a positive relationship between
 species richness and ecosystem variability (Fig. 2A,C). While surprising
 when viewed through the lens of biodiversity-ecosystem functioning
 theory and experimental findings, such a relationship is predicted by
@@ -595,7 +596,7 @@ abundances in several marine macro-benthic ecosystems. Many of their
 focal ecosystems were from highly variable intertidal environments. If
 coexistence was at least in part determined by environmental
 fluctuations, then the confounding effect of variability and species
-richness could compensate any direct effect of species richness on
+richness could offset or overwhlem any effect of species richness on
 variability. Previous theoretical work showed how environmental
 variation can mask the effect of species diversity on ecosystem
 productivity when sampling across sites (Loreau 1998). Our mechanistic
@@ -605,13 +606,11 @@ Whether coexistence is fluctuation-independent or fluctuation-dependent
 becomes especially important when we consider how ecosystem variability
 responds to increasing environmental variability. In the
 fluctuation-independent case, species richness is essentially fixed
-because the species' inequalities that determine coexistence (niche and
-fitness differences) are not linked to environmental variability.
-Therefore, increasing environmental variability will always increase
-ecosystem variability by increasing the fluctuations of individual
-species' abundances.
-
-When coexistence is fluctuation-dependent, however, the outcome is less
+because the niche and fitness differences that determine coexistence are
+not linked to environmental variability. Therefore, increasing
+environmental variability will always increase ecosystem variability by
+increasing the fluctuations of individual species' abundances. When
+coexistence is fluctuation-dependent, however, the outcome is less
 certain. By simulating communities with different species pool sizes
 across a gradient of environmental variability, we showed that species
 gains due to increasing environmental variability can buffer the direct
@@ -619,16 +618,15 @@ effect of environmental variability on ecosystem variability (Figs. 3
 and 4). These results lead to two conclusions.
 
 First, when predicting the impacts of increasing environmental
-variability on ecosystem variability, the mechanism of coexistence in
-the community matters. Fluctuation-dependent coexistence can buffer
-ecosystems from increasing environmental variability by promoting
-increased species richness. Whether our theoretical predictions hold in
-real communities is unknown and requires empirical tests. Doing so would
-require manipulating environmental variability in communities where
-coexistence is known to be fluctuation-dependent, at least in part. Such
-data do exist (Angert et al. 2009), and a coupled modeling-experimental
-approach could determine if our predictions hold true in real
-communities.
+variability on ecosystem variability, the mechanism of coexistence
+matters. Fluctuation-dependent coexistence can buffer ecosystems from
+increasing environmental variability by promoting increased species
+richness. Whether our theoretical predictions hold in real communities
+is unknown and requires empirical tests. Doing so would require
+manipulating environmental variability in communities where coexistence
+is known to be fluctuation-dependent, at least in part. Such data do
+exist (Angert et al. 2009), and a coupled modeling-experimental approach
+could determine if our predictions hold true in natural communities.
 
 Second, whether local fluctuation-dependent communities can receive the
 benefit of additional species depends on a diverse regional species
