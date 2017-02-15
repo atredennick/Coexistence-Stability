@@ -9,12 +9,10 @@
 \else % if luatex or xelatex
   \ifxetex
     \usepackage{mathspec}
-    \usepackage{xltxtra,xunicode}
   \else
     \usepackage{fontspec}
   \fi
-  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
-  \newcommand{\euro}{€}
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
 \fi
 % use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -24,7 +22,16 @@
 \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
 \usepackage[margin=1in]{geometry}
-\usepackage{graphicx}
+\usepackage{hyperref}
+\PassOptionsToPackage{usenames,dvipsnames}{color} % color is loaded by hyperref
+\hypersetup{unicode=true,
+            colorlinks=true,
+            linkcolor=black,
+            citecolor=Blue,
+            urlcolor=black,
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{graphicx,grffile}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
 \def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
@@ -33,27 +40,25 @@
 % margins by default, and it is still possible to overwrite the defaults
 % using explicit options in \includegraphics[width, height, ...]{}
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
-\ifxetex
-  \usepackage[setpagesize=false, % page size defined by xetex
-              unicode=false, % unicode breaks when used with xetex
-              xetex]{hyperref}
-\else
-  \usepackage[unicode=true]{hyperref}
-\fi
-\hypersetup{breaklinks=true,
-            bookmarks=true,
-            pdfauthor={},
-            pdftitle={},
-            colorlinks=true,
-            citecolor=blue,
-            urlcolor=black,
-            linkcolor=black,
-            pdfborder={0 0 0}}
-\urlstyle{same}  % don't use monospace font for urls
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
 \setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
 
 %%% Use protect on footnotes to avoid problems with footnotes in titles
 \let\rmarkdownfootnote\footnote%
@@ -87,15 +92,18 @@
 \usepackage{color, soul}
 \usepackage[font={footnotesize},labelfont={sf,bf},labelsep=space]{caption}
 \usepackage{sectsty}
+\usepackage{bm,mathrsfs}
+\usepackage{mathptmx}
 
 \begin{document}
-
-\maketitle
-
 
 \renewcommand\linenumberfont{\normalfont\tiny\sffamily\color{gray}}
 
 \newcommand{\tc}{\textcolor}
+
+\sloppy
+
+\renewcommand{\baselinestretch}{1.25}
 
 \begin{singlespace}
 
@@ -103,13 +111,13 @@
 
 \Large{The relationship between species richness and ecosystem variability is shaped by the mechanism of coexistence}
 
-\vspace{2.5em}
+\bigskip{} \bigskip{}
 
 \renewcommand*{\thefootnote}{\fnsymbol{footnote}}
 
 \normalsize{Andrew T. Tredennick\textsuperscript{1}, Peter B. Adler\textsuperscript{1}, and Frederick R. Adler\textsuperscript{2}}
 
-\vspace{1.5em}
+\bigskip{}
 
 \textit{\small{\textsuperscript{1}Department of Wildland Resources and the Ecology Center, Utah State University, Logan, Utah 84322}} \\
 \textit{\small{\textsuperscript{2}Departments of Biology and Mathematics, University of Utah, Salt Lake City, Utah 84112}} 
@@ -124,15 +132,11 @@ Last compile: \today
 
 \noindent \textbf{Authorship}: All authors conceived the research and designed the modeling approach; ATT conducted model simulations, with input from PBA and FRA; ATT wrote the manuscript and all authors contributed to revisions.
 
-\noindent \textbf{Data Accessibility}: There is no data associated with this manuscript. All R code necessary to reproduce our results will be archived on Figshare and released on GitHub (https://github.com/atredennick/Coexistence-Stability).
-
 \noindent \textbf{Running Title}: Environmental variability, ecosystem variability, \& species coexistence
 
 \noindent \textbf{Article Type}: Letter
 
 \noindent \textbf{Number of Words}: 3,699
-
-\noindent \textbf{Number of Words in Abstract}: 147
 
 \noindent \textbf{Number of References}: 40
 
@@ -177,7 +181,7 @@ respond dissimilarly to environmental variation, broadening the range of
 conditions under which the community maintains function (Loreau 2010). A
 variety of theoretical models all predict a negative relationship
 between species richness and ecosystem variability (Lehman \& Tilman
-2000; Ives \& Hughes 2002; Loreau \& {{de Mazancourt}} 2013), and
+2000; Ives \& Hughes 2002; Loreau \& de Mazancourt 2013), and
 experimental tests tend to support such a prediction (Tilman et al.
 2006; Hector et al. 2010).
 
@@ -194,7 +198,7 @@ stabilize ecosystems (Loreau 2010, but see Chesson et al. 2001).
 
 Fluctuating environmental conditions are an important ingredient for
 stable species coexistence, both in theoretical models (Chesson 2000a;
-Chesson et al. 2004) and in natural communities (C{á}ceres 1997;
+Chesson et al. 2004) and in natural communities (Cáceres 1997;
 Descamps-Julien \& Gonzalez 2005; Adler et al. 2006; Angert et al.
 2009). Such ``fluctuation-dependent'' coexistence requires that species
 have unique environmental responses and that environmental conditions
@@ -310,7 +314,7 @@ at the start of a growing season are equal to \vspace{-3em}
 
 \noindent where \(D(\tau_k)\), \(N(\tau_k)\), and \(R(\tau_k)\) are the
 abundances of each state at the end of growing season \emph{k} and
-\(\tau_k^+\) denotes the beginning of growing season \(k+1\). The
+\(\tau_k^+\) denotes the beginning of growing season \(k\). The
 activation of dormant biomass to live biomass is controlled by
 \(\gamma\), which is year (\emph{k}) and species (\emph{i}) specific.
 Dormant biomass is equal to a constant fraction (\(\alpha\)) of live
@@ -664,174 +668,6 @@ CAREER award to PBA (DEB-1054040).
 
 \newpage{}
 
-\setlength{\parindent}{0ex} \singlespacing
-
-\subsection*{REFERENCES}\label{references}
-\addcontentsline{toc}{subsection}{REFERENCES}
-
-Adler, P.B., HilleRisLambers, J., Kyriakidis, P.C., Guan, Q. \& Levine,
-J.M. (2006). Climate variability has a stabilizing effect on the
-coexistence of prairie grasses. \emph{Proceedings of the National
-Academy of Sciences}, 103, 12793--12798.
-
-Angert, A.L., Huxman, T.E., Chesson, P. \& Venable, D.L. (2009).
-Functional tradeoffs determine species coexistence via the storage
-effect. \emph{Proceedings of the National Academy of Sciences of the
-United States of America}, 106, 11641--11645.
-
-Armstrong, R.A. \& McGehee, R. (1980). Competitive Exclusion. \emph{The
-American Naturalist}, 115, 151--170.
-
-Brown, J.H. \& Kodric-Brown, A. (1997). Turnover Rates in Insular
-Biogeography : Effect of Immigration on Extinction. \emph{Ecology}, 58,
-445--449.
-
-C{á}ceres, C.E. (1997). Temporal variation, dormancy, and coexistence: a
-field test of the storage effect. \emph{Proceedings of the National
-Academy of Sciences}, 94, 9171--9175.
-
-Chesson, P. (2000a). Mechanisms of Maintenance of Species Diversity.
-\emph{Annual Review of Ecology and Systematics}, 31, 343--366.
-
-Chesson, P. (2000b). General theory of competitive coexistence in
-spatially-varying environments. \emph{Theoretical population biology},
-58, 211--37.
-
-Chesson, P., Gebauer, R.L.E., Schwinning, S., Huntly, N., Wiegand, K.,
-Ernest, M.S.K., et al. (2004). Resource pulses, species interactions,
-and diversity maintenance in arid and semi-arid environments.
-\emph{Oecologia}, 141, 236--253.
-
-Chesson, P., Pacala, S.W. \& Neuhauser, C. (2001). Environmental Niches
-and Ecosystem Functioning. In: \emph{The functional consequences of
-biodiversity: Empirical progress and theoretical extensions} (eds.
-Kinzig, A.P., Pacala, S.W. \& Tilman, D.). Princeton University Press,
-Princeton, pp. 213--245.
-
-Chesson, P.L. (1994). Multispecies Competition in Variable Environments.
-\emph{Theoretical Population Biology}, 45, 227.
-
-Chesson, P.L. \& Warner, R.R. (1981). Environmental Variability Promotes
-Coexistence in Lottery Competitive Systems. \emph{The American
-Naturalist}, 117, 923--943.
-
-Cusson, M., Crowe, T.P., Ara{ú}jo, R., Arenas, F., Aspden, R., Bulleri,
-F., et al. (2015). Relationships between biodiversity and the stability
-of marine ecosystems: Comparisons at a European scale using
-meta-analysis. \emph{Journal of Sea Research}, 98, 5--14.
-
-DeClerck, F.A.J., Barbour, M.G. \& Sawyer, J.O. (2006). Species richness
-and stand stability in conifer forests of the Sierra Nevada.
-\emph{Ecology}, 87, 2787--2799.
-
-Descamps-Julien, B. \& Gonzalez, A. (2005). Stable coexistence in a
-fluctuating environment: An experimental demonstration. \emph{Ecology},
-86, 2815--2824.
-
-Eisenhauer, N., Barnes, A.D., Cesarz, S., Craven, D., Ferlian, O.,
-Gottschall, F., et al. (2016). Biodiversity-ecosystem function
-experiments reveal the mechanisms underlying the consequences of
-biodiversity change in real world ecosystems. \emph{Journal of
-Vegetation Science}, 27, 1061--1070.
-
-Elton, C. (1958). \emph{The Ecology of Invasions by Animals and Plants}.
-University of Chicago Press, Chicago.
-
-Hautier, Y., Seabloom, E.W., Borer, E.T., Adler, P.B., Harpole, W.S.,
-Hillebrand, H., et al. (2014). Eutrophication weakens stabilizing
-effects of diversity in natural grasslands. \emph{Nature}, 508, 521--5.
-
-Hector, A., Hautier, Y., Saner, P., L.Wacker, Bagchi, R., Joshi, J., et
-al. (2010). General stabilizing effects of plant diversity on grassland
-productivity through population asynchrony and overyielding.
-\emph{Ecology}, 91, 2213--2220.
-
-Ives, A.R. \& Hughes, J.B. (2002). General relationships between species
-diversity and stability in competitive systems. \emph{The American
-naturalist}, 159, 388--395.
-
-Jiang, L. \& Pu, Z. (2009). Different effects of species diversity on
-temporal stability in single-trophic and multitrophic communities.
-\emph{The American Naturalist}, 174, 651--659.
-
-Kinzig, A.P., Pacala, S.W. \& Tilman, D. (Eds.). (2001). \emph{The
-functional consequences of biodiversity: Empirical progress and
-theoretical extensions}. Princeton University Press, Princeton.
-
-Lehman, C.L. \& Tilman, D. (2000). Biodiversity, Stability, and
-Productivity in Competitive Communities. \emph{The American Naturalist},
-156, 534--552.
-
-Leibold, M.A., Holyoak, M., Mouquet, N., Amarasekare, P., Chase, J.M.,
-Hoopes, M.F., et al. (2004). The metacommunity concept: A framework for
-multi-scale community ecology. \emph{Ecology letters}.
-
-Loreau, M. (1998). Biodiversity and ecosystem functioning: a mechanistic
-model. \emph{Proceedings of the National Academy of Sciences of the
-United States of America}, 95, 5632--5636.
-
-Loreau, M. (2010). \emph{From Polutations to Ecosystems: Theoretical
-Fondations for a New Ecological Synthesis}.
-
-Loreau, M. \& {{de Mazancourt}}, C. (2013). Biodiversity and ecosystem
-stability: A synthesis of underlying mechanisms. \emph{Ecology Letters},
-16, 106--115.
-
-MacArthur, R. (1955). Fluctuations of Animal Populations and a Measure
-of Community Stability. \emph{Ecology}, 36, 533--536.
-
-Mailleret, L. \& Lemesle, V. (2009). A note on semi-discrete modelling
-in the life sciences. \emph{Philosophical transactions. Series A,
-Mathematical, physical, and engineering sciences}, 367, 4779--4799.
-
-Mordecai, E.A., Gross, K. \& Mitchell, C.E. (2016). Within-Host Niche
-Differences and Fitness Trade-offs Promote Coexistence of Plant Viruses.
-\emph{The American Naturalist}, 187, E13--E26.
-
-Pachepsky, E., Nisbet, R.M. \& Murdoch, W.W. (2008). Between discrete
-and continuous: Consumer-resource dynamics with synchronized
-reproduction. \emph{Ecology}, 89, 280--288.
-
-R Development Core Team. (2013). \emph{R: A Language and
-Environment for Statistical Computing}.
-
-Sasaki, T. \& Lauenroth, W.K. (2011). Dominant species, rather than
-diversity, regulates temporal stability of plant communities.
-\emph{Oecologia}, 166, 761--768.
-
-Soetaert, K., Petzoldt, T. \& Setzer, R.W. (2010). Package deSolve :
-Solving Initial Value Differential Equations in R. \emph{Journal Of
-Statistical Software}, 33, 1--25.
-
-Tilman, D. (1982). \emph{Resource competition and community structure.}
-
-Tilman, D., Reich, P.B. \& Knops, J.M.H. (2006). Biodiversity and
-ecosystem stability in a decade-long grassland experiment.
-\emph{Nature}, 441, 629--632.
-
-Turnbull, L.A., Levine, J.M., Loreau, M. \& Hector, A. (2013).
-Coexistence, niches and biodiversity effects on ecosystem functioning.
-\emph{Ecology Letters}, 16, 116--127.
-
-Valone, T.J. \& Hoffman, C.D. (2003). A mechanistic examination of
-diversity-stability relationships in annual plant communities.
-\emph{Oikos}, 103, 519--527.
-
-Wang, S. \& Loreau, M. (2014). Ecosystem stability in space: \(\alpha\),
-\(\beta\) and \(\gamma\) variability. \emph{Ecology Letters}, 17,
-891--901.
-
-Wardle, D.A. (2016). Do experiments exploring plant diversity-ecosystem
-functioning relationships inform how biodiversity loss impacts natural
-ecosystems? \emph{Journal of Vegetation Science}, 27, 646--653.
-
-Yachi, S. \& Loreau, M. (1999). Biodiversity and ecosystem productivity
-in a fluctuating environment: the insurance hypothesis.
-\emph{Proceedings of the National Academy of Sciences of the United
-States of America}, 96, 1463--1468.
-
-\newpage{}
-
 \subsection{TABLE}\label{table}
 
 \begin{table}[!htbp]
@@ -895,7 +731,7 @@ correlated in time.}
 \begin{figure}[!ht]
   \centering
       \includegraphics[height=2.5in]{/Users/atredenn/Google_Drive/coexistence-stability_submission/figures/coex_stability_figure3.png}
-  \caption{The effect of environmental variability on ecosystem variability when species coexist via relative nonlinearity. (A) The species pool increases from one to four species, with the fourth species being most unstable (e.g., resource conservative to resource acquisitive). Increasing environmental variability (the SD of annual resource availability) allows for greater species richness, but species additions do not modulate the effect of environmental variability on ecosystem variability. (B) The species pool increases from one to four species, with the fourth species being most stable (e.g., resource acquisitive to resrouce conservative). In this case, increasing environmental variability allows for greater realized species richness and can temper the effect of environmental variability. In (B), there is limited parameter space under which only three species coexist, which is why a three species community is missing. Parameter values are as in Figure 2C.}
+  \caption{The effect of environmental variability on ecosystem variability when species coexist via relative nonlinearity. (A) The species pool increases from one to four species, with the fourth species being most unstable (e.g., resource conservative to resource acquisitive). Increasing environmental variability (the SD of annual resource availability) allows for greater species richness, but species additions do not modulate the effect of environmental variability on ecosystem variability. (B) The species pool increases from one to four species, with the fourth species being most stable (e.g., resource acquisitive to resrouce conservative). In this case, increasing environmental variability allows for greater realized species richness and can temper the effect of environmental variability. In (B), there is limited parameter space under which only three species coexist, which is why a three species community is missing. Parameter values are as in Figure 1C.}
 \end{figure}
 
 \newpage{}
@@ -903,8 +739,217 @@ correlated in time.}
 \begin{figure}[!ht]
   \centering
       \includegraphics[height=4in]{./components/coexistence_stability_infographic_v2.png}
-  \caption{Example of how species additions under increasing environmental variability can buffer ecosystem stability when species coexist via the storage effect. Environmental variability ($\sigma^2_E$) increases linearly with time on the \emph{x}-axis. (A) Time series of species' biomass (colored lines) in a closed community where colonization of new species is prevented and (B) its associated coefficient of variation (Rolling CV; calculated over 100-yr moving window) through time. (C) Time series of species' biomass in an open community where colonization by new species from the regional pool of four species becomes possible as environmental variation increases. The trajectory of total biomass CV in the open community (D) asymptotes at lower variability than in the closed community (B) due to the buffering effect of species richness. Parameter values are as in Figure 2A except for $\alpha$s: $\alpha_1 = 0.5, \alpha_2 = 0.494, \alpha_3 = 0.49, \alpha_4 = 0.483$.}
+  \caption{Example of how species additions under increasing environmental variability can buffer ecosystem stability when species coexist via the storage effect. Environmental variability ($\sigma^2_E$) increases linearly with time on the \emph{x}-axis. (A) Time series of species' biomass (colored lines) in a closed community where colonization of new species is prevented and (B) its associated coefficient of variation (Rolling CV; calculated over 100-yr moving window) through time. (C) Time series of species' biomass in an open community where colonization by new species from the regional pool of four species becomes possible as environmental variation increases. The trajectory of total biomass CV in the open community (D) asymptotes at lower variability than in the closed community (B) due to the buffering effect of species richness. Parameter values are as in Figure 2A except for $\alpha$s: (A-C) $\alpha_1 = 0.5, \alpha_2 = 0.494, \alpha_3 = 0.49, \alpha_4 = 0.483$.}
 \end{figure}
+
+\newpage{}
+
+\setlength{\parindent}{0ex} \singlespacing
+
+\subsection*{REFERENCES}\label{references}
+\addcontentsline{toc}{subsection}{REFERENCES}
+
+\hypertarget{refs}{}
+\hypertarget{ref-Adler2006}{}
+Adler, P.B., HilleRisLambers, J., Kyriakidis, P.C., Guan, Q. \& Levine,
+J.M. (2006). Climate variability has a stabilizing effect on the
+coexistence of prairie grasses. \emph{Proceedings of the National
+Academy of Sciences}, 103, 12793--12798.
+
+\hypertarget{ref-Angert2009}{}
+Angert, A.L., Huxman, T.E., Chesson, P. \& Venable, D.L. (2009).
+Functional tradeoffs determine species coexistence via the storage
+effect. \emph{Proceedings of the National Academy of Sciences of the
+United States of America}, 106, 11641--11645.
+
+\hypertarget{ref-Armstrong1980}{}
+Armstrong, R.A. \& McGehee, R. (1980). Competitive Exclusion. \emph{The
+American Naturalist}, 115, 151--170.
+
+\hypertarget{ref-Brown1997}{}
+Brown, J.H. \& Kodric-Brown, A. (1997). Turnover Rates in Insular
+Biogeography : Effect of Immigration on Extinction. \emph{Ecology}, 58,
+445--449.
+
+\hypertarget{ref-Caceres1997}{}
+Cáceres, C.E. (1997). Temporal variation, dormancy, and coexistence: a
+field test of the storage effect. \emph{Proceedings of the National
+Academy of Sciences}, 94, 9171--9175.
+
+\hypertarget{ref-Chesson2000}{}
+Chesson, P. (2000a). Mechanisms of Maintenance of Species Diversity.
+\emph{Annual Review of Ecology and Systematics}, 31, 343--366.
+
+\hypertarget{ref-Chesson2000a}{}
+Chesson, P. (2000b). General theory of competitive coexistence in
+spatially-varying environments. \emph{Theoretical population biology},
+58, 211--37.
+
+\hypertarget{ref-Chesson2004}{}
+Chesson, P., Gebauer, R.L.E., Schwinning, S., Huntly, N., Wiegand, K.,
+Ernest, M.S.K., et al. (2004). Resource pulses, species interactions,
+and diversity maintenance in arid and semi-arid environments.
+\emph{Oecologia}, 141, 236--253.
+
+\hypertarget{ref-Chesson2001}{}
+Chesson, P., Pacala, S.W. \& Neuhauser, C. (2001). Environmental Niches
+and Ecosystem Functioning. In: \emph{The functional consequences of
+biodiversity: Empirical progress and theoretical extensions} (eds.
+Kinzig, A.P., Pacala, S.W. \& Tilman, D.). Princeton University Press,
+Princeton, pp. 213--245.
+
+\hypertarget{ref-Chesson1994}{}
+Chesson, P.L. (1994). Multispecies Competition in Variable Environments.
+\emph{Theoretical Population Biology}, 45, 227.
+
+\hypertarget{ref-Chesson1981a}{}
+Chesson, P.L. \& Warner, R.R. (1981). Environmental Variability Promotes
+Coexistence in Lottery Competitive Systems. \emph{The American
+Naturalist}, 117, 923--943.
+
+\hypertarget{ref-Cusson2015}{}
+Cusson, M., Crowe, T.P., Araújo, R., Arenas, F., Aspden, R., Bulleri,
+F., et al. (2015). Relationships between biodiversity and the stability
+of marine ecosystems: Comparisons at a European scale using
+meta-analysis. \emph{Journal of Sea Research}, 98, 5--14.
+
+\hypertarget{ref-DeClerck2006}{}
+DeClerck, F.A.J., Barbour, M.G. \& Sawyer, J.O. (2006). Species richness
+and stand stability in conifer forests of the Sierra Nevada.
+\emph{Ecology}, 87, 2787--2799.
+
+\hypertarget{ref-Descamps-Julien2005}{}
+Descamps-Julien, B. \& Gonzalez, A. (2005). Stable coexistence in a
+fluctuating environment: An experimental demonstration. \emph{Ecology},
+86, 2815--2824.
+
+\hypertarget{ref-Eisenhauer2016}{}
+Eisenhauer, N., Barnes, A.D., Cesarz, S., Craven, D., Ferlian, O.,
+Gottschall, F., et al. (2016). Biodiversity-ecosystem function
+experiments reveal the mechanisms underlying the consequences of
+biodiversity change in real world ecosystems. \emph{Journal of
+Vegetation Science}, 27, 1061--1070.
+
+\hypertarget{ref-Elton1958}{}
+Elton, C. (1958). \emph{The Ecology of Invasions by Animals and Plants}.
+University of Chicago Press, Chicago.
+
+\hypertarget{ref-Hautier2014}{}
+Hautier, Y., Seabloom, E.W., Borer, E.T., Adler, P.B., Harpole, W.S.,
+Hillebrand, H., et al. (2014). Eutrophication weakens stabilizing
+effects of diversity in natural grasslands. \emph{Nature}, 508, 521--5.
+
+\hypertarget{ref-Hector2010}{}
+Hector, A., Hautier, Y., Saner, P., L.Wacker, Bagchi, R., Joshi, J., et
+al. (2010). General stabilizing effects of plant diversity on grassland
+productivity through population asynchrony and overyielding.
+\emph{Ecology}, 91, 2213--2220.
+
+\hypertarget{ref-Ives2002b}{}
+Ives, A.R. \& Hughes, J.B. (2002). General relationships between species
+diversity and stability in competitive systems. \emph{The American
+naturalist}, 159, 388--395.
+
+\hypertarget{ref-Jiang2009}{}
+Jiang, L. \& Pu, Z. (2009). Different effects of species diversity on
+temporal stability in single-trophic and multitrophic communities.
+\emph{The American Naturalist}, 174, 651--659.
+
+\hypertarget{ref-Kinzig2001}{}
+Kinzig, A.P., Pacala, S.W. \& Tilman, D. (Eds.). (2001). \emph{The
+functional consequences of biodiversity: Empirical progress and
+theoretical extensions}. Princeton University Press, Princeton.
+
+\hypertarget{ref-Lehman2000}{}
+Lehman, C.L. \& Tilman, D. (2000). Biodiversity, Stability, and
+Productivity in Competitive Communities. \emph{The American Naturalist},
+156, 534--552.
+
+\hypertarget{ref-Leibold2004}{}
+Leibold, M.A., Holyoak, M., Mouquet, N., Amarasekare, P., Chase, J.M.,
+Hoopes, M.F., et al. (2004). The metacommunity concept: A framework for
+multi-scale community ecology.
+
+\hypertarget{ref-Loreau1998}{}
+Loreau, M. (1998). Biodiversity and ecosystem functioning: a mechanistic
+model. \emph{Proceedings of the National Academy of Sciences of the
+United States of America}, 95, 5632--5636.
+
+\hypertarget{ref-Loreau2010}{}
+Loreau, M. (2010). \emph{From Polutations to Ecosystems: Theoretical
+Fondations for a New Ecological Synthesis}.
+
+\hypertarget{ref-Loreau2013}{}
+Loreau, M. \& de Mazancourt, C. (2013). Biodiversity and ecosystem
+stability: A synthesis of underlying mechanisms. \emph{Ecology Letters},
+16, 106--115.
+
+\hypertarget{ref-MacArthur1955}{}
+MacArthur, R. (1955). Fluctuations of Animal Populations and a Measure
+of Community Stability. \emph{Ecology}, 36, 533--536.
+
+\hypertarget{ref-Mailleret2009}{}
+Mailleret, L. \& Lemesle, V. (2009). A note on semi-discrete modelling
+in the life sciences. \emph{Philosophical transactions. Series A,
+Mathematical, physical, and engineering sciences}, 367, 4779--4799.
+
+\hypertarget{ref-Mordecai2016}{}
+Mordecai, E.A., Gross, K. \& Mitchell, C.E. (2016). Within-Host Niche
+Differences and Fitness Trade-offs Promote Coexistence of Plant Viruses.
+\emph{The American Naturalist}, 187, E13--E26.
+
+\hypertarget{ref-Pachepsky2008}{}
+Pachepsky, E., Nisbet, R.M. \& Murdoch, W.W. (2008). Between discrete
+and continuous: Consumer-resource dynamics with synchronized
+reproduction. \emph{Ecology}, 89, 280--288.
+
+\hypertarget{ref-Sasaki2011}{}
+Sasaki, T. \& Lauenroth, W.K. (2011). Dominant species, rather than
+diversity, regulates temporal stability of plant communities.
+\emph{Oecologia}, 166, 761--768.
+
+\hypertarget{ref-Soetaert2010}{}
+Soetaert, K., Petzoldt, T. \& Setzer, R.W. (2010). Package deSolve :
+Solving Initial Value Differential Equations in R. \emph{Journal Of
+Statistical Software}, 33, 1--25.
+
+\hypertarget{ref-Team2013}{}
+Team, R. (2013). R Development Core Team. \emph{R: A Language and
+Environment for Statistical Computing}.
+
+\hypertarget{ref-Tilman1982}{}
+Tilman, D. (1982). \emph{Resource competition and community structure.}
+
+\hypertarget{ref-Tilman2006}{}
+Tilman, D., Reich, P.B. \& Knops, J.M.H. (2006). Biodiversity and
+ecosystem stability in a decade-long grassland experiment.
+\emph{Nature}, 441, 629--632.
+
+\hypertarget{ref-Turnbull2013}{}
+Turnbull, L.A., Levine, J.M., Loreau, M. \& Hector, A. (2013).
+Coexistence, niches and biodiversity effects on ecosystem functioning.
+\emph{Ecology Letters}, 16, 116--127.
+
+\hypertarget{ref-Valone2003}{}
+Valone, T.J. \& Hoffman, C.D. (2003). A mechanistic examination of
+diversity-stability relationships in annual plant communities.
+\emph{Oikos}, 103, 519--527.
+
+\hypertarget{ref-Wang2014}{}
+Wang, S. \& Loreau, M. (2014). Ecosystem stability in space: \(\alpha\),
+\(\beta\) and \(\gamma\) variability. \emph{Ecology Letters}, 17,
+891--901.
+
+\hypertarget{ref-Wardle2016}{}
+Wardle, D.A. (2016). Do experiments exploring plant diversity-ecosystem
+functioning relationships inform how biodiversity loss impacts natural
+ecosystems? \emph{Journal of Vegetation Science}, 27, 646--653.
+
+\hypertarget{ref-Yachi1999}{}
+Yachi, S. \& Loreau, M. (1999). Biodiversity and ecosystem productivity
+in a fluctuating environment: the insurance hypothesis.
+\emph{Proceedings of the National Academy of Sciences of the United
+States of America}, 96, 1463--1468.
 
 
 \end{document}

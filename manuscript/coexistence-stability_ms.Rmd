@@ -10,6 +10,8 @@ header-includes:
   - \usepackage{color, soul}
   - \usepackage[font={footnotesize},labelfont={sf,bf},labelsep=space]{caption}
   - \usepackage{sectsty}
+  - \usepackage{bm,mathrsfs}
+  - \usepackage{mathptmx} 
 bibliography: ~/Dropbox/Bibliography/CoexistStability.bib
 csl: components/ecology_letters.csl
 
@@ -28,6 +30,11 @@ urlcolor: black
 
 \newcommand{\tc}{\textcolor}
 
+\sloppy
+
+\renewcommand{\baselinestretch}{1.25}
+\usepackage[usenames]{color}
+\newcommand{\new}{\textcolor{blue}}
 <!--
 \allsectionsfont{\normalfont\sffamily\bfseries}
 -->
@@ -38,13 +45,13 @@ urlcolor: black
 
 \Large{The relationship between species richness and ecosystem variability is shaped by the mechanism of coexistence}
 
-\vspace{2.5em}
+\bigskip{} \bigskip{}
 
 \renewcommand*{\thefootnote}{\fnsymbol{footnote}}
 
 \normalsize{Andrew T. Tredennick\textsuperscript{1}, Peter B. Adler\textsuperscript{1}, and Frederick R. Adler\textsuperscript{2}}
 
-\vspace{1.5em}
+\bigskip{}
 
 \textit{\small{\textsuperscript{1}Department of Wildland Resources and the Ecology Center, Utah State University, Logan, Utah 84322}} \\
 \textit{\small{\textsuperscript{2}Departments of Biology and Mathematics, University of Utah, Salt Lake City, Utah 84112}} 
