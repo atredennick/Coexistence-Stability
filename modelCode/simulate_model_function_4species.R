@@ -17,10 +17,8 @@
 simulate_model <- function(seasons, days_to_track, Rmu, 
                            Rsd_annual, sigE, rho, 
                            alpha1, alpha2, alpha3, alpha4,
-                           beta1, beta2, beta3, beta4,
                            eta1, eta2, eta3, eta4,
-                           theta1, theta2, theta3, theta4,
-                           nu, r1, r2, r3, r4,
+                           r1, r2, r3, r4,
                            a1, a2, a3, a4,
                            b1, b2, b3, b4,
                            eps1, eps2, eps3, eps4,
@@ -61,25 +59,21 @@ simulate_model <- function(seasons, days_to_track, Rmu,
   ## Discrete model
   update_DNR <- function(t, DNR, gammas,
                          alpha1, alpha2, alpha3, alpha4,
-                         eta1, eta2, eta3, eta4,
-                         beta1, beta2, beta3, beta4,
-                         theta1, theta2, theta3, theta4, nu) {
+                         eta1, eta2, eta3, eta4) {
     with (as.list(DNR),{
       g1    <- gammas[1]
       g2    <- gammas[2]
       g3    <- gammas[3]
       g4    <- gammas[4]
-      D1new <- alpha1*N1 + D1*(1-g1)*(1-eta1)
-      D2new <- alpha2*N2 + D2*(1-g2)*(1-eta2)
-      D3new <- alpha3*N3 + D3*(1-g3)*(1-eta3)
-      D4new <- alpha4*N4 + D4*(1-g4)*(1-eta4)
-      N1new <- beta1*(1-alpha1)*N1 + g1*(D1+(alpha1*N1))*(1-eta1)
-      N2new <- beta2*(1-alpha2)*N2 + g2*(D2+(alpha2*N2))*(1-eta2)
-      N3new <- beta3*(1-alpha3)*N3 + g3*(D3+(alpha3*N3))*(1-eta3)
-      N4new <- beta4*(1-alpha4)*N4 + g4*(D4+(alpha4*N4))*(1-eta4)
-      Rnew  <- theta1*(1-alpha1)*N1 + theta2*(1-alpha2)*N2 + 
-               theta3*(1-alpha3)*N3 + theta4*(1-alpha4)*N4 + 
-               nu*R + Rvector[t]
+      D1new <- (alpha1*N1 + D1)*(1-g1)*(1-eta1)
+      D2new <- (alpha2*N2 + D2)*(1-g2)*(1-eta2)
+      D3new <- (alpha3*N3 + D3)*(1-g3)*(1-eta3)
+      D4new <- (alpha4*N4 + D4)*(1-g4)*(1-eta4)
+      N1new <- g1*(D1+(alpha1*N1))*(1-eta1)
+      N2new <- g2*(D2+(alpha2*N2))*(1-eta2)
+      N3new <- g3*(D3+(alpha3*N3))*(1-eta3)
+      N4new <- g4*(D4+(alpha4*N4))*(1-eta4)
+      Rnew  <- Rvector[t]
       return(c(D1new, D2new, D3new, D4new, N1new, N2new, N3new, N4new, Rnew))
     })
   }
@@ -130,12 +124,7 @@ simulate_model <- function(seasons, days_to_track, Rmu,
     DNR <- update_DNR(season_now, DNR, gVec[season_now,],
                       alpha1 = alpha1, alpha2 = alpha2, 
                       alpha3 = alpha3, alpha4 = alpha4,
-                      eta1 = eta1, eta2 = eta2, eta3 = eta3, eta4 = eta4,
-                      beta1 = beta1, beta2 = beta2, 
-                      beta3 = beta3, beta4 = beta4,
-                      theta1 = theta1, theta2 = theta2, 
-                      theta3 = theta3, theta4 = theta4,
-                      nu=nu)
+                      eta1 = eta1, eta2 = eta2, eta3 = eta3, eta4 = eta4)
     
     names(DNR) <- nmsDNR
     NR         <- DNR[-dormants]  

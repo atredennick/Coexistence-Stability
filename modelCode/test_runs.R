@@ -32,19 +32,10 @@ constant_parameters <- list (
   alpha2 = 0.495,                   # live-to-dormant biomass fraction; spp2
   alpha3 = 0.49,                   # live-to-dormant biomass fraction; spp3
   alpha4 = 0.485,                   # live-to-dormant biomass fraction; spp4
-  beta1 = 0,                       # adult survivorship; spp1 (0 if annual, >0 if perennial)
-  beta2 = 0,                       # adult survivorship; spp2 (0 if annual, >0 if perennial)
-  beta3 = 0,                       # adult survivorship; spp3 (0 if annual, >0 if perennial)
-  beta4 = 0,                       # adult survivorship; spp4 (0 if annual, >0 if perennial)
   eta1 = 0.1,                      # dormant mortality; spp1
   eta2 = 0.1,                      # dormant mortality; spp2
   eta3 = 0.1,                      # dormant mortality; spp3
-  eta4 = 0.1,                      # dormant mortality; spp4
-  theta1 = 0,                      # resource recycling fraction; spp1
-  theta2 = 0,                      # resource recycling fraction; spp2
-  theta3 = 0,                      # resource recycling fraction; spp3
-  theta4 = 0,                      # resource recycling fraction; spp4
-  nu = 0                           # resource carry-over fraction
+  eta4 = 0.1                      # dormant mortality; spp4
 )
 
 # Growth function parameters
