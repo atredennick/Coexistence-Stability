@@ -1,9 +1,9 @@
 ##============================================================================##
 ##                                                                            ##
 ## A. Tredennick, P. Adler, and F. Adler                                      ##             
-## "How Fluctuation-Dependent Coexistence Mechanisms Affect the Temporal      ##
-##  Stability of Ecosystem Function"                                          ##
-##                                                                       2016 ##
+## "The relationship between species richness and ecosystem variability is    ##
+##  shaped by the mechanism of coexistence"                                   ##
+##                                                                       2017 ##
 ##============================================================================##            
 
 ##  These are the core model functions that can be called 
@@ -11,7 +11,7 @@
 
 ##  Author: Andrew Tredennick
 ##  Email:  atredenn@gmail.com
-##  Last update: 6-06-2016
+##  Last update: 2-21-2017
 
 
 simulate_model <- function(seasons, days_to_track, Rmu, 
@@ -65,14 +65,14 @@ simulate_model <- function(seasons, days_to_track, Rmu,
       g2    <- gammas[2]
       g3    <- gammas[3]
       g4    <- gammas[4]
-      D1new <- (alpha1*N1 + D1)*(1-g1)*(1-eta1)
-      D2new <- (alpha2*N2 + D2)*(1-g2)*(1-eta2)
-      D3new <- (alpha3*N3 + D3)*(1-g3)*(1-eta3)
-      D4new <- (alpha4*N4 + D4)*(1-g4)*(1-eta4)
-      N1new <- g1*(D1+(alpha1*N1))*(1-eta1)
-      N2new <- g2*(D2+(alpha2*N2))*(1-eta2)
-      N3new <- g3*(D3+(alpha3*N3))*(1-eta3)
-      N4new <- g4*(D4+(alpha4*N4))*(1-eta4)
+      D1new <- (1-g1)*(alpha1*N1 + D1)*(1-eta1)
+      D2new <- (1-g2)*(alpha2*N2 + D2)*(1-eta2)
+      D3new <- (1-g3)*(alpha3*N3 + D3)*(1-eta3)
+      D4new <- (1-g4)*(alpha4*N4 + D4)*(1-eta4)
+      N1new <- g1*(alpha1*N1 + D1)*(1-eta1)
+      N2new <- g2*(alpha2*N2 + D2)*(1-eta2)
+      N3new <- g3*(alpha3*N3 + D3)*(1-eta3)
+      N4new <- g4*(alpha4*N4 + D4)*(1-eta4)
       Rnew  <- Rvector[t]
       return(c(D1new, D2new, D3new, D4new, N1new, N2new, N3new, N4new, Rnew))
     })
@@ -87,7 +87,7 @@ simulate_model <- function(seasons, days_to_track, Rmu,
   getG <- function(sigE, rho, nTime, num_spp) {
     varcov       <- matrix(rep(rho*sigE,num_spp*2), num_spp, num_spp)
     diag(varcov) <- sigE
-    if(sigE > 0) { varcov <- Matrix::nearPD(varcov)$mat } # coerce matrix to PD 
+    if(sigE > 0) { varcov <- Matrix::nearPD(varcov)$mat } # crank through nearPD to fix rounding errors 
     varcov <- as.matrix(varcov)
     e      <- rmvnorm(n = nTime, mean = rep(0,num_spp), sigma = varcov)
     g      <- exp(e) / (1+exp(e))
