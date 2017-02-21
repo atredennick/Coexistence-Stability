@@ -147,7 +147,7 @@ Such a paradox complicates predictions about how ecosystems will respond to pred
 
 The opposing effects of environmental variability on ecosystem variability might explain the mixed results from \new{observational} studies on the diversity-\new{ecosystem variability} relationship.
 Observational tests of the diversity-\new{ecosystem variability} relationship, which require sampling across natural diversity gradients, have yielded negative [@Hautier2014], neutral [@Valone2003; @Cusson2015], and positive [@Sasaki2011] relationships.
-In a meta-analysis of diversity-\new{ecosystem variability} relationships based on observational studies in terrestrial ecosystems, @Jiang2009 found no significant evidence for an effect of species richness on ecosystem variability, perhaps because environmental variability varies across natural diversity gradients, affecting both richness and ecosystem variability.
+In a meta-analysis of diversity-\new{ecosystem variability} relationships @Jiang2009 found no significant evidence for an effect of species richness on ecosystem variability when restricting data to observational studies in terrestrial ecosystems, perhaps because environmental variability varies across natural diversity gradients, affecting both richness and ecosystem variability.
 The idiosyncratic results of these observational studies contrast with the consistent conclusions from \new{experimental and theoretical work that ignore, or control, the} feedbacks between variability and richness.
 
 The gap between theoretical expectations and empirical results of diversity-\new{ecosystem variability} relationships might reflect the divergence of theory developed to explain species coexistence and theory developed to explain diversity and ecosystem variability.
@@ -222,7 +222,7 @@ Common species will experience greater than average competition (*C*) in good en
 However, rare species can escape intraspecific competition and have the potential to increase rapidly in a good *E* year.
 *EC* covariance emerges in our model because dormant-to-live transition rates ($\gamma$) are species-specific and vary through time.
 In a high $\gamma$ year for a common species, resource uptake will be above average, while in a high $\gamma$ year for a rare species, resource uptake will be below average, as long as $\gamma$s are not perfectly correlated between species.
-\new{In other words, resource uptake is above average in a year when an abundant species experiences high germination rates because combined population size will then be above average, but relatively small in a year when a rare species experiences high germination rates because combined population size will be below average.}
+\new{In other words, resource uptake is above average in a year when an abundant species experiences high germination rates because combined population size will then be above average, but resource uptake will be below average in a year when a rare species experiences high germination rates because combined population size will be below average.}
 Subadditive population growth buffers populations against large population decreases in unfavorable years. 
 It is included in our model through a dormant stage with very low death rates, which limits large population declines in bad *E* years.
 
