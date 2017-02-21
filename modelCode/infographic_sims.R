@@ -12,10 +12,8 @@ library('mvtnorm')
 simulate_model <- function(seasons, days_to_track, Rmu, 
                            Rsd_annual, sigE, rho, 
                            alpha1, alpha2, alpha3, alpha4,
-                           beta1, beta2, beta3, beta4,
                            eta1, eta2, eta3, eta4,
-                           theta1, theta2, theta3, theta4,
-                           nu, r1, r2, r3, r4,
+                           r1, r2, r3, r4,
                            a1, a2, a3, a4,
                            b1, b2, b3, b4,
                            eps1, eps2, eps3, eps4,
@@ -56,23 +54,21 @@ simulate_model <- function(seasons, days_to_track, Rmu,
   ## Discrete model
   update_DNR <- function(t, DNR, gammas,
                          alpha1, alpha2, alpha3, alpha4,
-                         eta1, eta2, eta3, eta4,
-                         beta1, beta2, beta3, beta4,
-                         theta1, theta2, theta3, theta4, nu) {
+                         eta1, eta2, eta3, eta4) {
     with (as.list(DNR),{
-      g1 <- gammas[1]
-      g2 <- gammas[2]
-      g3 <- gammas[3]
-      g4 <- gammas[4]
-      D1new <- alpha1*N1 + D1*(1-g1)*(1-eta1)
-      D2new <- alpha2*N2 + D2*(1-g2)*(1-eta2)
-      D3new <- alpha3*N3 + D3*(1-g3)*(1-eta3)
-      D4new <- alpha4*N4 + D4*(1-g4)*(1-eta4)
-      N1new <- beta1*(1-alpha1)*N1 + g1*(D1+(alpha1*N1))*(1-eta1)
-      N2new <- beta2*(1-alpha2)*N2 + g2*(D2+(alpha2*N2))*(1-eta2)
-      N3new <- beta3*(1-alpha3)*N3 + g3*(D3+(alpha3*N3))*(1-eta3)
-      N4new <- beta4*(1-alpha4)*N4 + g4*(D4+(alpha4*N4))*(1-eta4)
-      Rnew <- theta1*(1-alpha1)*N1 + theta2*(1-alpha2)*N2 + theta3*(1-alpha3)*N3 + theta4*(1-alpha4)*N4 + nu*R + Rvector[t]
+      g1    <- gammas[1]
+      g2    <- gammas[2]
+      g3    <- gammas[3]
+      g4    <- gammas[4]
+      D1new <- (1-g1)*(alpha1*N1 + D1)*(1-eta1)
+      D2new <- (1-g2)*(alpha2*N2 + D2)*(1-eta2)
+      D3new <- (1-g3)*(alpha3*N3 + D3)*(1-eta3)
+      D4new <- (1-g4)*(alpha4*N4 + D4)*(1-eta4)
+      N1new <- g1*(alpha1*N1 + D1)*(1-eta1)
+      N2new <- g2*(alpha2*N2 + D2)*(1-eta2)
+      N3new <- g3*(alpha3*N3 + D3)*(1-eta3)
+      N4new <- g4*(alpha4*N4 + D4)*(1-eta4)
+      Rnew  <- Rvector[t]
       return(c(D1new, D2new, D3new, D4new, N1new, N2new, N3new, N4new, Rnew))
     })
   }
@@ -113,10 +109,7 @@ simulate_model <- function(seasons, days_to_track, Rmu,
     names(DNR) <- nmsDNR
     DNR <- update_DNR(season_now, DNR, gVec[season_now,],
                       alpha1 = alpha1, alpha2 = alpha2, alpha3 = alpha3, alpha4 = alpha4,
-                      eta1 = eta1, eta2 = eta2, eta3 = eta3, eta4 = eta4,
-                      beta1 = beta1, beta2 = beta2, beta3 = beta3, beta4 = beta4,
-                      theta1 = theta1, theta2 = theta2, theta3 = theta3, theta4 = theta4,
-                      nu=nu)
+                      eta1 = eta1, eta2 = eta2, eta3 = eta3, eta4 = eta4)
     names(DNR) <- nmsDNR
     NR <- DNR[-dormants]
     names(NR) <- nmsNR
@@ -170,19 +163,10 @@ constant_parameters <- list (
   alpha2 = 0.494,                   # live-to-dormant biomass fraction; spp2
   alpha3 = 0.49,                   # live-to-dormant biomass fraction; spp3
   alpha4 = 0.483,                   # live-to-dormant biomass fraction; spp4
-  beta1 = 0,                       # adult survivorship; spp1 (0 if annual, >0 if perennial)
-  beta2 = 0,                       # adult survivorship; spp2 (0 if annual, >0 if perennial)
-  beta3 = 0,                       # adult survivorship; spp3 (0 if annual, >0 if perennial)
-  beta4 = 0,                       # adult survivorship; spp4 (0 if annual, >0 if perennial)
   eta1 = 0.1,                      # dormant mortality; spp1
   eta2 = 0.1,                      # dormant mortality; spp2
   eta3 = 0.1,                      # dormant mortality; spp3
-  eta4 = 0.1,                      # dormant mortality; spp4
-  theta1 = 0,                      # resource recycling fraction; spp1
-  theta2 = 0,                      # resource recycling fraction; spp2
-  theta3 = 0,                      # resource recycling fraction; spp3
-  theta4 = 0,                      # resource recycling fraction; spp4
-  nu = 0                           # resource carry-over fraction
+  eta4 = 0.1                      # dormant mortality; spp4
 )
 
 # Growth function parameters
@@ -202,7 +186,8 @@ grow_parameters <- list (
 # Make on long vector of named parameters
 constant_param_vec <- c(unlist(constant_parameters), unlist(grow_parameters))
 parameters <- c(constant_param_vec, DNR)
-names(parameters)[39:47] <- colnames(DNR)
+dnr_slots <- which(names(parameters) == "")
+names(parameters)[dnr_slots] <- colnames(DNR)
 outs <- do.call(simulate_model,c(list(gVec=gVec),parameters)) 
 
 
@@ -247,26 +232,26 @@ ggplot(rolling_cv, aes(x=iteration, y=cv))+
         axis.title = element_text(size=16))+
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ggsave(paste0("../manuscript/components/open_community_infographic_cv.png"), width = 3, height = 3, units = "in", dpi = 72)
-  
+
 # mycols <- c("#890584","#b1cb3d","#12205b","#0085dc", rgb(52, 0, 66, maxColorValue = 255))
 mycols <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 mycols <- c("#E69F00", "#56B4E9", "#009E73", "#CC79A7", NA)
 # mycols <- c("orange","blue","red", "green", "grey25")
 ggplot(dosim_long, aes(x=iteration, y=value, color=variable))+
-      geom_line(size=0.35)+
+  geom_line(size=0.35)+
   scale_color_manual(values=mycols)+
-      # scale_color_viridis(discrete=TRUE, direction = -1, end = 0.9, name="")+
+  # scale_color_viridis(discrete=TRUE, direction = -1, end = 0.9, name="")+
   # scale_alpha_manual(values = c(0.7,0.7,0.7,0.7,1))+
-      xlab("Time")+
-      ylab("Biomass")+
+  xlab("Time")+
+  ylab("Biomass")+
   scale_y_continuous(limits=c(0,50))+
-      theme(panel.grid.major = element_line(colour = "grey", linetype = "dotted"),
-            panel.grid.minor = element_line(colour = "white", linetype = "dotted"),
-            panel.background = element_rect("white"),
-            axis.line.x = element_line("white"),
-            axis.line.y = element_line("white"),
-            axis.title = element_text(size=16))+
-    guides(color=FALSE, alpha=FALSE)
+  theme(panel.grid.major = element_line(colour = "grey", linetype = "dotted"),
+        panel.grid.minor = element_line(colour = "white", linetype = "dotted"),
+        panel.background = element_rect("white"),
+        axis.line.x = element_line("white"),
+        axis.line.y = element_line("white"),
+        axis.title = element_text(size=16))+
+  guides(color=FALSE, alpha=FALSE)
 ggsave(paste0("../manuscript/components/open_community_infographic.png"), width = 8, height = 3, units = "in", dpi = 72)
 
 
@@ -277,7 +262,8 @@ ggsave(paste0("../manuscript/components/open_community_infographic.png"), width 
 ####
 DNR <- rbind(c(D=c(1,0,0,0),N=c(1,0,0,0),R=20)) # closed community
 parameters <- c(constant_param_vec, DNR)
-names(parameters)[39:47] <- colnames(DNR)
+dnr_slots <- which(names(parameters) == "")
+names(parameters)[dnr_slots] <- colnames(DNR)
 outs_close <- do.call(simulate_model,c(list(gVec=gVec),parameters)) 
 dosim_close <- as.data.frame(outs_close[101:3000,5:8])
 colnames(dosim_close) <- c("Species 1","Species 2","Species 3","Species 4")
@@ -304,7 +290,7 @@ ggplot(dosim_long_close, aes(x=iteration, y=value, color=variable))+
 ggsave(paste0("../manuscript/components/closed_community_infographic.png"), width = 8, height = 3, units = "in", dpi = 72)
 
 rolling_cv_close <- data.frame(cv = rollapply(dosim_close$`Total Biomass`, width=100, FUN=mycv, fill=NA),
-                         iteration = 1:2900)
+                               iteration = 1:2900)
 
 ggplot(rolling_cv_close, aes(x=iteration, y=cv))+
   geom_line()+
@@ -387,6 +373,3 @@ ggplot(sig_df, aes(x=years, y=variance))+
         axis.title = element_text(size=16))+
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ggsave(paste0("../manuscript/components/infographic_variance.png"), width = 8, height = 2, units = "in", dpi = 72)
-
-
-
