@@ -91,17 +91,18 @@ for(i in 1:length(rho0_storage_effect)){
   tmp_out <- data.frame(rho=0,
                         sigE=sig_e_vec[i],
                         cv=tmp_cv,
-                        spprich=tmp_spprich)
+                        spprich=tmp_spprich,
+                        sdev=sd(tmp_totbiomass),
+                        avg=mean(tmp_totbiomass))
   
   save_multispp_rho0 <- rbind(save_multispp_rho0, tmp_out)
 }
-
-
-
+write.csv(save_multispp_rho0, "../derivedSimulationStats/storage_effect_regional_div-stab.csv")
 
 
 ggplot(save_multispp_rho0, aes(x=spprich, y=cv))+
-  geom_point(shape=21, color="grey40", fill=mycols[1], size=2)+
+  # geom_point(shape=21, color="grey40", fill=mycols[1], size=2)+
+  geom_jitter(shape=21, color="grey40", fill=mycols[1], size=2, width=0.05)+
   stat_smooth(method="lm", color=mycols[1], se=FALSE, size=0.6)+
   xlab("Number of Species")+
   ylab("Variability of Total\nCommunity Biomass (CV)")+
@@ -110,16 +111,6 @@ ggplot(save_multispp_rho0, aes(x=spprich, y=cv))+
 fig.width <- 133/2
 ggsave(paste0(path2figs,"diversity_stability_relationship_storage_effect.png"), width = fig.width, height = 60, units = "mm", dpi = 600)
 
-# ggplot(save_multispp_rho0, aes(x=sigE, y=spprich))+
-#   geom_point(shape=1, col=mycols[1])+
-#   ylab("S")+
-#   xlab(expression(sigma[E]^2))+
-#   my_theme+
-#   theme(axis.title.y = element_text(angle=0, face="italic"),
-#         axis.title.x = element_text(face="italic"),
-#         panel.border = element_rect(fill=NA),
-#         plot.background = element_rect(fill = "#EFEFEF"))
-# ggsave(paste0(path2figs,"diversity_envvar_relationship_storage_effect.png"), width = 60, height = 35, units = "mm", dpi = 600)
 
 
 ####
@@ -146,13 +137,18 @@ for(i in 1:length(multispp_rln)){
   
   tmp_out <- data.frame(rsd=rsd_vec[i,"Rsd_annual"],
                         cv=tmp_cv,
-                        spprich=tmp_spprich)
+                        spprich=tmp_spprich,
+                        sdev=sd(tmp_totbiomass),
+                        avg=mean(tmp_totbiomass))
   
   save_multispp <- rbind(save_multispp, tmp_out)
 }
 
+write.csv(save_multispp, "../derivedSimulationStats/relative_nonlinearity_regional_div-stab.csv")
+
 ggplot(subset(save_multispp, spprich>0), aes(x=spprich, y=cv))+
-  geom_point(shape=21, color="grey40", fill=mycols[2], size=2)+
+  # geom_point(shape=21, color="grey40", fill=mycols[2], size=2)+
+  geom_jitter(shape=21, color="grey40", fill=mycols[2], size=2, width=0.05)+
   stat_smooth(method="lm", color=mycols[2], se=FALSE, size=0.6)+
   xlab("Number of Species")+
   ylab("Variability of Total\nCommunity Biomass (CV)")+
@@ -161,16 +157,6 @@ ggplot(subset(save_multispp, spprich>0), aes(x=spprich, y=cv))+
 fig.width <- 133/2
 ggsave(paste0(path2figs,"diversity_stability_relationship_relnonlin.png"), width = fig.width, height = 60, units = "mm", dpi = 600)
 
-# ggplot(subset(save_multispp, spprich>0), aes(x=rsd, y=spprich))+
-#   geom_point(shape=1, col=mycols[2])+
-#   ylab("S")+
-#   xlab(expression(sigma[R]^phantom(0)))+
-#   my_theme+
-#   theme(axis.title.y = element_text(angle=0, face="italic"),
-#         axis.title.x = element_text(face="italic"),
-#         panel.border = element_rect(fill=NA),
-#         plot.background = element_rect(fill = "#EFEFEF"))
-# ggsave(paste0(path2figs,"diversity_envvar_relationship_relnonlin.png"), width = 60, height = 35, units = "mm", dpi = 600)
 
 
 ####
@@ -190,13 +176,18 @@ for(i in 1:length(sppco_strg)){
   tmp_spprich <- length(which(tmp_sppavg > 1))
   
   tmp_out <- data.frame(cv=tmp_cv,
-                        spprich=tmp_spprich)
+                        spprich=tmp_spprich,
+                        sdev=sd(tmp_totbiomass),
+                        avg=mean(tmp_totbiomass))
   
   save_multispp <- rbind(save_multispp, tmp_out)
 }
 
+write.csv(save_multispp, "../derivedSimulationStats/storage_effect_local_div-stab.csv")
+
 ggplot(save_multispp, aes(x=spprich, y=cv))+
-  geom_point(shape=21, color="grey40", fill=mycols[1], size=2)+
+  # geom_point(shape=21, color="grey40", fill=mycols[1], size=2)+
+  geom_jitter(shape=21, color="grey40", fill=mycols[1], size=2, width=0.05)+
   stat_smooth(method="lm", color=mycols[1], se=FALSE, size=0.6)+
   xlab("Number of Species")+
   ylab("Variability of Total\nCommunity Biomass (CV)")+
@@ -218,14 +209,19 @@ for(i in 1:length(sppco_relnonlin)){
   tmp_spprich <- length(which(tmp_sppavg > 1))
   
   tmp_out <- data.frame(cv=tmp_cv,
-                        spprich=tmp_spprich)
+                        spprich=tmp_spprich,
+                        sdev=sd(tmp_totbiomass),
+                        avg=mean(tmp_totbiomass))
   
   save_multispp <- rbind(save_multispp, tmp_out)
 }
 
+write.csv(save_multispp, "../derivedSimulationStats/relative_nonlinearity_local_div-stab.csv")
+
 save_multispp <- subset(save_multispp, spprich > 0)
 ggplot(save_multispp, aes(x=spprich, y=cv))+
-  geom_point(shape=21, color="grey40", fill=mycols[2], size=2)+
+  # geom_point(shape=21, color="grey40", fill=mycols[2], size=2)+
+  geom_jitter(shape=21, color="grey40", fill=mycols[2], size=2, width=0.05)+
   stat_smooth(method="lm", color=mycols[2], se=FALSE, size=0.6)+
   xlab("Number of Species")+
   ylab("Variability of Total\nCommunity Biomass (CV)")+

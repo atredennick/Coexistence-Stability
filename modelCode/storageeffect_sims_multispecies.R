@@ -4,7 +4,7 @@
 ## "The relationship between species richness and ecosystem variability is    ##
 ##  shaped by the mechanism of coexistence"                                   ##
 ##                                                                       2017 ##
-##============================================================================#
+##============================================================================##
 
 # Last update: 2-21-2017
 

@@ -41,7 +41,7 @@ constant_parameters <- list (
   seasons = 5000,                  # number of seasons to simulate
   days_to_track = 100,             # number of days to simulate in odSolve
   Rmu = 3,                         # mean resource pulse (on log scale)
-  Rsd_annual = 1.2,                # std dev of resource pulses (on log scale)
+  Rsd_annual = 1.1,                # std dev of resource pulses (on log scale)
   sigE = 0,                        # environmental cue variance
   rho = 1,                         # environmental cue correlation between species
   alpha1 = 0.50,                   # live-to-dormant biomass fraction; spp1

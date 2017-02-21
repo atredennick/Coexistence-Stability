@@ -8,7 +8,7 @@ header-includes:
   - \doublespacing
   - \usepackage{rotating}
   - \usepackage{color, soul}
-  - \usepackage[font={footnotesize},labelfont={sf,bf},labelsep=space]{caption}
+  - \usepackage[font={normalsize},labelfont={bf},labelsep=quad]{caption}
   - \usepackage{sectsty}
   - \usepackage{bm,mathrsfs}
   - \usepackage{mathptmx} 
@@ -29,9 +29,6 @@ urlcolor: black
 \renewcommand\linenumberfont{\normalfont\tiny\sffamily\color{gray}}
 \definecolor{blue}{rgb}{0,0,0.7} 
 \newcommand{\new}{\textcolor{blue}}
-<!--
-\allsectionsfont{\normalfont\sffamily\bfseries}
--->
 
 \begin{singlespace}
 
@@ -64,9 +61,11 @@ Last compile: \today
 
 \noindent \textbf{Article Type}: Letter
 
-\noindent \textbf{Number of Words}: 3,699
+\noindent \textbf{Number of Words in Abstract}: \textcolor{red}{UPDATE}
 
-\noindent \textbf{Number of References}: 40
+\noindent \textbf{Number of Words in Main Text}: \textcolor{red}{UPDATE}
+
+\noindent \textbf{Number of References}: \textcolor{red}{UPDATE}
 
 \noindent \textbf{Number of Tables and Figures}: 1 table, 5 figures
 
@@ -370,7 +369,7 @@ Our results show that, when coexistence is fluctuation-dependent, regional biodi
 
 ACKNOWLEDGMENTS
 ---------------
-The National Science Foundation provided funding for this work through a Postdoctoral Research Fellowship in Biology to ATT (DBI-1400370) and a CAREER award to PBA (DEB-1054040). We thank four anonymous reviewers for providing detailed and thoughtful comments that greatly improved the paper.
+The National Science Foundation provided funding for this work through a Postdoctoral Research Fellowship in Biology to ATT (DBI-1400370) and a CAREER award to PBA (DEB-1054040). \new{We thank four anonymous reviewers for providing detailed and thoughtful comments that greatly improved the paper.}
 
 \newpage{}
 
@@ -378,7 +377,6 @@ TABLE
 -----
 
 \begin{table}[!htbp]
-\footnotesize
 \caption{Default values of model parameters and their descriptions. Parameters that vary depending on the mode and strength of species coexistence or depending on species competitive hierarchies are labeled as ``variable'' in parentheses. The dormant-to-live biomass transition fraction ($\gamma$) is a function of other parameters, so has no default value.}
 \begin{tabular}{l l l}
 \hline
@@ -389,7 +387,7 @@ $a$ & Hill function rate parameter & 2 (variable) \\
 $b$ & Hill function curvature parameter & 2.5 (variable) \\
 $\epsilon$ & resource-to-biomass conversion efficiency & 0.5 \\
 $\alpha$ & allocation fraction of live biomass to dormant biomass & 0.5 (variable) \\
-$\gamma$ & dormant-to-live biomass transition fraction & -- \\
+$\gamma$ & dormant-to-live biomass transition fraction & n.a. \\
 $\rho$ & correlation of species' response to the environment & 0 (variable) \\
 $\sigma_E$ & variance of the environmental cue & 2 (variable) \\
 $\eta$ & dormant biomass mortality rate & 0.1 \\
@@ -411,22 +409,7 @@ library(gridExtra)
 library(viridis)
 library(RColorBrewer)
 
-# mytheme <- theme_bw()+
-#   theme(panel.grid.major.x = element_blank(), 
-#         panel.grid.minor.x = element_blank(),
-#         panel.grid.minor.y = element_blank(),
-#         panel.grid.major.y = element_blank(),
-#         panel.background   = element_rect(fill = "white"),
-#         axis.text          = element_text(size=6, color="grey35", family = "Arial Narrow"),
-#         axis.title         = element_text(size=8, family = "Arial Narrow", face = "bold"),
-#         panel.border       = element_blank(),
-#         axis.line.x        = element_line(color="black"),
-#         axis.line.y        = element_line(color="black"),
-#         strip.background   = element_blank(),
-#         strip.text         = element_text(size=8, color="grey35", family = "Arial Narrow"),
-#         legend.title       = element_text(size=8, family = "Arial Narrow"),
-#         legend.text        = element_text(size=6, color="grey35", family = "Arial Narrow"),
-#         legend.key.size    = unit(0.3, "cm"))
+set.seed(12345)
 
 mytheme <- theme_few()+
   theme(axis.text          = element_text(size=6, color="grey35"),
@@ -436,17 +419,7 @@ mytheme <- theme_few()+
         legend.text        = element_text(size=6, color="grey35"),
         legend.key.size    = unit(0.3, "cm"))
 
-
-# mycols <- c("#9D6188","#97A861")
-# mycols <- c("black", "red")
-# mycols <- c("grey35", "steelblue")
-# mycols <- viridis(2, end = 0.6)
 mycols <- brewer.pal(3, "Set2")
-
-# mytheme <- theme(axis.text=element_text(size=6),
-#                  axis.title=element_text(size=8),
-#                  legend.text=element_text(size=6),
-#                  legend.key.size=unit(0.3, "cm"))
 
  ##  Resource uptake function (Hill function)
   uptake_R <- function(r, R, alpha, beta){
@@ -462,12 +435,12 @@ mycols <- brewer.pal(3, "Set2")
 
 ## STORAGE EFFECT PLOTS
 parms <- list(
-  r = c(5,5),         # max growth rate for each species
-  alpha = c(5,5),     # rate parameter for Hill function 
-  beta = c(20,20),    # shape parameter for Hill function
-  mN = c(0.5,0.5),    # live biomass loss (mortality) rates 
-  mD = c(0.01, 0.01), # dormant biomass loss (mortality) rates
-  a = c(0.5,0.5)      # allocation fraction of live biomass to seed bank
+  r     = c(5,5),         # max growth rate for each species
+  alpha = c(5,5),         # rate parameter for Hill function 
+  beta  = c(20,20),       # shape parameter for Hill function
+  mN    = c(0.5,0.5),     # live biomass loss (mortality) rates 
+  mD    = c(0.01, 0.01),  # dormant biomass loss (mortality) rates
+  a     = c(0.5,0.5)      # allocation fraction of live biomass to seed bank
 )
 R <- seq(0,100,1)
 out_r <- matrix(ncol=2, nrow=length(R))
@@ -496,7 +469,7 @@ strg_uptake_plot <- ggplot()+
         legend.key = element_blank())
 
 sigE <- 2   # environmental cue variability
-rho <- 0    # environmental cue correlation between species
+rho  <- 0   # environmental cue correlation between species
 gVec <- getG(sigE = sigE, rho = rho, nTime = 20)
 germ_rate <- data.frame(species=rep(c(1:2),each=20),
                         timestep=rep(c(1:20), times=2),
@@ -514,12 +487,12 @@ strg_germ_plot <- ggplot()+
 
 ## RELATIVE NONLINEARITY PLOTS
 parms <- list(
-  r = c(5,1),          # max growth rate for each species
-  alpha = c(5,2),      # rate parameter for Hill function 
-  beta = c(20,2.5),    # shape parameter for Hill function
-  mN = c(0.5,0.5),     # live biomass loss (mortality) rates 
-  mD = c(0.01, 0.01),  # dormant biomass loss (mortality) rates
-  a = c(0.5,0.5)       # allocation fraction of live biomass to seed bank
+  r     = c(5,1),         # max growth rate for each species
+  alpha = c(5,2),         # rate parameter for Hill function 
+  beta  = c(20,2.5),      # shape parameter for Hill function
+  mN    = c(0.5,0.5),     # live biomass loss (mortality) rates 
+  mD    = c(0.01, 0.01),  # dormant biomass loss (mortality) rates
+  a     = c(0.5,0.5)      # allocation fraction of live biomass to seed bank
 )
 R <- seq(0,100,1)
 out_r <- matrix(ncol=2, nrow=length(R))
@@ -542,9 +515,9 @@ reln_uptake_plot <- ggplot()+
   geom_text(aes(x=1,y=5,label="C"), size=2.5)+
   mytheme
 
-sigE <- 2   # environmental cue variability
-rho <- 1    # environmental cue correlation between species
-gVec <- getG(sigE = sigE, rho = rho, nTime = 20)
+sigE      <- 2   # environmental cue variability
+rho       <- 1   # environmental cue correlation between species
+gVec      <- getG(sigE = sigE, rho = rho, nTime = 20)
 germ_rate <- data.frame(species=rep(c(1:2),each=20),
                         timestep=rep(c(1:20), times=2),
                         germrate=c(gVec[,1], gVec[,2]))
@@ -571,7 +544,7 @@ g_strg <- grid.arrange(strg_uptake_plot, strg_germ_plot,
 \begin{figure}[!ht]
   \centering
       \includegraphics[height=5in]{/Users/atredenn/Google_Drive/coexistence-stability_submission/figures/coex_stability_figure1.png}
-  \caption{Variability of total community biomass as a function of species richness when coexistence is maintained by the storage effect (A,B) or relative nonlinearity (C,D). Left panels show results from simulations where environmental or resource variance determine the number species that coexist in a community. Right panels show results from simulations where environmental or resource variance is fixed at a level that allows coexistence of all four species, but species are removed to manipulate diversity. The left-hand panels represent regional diversity-variability relationships across natural diversity gradients, whereas the right-hand panels represent local diversity-variability relationships. Parameter values, where species are denoted by numeric subscripts: (A) $r_1 = r_2 = r_3 = r_4 = 0.2$, $a_1 = a_2 = a_3 = a_4 = 2$, $b_1 = b_2 = b_3 = b_4 = 2.5$, $\alpha_1 = 0.5, \alpha_2 = 0.49, \alpha_3 = 0.48, \alpha_4 = 0.47$, $\rho_1 = \rho_2 = \rho_3 = \rho_4 = 0$, $\sigma_E =$ variable; (B) $r_1 = r_2 = r_3 = r_4 = 0.2$, $a_1 = a_2 = a_3 = a_4 = 2$, $b_1 = b_2 = b_3 = b_4 = 2.5$, $\alpha_1 = 0.5, \alpha_2 = 0.49, \alpha_3 = 0.48, \alpha_4 = 0.47$, $\rho_1 = \rho_2 = \rho_3 = \rho_4 = -1/3$, $\sigma_E = 4$; (C) $r_1 = 0.2, r_2 = 1, r_3 = 2, r_4 = 5$, $a_1 = 2, a_2 = 5, a_3 = 10, a_4 = 25$, $b_1 = 2.5, b_2 = 20, b_3 = 30, b_4 = 45$, $\alpha_1 = \alpha_2 = \alpha_3 = \alpha_4 = 0.5$, $\rho_1 = \rho_2 = \rho_3 = \rho_4 = 1$, $\sigma(R^+) =$ variable; (D) $r_1 = 0.2, r_2 = 1, r_3 = 2, r_4 = 5$, $a_1 = 2, a_2 = 5, a_3 = 10, a_4 = 25$, $b_1 = 2.5, b_2 = 20, b_3 = 30, b_4 = 45$, $\alpha_1 = \alpha_2 = \alpha_3 = \alpha_4 = 0.5$, $\rho_1 = \rho_2 = \rho_3 = \rho_4 = 1$, $\sigma(R^+) =$ 1.2.}
+  \caption{Variability of total community biomass as a function of species richness when coexistence is maintained by the storage effect (A,B) or relative nonlinearity (C,D). Left panels show results from simulations where environmental or resource variance determine the number species that coexist in a community. Right panels show results from simulations where environmental or resource variance is fixed at a level that allows coexistence of all four species, but species are removed to manipulate diversity. The left-hand panels represent regional diversity-variability relationships across natural diversity gradients, whereas the right-hand panels represent local diversity-variability relationships. Points are jittered within discrete richness values for visual clarity. Parameter values, where species are denoted by numeric subscripts: (A) $r_1 = r_2 = r_3 = r_4 = 0.2$, $a_1 = a_2 = a_3 = a_4 = 2$, $b_1 = b_2 = b_3 = b_4 = 2.5$, $\alpha_1 = 0.5, \alpha_2 = 0.49, \alpha_3 = 0.48, \alpha_4 = 0.47$, $\rho_1 = \rho_2 = \rho_3 = \rho_4 = 0$, $\sigma_E =$ variable; (B) $r_1 = r_2 = r_3 = r_4 = 0.2$, $a_1 = a_2 = a_3 = a_4 = 2$, $b_1 = b_2 = b_3 = b_4 = 2.5$, $\alpha_1 = 0.5, \alpha_2 = 0.49, \alpha_3 = 0.48, \alpha_4 = 0.47$, $\rho_1 = \rho_2 = \rho_3 = \rho_4 = -1/3$, $\sigma_E = 4$; (C) $r_1 = 0.2, r_2 = 1, r_3 = 2, r_4 = 5$, $a_1 = 2, a_2 = 5, a_3 = 10, a_4 = 25$, $b_1 = 2.5, b_2 = 20, b_3 = 30, b_4 = 45$, $\alpha_1 = \alpha_2 = \alpha_3 = \alpha_4 = 0.5$, $\rho_1 = \rho_2 = \rho_3 = \rho_4 = 1$, $\sigma(R^+) =$ variable; (D) $r_1 = 0.2, r_2 = 1, r_3 = 2, r_4 = 5$, $a_1 = 2, a_2 = 5, a_3 = 10, a_4 = 25$, $b_1 = 2.5, b_2 = 20, b_3 = 30, b_4 = 45$, $\alpha_1 = \alpha_2 = \alpha_3 = \alpha_4 = 0.5$, $\rho_1 = \rho_2 = \rho_3 = \rho_4 = 1$, $\sigma(R^+) =$ 1.1.}
 \end{figure}
 
 \newpage{}
@@ -599,9 +572,6 @@ g_strg <- grid.arrange(strg_uptake_plot, strg_germ_plot,
 \end{figure}
 
 \newpage{}
-
-
-
 
 \setlength{\parindent}{0ex}
 \singlespacing
