@@ -105,13 +105,6 @@ opts_chunk$set(dev='pdf', dev.args=c(version="1.3"))
 
 ```
 
-<!--
-ALTERNATIVE TITLES:
--FLUCTUATION-DEPENDENT COEXISTENCE AND THE DIVERSITY-STABILITY RELATIONSHIP
--THE DIVERSITY-STABILITY RELATIONSHIP IS SHAPED BY THE MECHANISM OF COEXISTENCE
--How fluctuation-dependent species coexistence affects the diversity-stability relationship
--->
-
 \newpage{}
 
 \begin{abstract}
@@ -132,7 +125,7 @@ Our work provides a general explanation for variation in observed diversity-\new
 INTRODUCTION
 ------------
 @MacArthur1955, @Elton1958, and even Darwin [@Turnbull2013] recognized the potential for compensatory dynamics among species to stabilize ecosystem functioning in fluctuating environments. 
-This idea underlies the "insurance hypothesis" [@Yachi1999], which suggests \new{the variation of ecosystem biomass through time (ecosytem variability)} decreases with diversity because species respond dissimilarly to environmental variation, broadening the range of conditions under which the community maintains function [@Loreau2010].
+This idea underlies the "insurance hypothesis" [@Yachi1999], which suggests \new{the temporal coefficient of variability of ecosystem biomass (\emph{ecosytem variability})} decreases with diversity because species respond dissimilarly to environmental variation, broadening the range of conditions under which the community maintains function [@Loreau2010].
 A variety of theoretical models all predict a negative relationship between species richness and ecosystem variability [@Lehman2000; @Ives2002b; @Loreau2013], and experimental tests tend to support such a prediction [@Tilman2006; @Hector2010].
 
 However, the ability of biodiversity-ecosystem functioning (BEF) experiments to accurately represent real-world dynamics is debated [@Wardle2016; @Eisenhauer2016].
@@ -141,6 +134,12 @@ Theoretical work on diversity-\new{ecosystem variability} relationships typicall
 
 Fluctuating environmental conditions are an important ingredient for stable species coexistence, both in theoretical models [@Chesson2000; @Chesson2004] and in natural communities [@Caceres1997; @Descamps-Julien2005; @Adler2006; @Angert2009].
 Such "fluctuation-dependent" coexistence \new{emerges most easily when} species have unique environmental responses and that environmental conditions vary so that each species in a community experiences favorable and unfavorable conditions, which prevents competitive exclusion [@Chesson2000].
+\new{Chesson (2000) described the two fluctuation-dependent mechanisms: the storage effect and relative nonlinearity.
+In brief, species coexistence via the storage effect occurs when species have buffered population growth to avoid large population declines in ``bad environment'' years (e.g., too hot for seed germination) and there is positive covariance between competition and the environment.
+Species coexistence via relative nonlinearity occurs when species have nonlinear and unique responses to some limiting factor that fluctates from year-to-year (e.g., soil moisture).
+Importantly, variability in the driving environmental factor promotes species richness in both mechanisms.
+We describe these mechanisms in more detail below (see \textbf{Materials and Methods: Consumer-resource model}).}
+
 When coexistence is maintained by a fluctuation-dependent mechanism, an increase in environmental variability might lead to an increase in species richness and, consequently, a decrease in ecosystem variability.
 However, increasing environmental variability may also increase ecosystem variability by increasing the fluctuations of individual species, regardless of species richness. 
 These countervailing effects of environmental variability present an interesting paradox: while we should expect an increase in environmental fluctuations to increase ecosystem variability, this increase might be buffered if fluctuation-dependent coexistence adds new species to the community. 
@@ -191,13 +190,13 @@ N_{i,\tau(0)} = \gamma_{i,\tau} D_{i,\tau(0)},
 \vspace{-3em}
 \noindent where the subscript $i$ denotes species, $N$ is the living biomass state, and $\epsilon_i$ is each species' resource-to-biomass conversion efficiency. The growth rate of living biomass is a resource-dependent Hill function, $f_{i}(R) = r_{i}R^{a_{i}} / (b_{i}^{a_{i}}+R^{a_{i}})$, where *r* is a species' intrinsic growth rate and *a* and *b* define the curvature of the function. Resource depletion is equal to the sum of each species' consumption. 
 
-\new{At the end of the growing season ($t=T$), a fraction ($\alpha_i$) of live biomass is stored as dormant biomass and a fraction of dormant biomass survives ($\eta_i$) to the next growing season, giving the following equation:}
+\new{At the end of the growing season ($t=T$), a fraction ($\alpha_i$) of live biomass is stored as dormant biomass and a fraction of dormant biomass survives ($1-\eta_i$) to the next growing season, giving the following equation:}
 \vspace{-3em}
 \begin{align}
 D_{i,\tau + 1} = \left[\alpha_i N_{i,\tau(T)} + D_{i,\tau(T)} \right](1 - \eta_i)
 \end{align}
 \vspace{-3em}
-\noindent \new{ where $\tau(T)$ denotes the end of growing season $\tau$.
+\noindent \new{where $\tau(T)$ denotes the end of growing season $\tau$.
 We assume remaining live biomass $\left(N_{\tau(T)}(1-\alpha)\right)$ dies (i.e., this is not a closed system where all biomass must be in either $N$ or $D$ states).}
 
 We assume the resource pool is not replenished within a growing season.
@@ -368,18 +367,10 @@ Just as declines in local species richness can destabilize ecosystem functioning
 @Wang2014 show that regional ecosystem variability depends on regional biodiversity through its effects on beta diversity and, in turn, the asynchrony of functioning in local communities.
 Our results show that, when coexistence is fluctuation-dependent, regional biodiversity declines could also affect local ecosystem functioning by limiting local colonization events that could be possible under scenarios of increasing environmental variability (Fig. 5).
 
-<!--
-Species coexistence in real ecological communities probably emerges from some combination of fluctuation-independent and fluctuation-dependent mechanisms [@Chesson2000; @Clark2010].
-Likewise, environmental conditions in real ecosystems are unlikely to change only in their variability without an associated change in the mean [@Avolio2015].
-Therefore, environmental change has the potential to alter the niche and fitness differences among species in multiple ways, some of which were not present in our current analysis.
-Mean changes in environmental conditions could reorder competitive hierarchies [@Klanderud2005] and/or alter the availability of niches [@Harpole2016].
-Associated changes in ecosystem stability will depend upon the magnitude of environmental change, each species' response to the particular environmental driver, and biotic interactions [@Hallett2014a].
--->
-
 
 ACKNOWLEDGMENTS
 ---------------
-The National Science Foundation provided funding for this work through a Postdoctoral Research Fellowship in Biology to ATT (DBI-1400370) and a CAREER award to PBA (DEB-1054040).
+The National Science Foundation provided funding for this work through a Postdoctoral Research Fellowship in Biology to ATT (DBI-1400370) and a CAREER award to PBA (DEB-1054040). We thank four anonymous reviewers for providing detailed and thoughtful comments that greatly improved the paper.
 
 \newpage{}
 
