@@ -28,9 +28,11 @@ get_cv <- function(x){
   livestates <- grep("N", colnames(x))
   tmp_totbiomass <- rowSums(x[seasons_to_exclude:nrow(x),livestates])
   tmp_cv <- sd(tmp_totbiomass) / mean(tmp_totbiomass)
+  tmp_mean <- mean(tmp_totbiomass)
+  tmp_sd <- sd(tmp_totbiomass)
   tmp_sppavg <- colMeans(x[seasons_to_exclude:nrow(x),livestates])
   tmp_spprich <- length(which(tmp_sppavg > 1))
-  tmp_out <- c(tmp_cv, tmp_spprich)
+  tmp_out <- c(tmp_cv, tmp_spprich, tmp_mean, tmp_sd)
 }
 
 
@@ -38,14 +40,14 @@ get_cv <- function(x){
 ####
 ####  Function for collating raw simulation lists
 ####
-collate_sims <- function(in_file, parameter_matrix, save_file){
+collate_sims <- function(in_file, parameter_matrix, save_file, remove_big_file=FALSE){
   sims_list <- readRDS(in_file)                     # read in the large simulation output
   out_cvs <- lapply(sims_list, get_cv)              # apply the function
   out_cvs_df <- do.call(rbind.data.frame, out_cvs)  # convert to data frame
   colnames(out_cvs_df) <- c("cv", "spprichness")    # give the columns names
   cvs_params <- cbind(parameter_matrix, out_cvs_df) # combine with parameter values
   saveRDS(cvs_params, file = save_file)             # save the file
-  # file.remove(in_file)                              # delete the large, raw file
+  if(remove_big_file) file.remove(in_file)          # delete the large, raw file
 }
 
 
@@ -135,7 +137,7 @@ parameter_matrix <- cbind(prm_repped, alphas_repped)
 ##  Collate the results, if necessary, otherwise read in collated results
 strg_comp_large_file <- "../simulationResults/storageeffect_div+envvar_stability_varycomp.RDS"
 strg_comp_file <- "../simulationResults/storageeffect_div+envvar_cv_varycomp_collated.RDS"
-if(file.exists(strg_comp_file) == FALSE) {
+if(file.exists(strg_comp_large_file) == TRUE) {
   collate_sims(in_file = strg_comp_large_file, 
                parameter_matrix = parameter_matrix, 
                save_file = strg_comp_file)
@@ -361,7 +363,7 @@ parameter_matrix <- cbind(DNR_repped, prm_repped)
 ##  Collate the results, if necessary, otherwise read in collated results
 rnonlin_stable2unstable_large_file <- "../simulationResults/relnonlin_div+envvar_cv_stable2unstable.RDS"
 rnonlin_stable2unstable_file <- "../simulationResults/relnonlin_div+envvar_cv_stable2unstable_collated.RDS"
-if(file.exists(rnonlin_stable2unstable_file) == FALSE) {
+if(file.exists(rnonlin_stable2unstable_large_file) == TRUE) {
   collate_sims(in_file = rnonlin_stable2unstable_large_file, 
                parameter_matrix = parameter_matrix, 
                save_file = rnonlin_stable2unstable_file)
@@ -387,7 +389,7 @@ parameter_matrix <- cbind(DNR_repped, prm_repped)
 ##  Collate the results, if necessary, otherwise read in collated results
 rnonlin_unstable2stable_large_file <- "../simulationResults/relnonlin_div+envvar_cv_unstable2stable.RDS"
 rnonlin_unstable2stable_file <- "../simulationResults/relnonlin_div+envvar_cv_unstable2stable_collated.RDS"
-if(file.exists(rnonlin_unstable2stable_file) == FALSE) {
+if(file.exists(rnonlin_unstable2stable_large_file) == TRUE) {
   collate_sims(in_file = rnonlin_unstable2stable_large_file, 
                parameter_matrix = parameter_matrix, 
                save_file = rnonlin_unstable2stable_file)
@@ -411,7 +413,7 @@ rnonlin_cvs_eqrich <- rnonlin_cvs[ids_to_keep,]
 rnonlin_cvs_mean_full <- ddply(rnonlin_cvs_eqrich, .(Rsd_annual, spprichness, spporder), 
                                summarise,
                                cv = mean(cv))
-rnonlin_cvs_mean <- subset(rnonlin_cvs_mean_full, Rsd_annual<1.2 & Rsd_annual>0  & spprichness>0)
+rnonlin_cvs_mean <- subset(rnonlin_cvs_mean_full, Rsd_annual<1.2 & Rsd_annual>0  & spprichness>0 & cv>0)
 
 ##  Plot and save
 ## Find species first occurences for lines

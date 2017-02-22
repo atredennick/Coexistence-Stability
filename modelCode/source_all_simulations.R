@@ -18,7 +18,7 @@
 ##  GITHUB REPO: http://github.com/atredennick/Coexistence-Stability
 ##
 ##  CONTACT:     Andrew Tredennick (atredenn@gmail.com)
-##  LAST UPDATE: Feb. 21, 2017
+##  LAST UPDATE: Feb. 22, 2017
 
 
 
@@ -31,10 +31,10 @@ source("storageeffect_sims_multispecies.R")
 ##	Figure 2B simulation script
 source("storageeffect_sims_div_stability.R")
 
-##	Figure simulation script
+##	Figure 2C simulation script
 source("relativenonlin_sims_multispecies.R")
 
-##	Figure simulation script
+##	Figure 2D simulation script
 source("relnonlin_sims_div_stability.R")
 
 ##  Generate Figure 2 Panels
@@ -43,20 +43,28 @@ source("plot_richness_variability.R")
 
 
 ####
-####	FIGURE 3 -- Effect of Environmental Variability (Storage Effect) ----
+####	FIGURE 3 SIMS -- Effect of Environmental Variability (Storage Effect) ----
 ####
+# simulation script
 source("storageeffect_sims_div+envvar_stability_varycomp.R")
 
 
 
 ####
-####	FIGURE 4 -- Effect of Environmental Variability (Relative Nonlinearity) ----
+####	FIGURE 4 SIMS -- Effect of Environmental Variability (Relative Nonlinearity) ----
 ####
-##	Figure 4A
+##	Figure 4A simulation script
 source("relnonlin_sims_div+envvar_stability.R")
 
-##	Figure 4B
+##	Figure 4B simulation script
 source("relnonlin_sims_div+envvar_stability_revpool.R")
+
+
+
+####
+####  GENERATE PANELS FOR FIG. 3 and 4 ----
+####
+source("collate_div+envar_sims.R")
 
 
 
