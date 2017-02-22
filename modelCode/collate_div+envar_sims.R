@@ -436,7 +436,7 @@ ggplot()+
   facet_wrap("spporder", ncol=2)+
   theme_bw()+
   my_theme2+
-  theme(legend.position = c(0.4, 0.7))+
+  theme(legend.position = c(0.4, 0.75))+
   theme(legend.title=element_text(size=6, face="bold"),
         legend.text=element_text(size=6),
         legend.background = element_rect(colour = "lightgrey", size=0.25),
