@@ -139,10 +139,10 @@
 \renewcommand\linenumberfont{\normalfont\tiny\sffamily\color{gray}}
 \renewcommand\thefigure{S1-\arabic{figure}}  
 \renewcommand\thetable{S1-\arabic{table}}  
-\renewcommand\thesection{Section S1.\arabic{section}}
+\renewcommand\thesection{Section SI.\arabic{section}}
 
 \begin{center}
-\textbf{\Large{Supporting Information Appendix S1}} \\
+\textbf{\Large{Supporting Information}} \\
 A.T. Tredennick, P.B. Adler, \& F.R. Adler, ``The relationship between species richness and...'' \\
 \emph{Ecology Letters}
 \end{center}
@@ -161,7 +161,7 @@ Figshare (link) and is available on GitHub
                            \NormalTok{Rsd_annual, sigE, rho, }
                            \NormalTok{alpha1, alpha2, alpha3, alpha4,}
                            \NormalTok{eta1, eta2, eta3, eta4,}
-                           \NormalTok{nu, r1, r2, r3, r4,}
+                           \NormalTok{r1, r2, r3, r4,}
                            \NormalTok{a1, a2, a3, a4,}
                            \NormalTok{b1, b2, b3, b4,}
                            \NormalTok{eps1, eps2, eps3, eps4,}
@@ -187,7 +187,7 @@ Figshare (link) and is available on GitHub
   \NormalTok{####}
   \NormalTok{####  Sub-Model functions ----------------------------------------------------}
   \NormalTok{####}
-  \NormalTok{## Continuous model (Equations 1-2)}
+  \NormalTok{## Continuous model}
   \NormalTok{updateNR <-}\StringTok{ }\NormalTok{function(t, NR, parms)\{}
     \KeywordTok{with}\NormalTok{(}\KeywordTok{as.list}\NormalTok{(}\KeywordTok{c}\NormalTok{(NR, parms)), \{}
       \NormalTok{dN1dt =}\StringTok{ }\NormalTok{N1*eps[}\DecValTok{1}\NormalTok{]*(}\KeywordTok{uptake_R}\NormalTok{(r[}\DecValTok{1}\NormalTok{], R, a[}\DecValTok{1}\NormalTok{], b[}\DecValTok{1}\NormalTok{]))}
@@ -199,7 +199,7 @@ Figshare (link) and is available on GitHub
     \NormalTok{\})}
   \NormalTok{\} }\CommentTok{# end continuous function}
   
-  \NormalTok{## Discrete model (Equations 3-4)}
+  \NormalTok{## Discrete model}
   \NormalTok{update_DNR <-}\StringTok{ }\NormalTok{function(t, DNR, gammas,}
                          \NormalTok{alpha1, alpha2, alpha3, alpha4,}
                          \NormalTok{eta1, eta2, eta3, eta4) \{}
@@ -208,14 +208,14 @@ Figshare (link) and is available on GitHub
       \NormalTok{g2    <-}\StringTok{ }\NormalTok{gammas[}\DecValTok{2}\NormalTok{]}
       \NormalTok{g3    <-}\StringTok{ }\NormalTok{gammas[}\DecValTok{3}\NormalTok{]}
       \NormalTok{g4    <-}\StringTok{ }\NormalTok{gammas[}\DecValTok{4}\NormalTok{]}
-      \NormalTok{D1new <-}\StringTok{ }\NormalTok{alpha1*N1 +}\StringTok{ }\NormalTok{D1*(}\DecValTok{1}\NormalTok{-g1)*(}\DecValTok{1}\NormalTok{-eta1)}
-      \NormalTok{D2new <-}\StringTok{ }\NormalTok{alpha2*N2 +}\StringTok{ }\NormalTok{D2*(}\DecValTok{1}\NormalTok{-g2)*(}\DecValTok{1}\NormalTok{-eta2)}
-      \NormalTok{D3new <-}\StringTok{ }\NormalTok{alpha3*N3 +}\StringTok{ }\NormalTok{D3*(}\DecValTok{1}\NormalTok{-g3)*(}\DecValTok{1}\NormalTok{-eta3)}
-      \NormalTok{D4new <-}\StringTok{ }\NormalTok{alpha4*N4 +}\StringTok{ }\NormalTok{D4*(}\DecValTok{1}\NormalTok{-g4)*(}\DecValTok{1}\NormalTok{-eta4)}
-      \NormalTok{N1new <-}\StringTok{ }\NormalTok{g1*(D1+(alpha1*N1))*(}\DecValTok{1}\NormalTok{-eta1)}
-      \NormalTok{N2new <-}\StringTok{ }\NormalTok{g2*(D2+(alpha2*N2))*(}\DecValTok{1}\NormalTok{-eta2)}
-      \NormalTok{N3new <-}\StringTok{ }\NormalTok{g3*(D3+(alpha3*N3))*(}\DecValTok{1}\NormalTok{-eta3)}
-      \NormalTok{N4new <-}\StringTok{ }\NormalTok{g4*(D4+(alpha4*N4))*(}\DecValTok{1}\NormalTok{-eta4)}
+      \NormalTok{D1new <-}\StringTok{ }\NormalTok{(}\DecValTok{1}\NormalTok{-g1)*(alpha1*N1 +}\StringTok{ }\NormalTok{D1)*(}\DecValTok{1}\NormalTok{-eta1)}
+      \NormalTok{D2new <-}\StringTok{ }\NormalTok{(}\DecValTok{1}\NormalTok{-g2)*(alpha2*N2 +}\StringTok{ }\NormalTok{D2)*(}\DecValTok{1}\NormalTok{-eta2)}
+      \NormalTok{D3new <-}\StringTok{ }\NormalTok{(}\DecValTok{1}\NormalTok{-g3)*(alpha3*N3 +}\StringTok{ }\NormalTok{D3)*(}\DecValTok{1}\NormalTok{-eta3)}
+      \NormalTok{D4new <-}\StringTok{ }\NormalTok{(}\DecValTok{1}\NormalTok{-g4)*(alpha4*N4 +}\StringTok{ }\NormalTok{D4)*(}\DecValTok{1}\NormalTok{-eta4)}
+      \NormalTok{N1new <-}\StringTok{ }\NormalTok{g1*(alpha1*N1 +}\StringTok{ }\NormalTok{D1)*(}\DecValTok{1}\NormalTok{-eta1)}
+      \NormalTok{N2new <-}\StringTok{ }\NormalTok{g2*(alpha2*N2 +}\StringTok{ }\NormalTok{D2)*(}\DecValTok{1}\NormalTok{-eta2)}
+      \NormalTok{N3new <-}\StringTok{ }\NormalTok{g3*(alpha3*N3 +}\StringTok{ }\NormalTok{D3)*(}\DecValTok{1}\NormalTok{-eta3)}
+      \NormalTok{N4new <-}\StringTok{ }\NormalTok{g4*(alpha4*N4 +}\StringTok{ }\NormalTok{D4)*(}\DecValTok{1}\NormalTok{-eta4)}
       \NormalTok{Rnew  <-}\StringTok{ }\NormalTok{Rvector[t]}
       \KeywordTok{return}\NormalTok{(}\KeywordTok{c}\NormalTok{(D1new, D2new, D3new, D4new, N1new, N2new, N3new, N4new, Rnew))}
     \NormalTok{\})}
@@ -230,10 +230,7 @@ Figshare (link) and is available on GitHub
   \NormalTok{getG <-}\StringTok{ }\NormalTok{function(sigE, rho, nTime, num_spp) \{}
     \NormalTok{varcov       <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{rep}\NormalTok{(rho*sigE,num_spp*}\DecValTok{2}\NormalTok{), num_spp, num_spp)}
     \KeywordTok{diag}\NormalTok{(varcov) <-}\StringTok{ }\NormalTok{sigE}
-    
-    \CommentTok{# crank through nearPD to fix rounding errors}
-    \NormalTok{if(sigE >}\StringTok{ }\DecValTok{0}\NormalTok{) \{ varcov <-}\StringTok{ }\NormalTok{Matrix::}\KeywordTok{nearPD}\NormalTok{(varcov)$mat \}  }
-    
+    \NormalTok{if(sigE >}\StringTok{ }\DecValTok{0}\NormalTok{) \{ varcov <-}\StringTok{ }\NormalTok{Matrix::}\KeywordTok{nearPD}\NormalTok{(varcov)$mat \} }\CommentTok{# crank through nearPD to fix rounding errors }
     \NormalTok{varcov <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(varcov)}
     \NormalTok{e      <-}\StringTok{ }\KeywordTok{rmvnorm}\NormalTok{(}\DataTypeTok{n =} \NormalTok{nTime, }\DataTypeTok{mean =} \KeywordTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,num_spp), }\DataTypeTok{sigma =} \NormalTok{varcov)}
     \NormalTok{g      <-}\StringTok{ }\KeywordTok{exp}\NormalTok{(e) /}\StringTok{ }\NormalTok{(}\DecValTok{1}\NormalTok{+}\KeywordTok{exp}\NormalTok{(e))}
@@ -267,15 +264,10 @@ Figshare (link) and is available on GitHub
     \NormalTok{saved_outs[season_now}\DecValTok{+1}\NormalTok{,] <-}\StringTok{ }\NormalTok{DNR}
     
     \KeywordTok{names}\NormalTok{(DNR) <-}\StringTok{ }\NormalTok{nmsDNR}
-    \NormalTok{DNR <-}\StringTok{ }\KeywordTok{update_DNR}\NormalTok{(season_now, DNR, gVec[season_now,],}
-                      \DataTypeTok{alpha1 =} \NormalTok{alpha1, }\DataTypeTok{alpha2 =} \NormalTok{alpha2, }
-                      \DataTypeTok{alpha3 =} \NormalTok{alpha3, }\DataTypeTok{alpha4 =} \NormalTok{alpha4,}
-                      \DataTypeTok{eta1 =} \NormalTok{eta1, }\DataTypeTok{eta2 =} \NormalTok{eta2, }\DataTypeTok{eta3 =} \NormalTok{eta3, }\DataTypeTok{eta4 =} \NormalTok{eta4,}
-                      \DataTypeTok{beta1 =} \NormalTok{beta1, }\DataTypeTok{beta2 =} \NormalTok{beta2, }
-                      \DataTypeTok{beta3 =} \NormalTok{beta3, }\DataTypeTok{beta4 =} \NormalTok{beta4,}
-                      \DataTypeTok{theta1 =} \NormalTok{theta1, }\DataTypeTok{theta2 =} \NormalTok{theta2, }
-                      \DataTypeTok{theta3 =} \NormalTok{theta3, }\DataTypeTok{theta4 =} \NormalTok{theta4,}
-                      \DataTypeTok{nu=}\NormalTok{nu)}
+    \NormalTok{DNR        <-}\StringTok{ }\KeywordTok{update_DNR}\NormalTok{(season_now, DNR, gVec[season_now,],}
+                             \DataTypeTok{alpha1 =} \NormalTok{alpha1, }\DataTypeTok{alpha2 =} \NormalTok{alpha2, }
+                             \DataTypeTok{alpha3 =} \NormalTok{alpha3, }\DataTypeTok{alpha4 =} \NormalTok{alpha4,}
+                             \DataTypeTok{eta1 =} \NormalTok{eta1, }\DataTypeTok{eta2 =} \NormalTok{eta2, }\DataTypeTok{eta3 =} \NormalTok{eta3, }\DataTypeTok{eta4 =} \NormalTok{eta4)}
     
     \KeywordTok{names}\NormalTok{(DNR) <-}\StringTok{ }\NormalTok{nmsDNR}
     \NormalTok{NR         <-}\StringTok{ }\NormalTok{DNR[-dormants]  }
@@ -284,9 +276,17 @@ Figshare (link) and is available on GitHub
   
   \KeywordTok{return}\NormalTok{(saved_outs)}
   
-\NormalTok{\} ##  End simulation function}
+\NormalTok{\} }\CommentTok{#end simulation function}
 \end{Highlighting}
 \end{Shaded}
+
+\newpage{}
+
+\section{Exploring Parameter Space}
+
+\newpage{}
+
+\section{Eight-Species Storage Effect Model}
 
 \newpage{}
 

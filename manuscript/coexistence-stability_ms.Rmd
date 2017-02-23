@@ -164,7 +164,7 @@ We use the model to investigate two questions:
 \new{To bound the problem and to isolate the effect of fluctation-dependent coexistence on the diversity-ecosystem stability relationship we constrain our analysis to four species communities and do not consider communities where coexistence is maintained by a combination of mechanisms.
 We limit our analysis to four species communities to keep the models tractable while still allowing enough of a species richness gradient for trends to emerge.
 It is notoriously difficult to get more than four species to coexist via relative nonlinearity without introducing some form of fluctuation-independent mechanism like resource partitioning} [@Yuan2015], \new{which would then cloud our inference on the effect of fluctuation-dependent coexistence.
-It is relatively easy to get many species to coexist via the storage effect, but for consistency we constrain our focus to four species communities under the storage effect as well.}
+For consistency, we also constrain our focus to four species communities under the storage effect, but our conclusions generally apply to more species-rich communities as well (see SI section SI.2).}
 
 
 MATERIALS AND METHODS
@@ -289,7 +289,7 @@ After discarding an initial 500 seasons to reduce transient effects on our resul
 We calculated species richness as the number of species whose average biomass was greater than 1 over the course of the simulation.
 Parameter values for specific results are given in figure captions.
 Within-season dynamics were solved given initial conditions using the package ``deSolve`` [@Soetaert2010] in ```R``` [@Team2013].
-```R``` code for our model function is in the Supporting Information Appendix S1.
+```R``` code for our model function is in the Supporting Information section SI.1.
 All model code has been deposited on Figshare (*link*) and is available on GitHub at http://github.com/atredennick/Coexistence-Stability.
 
 

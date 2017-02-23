@@ -1,23 +1,27 @@
 ##============================================================================##
 ##                                                                            ##
 ## A. Tredennick, P. Adler, and F. Adler                                      ##             
-## "How Fluctuation-Dependent Coexistence Mechanisms Affect the Temporal      ##
-##  Stability of Ecosystem Function"                                          ##
-##                                                                       2016 ##
-##============================================================================##            
+## "The relationship between species richness and ecosystem variability is    ##
+##  shaped by the mechanism of coexistence"                                   ##
+##                                                                       2017 ##
+##============================================================================##      
 
-##  These are the core model functions that can be called 
-##    from simulation wrappers.
+##  These are the core model functions for two-species communities that can 
+##  be called from simulation wrappers. The two-species version is used to
+##  estimate invasion growth rates and CV of community biomass as a function
+##  environmental variability (environmental cue for the storage effect;
+##  resource variability for relative nonlinearity). Results from these
+##  simulations are presented in the SI material.
 
-##  Author: Andrew Tredennick
-##  Email:  atredenn@gmail.com
-##  Last update: 4-27-2016
+##  Author:      Andrew Tredennick
+##  Email:       atredenn@gmail.com
+##  Last update: 2-23-2017
 
 
 simulate_model <- function(seasons, days_to_track, Rmu, 
                            Rsd_annual, sigE, rho, 
-                           alpha1, alpha2, beta1, beta2,
-                           eta1,eta2, theta1, theta2, nu, r1,
+                           alpha1, alpha2,
+                           eta1,eta2, r1,
                            r2, a1, a2, b1, b2, eps1, eps2,
                            D1, D2, N1, N2, R) {
   require('deSolve') # for solving continuous differential equations
@@ -52,16 +56,15 @@ simulate_model <- function(seasons, days_to_track, Rmu,
   }
   
   ## Discrete model
-  update_DNR <- function(t,DNR,gammas,alpha1,alpha2,eta1,eta2,
-                         beta1,beta2,theta1,theta2,nu) {
+  update_DNR <- function(t,DNR,gammas,alpha1,alpha2,eta1,eta2) {
     with (as.list(DNR),{
       g1 <- gammas[1]
       g2 <- gammas[2]
-      D1new <- alpha1*N1 + D1*(1-g1)*(1-eta1)
-      D2new <- alpha2*N2 + D2*(1-g2)*(1-eta2)
-      N1new <- beta1*(1-alpha1)*N1 + g1*(D1+(alpha1*N1))*(1-eta1)
-      N2new <- beta2*(1-alpha2)*N2 + g2*(D2+(alpha2*N2))*(1-eta2)
-      Rnew <- theta1*(1-alpha1)*N1 + theta2*(1-alpha2)*N2 + nu*R + Rvector[t]
+      D1new <- (1-g1)*(alpha1*N1 + D1)*(1-eta1)
+      D2new <- (1-g2)*(alpha2*N2 + D2)*(1-eta2)
+      N1new <- g1*(alpha1*N1 + D1)*(1-eta1)
+      N2new <- g2*(alpha2*N2 + D2)*(1-eta2)
+      Rnew <- Rvector[t]
       return(c(D1new, D2new, N1new, N2new, Rnew))
     })
   }
@@ -98,9 +101,7 @@ simulate_model <- function(seasons, days_to_track, Rmu,
     names(DNR) <- nmsDNR
     DNR <- update_DNR(season_now, DNR, gVec[season_now,],
                       alpha1=alpha1,alpha2=alpha2,
-                      eta1=eta1,eta2=eta2,
-                      beta1=beta1,beta2=beta2,
-                      theta1=theta1,theta2=theta2,nu=nu)
+                      eta1=eta1,eta2=eta2)
     names(DNR) <- nmsDNR
     NR <- DNR[c("N1", "N2", "R")] 
     names(NR) <- nmsNR
@@ -121,9 +122,7 @@ simulate_model <- function(seasons, days_to_track, Rmu,
     names(DNR) <- nmsDNR
     DNR <- update_DNR(season_now, DNR, gVec[season_now,],
                       alpha1=alpha1,alpha2=alpha2,
-                      eta1=eta1,eta2=eta2,
-                      beta1=beta1,beta2=beta2,
-                      theta1=theta1,theta2=theta2,nu=nu)
+                      eta1=eta1,eta2=eta2)
     names(DNR) <- nmsDNR
     NR <- DNR[c("N1", "N2", "R")] 
     names(NR) <- nmsNR
@@ -138,9 +137,7 @@ simulate_model <- function(seasons, days_to_track, Rmu,
   for(season_now in 1:seasons){
     DNR <- update_DNR(season_now, DNR, gVec[season_now,],
                       alpha1=alpha1,alpha2=alpha2,
-                      eta1=eta1,eta2=eta2,
-                      beta1=beta1,beta2=beta2,
-                      theta1=theta1,theta2=theta2,nu=nu)
+                      eta1=eta1,eta2=eta2)
     names(DNR) <- nmsDNR
     NR <- DNR[c("N1", "N2", "R")] 
     names(NR) <- nmsNR
@@ -151,9 +148,7 @@ simulate_model <- function(seasons, days_to_track, Rmu,
     
     DNR <- update_DNR(season_now, DNR, gVec[season_now,],
                       alpha1=alpha1,alpha2=alpha2,
-                      eta1=eta1,eta2=eta2,
-                      beta1=beta1,beta2=beta2,
-                      theta1=theta1,theta2=theta2,nu=nu)
+                      eta1=eta1,eta2=eta2)
     names(DNR) <- nmsDNR
     inv_results[season_now, ] <- DNR # save next year's initial conditions
     

@@ -29,10 +29,10 @@ urlcolor: black
 \renewcommand\linenumberfont{\normalfont\tiny\sffamily\color{gray}}
 \renewcommand\thefigure{S1-\arabic{figure}}  
 \renewcommand\thetable{S1-\arabic{table}}  
-\renewcommand\thesection{Section S1.\arabic{section}}
+\renewcommand\thesection{Section SI.\arabic{section}}
 
 \begin{center}
-\textbf{\Large{Supporting Information Appendix S1}} \\
+\textbf{\Large{Supporting Information}} \\
 A.T. Tredennick, P.B. Adler, \& F.R. Adler, ``The relationship between species richness and...'' \\
 \emph{Ecology Letters}
 \end{center}
@@ -46,7 +46,7 @@ simulate_model <- function(seasons, days_to_track, Rmu,
                            Rsd_annual, sigE, rho, 
                            alpha1, alpha2, alpha3, alpha4,
                            eta1, eta2, eta3, eta4,
-                           nu, r1, r2, r3, r4,
+                           r1, r2, r3, r4,
                            a1, a2, a3, a4,
                            b1, b2, b3, b4,
                            eps1, eps2, eps3, eps4,
@@ -72,7 +72,7 @@ simulate_model <- function(seasons, days_to_track, Rmu,
   ####
   ####  Sub-Model functions ----------------------------------------------------
   ####
-  ## Continuous model (Equations 1-2)
+  ## Continuous model
   updateNR <- function(t, NR, parms){
     with(as.list(c(NR, parms)), {
       dN1dt = N1*eps[1]*(uptake_R(r[1], R, a[1], b[1]))
@@ -84,7 +84,7 @@ simulate_model <- function(seasons, days_to_track, Rmu,
     })
   } # end continuous function
   
-  ## Discrete model (Equations 3-4)
+  ## Discrete model
   update_DNR <- function(t, DNR, gammas,
                          alpha1, alpha2, alpha3, alpha4,
                          eta1, eta2, eta3, eta4) {
@@ -93,14 +93,14 @@ simulate_model <- function(seasons, days_to_track, Rmu,
       g2    <- gammas[2]
       g3    <- gammas[3]
       g4    <- gammas[4]
-      D1new <- alpha1*N1 + D1*(1-g1)*(1-eta1)
-      D2new <- alpha2*N2 + D2*(1-g2)*(1-eta2)
-      D3new <- alpha3*N3 + D3*(1-g3)*(1-eta3)
-      D4new <- alpha4*N4 + D4*(1-g4)*(1-eta4)
-      N1new <- g1*(D1+(alpha1*N1))*(1-eta1)
-      N2new <- g2*(D2+(alpha2*N2))*(1-eta2)
-      N3new <- g3*(D3+(alpha3*N3))*(1-eta3)
-      N4new <- g4*(D4+(alpha4*N4))*(1-eta4)
+      D1new <- (1-g1)*(alpha1*N1 + D1)*(1-eta1)
+      D2new <- (1-g2)*(alpha2*N2 + D2)*(1-eta2)
+      D3new <- (1-g3)*(alpha3*N3 + D3)*(1-eta3)
+      D4new <- (1-g4)*(alpha4*N4 + D4)*(1-eta4)
+      N1new <- g1*(alpha1*N1 + D1)*(1-eta1)
+      N2new <- g2*(alpha2*N2 + D2)*(1-eta2)
+      N3new <- g3*(alpha3*N3 + D3)*(1-eta3)
+      N4new <- g4*(alpha4*N4 + D4)*(1-eta4)
       Rnew  <- Rvector[t]
       return(c(D1new, D2new, D3new, D4new, N1new, N2new, N3new, N4new, Rnew))
     })
@@ -115,10 +115,7 @@ simulate_model <- function(seasons, days_to_track, Rmu,
   getG <- function(sigE, rho, nTime, num_spp) {
     varcov       <- matrix(rep(rho*sigE,num_spp*2), num_spp, num_spp)
     diag(varcov) <- sigE
-    
-    # crank through nearPD to fix rounding errors
-    if(sigE > 0) { varcov <- Matrix::nearPD(varcov)$mat }  
-    
+    if(sigE > 0) { varcov <- Matrix::nearPD(varcov)$mat } # crank through nearPD to fix rounding errors 
     varcov <- as.matrix(varcov)
     e      <- rmvnorm(n = nTime, mean = rep(0,num_spp), sigma = varcov)
     g      <- exp(e) / (1+exp(e))
@@ -152,15 +149,10 @@ simulate_model <- function(seasons, days_to_track, Rmu,
     saved_outs[season_now+1,] <- DNR
     
     names(DNR) <- nmsDNR
-    DNR <- update_DNR(season_now, DNR, gVec[season_now,],
-                      alpha1 = alpha1, alpha2 = alpha2, 
-                      alpha3 = alpha3, alpha4 = alpha4,
-                      eta1 = eta1, eta2 = eta2, eta3 = eta3, eta4 = eta4,
-                      beta1 = beta1, beta2 = beta2, 
-                      beta3 = beta3, beta4 = beta4,
-                      theta1 = theta1, theta2 = theta2, 
-                      theta3 = theta3, theta4 = theta4,
-                      nu=nu)
+    DNR        <- update_DNR(season_now, DNR, gVec[season_now,],
+                             alpha1 = alpha1, alpha2 = alpha2, 
+                             alpha3 = alpha3, alpha4 = alpha4,
+                             eta1 = eta1, eta2 = eta2, eta3 = eta3, eta4 = eta4)
     
     names(DNR) <- nmsDNR
     NR         <- DNR[-dormants]  
@@ -169,8 +161,16 @@ simulate_model <- function(seasons, days_to_track, Rmu,
   
   return(saved_outs)
   
-} ##  End simulation function
+} #end simulation function
 ```
+
+\newpage{}
+
+\section{Exploring Parameter Space}
+
+\newpage{}
+
+\section{Eight-Species Storage Effect Model}
 
 \newpage{}
 
