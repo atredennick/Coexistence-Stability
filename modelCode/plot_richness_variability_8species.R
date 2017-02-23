@@ -105,12 +105,13 @@ avg_cv_per_rich <- ddply(save_multispp_rho0, .(spprich), summarise,
 
 ggplot()+
   geom_jitter(data=save_multispp_rho0, aes(x=spprich, y=cv), shape=21, color="grey40", fill=mycols[1], size=2, width=0.05, alpha=0.5)+
-  geom_point(data = avg_cv_per_rich, aes(x=spprich, y=avg_cv), shape=19, color="grey40", size=4)+
+  geom_point(data = avg_cv_per_rich, aes(x=spprich, y=avg_cv), shape=19, color="grey40", size=2)+
   geom_line(data = avg_cv_per_rich, aes(x=spprich, y=avg_cv), color="grey40")+
   xlab("Number of Species")+
   ylab("Variability of Total\nCommunity Biomass (CV)")+
+  scale_x_continuous(breaks=c(1:8), labels = c(1:8))+
   theme_bw()+
   my_theme
 fig.width <- 133/2
-ggsave(paste0(path2figs,"regional_diversity_stability_storage_effect_8species.png"), width = fig.width, height = 60, units = "mm", dpi = 600)
+ggsave(paste0(path2figs,"regional_diversity_stability_storage_effect_8species.png"), width = fig.width, height = 60, units = "mm", dpi = 200)
 
