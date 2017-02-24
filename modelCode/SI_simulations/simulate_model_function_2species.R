@@ -85,12 +85,12 @@ simulate_model <- function(seasons, days_to_track, Rmu,
   
   # Loop over seasons
   nmsDNR <- names(DNR)
-  NR <- DNR[c("N1", "N2", "R")] 
+  NR <- DNR[c("N1", "N2", "R")]
   nmsNR <- names(NR)
   gVec <- getG(sigE = sigE, rho = rho, nTime = seasons)
   Rvector <- rlnorm(seasons, Rmu, Rsd_annual)
   saved_outs <- matrix(ncol=5, nrow=seasons+1)
-  saved_outs[1,] <- DNR 
+  saved_outs[1,] <- DNR
 
   for(season_now in 1:seasons) {
     output <- ode(y = NR, times=days,
@@ -103,7 +103,7 @@ simulate_model <- function(seasons, days_to_track, Rmu,
                       alpha1=alpha1,alpha2=alpha2,
                       eta1=eta1,eta2=eta2)
     names(DNR) <- nmsDNR
-    NR <- DNR[c("N1", "N2", "R")] 
+    NR <- DNR[c("N1", "N2", "R")]
     names(NR) <- nmsNR
   } # next season
   
@@ -129,15 +129,28 @@ simulate_model <- function(seasons, days_to_track, Rmu,
   } # next season
   
   
+  ## Discrete model -- for invasion runs
+  update_DNR <- function(t,DNR,gammas,alpha1,alpha2,eta1,eta2) {
+    with (as.list(DNR),{
+      g1 <- gammas[1]
+      g2 <- gammas[2]
+      D1new <- (1-g1)*(alpha1*N1 + D1)*(1-eta1)
+      D2new <- (1-g2)*(alpha2*N2 + D2)*(1-eta2)
+      N1new <- g1*(alpha1*N1 + D1)*(1-eta1)
+      N2new <- g2*(alpha2*N2 + D2)*(1-eta2)
+      Rnew <- Rvector[t]
+      return(c(D1new, D2new, N1new, N2new, Rnew))
+    })
+  }
   
   ### INVASION SIMULATIONS
   equil_abund_superior <- mean(single_spp_results[100:200,1], na.rm = TRUE)
   DNR <- c(D=c(equil_abund_superior,1),N=c(equil_abund_superior,1), R=20)    # initial conditions
   inv_results <- matrix(ncol=5, nrow=seasons)
   for(season_now in 1:seasons){
-    DNR <- update_DNR(season_now, DNR, gVec[season_now,],
-                      alpha1=alpha1,alpha2=alpha2,
-                      eta1=eta1,eta2=eta2)
+    # DNR <- update_DNR(season_now, DNR, gVec[season_now,],
+    #                   alpha1=alpha1,alpha2=alpha2,
+    #                   eta1=eta1,eta2=eta2)
     names(DNR) <- nmsDNR
     NR <- DNR[c("N1", "N2", "R")] 
     names(NR) <- nmsNR
@@ -152,8 +165,8 @@ simulate_model <- function(seasons, days_to_track, Rmu,
     names(DNR) <- nmsDNR
     inv_results[season_now, ] <- DNR # save next year's initial conditions
     
-    DNR <- c(D=c(equil_abund_superior, 1),
-             N=c(equil_abund_superior, 1), 
+    DNR <- c(D=c(equil_abund_superior, 0.1),
+             N=c(equil_abund_superior, 0.1), 
              R=20) # reset initial conditions
   } # next invasion season
   

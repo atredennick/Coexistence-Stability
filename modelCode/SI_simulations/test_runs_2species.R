@@ -1,10 +1,4 @@
-##============================================================================##
-##                                                                            ##
-## A. Tredennick, P. Adler, and F. Adler                                      ##             
-## "The relationship between species richness and ecosystem variability is    ##
-##  shaped by the mechanism of coexistence"                                   ##
-##                                                                       2017 ##
-##============================================================================##      
+### TEST RUNS ###
 
 ##  This code runs the storage effect model under a factorial combination
 ##  of environmental variability and species temporal correlations. This way
@@ -42,7 +36,7 @@ prm            <- unique(varvars)
 
 ##  Define constant parameters in list
 constant_parameters <- list (
-  seasons = 500,                  # number of seasons to simulate
+  seasons = 1000,                  # number of seasons to simulate
   days_to_track = 100,             # number of days to simulate in odSolve
   Rmu = 3,                         # mean resource pulse (on log scale)
   Rsd_annual = 0.0,                # std dev of resource pulses (on log scale)
@@ -77,15 +71,18 @@ parameter_matrix <- cbind(constant_param_matrix, prm)
 
 ##  Run all parameter combinations in paralell
 # Returns list of simulation time series with dims = c(nrow(prm), seasons, length(DNR))
-outs <- mclapply(seq_len(nrow(prm)), 
-                 function(i) {
-                   do.call(simulate_model, parameter_matrix[i,])
-                   }, 
-                 mc.cores=nbcores) # end apply function
 
-equilibrium_runs <- sapply(outs, "[", 1)
-invasion_runs <- sapply(outs, "[", 2)
+# outs <- do.call(simulate_model, parameter_matrix[121,])
+outs <- do.call(simulate_model, parameter_matrix[11,])
 
-saveRDS(equilibrium_runs, "../../simulationResults/storage_effect_equilibrium_runs.RDS")
-saveRDS(invasion_runs, "../../simulationResults/storage_effect_invasion_runs.RDS")
+
+equilibrium_runs <- outs[[1]]
+invasion_runs    <- outs[[2]]
+
+
+matplot(equilibrium_runs[,3:4], type="l")
+
+mean(log(invasion_runs[501:nrow(invasion_runs),4] / 1), na.rm = T)
+
+hist(invasion_runs[501:nrow(invasion_runs),4])
 
