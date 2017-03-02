@@ -108,16 +108,14 @@ opts_chunk$set(dev='pdf', dev.args=c(version="1.3"))
 
 \begin{abstract}
 Theory relating species richness to ecosystem variability typically ignores the potential for environmental variability to promote species coexistence.
-Failure to account for fluctuation-dependent coexistence mechanisms may explain observed deviations from the expected negative diversity-\new{ecosystem variability} relationship, and limits our ability to predict the consequences of future increases in environmental variability.
+Failure to account for fluctuation-dependent coexistence mechanisms may explain observed deviations from the expected negative diversity--\new{ecosystem variability} relationship, and limits our ability to predict the consequences of future increases in environmental variability.
 We use a consumer-resource model to explore how coexistence via the temporal storage effect and relative nonlinearity affects ecosystem variability.
-We show that a positive, rather than negative, diversity-\new{ecosystem variability} relationship is possible when ecosystem function is sampled across a natural gradient in environmental variability and diversity.
+We show that a positive, rather than negative, diversity--\new{ecosystem variability} relationship is possible when ecosystem function is sampled across a natural gradient in environmental variability and diversity.
 We also show how fluctuation-dependent coexistence can buffer ecosystem functioning against increasing environmental variability by promoting species richness and portfolio effects.
-Our work provides a general explanation for variation in observed diversity-\new{ecosystem variability} relationships and highlights the importance of conserving regional species pools to help buffer ecosystems against predicted increases in environmental variability.
+Our work provides a general explanation for variation in observed diversity--\new{ecosystem variability} relationships and highlights the importance of conserving regional species pools to help buffer ecosystems against predicted increases in environmental variability.
 \vspace{2em}
 \end{abstract}
 
-
-\newpage{}
 
 \setlength{\parindent}{5ex}
 
@@ -127,7 +125,7 @@ INTRODUCTION
 This idea underlies the "insurance hypothesis" [@Yachi1999], which suggests \new{the temporal coefficient of variability of ecosystem biomass (\emph{ecosytem variability})} decreases with diversity because species respond dissimilarly to environmental variation, broadening the range of conditions under which the community maintains function [@Loreau2010].
 A variety of theoretical models all predict a negative relationship between species richness and ecosystem variability [@Lehman2000; @Ives2002b; @Loreau2013], and experimental tests tend to support such a prediction [@Tilman2006; @Hector2010].
 
-However, the ability of biodiversity-ecosystem functioning (BEF) experiments to accurately represent real-world dynamics is debated [@Wardle2016; @Eisenhauer2016].
+However, the ability of biodiversity--ecosystem functioning (BEF) experiments to accurately represent real-world dynamics is debated [@Wardle2016; @Eisenhauer2016].
 Much of the debate centers on the fact that BEF experimental protocols \new{do not allow species additions from the regional pool to offset species losses in local communities.}
 Theoretical work on diversity-\new{ecosystem variability} relationships typically suffers from the same limitation: it recognizes the role of environmental variability in driving population fluctuations which destabilize ecosystems, but ignores the potential for environmental variability to promote species richness and thereby help stabilize ecosystems [Loreau 2010, but see @Chesson2001].
 
@@ -161,7 +159,7 @@ We use the model to investigate two questions:
 
 2. How does increasing environmental variability impact ecosystem variability when coexistence depends on the storage effect or relative nonlinearity?
 
-\new{To bound the problem and to isolate the effect of fluctation-dependent coexistence on the diversity-ecosystem stability relationship we constrain our analysis to four species communities and do not consider communities where coexistence is maintained by a combination of mechanisms.
+\new{To bound the problem and to isolate the effect of fluctation-dependent coexistence on the diversity--ecosystem variability relationship we constrain our analysis to four species communities and do not consider communities where coexistence is maintained by a combination of mechanisms.
 We limit our analysis to four species communities to keep the models tractable while still allowing enough of a species richness gradient for trends to emerge.
 It is notoriously difficult to get more than four species to coexist via relative nonlinearity without introducing some form of fluctuation-independent mechanism like resource partitioning} [@Yuan2015], \new{which would then cloud our inference on the effect of fluctuation-dependent coexistence.
 For consistency, we also constrain our focus to four species communities under the storage effect, but our conclusions generally apply to more species-rich communities as well (see SI section SI.2).}
@@ -267,7 +265,7 @@ Such reciprocity helps each species to increase when rare, stabilizing coexisten
 To explore how fluctuation-dependent coexistence can affect the diversity-variability relationship, we simulated the model with four species under two scenarios for each coexistence mechanism.
 First, we allowed the variance of the environment to determine how many species can coexist, akin to a community assembly experiment with a species pool of four species.
 To do this, we simulated communities with all species initially present across a gradient of annual resource variability (for relative nonlinearity) or environmental cue variability (for the storage effect).
-Second, we chose parameter values that allowed coexistence of all four species and then performed species removals, akin to a biodiversity-ecosystem function experiment.
+Second, we chose parameter values that allowed coexistence of all four species and then performed species removals, akin to a biodiversity--ecosystem function experiment.
 The two simulation experiments correspond to (i) sampling ecosystem function across a natural gradient of species richness and (ii) sampling ecosystem function across diversity treatments within a site.
 
 To understand how increasing environmental variability will impact ecosystem variability when coexistence is fluctuation-dependent, we simulated the model over a range of species pool sizes and environmental cue or resource variability.
@@ -300,7 +298,7 @@ This was true for the storage effect, where coexistence is maintained by fluctua
 The relationship is driven by the fact that increasing environmental variability increases the strength of both coexistence mechanisms (Fig. S1-2).
 More variable conditions promoted species richness, creating a positive relationship between diversity and \new{ecosystem} variability.
 
-When we performed species removals but held environmental variability at a level that allows coexistence of all four species, similar to a biodiversity-ecosystem functioning experiment, we found a negative diversity-\new{ecosystem variability} relationship (Fig. 2B,D).
+When we performed species removals but held environmental variability at a level that allows coexistence of all four species, similar to a biodiversity--ecosystem functioning experiment, we found a negative diversity-\new{ecosystem variability} relationship (Fig. 2B,D).
 Scatter around the relationship was small for the storage effect because all species have similar temporal variances.
 Regardless of species identity, the presence of more species always stabilized ecosystem functioning through portfolio effects.
 In contrast, scatter around the relationship was larger for relative nonlinearity (Fig. 2D) because species with different resource uptake curves had different population variances.
@@ -322,14 +320,14 @@ When only the most unstable (resource acquisitive) species is present, ecosystem
 
 DISCUSSION
 ----------
-Theory developed for biodiversity-ecosystem function experiments emphasizes that increases in species richness should reduce ecosystem variability. 
-Consistent with theoretical expectations from models and with results from biodiversity-ecosystem functioning experiments, in which species coexistence is maintained by fluctuation-independent mechanisms, our model of  fluctuation-dependent species coexistence [also see @Chesson2001] produced a negative diversity-\new{ecosystem variability} relationship (Fig. 2B,D).
+Theory developed for biodiversity--ecosystem function experiments emphasizes that increases in species richness should reduce ecosystem variability. 
+Consistent with theoretical expectations from models and with results from biodiversity--ecosystem functioning experiments, in which species coexistence is maintained by fluctuation-independent mechanisms, our model of  fluctuation-dependent species coexistence [also see @Chesson2001] produced a negative diversity-\new{ecosystem variability} relationship (Fig. 2B,D).
 This agreement is encouraging because species almost certainly coexist by some combination of fluctuation-independent (e.g., resource partitioning) and fluctuation-dependent mechanisms.
 By extending theory to communities where species richness is explicitly maintained by temporal variability, we have gained confidence that experimental findings are generalizable to many communities.
 In local settings where environmental variability is relatively homogeneous, reductions in the number of species should increase the variability of ecosystem functioning, regardless of how coexistence is maintained.
 
 When we allowed communities to assemble at sites across a gradient of environmental variability, we discovered a positive relationship between species richness and ecosystem variability (Fig. 2A,C).
-While surprising when viewed through the lens of biodiversity-ecosystem functioning theory and experimental findings, such a relationship is predicted by theory on coexistence in fluctuating environments.
+While surprising when viewed through the lens of biodiversity--ecosystem functioning theory and experimental findings, such a relationship is predicted by theory on coexistence in fluctuating environments.
 Environmental variability is a prerequisite for the storage effect and relative nonlinearity to stabilize coexistence [@Chesson2000].
 These mechanisms can translate increased variability into higher species richness (Fig. S1-2), but the increase in environmental variability also increases ecosystem variability.
 
