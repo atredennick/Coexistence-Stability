@@ -14,7 +14,7 @@
 ####
 
 rm(list=ls())                    # Erase the memory
-fxnfile <- "simulate_model_function_2species.R"
+fxnfile <- "simulate_model_function_2spp_relative_nonlinearity.R"
 source(fxnfile)                  # Load the function for the simulations
 require(parallel)                # Load the parallel package
 
@@ -31,7 +31,7 @@ colnames(prm) <- "Rsd_annual"
 
 ##  Define constant parameters in list
 constant_parameters <- list (
-  seasons = 1000,                  # number of seasons to simulate
+  seasons = 5000,                  # number of seasons to simulate
   days_to_track = 100,             # number of days to simulate in odSolve
   Rmu = 3,                         # mean resource pulse (on log scale)
   # Rsd_annual = 0.5,               # std dev of resource pulses (on log scale)

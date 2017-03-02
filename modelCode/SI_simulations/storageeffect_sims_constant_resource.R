@@ -22,7 +22,7 @@
 ####
 
 rm(list=ls())                    # Erase the memory
-fxnfile <- "simulate_model_function_2species.R"
+fxnfile <- "simulate_model_function_2spp_storage_effect.R"
 source(fxnfile)                  # Load the function for the simulations
 require(parallel)                # Load the parallel package
 
@@ -42,7 +42,7 @@ prm            <- unique(varvars)
 
 ##  Define constant parameters in list
 constant_parameters <- list (
-  seasons = 500,                  # number of seasons to simulate
+  seasons = 5000,                  # number of seasons to simulate
   days_to_track = 100,             # number of days to simulate in odSolve
   Rmu = 3,                         # mean resource pulse (on log scale)
   Rsd_annual = 0.0,                # std dev of resource pulses (on log scale)
