@@ -107,13 +107,17 @@ simulate_model <- function(seasons, days_to_track, Rmu,
     names(NR) <- nmsNR
   } # next season
   
+  
+  ##############################################################################
+  
+  
   ### SINGLE SPECIES, SUPERIOR COMPETITOR, SIMULATIONS
   DNR <- c(D=c(1,0),N=c(1,0), R=20)
   nmsDNR <- names(DNR)
   NR <- DNR[c("N1", "N2", "R")] 
   nmsNR <- names(NR)
-  single_spp_results <- matrix(ncol=5, nrow=200)
-  for(season_now in 1:200) {
+  single_spp_results <- matrix(ncol=5, nrow=seasons)
+  for(season_now in 1:seasons) {
     output <- ode(y = NR, times=days,
                   func = updateNR, parms = parms)
     NR <- output[nrow(output),nmsNR]
@@ -129,28 +133,42 @@ simulate_model <- function(seasons, days_to_track, Rmu,
   } # next season
   
   
-  ## Discrete model -- for invasion runs
-  update_DNR <- function(t,DNR,gammas,alpha1,alpha2,eta1,eta2) {
+  #############################################################################
+  
+  
+  ### INVASION SIMULATIONS
+  germinate <- function(t,DNR,gammas) {
     with (as.list(DNR),{
       g1 <- gammas[1]
       g2 <- gammas[2]
-      D1new <- (1-g1)*(alpha1*N1 + D1)*(1-eta1)
-      D2new <- (1-g2)*(alpha2*N2 + D2)*(1-eta2)
-      N1new <- g1*(alpha1*N1 + D1)*(1-eta1)
-      N2new <- g2*(alpha2*N2 + D2)*(1-eta2)
-      Rnew <- Rvector[t]
+      D1new <- (1-g1)*(D1)
+      D2new <- (1-g2)*(D2)
+      N1new <- g1*(N1)
+      N2new <- g2*(N2)
+      Rnew  <- 20
       return(c(D1new, D2new, N1new, N2new, Rnew))
     })
   }
-  
-  ### INVASION SIMULATIONS
-  equil_abund_superior <- mean(single_spp_results[100:200,1], na.rm = TRUE)
-  DNR <- c(D=c(equil_abund_superior,1),N=c(equil_abund_superior,1), R=20)    # initial conditions
-  inv_results <- matrix(ncol=5, nrow=seasons)
+
+  transition <- function(t,DNR,alpha1,alpha2,eta1,eta2) {
+    with (as.list(DNR),{
+      D1new <- (alpha1*N1 + D1)*(1-eta1)
+      D2new <- (alpha2*N2 + D2)*(1-eta2)
+      N1new <- (alpha1*N1 + D1)*(1-eta1)
+      N2new <- (alpha2*N2 + D2)*(1-eta2)
+      Rnew  <- 20
+      return(c(D1new, D2new, N1new, N2new, Rnew))
+    })
+  }
+
+  rare_abund_inferior  <- 10^-10
+  single_spp_shuffle   <- sample(1:seasons, seasons, replace = FALSE)
+  DNR                  <- c(D=c(single_spp_results[single_spp_shuffle[1],1], rare_abund_inferior),
+                            N=c(single_spp_results[single_spp_shuffle[1],3], rare_abund_inferior), 
+                            R=20)    # initial conditions
+  inv_results          <- matrix(ncol=5, nrow=seasons)
   for(season_now in 1:seasons){
-    # DNR <- update_DNR(season_now, DNR, gVec[season_now,],
-    #                   alpha1=alpha1,alpha2=alpha2,
-    #                   eta1=eta1,eta2=eta2)
+    DNR <- germinate(season_now, DNR, gVec[season_now,])
     names(DNR) <- nmsDNR
     NR <- DNR[c("N1", "N2", "R")] 
     names(NR) <- nmsNR
@@ -159,14 +177,15 @@ simulate_model <- function(seasons, days_to_track, Rmu,
     NR <- output[nrow(output),nmsNR]
     DNR <- unlist(c(DNR[c("D1","D2")], NR))
     
-    DNR <- update_DNR(season_now, DNR, gVec[season_now,],
+    DNR <- transition(season_now, DNR,
                       alpha1=alpha1,alpha2=alpha2,
                       eta1=eta1,eta2=eta2)
+    
     names(DNR) <- nmsDNR
     inv_results[season_now, ] <- DNR # save next year's initial conditions
     
-    DNR <- c(D=c(equil_abund_superior, 0.1),
-             N=c(equil_abund_superior, 0.1), 
+    DNR <- c(D=c(single_spp_results[single_spp_shuffle[season_now],1], rare_abund_inferior),
+             N=c(single_spp_results[single_spp_shuffle[season_now],3], rare_abund_inferior), 
              R=20) # reset initial conditions
   } # next invasion season
   

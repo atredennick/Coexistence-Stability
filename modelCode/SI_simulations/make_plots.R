@@ -89,11 +89,12 @@ strg_eff_comm_cv <- save_seasons %>%
 ##  Read in invasion simulation results; calculate invasion growth rates
 storage_effect_invasions <- readRDS(paste0(results_path,"storage_effect_invasion_runs.RDS"))
 se_invasion_growth_rate  <- list()
+rare_abund_inferior <- 10^-10
 
-for(i in 1:length(storage_effect_sims)){
+for(i in 1:length(storage_effect_invasions)){
   tmp      <- storage_effect_invasions[[i]]
-  tmpr     <- log(tmp[1:nrow(tmp),4] / 0.1)
-  meantmpr <- median(tmpr)
+  tmpr     <- log(tmp[1:nrow(tmp),2] / rare_abund_inferior)
+  meantmpr <- mean(tmpr)
   tmpdf    <- data.frame(rho=storage_effect_varvars[i,"rho"], 
                          sigE=storage_effect_varvars[i,"sigE"], 
                          growth_rate=meantmpr)

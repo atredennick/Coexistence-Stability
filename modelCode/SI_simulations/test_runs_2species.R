@@ -82,7 +82,7 @@ invasion_runs    <- outs[[2]]
 
 matplot(equilibrium_runs[,3:4], type="l")
 
-mean(log(invasion_runs[501:nrow(invasion_runs),4] / 1), na.rm = T)
+mean(log(invasion_runs[,2] / 10^-10), na.rm = T)
 
 hist(invasion_runs[501:nrow(invasion_runs),4])
 
