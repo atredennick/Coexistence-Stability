@@ -352,8 +352,14 @@ In the fluctuation-independent case, species richness is essentially fixed becau
 Therefore, increasing environmental variability will always increase ecosystem variability by increasing the fluctuations of individual species' abundances.
 When coexistence is fluctuation-dependent, however, the outcome is less certain.
 By simulating communities with different species pool sizes across a gradient of environmental variability, we showed that species gains due to increasing environmental variability can buffer the direct effect of environmental variability on ecosystem variability (Figs. 3 and 4).
-These results lead to two conclusions.
 
+\new{One limitation of our model is that we did not include demographic stochasticity, which can lead to stochastic extinction for small populations as environmental  variability increases} [@Boyce1992].
+\new{Previous work has shown how demographic stochasticity and coexistence mechanisms can interact to create a "humped-shape" relationship between coexistence time and environmental variability} [@Adler2008].
+\new{This occurs because environmental variability increases coexistence strength and the probability of stochastic extinction simultaneously.
+We did not consider this potential effect here because our focus was on large populations that would most influence ecosystem functioning.
+However, an interesting extension of our work will be to investigate the role of small populations and demographic stochasticity.}
+
+Overall, our results lead to two conclusions.
 First, when predicting the impacts of increasing environmental variability on ecosystem variability, the mechanism of coexistence matters.
 Fluctuation-dependent coexistence can buffer ecosystems from increasing environmental variability by promoting increased species richness.
 Whether our theoretical predictions hold in real communities is unknown and requires empirical tests.
