@@ -164,13 +164,27 @@ simulate_model <- function(seasons, days_to_track, Rmu,
 } #end simulation function
 ```
 
-\newpage{}
 
 \section{Exploring Parameter Space}
 
-\newpage{}
 
 \section{Eight-Species Storage Effect Model}
+In the main text we constrained our focus to four-species communities because getting more than four species to coexist by relative nonlinearity is tricky, and usually requires adding another coexistence mechanism on top off relative nonlinearity [@Yuan2015].
+The storage effect does not suffer from this limitation, but we wanted our results in the main text to be easily comparable between coexistence mechanisms.
+Here, we show that our results are qualitatively similar if we simulate an eight-species community with species coexistence maintained by the storage effect.
+We conducted the same numerical simulations described in the main text for Figure 2.
+Quoting from the main text:
+
+\begin{quote}
+\emph{First, we allowed the variance of the environment to determine how many species can coexist, akin to a community assembly experiment with a species pool of four species.
+To do this, we simulated communities with all species initially present across a gradient of annual resource variability (for relative nonlinearity) or environmental cue variability (for the storage effect).
+Second, we chose parameter values that allowed coexistence of all four species and then performed species removals, akin to a biodiversity--ecosystem function experiment.
+The two simulation experiments correspond to (i) sampling ecosystem function across a natural gradient of species richness and (ii) sampling ecosystem function across diversity treatments within a site.}
+\end{quote}
+
+From one to four species, the relationship is as presented in the main text: total community *CV* increases approximately linearly with environmental variability because (1) environmental variability promotes species coexistence \emph{and} (2) environmental variability causes populations fluctuations to increase (Figure S1-1).
+However, after four species, the relationship saturates --- species additions due to coexistence by the storage effect completely buffer ecosystem variability from further increases in environmental variability (Figure S1-1).
+Thus, our results provide novel theoretical explanations for positive and flat diversity--ecosystem variability relationships.
 
 \begin{figure}[!ht]
   \centering
