@@ -1,7 +1,6 @@
 #!/bin/bash
 #SBATCH --time=05:00:00
 #SBATCH --nodes=1
-#SBATCH --ntasks=8
 
 #SBATCH --account=adlerp     
 #SBATCH --partition=lonepeak
@@ -22,11 +21,16 @@ export OUT_DIR=$WORK_DIR/results
 # Load R (version 3.2.3)
 module load R/3.2.3.omp.$USER
 
-# Run many serial jobs
+# Run an array of serial jobs
 export OMP_NUM_THREADS=1
 
-for (( i=0; i < $SLURM_TASKS ; i++ )); \
+for (( i=1; i < $SLURM_TASKS_PER_NODE ; i++ )); \
  do echo $i $EXE $WORK_DIR/$FILENAME $i ; \
 done > my.config.$UUFSCELL.$SLURM_JOBID
 
+# Run a task on each core
+cd $WORK_DIR
 srun --multi-prog my.config.$UUFSCELL.$SLURM_JOBID
+
+# Clean-up the root scratch dir
+rm -rf $SCRATCH_DIR
