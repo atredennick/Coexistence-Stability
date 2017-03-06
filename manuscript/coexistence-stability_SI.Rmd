@@ -166,6 +166,57 @@ simulate_model <- function(seasons, days_to_track, Rmu,
 
 
 \section{Exploring Parameter Space}
+In the main text we presented results that most clearly demonstrated our main point, sacrificing some quantitative rigor in terms of exploring the parameter space of the model.
+In many cases, altering model parameters, or making them asymmetric among species, makes coexistence more difficult. For example, as we show in Figure 3 in the main text, imposing competitive hierarchies makes it more difficult for species to coexist, but it does not impact our conclusion that a positive diversity--ecosystem variability relationship is possible.
+We imposed competitive hierarchies by making the live-to-dormant biomass fractions unique for each species, but any parameter that controls population growth would do the same.
+For example, if we make dormant mortality rates assymetric among species we achieve similar results as shown in Figure 3 (Fig. S1-x).
+
+While the results of competitive assymetries among species are rather intuitive, the sensitivity of our results to changes in the absolute values of parameters is less intuitive and requires exploration.
+We took a targeted approach to exploring parameter space by focusing on particular processes.
+First, we examined the sensitivity of our results to parameters that control the strength of each coexistence mechanism.
+Second, we examined the sensitivity of our results to parameters that previous theory have identified as important for the diversity--ecosystem variability relationship.
+We describe each in turn.
+
+\subsection{Parameter sensitivity: coexistence strength}
+For the storage effect, coexistence strength declines as:
+
+1. Environment-competition covariance (*EC* covariance) becomes less positive
+2. Environemntal variation decreases
+3. Buffering of population growth rate declines
+
+Conditions 1 \& 2 are already included in our main analysis because we present results across a spectrum of correlations among species' environmental responses (condition 1) and across gradients of environmental variation (condition 2).
+Here, we show how the patterns described in the main text change as the buffering of populaion growth declines (condition 3).
+We do this by conducting the same simulations as in Figure 3 of the main text, but for one set of live-to-dormant transition rates ($\alpha$s) and with two levels (high and low) of dormant mortality rates ($\eta$s).
+Our results are qualitatively similar: (1) increasing environmental variation allows more species to coexist, creating a positive relationship between species richness and ecosystem variability; (2) and at any given level of environmental variability, it is always better to have more species, creating a within-site negative relationship between species richness and ecosystem variability.
+However, the rate at which species richness buffers ecosystem variability declines as dormant mortality increases (compare curves of each color among top and bottom panels).
+
+For relative nonlinearity, coexistence strength declines as:
+
+1. Variability in population densities, here driven by resource variability, declines
+2. Species' resource uptake curves become more similar
+3. Mean resource level declines
+
+Condition 1 is already included in our main analysis (Figures 2 and 4).
+Condition 2 simply creates conditions where some species cannot coexist, which would not change the relationship between species richness and ecosystem variability, but rather disallow it.
+Condition 3 is more interesting, because it could create situations where species may not coexist, but it could also weakn the diversity--ecosystem variabilty relationship be reducing mean biomass and the effect of species with very nonlinear growth rates.
+To explore the effect of condition 3, we ran simulations across a gradient of resource variability (11 levels) crossed with a gradient of mean resource levels (3 levels).
+
+\subsection{Parameter sensitivity: diversity--ecosystem variability parameters}
+Previous theory [@Loreau2013] identifies three main mechanisms by which diversity can reduce ecosystem variability:
+
+1. Aysnchrony of species' responses to environmental conditions
+2. Reduced mean competition at the community-level
+3. Differences in population growth rates, which differentiates the speed at which species respond to perturbations.
+
+*CV* scaled by the mean, and we don't have demographic stochasticity because we are assuming large populations, so reducing overall competition to get over-yielding doesn't matter here.
+
+\begin{figure}[!ht]
+  \centering
+      \includegraphics[width=4in]{./components/regional_diversity_stability_storage_effect_8species.png}
+  \caption{The effect of increasing environmental variability on ecosystem variability when species coexist via the storage effect. Panels (A-C) show simulation results where species have slightly asymmetrical competitive effects, whereas panels (D-F) show results when competition is more asymmetric. Columns show results for different levels of correlations of species' environmental responses, $\rho$. Colored vertical lines show the magnitude of environmental variability at which each level of species richness first occurs. Parameter values are as in Figure 2A except for $\alpha$s: (A-C) $\alpha_1 = 0.5, \alpha_2 = 0.495, \alpha_3 = 0.49, \alpha_4 = 0.485$; (D-F) $\alpha_1 = 0.5, \alpha_2 = 0.49, \alpha_3 = 0.48, \alpha_4 = 0.47$.}
+\end{figure}
+
+
 
 
 \section{Eight-Species Storage Effect Model}
@@ -189,7 +240,7 @@ Thus, our results provide novel theoretical explanations for positive and flat d
 \begin{figure}[!ht]
   \centering
       \includegraphics[width=4in]{./components/regional_diversity_stability_storage_effect_8species.png}
-  \caption{A storage effect result.}
+  \caption{Variability of total community biomass as a function of species richness when coexistence is maintained by the storage effect. Results are from simulations where environmental variance determines the number species that coexist in a community (e.g., a ``regional'' relationship. Colored points show results from individual simulations and the gray points with connecting line show the mean at each level of environmental variance.}
 \end{figure}
 
 \newpage{}
