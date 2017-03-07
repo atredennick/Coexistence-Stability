@@ -25,7 +25,7 @@ else
      # Copy content SCRIPT_DIR to SCRATCH_DIR
      cp -pR $SCRIPT_DIR/* . 
      Rscript storageeffect_sims_div+envvar_stability_varyetas.R $1 >& rscript$1.out
-     rm storageeffect_sims_div+envvar_stability_varyetas.R
+     rm *.R
 
      # Copy results back to OUT_DIR
      mkdir -p $OUT_DIR
