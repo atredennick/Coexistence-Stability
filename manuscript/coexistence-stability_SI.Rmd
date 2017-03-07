@@ -1,5 +1,5 @@
 ---
-layout: 12pt
+layout: 11pt
 header-includes:
   - \usepackage{lineno}
   - \linenumbers
@@ -21,7 +21,7 @@ output:
     fig_caption: true
     keep_tex: true
     number_sections: true
-fontsize: 12pt
+fontsize: 11pt
 geometry: margin=1in
 linkcolor: black
 urlcolor: black
