@@ -87,7 +87,7 @@ simulate_model <- function(seasons, days_to_track, Rmu,
   getG <- function(sigE, rho, nTime, num_spp) {
     varcov       <- matrix(rep(rho*sigE,num_spp*2), num_spp, num_spp)
     diag(varcov) <- sigE
-    # if(sigE > 0) { varcov <- Matrix::nearPD(varcov)$mat } # crank through nearPD to fix rounding errors 
+    # if(sigE > 0) { varcov <- Matrix::nearPD(varcov)$mat } # crank through nearPD to fix rounding errors
     # varcov <- as.matrix(varcov)
     e      <- rmvnorm(n = nTime, mean = rep(0,num_spp), sigma = varcov)
     g      <- exp(e) / (1+exp(e))
