@@ -189,8 +189,12 @@ For the storage effect, coexistence strength declines as:
 Conditions 1 \& 2 are already included in our main analysis because we present results across a spectrum of correlations among species' environmental responses (condition 1) and across gradients of environmental variation (condition 2).
 Here, we show how the patterns described in the main text change as the buffering of populaion growth declines (condition 3).
 We do this by conducting the same simulations as in Figure 3 of the main text, but for one set of live-to-dormant transition rates ($\alpha$s) and with two levels (high and low) of dormant mortality rates ($\eta$s).
-Our results are qualitatively similar: (1) increasing environmental variation allows more species to coexist, creating a positive relationship between species richness and ecosystem variability; (2) and at any given level of environmental variability, it is always better to have more species, creating a within-site negative relationship between species richness and ecosystem variability.
-However, the rate at which species richness buffers ecosystem variability declines as dormant mortality increases (compare curves of each color among top and bottom panels).
+
+Our results are qualitatively similar: (1) increasing environmental variation allows more species to coexist, creating a positive relationship between species richness and ecosystem variability; (2) and at any given level of environmental variability, it is always better to have more species, creating a within-site negative relationship between species richness and ecosystem variability (Fig. S1-1).
+Although the qualitative patterns are similar, increasing the dormant mortality rate has two interesting effects: (1) it makes coexistence more difficult, (2) it reduces the absolute value of ecosystem *CV* by reducing mean population size a little bit and by reducing the temporal standard deviation a lot, and (3) it weakens the buffering effect of additional species (compare the spread of the lines between top and bottom panels of Fig. S1-1).
+The second result occurs because population fluctuations are reduced when very little biomass can be activated to the live stage at the beginning of each season.
+That is, in terms of an annual plant, germination of live biomass is always a fraction of a very small number.
+The third result is a consequence of the second: populations are not fluctuating that much, so total *CV* can only be reduced by so much with the addition of another species.
 
 \begin{figure}[!ht]
   \centering
@@ -216,7 +220,7 @@ Previous theory [@Loreau2013] identifies three main mechanisms by which diversit
 2. Reduced mean competition at the community-level
 3. Differences in population growth rates, which differentiates the speed at which species respond to perturbations.
 
-*CV* scaled by the mean, and we don't have demographic stochasticity because we are assuming large populations, so reducing overall competition to get over-yielding doesn't matter here.
+*CV* scaled by the mean, and we don't have demographic stochasticity because we are assuming large populations, so reducing overall competition to get over-yielding doesn't matter here...
 
 
 \section{Eight-Species Storage Effect Model}

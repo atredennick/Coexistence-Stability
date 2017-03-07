@@ -111,6 +111,7 @@ for(i in 1:nrow(out_files)) {
                         eta  = prm_full[i,"eta1"],
                         rho  = round(prm_full[i,"rho"],2),
                         sigE = prm_full[i,"sigE"])
+  print(tmp_out)
   sims_summary <- rbind(sims_summary, tmp_out)
 }
 if(nrow(sims_summary) != number_of_files) { stop("WRONG DIMENSIONS;
@@ -151,7 +152,5 @@ ggplot()+
         legend.key.size = unit(0.2, "cm"))+
   guides(colour = guide_legend(override.aes = list(size=1)))
 ggsave(paste0(figures_path, "SI_storage_effect_two_etas.png"), width = 133, height=80, units = "mm", dpi = 600)
-
-
 
 
