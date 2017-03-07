@@ -24,9 +24,8 @@ else
      cd $SCRATCH_DIR
      # Copy content SCRIPT_DIR to SCRATCH_DIR
      cp -pR $SCRIPT_DIR/* . 
-     Rscript sim_storage_effect_growth_rates.R $1
-     rm sim_storage_effect_growth_rates.R
-     rm simulate_model_function_4species.R
+     Rscript storageeffect_sims_div+envvar_stability_varyetas.R $1 >& rscript$1.out
+     rm storageeffect_sims_div+envvar_stability_varyetas.R
 
      # Copy results back to OUT_DIR
      mkdir -p $OUT_DIR
