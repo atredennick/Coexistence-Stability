@@ -171,7 +171,13 @@ simulate_model <- function(seasons, days_to_track, Rmu,
 In the main text we presented results that most clearly demonstrated our main point, sacrificing some quantitative rigor in terms of exploring the parameter space of the model.
 In many cases, altering model parameters, or making them asymmetric among species, makes coexistence more difficult. For example, as we show in Figure 3 in the main text, imposing competitive hierarchies makes it more difficult for species to coexist, but it does not impact our conclusion that a positive diversity--ecosystem variability relationship is possible.
 We imposed competitive hierarchies by making the live-to-dormant biomass fractions unique for each species, but any parameter that controls population growth would do the same.
-For example, if we make dormant mortality rates assymetric among species we achieve similar results as shown in Figure 3 (Fig. S1-x).
+For example, if we make dormant mortality rates assymetric among species we achieve similar results as shown in Figure 3 (Fig. S1-1).
+
+\begin{figure}[!ht]
+  \centering
+      \includegraphics[width=6in]{./components/SI_storage_effect_asymmetric_etas.png}
+  \caption{The effect of increasing environmental variability on ecosystem variability when species coexist via the storage effect. Top panels show simulation results where species have relatively symmetric dormant mortality rates ($\eta_1=0.1, \eta_2=0.115, \eta_3=0.12, \eta_4=0.125$), whereas bottom panels show results with slightly more asymmetric dormant mortality rates ($\eta_1=0.1, \eta_2=0.12, \eta_3=0.13, \eta_4=0.14$). Columns show results for different levels of correlations of species' environmental responses, $\rho = -1/3$ and $\rho = 0$. Colored vertical lines show the magnitude of environmental variability at which each level of species richness first occurs. Parameter values are as in Figure 2A except for $\alpha$s: $\alpha_1 = \alpha_2 = \alpha_3 = \alpha_4 = 0.5$.}
+\end{figure}
 
 While the results of competitive assymetries among species are rather intuitive, the sensitivity of our results to changes in the absolute values of parameters is less intuitive and requires exploration.
 We took a targeted approach to exploring parameter space by focusing on particular processes.
@@ -190,8 +196,8 @@ Conditions 1 \& 2 are already included in our main analysis because we present r
 Here, we show how the patterns described in the main text change as the buffering of populaion growth declines (condition 3).
 We do this by conducting the same simulations as in Figure 3 of the main text, but for one set of live-to-dormant transition rates ($\alpha$s) and with two levels (high and low) of dormant mortality rates ($\eta$s).
 
-Our results are qualitatively similar: (1) increasing environmental variation allows more species to coexist, creating a positive relationship between species richness and ecosystem variability; (2) and at any given level of environmental variability, it is always better to have more species, creating a within-site negative relationship between species richness and ecosystem variability (Fig. S1-1).
-Although the qualitative patterns are similar, increasing the dormant mortality rate has two interesting effects: (1) it makes coexistence more difficult, (2) it reduces the absolute value of ecosystem *CV* by reducing mean population size a little bit and by reducing the temporal standard deviation a lot, and (3) it weakens the buffering effect of additional species (compare the spread of the lines between top and bottom panels of Fig. S1-1).
+Our results are qualitatively similar: (1) increasing environmental variation allows more species to coexist, creating a positive relationship between species richness and ecosystem variability; (2) and at any given level of environmental variability, it is always better to have more species, creating a within-site negative relationship between species richness and ecosystem variability (Fig. S1-2).
+Although the qualitative patterns are similar, increasing the dormant mortality rate has two interesting effects: (1) it makes coexistence more difficult, (2) it reduces the absolute value of ecosystem *CV* by reducing mean population size a little bit and by reducing the temporal standard deviation a lot, and (3) it weakens the buffering effect of additional species (compare the spread of the lines between top and bottom panels of Fig. S1-2).
 The second result occurs because population fluctuations are reduced when very little biomass can be activated to the live stage at the beginning of each season.
 That is, in terms of an annual plant, germination of live biomass is always a fraction of a very small number.
 The third result is a consequence of the second: populations are not fluctuating that much, so total *CV* can only be reduced by so much with the addition of another species.
@@ -199,7 +205,7 @@ The third result is a consequence of the second: populations are not fluctuating
 \begin{figure}[!ht]
   \centering
       \includegraphics[width=6in]{./components/SI_storage_effect_two_etas.png}
-  \caption{The effect of increasing environmental variability on ecosystem variability when species coexist via the storage effect. Top panels show simulation results where species have low dormant mortality rates ($\eta = 0.2$), whereas bottome panels show results with high dormant mortality rates ($\eta = 0.8$). Columns show results for different levels of correlations of species' environmental responses, $\rho = -1/3$ and $\rho = 0$. Colored vertical lines show the magnitude of environmental variability at which each level of species richness first occurs. Parameter values are as in Figure 2A except for $\alpha$s: $\alpha_1 = 0.5, \alpha_2 = 0.495, \alpha_3 = 0.49, \alpha_4 = 0.485$.}
+  \caption{The effect of increasing environmental variability on ecosystem variability when species coexist via the storage effect. Top panels show simulation results where species have low dormant mortality rates ($\eta = 0.2$), whereas bottom panels show results with high dormant mortality rates ($\eta = 0.8$). Columns show results for different levels of correlations of species' environmental responses, $\rho = -1/3$ and $\rho = 0$. Colored vertical lines show the magnitude of environmental variability at which each level of species richness first occurs. Parameter values are as in Figure 2A except for $\alpha$s: $\alpha_1 = 0.5, \alpha_2 = 0.495, \alpha_3 = 0.49, \alpha_4 = 0.485$.}
 \end{figure}
 
 For relative nonlinearity, coexistence strength declines as:
@@ -237,8 +243,8 @@ Second, we chose parameter values that allowed coexistence of all four species a
 The two simulation experiments correspond to (i) sampling ecosystem function across a natural gradient of species richness and (ii) sampling ecosystem function across diversity treatments within a site.}
 \end{quote}
 
-From one to four species, the relationship is as presented in the main text: total community *CV* increases approximately linearly with environmental variability because (1) environmental variability promotes species coexistence \emph{and} (2) environmental variability causes populations fluctuations to increase (Figure S1-1).
-However, after four species, the relationship saturates --- species additions due to coexistence by the storage effect completely buffer ecosystem variability from further increases in environmental variability (Figure S1-1).
+From one to four species, the relationship is as presented in the main text: total community *CV* increases approximately linearly with environmental variability because (1) environmental variability promotes species coexistence \emph{and} (2) environmental variability causes populations fluctuations to increase (Figure S1-x).
+However, after four species, the relationship saturates --- species additions due to coexistence by the storage effect completely buffer ecosystem variability from further increases in environmental variability (Figure S1-x).
 Thus, our results provide novel theoretical explanations for positive and flat diversity--ecosystem variability relationships.
 
 \begin{figure}[!ht]
