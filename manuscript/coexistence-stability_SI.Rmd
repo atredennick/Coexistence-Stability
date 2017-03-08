@@ -217,9 +217,21 @@ For relative nonlinearity, coexistence strength declines as:
 Condition 1 is already included in our main analysis (Figures 2 and 4).
 Condition 2 simply creates conditions where some species cannot coexist, which would not change the relationship between species richness and ecosystem variability, but rather disallow it.
 Condition 3 is more interesting, because it could create situations where species may not coexist, but it could also weaken the diversity--ecosystem variabilty relationship be reducing mean biomass and the effect of species with very nonlinear growth rates.
-To explore the effect of condition 3, we ran simulations across a gradient of resource variability (11 levels) crossed with a gradient of mean resource levels (3 levels).
+To explore the effect of condition 3, we ran simulations across a gradient of resource variability (11 levels) crossed with a gradient of mean resource levels (4 levels: $\mu_R = 1,2,3,4$).
+
+As expected, lower mean levels of resource make coexistence more difficult because resource acquisitive species are never favored (Fig. S1-x).
+Our general conclusion remains, however, that positive diversity--ecosystem variability relationships are possible.
+However, the occurence a of positive diversity--ecosystem variability relationship depends on amount of resource variability being sampled over and the traits of individual species (e.g., resource uptake curves). 
+In other words, the patterns we report in the main text require that species coexistence be possible given the environmental conditions.
+
+\begin{figure}[!ht]
+  \centering
+      \includegraphics[width=6in]{./components/SI_relative_nonlinearity_four_rmus.png}
+  \caption{The effect of environmental variability on ecosystem variability when species coexist via relative nonlinearity. The species pool increases from one to four species, with the fourth species being most unstable (e.g., resource conservative to resource acquisitive). Increasing environmental variability (the SD of annual resource availability) allows for greater species richness, but species additions do not modulate the effect of environmental variability on ecosystem variability. Higher values of mean resource availability (left to right across panels) makes coexistence easier. Parameter values are as in Figure 2C in the main text.}
+\end{figure}
 
 \subsection{Parameter sensitivity: diversity--ecosystem variability parameters}
+\textcolor{red}{THIS SECTION IN PROGRESS...}
 Previous theory [@Loreau2013] identifies three main mechanisms by which diversity can reduce ecosystem variability:
 
 1. Aysnchrony of species' responses to environmental conditions
