@@ -11,9 +11,15 @@
 rm(list=ls())                    # Erase the memory
 fxnfile <- "simulate_model_function_4species.R"
 source(fxnfile)                  # Load the function for the simulations
-require(parallel)                # Load the parallel package
+library(deSolve)
+library(mvtnorm)
+library(Matrix)
 
-nbcores <- 4 # Set number of cores to match machine/simulations
+##  Get simulation id from SLURM
+args <- commandArgs(trailingOnly = F)
+myargument <- args[length(args)]
+myargument <- sub("-","",myargument)
+i <- as.numeric(myargument)
 set.seed(123456789) # Set seed to reproduce random results
 
 ## Define vectors of parameters to vary -- here, initial conditions to vary richness
@@ -25,15 +31,19 @@ DNR <- rbind(c(D=c(1,1,1,1),N=c(1,1,1,1),R=20),
 ## Define vectors of parameters to vary
 n_rsd <- 25 # Number of seasonal standard deviation levels
 rsd_vec <- pretty(seq(0.1, 1.4, length.out=n_rsd), n_rsd) # Make a pretty vector
-prm <- as.data.frame(rsd_vec)
-colnames(prm) <- "Rsd_annual"
+prm <- expand.grid(as.matrix(rsd_vec), 1:4, 1:4)
+DNR_repped <- matrix(rep(DNR,each=(nrow(prm)/nrow(DNR))),ncol=ncol(DNR))
+colnames(prm) <- c("Rsd_annual", "Rmu", "dnr_id")
+colnames(DNR_repped) <- colnames(DNR)
+prm <- cbind(prm, DNR_repped)
+prm_full <- subset(prm, select = -c(dnr_id))
 
 
 ##  Define constant parameters in list
 constant_parameters <- list (
   seasons = 5000,                  # number of seasons to simulate
   days_to_track = 100,             # number of days to simulate in odSolve
-  Rmu = 3,                         # mean resource pulse (on log scale)
+  # Rmu = 3,                         # mean resource pulse (on log scale)
   # Rsd_annual = 1.2,               # std dev of resource pulses (on log scale)
   sigE = 0,                        # environmental cue variance
   rho = 1,                         # environmental cue correlation between species
@@ -56,26 +66,19 @@ grow_parameters <- list (
 )
 
 
+
 # Make on long vector of named parameters
 constant_param_vec <- c(unlist(constant_parameters), unlist(grow_parameters))
 
 
-# Add in variable parameters to form parameter matrix
-DNR_repped <- do.call("rbind", replicate(nrow(prm), DNR,  simplify = FALSE))
-prm_repped <- do.call("rbind", replicate(nrow(DNR), prm,  simplify = FALSE))
-constant_param_matrix <- matrix(constant_param_vec, nrow = nrow(DNR_repped), 
+constant_param_matrix <- matrix(constant_param_vec, nrow = nrow(prm_full), 
                                 ncol=length(constant_param_vec), byrow = TRUE)
 colnames(constant_param_matrix) <- names(constant_param_vec)
-parameter_matrix <- cbind(constant_param_matrix, DNR_repped, prm_repped)
+parameter_matrix <- cbind(constant_param_matrix, prm_full)
 
 
 ##  Run all parameter combinations in paralell
 # Returns list of simulation time series with dims = c(nrow(prm), seasons, length(DNR))
-outs <- mclapply(seq_len(nrow(parameter_matrix)), 
-                 function(i) {
-                   do.call(simulate_model, as.list(parameter_matrix[i,]))
-                 }, 
-                 mc.cores=nbcores) # end apply function
+outs <- do.call(simulate_model, as.list(parameter_matrix[i,]))
 
-saveRDS(outs, "../simulationResults/relnonlin_div+envvar_cv_unstable2stable.RDS")
-
+saveRDS(outs, paste0("relnonlin_div+envvar_cv_unstable2stable_three_Rmus_", i, ".RDS"))
