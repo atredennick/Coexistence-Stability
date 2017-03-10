@@ -69,8 +69,6 @@ grow_parameters <- list (
 
 # Make on long vector of named parameters
 constant_param_vec <- c(unlist(constant_parameters), unlist(grow_parameters))
-
-
 constant_param_matrix <- matrix(constant_param_vec, nrow = nrow(prm_full), 
                                 ncol=length(constant_param_vec), byrow = TRUE)
 colnames(constant_param_matrix) <- names(constant_param_vec)

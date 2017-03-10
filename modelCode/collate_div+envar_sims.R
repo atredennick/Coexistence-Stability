@@ -26,11 +26,11 @@ get_cv <- function(x){
   x <- as.data.frame(x)
   names(x) <- c("D1", "D2", "D3", "D4", "N1", "N2", "N3", "N4", "R")
   livestates <- grep("N", colnames(x))
-  tmp_totbiomass <- rowSums(x[seasons_to_exclude:nrow(x),livestates])
+  tmp_totbiomass <- rowSums(x[seasons_to_exclude:nrow(x),livestates], na.rm = T)
   tmp_cv <- sd(tmp_totbiomass) / mean(tmp_totbiomass)
   tmp_mean <- mean(tmp_totbiomass)
   tmp_sd <- sd(tmp_totbiomass)
-  tmp_sppavg <- colMeans(x[seasons_to_exclude:nrow(x),livestates])
+  tmp_sppavg <- colMeans(x[seasons_to_exclude:nrow(x),livestates], na.rm = T)
   tmp_spprich <- length(which(tmp_sppavg > 1))
   tmp_out <- c(tmp_cv, tmp_spprich, tmp_mean, tmp_sd)
 }
@@ -407,13 +407,13 @@ rnonlin_cvs <- rbind(rnonlin_stable2unstable_cvs, rnonlin_unstable2stable_cvs)
 ##  Calculate initial species richness for each simulation
 rnonlin_cvs$init_spprich <- rowSums(rnonlin_cvs[c("N1","N2","N3","N4")])
 ids_to_keep <- which(rnonlin_cvs$spprichness == rnonlin_cvs$init_spprich)
-rnonlin_cvs_eqrich <- rnonlin_cvs[ids_to_keep,]
+rnonlin_cvs_eqrich <- rnonlin_cvs #[ids_to_keep,]
 
 ##  Summarise by taking mean CV at different realized richness
 rnonlin_cvs_mean_full <- ddply(rnonlin_cvs_eqrich, .(Rsd_annual, spprichness, spporder), 
                                summarise,
                                cv = mean(cv))
-rnonlin_cvs_mean <- subset(rnonlin_cvs_mean_full, Rsd_annual<1.2 & Rsd_annual>0  & spprichness>0 & cv>0)
+rnonlin_cvs_mean <- subset(rnonlin_cvs_mean_full, Rsd_annual<1.2 & Rsd_annual>0  & spprichness>0 & cv>0 & cv<10)
 
 ##  Plot and save
 ## Find species first occurences for lines

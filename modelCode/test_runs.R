@@ -25,32 +25,32 @@ constant_parameters <- list (
   seasons = 500,                  # number of seasons to simulate
   days_to_track = 100,              # number of days to simulate in odSolve
   Rmu = 3,                         # mean resource pulse (on log scale)
-  Rsd_annual = 0,                # std dev of resource pulses (on log scale)
-  sigE = 5,                        # environmental cue variance
-  rho = 0,                         # environmental cue correlation between species
+  Rsd_annual = 0.7,                # std dev of resource pulses (on log scale)
+  sigE = 0,                        # environmental cue variance
+  rho = 1,                         # environmental cue correlation between species
   alpha1 = 0.5,                   # live-to-dormant biomass fraction; spp1
   alpha2 = 0.5,                   # live-to-dormant biomass fraction; spp2
   alpha3 = 0.5,                   # live-to-dormant biomass fraction; spp3
   alpha4 = 0.5,                   # live-to-dormant biomass fraction; spp4
   eta1 = 0.1,                      # dormant mortality; spp1
-  eta2 = 0.11,                      # dormant mortality; spp2
-  eta3 = 0.12,                      # dormant mortality; spp3
-  eta4 = 0.13                      # dormant mortality; spp4
+  eta2 = 0.1,                      # dormant mortality; spp2
+  eta3 = 0.1,                      # dormant mortality; spp3
+  eta4 = 0.1                      # dormant mortality; spp4
 )
 
 # Growth function parameters
-grow_parameters <- list (
-  r = c(1,1,1,1),           # max growth rate for each species
-  a = c(2,2,2,2),           # rate parameter for Hill function
-  b = c(2.5,2.5,2.5,2.5),   # shape parameter for Hill function
-  eps = c(0.5,0.5,0.5,0.5)  # resource-to-biomass efficiency
-)
 # grow_parameters <- list (
-#   r   = c(0.2,1.0,2.0,5.0), # max growth rate for each species
-#   a   = c(2,5,10,25),       # rate parameter for Hill function 
-#   b   = c(2.5,20,30,45),    # shape parameter for Hill function
+#   r = c(1,1,1,1),           # max growth rate for each species
+#   a = c(2,2,2,2),           # rate parameter for Hill function
+#   b = c(2.5,2.5,2.5,2.5),   # shape parameter for Hill function
 #   eps = c(0.5,0.5,0.5,0.5)  # resource-to-biomass efficiency
 # )
+grow_parameters <- list (
+  r   = c(0.2,1.0,2.0,5.0), # max growth rate for each species
+  a   = c(2,5,10,25),       # rate parameter for Hill function
+  b   = c(2.5,20,30,45),    # shape parameter for Hill function
+  eps = c(0.5,0.5,0.5,0.5)  # resource-to-biomass efficiency
+)
 
 
 # Make on long vector of named parameters

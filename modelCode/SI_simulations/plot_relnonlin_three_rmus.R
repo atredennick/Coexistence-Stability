@@ -46,7 +46,7 @@ get_cv <- function(x, seasons_to_exclude){
   x <- as.data.frame(x)
   names(x)       <- c("D1", "D2", "D3", "D4", "N1", "N2", "N3", "N4", "R")
   livestates     <- grep("N", colnames(x))
-  tmp_totbiomass <- rowSums(x[seasons_to_exclude:nrow(x),livestates])
+  tmp_totbiomass <- rowSums(x[seasons_to_exclude:nrow(x),livestates], na.rm = TRUE)
   tmp_cv         <- sd(tmp_totbiomass) / mean(tmp_totbiomass)
   tmp_mean       <- mean(tmp_totbiomass)
   tmp_sd         <- sd(tmp_totbiomass)
@@ -111,10 +111,12 @@ if(nrow(sims_summary) != number_of_files1) { stop("WRONG DIMENSIONS;
                                                  CHECK OUTPUT") }
 
 # Calculate mean CV at different realized richness
+torms <- which(is.nan(sims_summary$cv))
+sims_summary <- sims_summary[-torms,]
 cv_means_su <- sims_summary %>%
   group_by(Rmu, Rsd, num_species) %>%
-  summarise(avg_cv = mean(cv)) %>%
-  filter(num_species>0 & avg_cv<10)
+  summarise(avg_cv = mean(cv))  %>%
+  filter(num_species>0 & avg_cv<5 & avg_cv>0)
 
 cv_means_su$Rmu <- paste0("Rmu = ", cv_means_su$Rmu)
 
@@ -123,6 +125,9 @@ firstones_su <- cv_means_su %>%
   group_by(Rmu, num_species) %>%
   summarise(Rsd = min(Rsd),
             cv = avg_cv[which.min(Rsd)])
+
+
+
 
 
 
@@ -169,8 +174,8 @@ for(i in 1:nrow(out_files)) {
   tmp_sim <- readRDS(paste0(results_path2, out_files[i,1]))
   tmp_cv  <- get_cv(tmp_sim, seasons_to_exclude)
   tmp_out <- data.frame(tmp_cv,
-                        Rmu  = prm_full[i,"Rmu"],
-                        Rsd  = prm_full[i,"Rsd_annual"])
+                        Rmu  = prm_full[out_files[i,2],"Rmu"],
+                        Rsd  = prm_full[out_files[i,2],"Rsd_annual"])
   sims_summary <- rbind(sims_summary, tmp_out)
 }
 if(nrow(sims_summary) != number_of_files2) { stop("WRONG DIMENSIONS;
@@ -180,7 +185,7 @@ if(nrow(sims_summary) != number_of_files2) { stop("WRONG DIMENSIONS;
 cv_means <- sims_summary %>%
   group_by(Rmu, Rsd, num_species) %>%
   summarise(avg_cv = mean(cv)) %>%
-  filter(num_species>0 & avg_cv<10)
+  filter(num_species>0 & avg_cv<5 & avg_cv>0)
 
 cv_means$Rmu <- paste0("Rmu = ", cv_means$Rmu)
 
@@ -190,6 +195,18 @@ firstones <- cv_means %>%
   summarise(Rsd = min(Rsd),
             cv = avg_cv[which.min(Rsd)])
 
+
+
+####
+####  COMBINE RESULTS ----
+####
+cv_means$spporder <- "unstable2stable"
+cv_means_su$spporder <- "stable2unsable"
+firstones$spporder <- "unstable2stable"
+firstones_su$spporder <- "stable2unsable"
+
+cv_means <- rbind(cv_means, cv_means_su)
+firstones <- rbind(firstones, firstones_su)
 
 
 ####
@@ -203,7 +220,7 @@ ggplot()+
   scale_color_brewer(palette = "Set2", name = "Species\nRichness")+
   xlab(expression(paste("Standard deviation of resource (",sigma[R], ")")))+
   ylab("CV of Community Biomass")+
-  facet_grid(.~Rmu, scales = "free_y")+
+  facet_grid(spporder~Rmu, scales = "free_y")+
   my_theme+
   # theme(legend.position = c(0.93, 0.155))+
   theme(legend.title=element_text(size=6, face="bold"),
@@ -212,4 +229,4 @@ ggplot()+
         legend.key = element_blank(),
         legend.key.size = unit(0.2, "cm"))+
   guides(colour = guide_legend(override.aes = list(size=1)))
-ggsave(paste0(figures_path, "SI_relative_nonlinearity_four_rmus.png"), width = 160, height=60, units = "mm", dpi = 600)
+# ggsave(paste0(figures_path, "SI_relative_nonlinearity_four_rmus.png"), width = 160, height=60, units = "mm", dpi = 600)
