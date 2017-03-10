@@ -113,5 +113,14 @@ ggplot()+
   theme_bw()+
   my_theme
 fig.width <- 133/2
-ggsave(paste0(path2figs,"regional_diversity_stability_storage_effect_8species.png"), width = fig.width, height = 60, units = "mm", dpi = 200)
+# ggsave(paste0(path2figs,"regional_diversity_stability_storage_effect_8species.png"), width = fig.width, height = 60, units = "mm", dpi = 200)
+
+
+
+
+##############                                      #################
+##############  SECOND PART -- FROM HPC SAVED FILES #################
+##############                                      #################
+
+
 

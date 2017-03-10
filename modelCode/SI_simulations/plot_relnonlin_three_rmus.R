@@ -17,10 +17,12 @@ rm(list=ls(all.names = TRUE))
 library(tidyverse)
 library(ggthemes)
 library(dplyr)
-results_path       <- "../../simulationResults/SI_results/relnonlin_four_rmus/"
-figures_path       <- "../../manuscript/components/"
-seasons_to_exclude <- 500
-number_of_files    <- length(grep("*.RDS", list.files(results_path)))
+results_path1       <- "../../simulationResults/SI_results/relnonlin_four_rmus/"
+results_path2       <- "../../simulationResults/SI_results/relnonlin_four_rmus_unstable2stable/"
+figures_path        <- "../../manuscript/components/"
+seasons_to_exclude  <- 500
+number_of_files1    <- length(grep("*.RDS", list.files(results_path1)))
+number_of_files2    <- length(grep("*.RDS", list.files(results_path2)))
 
 
 
@@ -60,7 +62,7 @@ get_cv <- function(x, seasons_to_exclude){
 
 
 ####
-####  RECREATE PARAMETER GRID ----
+####  RECREATE PARAMETER GRID (STABLE TO USTABLE) ----
 ####
 DNR <- rbind(c(D=c(1,1,1,1),N=c(1,1,1,1),R=20),
              c(D=c(1,1,1,0),N=c(1,1,1,0),R=20),
@@ -78,7 +80,7 @@ prm <- cbind(prm, DNR_repped)
 prm_full <- subset(prm, select = -c(dnr_id))
 
 
-if(dim(prm_full)[1] != number_of_files) { stop("WRONG DIMENSIONS; 
+if(dim(prm_full)[1] != number_of_files1) { stop("WRONG DIMENSIONS; 
                                                CHECK PARAMETER MATRIX") }
 
 
@@ -86,7 +88,7 @@ if(dim(prm_full)[1] != number_of_files) { stop("WRONG DIMENSIONS;
 ####
 ####  SUMMARIZE RESULTS ----
 ####
-out_files <- as.data.frame(list.files(results_path)[grep("*.RDS", list.files(results_path))]) 
+out_files <- as.data.frame(list.files(results_path1)[grep("*.RDS", list.files(results_path1))]) 
 colnames(out_files) <- "file"
 suppressWarnings(
   out_files_sep <- out_files %>%
@@ -98,14 +100,80 @@ out_files <- data.frame(out_files, id = as.numeric(out_files_sep[,"id"])) %>%
   
 sims_summary <- list() # empty storage
 for(i in 1:nrow(out_files)) {
-  tmp_sim <- readRDS(paste0(results_path, out_files[i,1]))
+  tmp_sim <- readRDS(paste0(results_path1, out_files[i,1]))
   tmp_cv  <- get_cv(tmp_sim, seasons_to_exclude)
   tmp_out <- data.frame(tmp_cv,
                         Rmu  = prm_full[i,"Rmu"],
                         Rsd  = prm_full[i,"Rsd_annual"])
   sims_summary <- rbind(sims_summary, tmp_out)
 }
-if(nrow(sims_summary) != number_of_files) { stop("WRONG DIMENSIONS;
+if(nrow(sims_summary) != number_of_files1) { stop("WRONG DIMENSIONS;
+                                                 CHECK OUTPUT") }
+
+# Calculate mean CV at different realized richness
+cv_means_su <- sims_summary %>%
+  group_by(Rmu, Rsd, num_species) %>%
+  summarise(avg_cv = mean(cv)) %>%
+  filter(num_species>0 & avg_cv<10)
+
+cv_means_su$Rmu <- paste0("Rmu = ", cv_means_su$Rmu)
+
+# Find species first occurences for lines
+firstones_su <- cv_means_su %>%
+  group_by(Rmu, num_species) %>%
+  summarise(Rsd = min(Rsd),
+            cv = avg_cv[which.min(Rsd)])
+
+
+
+####
+####  RECREATE PARAMETER GRID (USTABLE TO STABLE) ----
+####
+DNR <- rbind(c(D=c(1,1,1,1),N=c(1,1,1,1),R=20),
+             c(D=c(1,1,1,0),N=c(1,1,1,0),R=20),
+             c(D=c(1,1,0,0),N=c(1,1,0,0),R=20),
+             c(D=c(1,0,0,0),N=c(1,0,0,0),R=20))
+
+## Define vectors of parameters to vary
+n_rsd <- 25 # Number of seasonal standard deviation levels
+rsd_vec <- pretty(seq(0.1, 1.4, length.out=n_rsd), n_rsd) # Make a pretty vector
+prm <- expand.grid(as.matrix(rsd_vec), 1:4, 1:4)
+DNR_repped <- matrix(rep(DNR,each=(nrow(prm)/nrow(DNR))),ncol=ncol(DNR))
+colnames(prm) <- c("Rsd_annual", "Rmu", "dnr_id")
+colnames(DNR_repped) <- colnames(DNR)
+prm <- cbind(prm, DNR_repped)
+prm_full <- subset(prm, select = -c(dnr_id))
+
+
+if(dim(prm_full)[1] != number_of_files2) { stop("WRONG DIMENSIONS; 
+                                               CHECK PARAMETER MATRIX") }
+
+
+
+####
+####  SUMMARIZE RESULTS ----
+####
+out_files <- as.data.frame(list.files(results_path2)[grep("*.RDS", list.files(results_path2))]) 
+colnames(out_files) <- "file"
+suppressWarnings(
+  out_files_sep <- out_files %>%
+    separate(file, into = c("sc1", "sc2", "sc3", "sc4", "sc5", "sc6", "sc7", "id"))
+)
+out_files <- data.frame(out_files, id = as.numeric(out_files_sep[,"id"])) %>%
+  arrange(id)
+
+# which(!(1:432 %in% out_files$id))
+
+sims_summary <- list() # empty storage
+for(i in 1:nrow(out_files)) {
+  tmp_sim <- readRDS(paste0(results_path2, out_files[i,1]))
+  tmp_cv  <- get_cv(tmp_sim, seasons_to_exclude)
+  tmp_out <- data.frame(tmp_cv,
+                        Rmu  = prm_full[i,"Rmu"],
+                        Rsd  = prm_full[i,"Rsd_annual"])
+  sims_summary <- rbind(sims_summary, tmp_out)
+}
+if(nrow(sims_summary) != number_of_files2) { stop("WRONG DIMENSIONS;
                                                  CHECK OUTPUT") }
 
 # Calculate mean CV at different realized richness
