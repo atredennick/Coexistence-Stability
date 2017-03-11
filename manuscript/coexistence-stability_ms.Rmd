@@ -388,6 +388,22 @@ Just as declines in local species richness can destabilize ecosystem functioning
 @Wang2014 show that regional ecosystem variability depends on regional biodiversity through its effects on beta diversity and, in turn, the asynchrony of functioning in local communities.
 Our results show that, when coexistence is fluctuation-dependent, regional biodiversity declines could also affect local ecosystem functioning by limiting local colonization events that could be possible under scenarios of increasing environmental variability (Fig. 5).
 
+LIMITATIONS AND CONCLUSIONS
+---------------------------
+\new{What we have presented here is clearly just a beginning.
+Theoretical explorations of the diversity--ecosystem variability relationship over the past three decades have highlighted numerous context-dependent processes that determine how much diversity can buffer ecosystem variability, and we have added another wrinkle.
+To make our current analysis tractable, we ignored several potentially important processes and phenomena.
+For example, we assumed all species pairs have the same environmental response correlations (e.g., $\rho_{ij} = \rho$), which is clearly not true in nature and can mediate the impact of dominant species on ecosystem variability} [@Thibaut2013].
+\new{We also limited our analysis to four-species communities so we could easily compare the storage effect and relative nonlinearity.
+Although our initial results suggest more species rich communities continue to buffer ecosystem variability under the storage effect (Fig. S1-x), future research should focus specifically on the storage effect to elaborate on our initial findings.
+Lastly, we ignored demographic stochasticity, assuming our species had a generous seed source to bounce back from low population density.
+But this need not be the case, and increasing environmental variability may threaten small populations even as it promotes coexistence of new species.
+This dynamic may be especially relevant to applied work because habitat fragmentation and increasing environmental variability are likely to happen together.} 
+
+\new{Perhaps most important will be linking our results from a specific mechanistic model to more general quantitative frameworks.
+Using a very general model,} @Thibaut2013 \new{show that positive diversity--ecosystem variability relationships are possible.
+Specifically, ...}
+
 
 ACKNOWLEDGMENTS
 ---------------
