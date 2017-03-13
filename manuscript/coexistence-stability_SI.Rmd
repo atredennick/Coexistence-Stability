@@ -29,8 +29,8 @@ urlcolor: black
 
 \newcommand{\tikzcircle}[2][red,fill=red]{\tikz[baseline=-0.5ex]\draw[#1,radius=#2] (0,0) circle ;}
 \renewcommand\linenumberfont{\normalfont\tiny\sffamily\color{gray}}
-\renewcommand\thefigure{S1-\arabic{figure}}  
-\renewcommand\thetable{S1-\arabic{table}}  
+\renewcommand\thefigure{SI-\arabic{figure}}  
+\renewcommand\thetable{SI-\arabic{table}}  
 \renewcommand\thesection{Section SI.\arabic{section}}
 
 \begin{center}
@@ -179,7 +179,7 @@ In the main text we did explore some parameter space by conducting simulations a
 In many cases, altering model parameters, or making them asymmetric among species, makes coexistence more difficult. 
 For example, as we show in Figure 3 in the main text, imposing competitive hierarchies makes it more difficult for species to coexist, but it does not impact our conclusion that a positive diversity--ecosystem variability relationship is possible.
 We imposed competitive hierarchies by making the live-to-dormant biomass fractions unique for each species, but any parameter that controls population growth would do the same.
-For example, if we make dormant mortality rates assymetric among species we achieve similar results as shown in Figure 3 (Fig. S1-1).
+For example, if we make dormant mortality rates assymetric among species we achieve similar results as shown in Figure 3 (Fig. SI-1).
 
 \begin{figure}[!ht]
   \centering
@@ -187,7 +187,7 @@ For example, if we make dormant mortality rates assymetric among species we achi
   \caption{The effect of increasing environmental variability on ecosystem variability when species coexist via the storage effect. Top panels show simulation results where species have relatively symmetric dormant mortality rates ($\eta_1=0.1, \eta_2=0.115, \eta_3=0.12, \eta_4=0.125$), whereas bottom panels show results with slightly more asymmetric dormant mortality rates ($\eta_1=0.1, \eta_2=0.12, \eta_3=0.13, \eta_4=0.14$). Columns show results for different levels of correlations of species' environmental responses, $\rho = -1/3$ and $\rho = 0$. Colored vertical lines show the magnitude of environmental variability at which each level of species richness first occurs. Parameter values are as in Figure 2A except for $\alpha$s: $\alpha_1 = \alpha_2 = \alpha_3 = \alpha_4 = 0.5$.}
 \end{figure}
 
-This result (Fig. S1-x and Figure 3 in the main text) reinforces the notion that our conclusion about a positive diversity--ecosystem variability relationship is contingent upon the regional community consisting of species that *can* coexist at some level of observable environmental variance.
+This result (Fig. SI-1 and Figure 3 in the main text) reinforces the notion that our conclusion about a positive diversity--ecosystem variability relationship is contingent upon the regional community consisting of species that *can* coexist at some level of observable environmental variance.
 In other words, if there is no species that can take advantage of more variable conditions, then fluctuation-dependent coexistence is not possible and neither are the results we present in the main text.
 
 While the results of competitive assymetries among species are rather intuitive, the sensitivity of our results to changes in the absolute values of parameters is less intuitive and requires exploration.
@@ -205,8 +205,8 @@ Conditions 1 \& 2 are already included in our main analysis because we present r
 Here, we show how the patterns described in the main text change as the buffering of populaion growth declines (condition 3).
 We do this by conducting the same simulations as in Figure 3 of the main text, but for one set of live-to-dormant transition rates ($\alpha$s) and with two levels (high and low) of dormant mortality rates ($\eta$s).
 
-Our results are qualitatively similar: (1) increasing environmental variation allows more species to coexist, creating a positive relationship between species richness and ecosystem variability (richness increases along x-axes within panels); (2) and at any given level of environmental variability, it is always better to have more species, creating a within-site negative relationship between species richness and ecosystem variability (Fig. S1-2).
-Although the qualitative patterns are similar, increasing the dormant mortality rate has two interesting effects: (1) it makes coexistence more difficult, (2) it reduces the absolute value of ecosystem *CV* by reducing mean population size a little bit and by reducing the temporal standard deviation a lot, and (3) it weakens the buffering effect of additional species (compare the spread of the lines between top and bottom panels of Fig. S1-2).
+Our results are qualitatively similar: (1) increasing environmental variation allows more species to coexist, creating a positive relationship between species richness and ecosystem variability (richness increases along x-axes within panels); (2) and at any given level of environmental variability, it is always better to have more species, creating a within-site negative relationship between species richness and ecosystem variability (Fig. SI-2).
+Although the qualitative patterns are similar, increasing the dormant mortality rate has two interesting effects: (1) it makes coexistence more difficult, (2) it reduces the absolute value of ecosystem *CV* by reducing mean population size a little bit and by reducing the temporal standard deviation a lot, and (3) it weakens the buffering effect of additional species (compare the spread of the lines between top and bottom panels of Fig. SI-2).
 The second result occurs because population fluctuations are reduced when very little biomass can be activated to the live stage at the beginning of each season.
 That is, in terms of an annual plant, germination of live biomass is always a fraction of a very small number.
 The third result is a consequence of the second: populations are not fluctuating that much, so total *CV* can only be reduced by so much with the addition of another species.
@@ -229,7 +229,7 @@ Condition 2 simply creates conditions where some species cannot coexist, which w
 Condition 3 is more interesting, because it could create situations where species may not coexist, but it could also weaken the diversity--ecosystem variabilty relationship be reducing mean biomass and the effect of species with very nonlinear growth rates.
 To explore the effect of condition 3, we ran simulations across a gradient of resource variability (11 levels) crossed with a gradient of mean resource levels (4 levels: $\mu_R = 1,2,3,4$).
 
-As expected, lower mean levels of resource make coexistence more difficult because resource acquisitive species are never favored (Fig. S1-3).
+As expected, lower mean levels of resource make coexistence more difficult because resource acquisitive species are never favored (Fig. SI-3).
 Our general conclusion remains, however, that positive diversity--ecosystem variability relationships are possible.
 However, the occurence a of positive diversity--ecosystem variability relationship depends on amount of resource variability being sampled over and the traits of individual species (e.g., resource uptake curves). 
 In other words, the patterns we report in the main text require that fluctuation-dependent species coexistence be possible given the environmental conditions and species' traits.
@@ -270,12 +270,12 @@ The two simulation experiments correspond to (i) sampling ecosystem function acr
 
 \begin{figure}[!ht]
   \centering
-      \includegraphics[width=3in]{./components/regional_diversity_stability_storage_effect_8species.png}
-  \caption{Variability of total community biomass as a function of species richness when coexistence is maintained by the storage effect. Results are from simulations where environmental variance determines the number species that coexist in a community (e.g., a ``regional'' relationship. Colored points show results from individual simulations and the gray points with connecting line show the mean at each level of environmental variance.}
+      \includegraphics[width=6in]{./components/SI_storage_effect_eightspp_local_regional.png}
+  \caption{Variability of total community biomass as a function of species richness when coexistence is maintained by the storage effect. The left panel shows results from simulations where environmental cue variance determines the number species that coexist in a community. The right panel shows results from simulations where environmental cuie variance is fixed at a level that allows coexistence of all eight species, but species are removed to manipulate diversity. The left-hand panel represents a ``regional'' diversity--ecosystem variability relationship across a natural diversity gradient, whereas the right-hand panel represents a ``local'' diversity--ecosystem variability relationship. Points are jittered within discrete richness values for visual clarity.}
 \end{figure}
 
-From one to four species, the relationship is as presented in the main text: total community *CV* increases approximately linearly with environmental variability because (1) environmental variability promotes species coexistence \emph{and} (2) environmental variability causes populations fluctuations to increase (Figure S1-4).
-However, after four species, the relationship saturates --- species additions due to coexistence by the storage effect completely buffer ecosystem variability from further increases in environmental variability (Figure S1-4).
+From one to four species, the relationship is as presented in the main text: total community *CV* increases approximately linearly with environmental variability because (1) environmental variability promotes species coexistence \emph{and} (2) environmental variability causes populations fluctuations to increase (Figure SI-4).
+However, after four species, the relationship saturates --- species additions due to coexistence by the storage effect completely buffer ecosystem variability from further increases in environmental variability (Figure SI-4).
 Thus, our results provide novel theoretical explanations for positive and flat diversity--ecosystem variability relationships.
 
 
@@ -304,8 +304,24 @@ Thus, our results provide novel theoretical explanations for positive and flat d
 
 \begin{figure}[!ht]
   \centering
+      \includegraphics[width=5in]{./components/SI_temp_means_sds_local.png}
+  \caption{Temporal means and standarad deviations of total community biomass at each level of species richness. Values come from the simulations represented in the main text Figure 2B (storage effect) and Figure 2D (relative nonlinearity). These plots show how the components of the coefficient of variability change with species richness at a given level of environmental variability (e.g., a ``local'' diversity--ecosystem variability relationship).}
+\end{figure}
+
+\newpage{}
+
+\begin{figure}[!ht]
+  \centering
       \includegraphics[width=5in]{./components/storage_effect_div+envar_varycomp_loglog_slopes.png}
   \caption{Slopes of linear fits for the relationship between log(\emph{CV}) and log($\sigma_E$) at different levels of realized species richness from storage effect simulations. The slopes come from linear models fit to log-transformed versions of Figure 3 in the main text. For these simulations, ``symmetric competion'' (\tikzcircle{1.5pt}) refers to similar live-to-dormant biomass allocation fractions ($\boldsymbol{\alpha} = [0.5, 0.495, 0.49, 0.485]$ for the four species), and ``asymmetric competition'' (\tikzcircle[fill=blue]{1.5pt}) refers to more dissimilar live-to-dormant biomass allocation fractions ($\boldsymbol{\alpha} = [0.5, 0.49, 0.48, 0.47]$ for the four species).}
+\end{figure}
+
+\newpage{}
+
+\begin{figure}[!ht]
+  \centering
+      \includegraphics[width=5in]{./components/SI_storage_effect_two_rmus_fourSpeciesOnly.png}
+  \caption{Ecosystem \emph{CV} of a four-species community as a function of environmental cue variance at two levels of mean resource availability (\texttt{Rmu} across tops of panels) and two levels of correlation of species' responses to environmental conditions ($\rho$). Here we simualted community dynamics across a greater range of environmental cue variance (up to 10) to show that the \emph{CV} of four-species communities does not remain flat as environmental variance increases beyond levels shown in the main text. The mean resource level has no effect on the results.}
 \end{figure}
 
 \newpage{}
@@ -316,13 +332,7 @@ Thus, our results provide novel theoretical explanations for positive and flat d
   \caption{Slopes of linear fits for the relationship between log(\emph{CV}) and log($\sigma_R$) at different levels of realized species richness from relative nonlinearity simulations. The slopes come from linear models fit to log-transformed versions of Figure 4 in the main text.}
 \end{figure}
 
-\newpage{}
 
-\begin{figure}[!ht]
-  \centering
-      \includegraphics[width=5in]{./components/SI_storage_effect_two_rmus_fourSpeciesOnly.png}
-  \caption{Ecosystem \emph{CV} of a four-species community as a function of environmental cue variance at two levels of mean resource availability (\texttt{Rmu} across tops of panels) and two levels of correlation of species' responses to environmental conditions ($\rho$). Here we simualted community dynamics across a greater range of environmental cue variance (up to 10) to show that the \emph{CV} of four-species communities does not remain flat as environmental variance increases beyond levels shown in the main text. The mean resource level has no effect on the results.}
-\end{figure}
 
 \newpage{}
 
