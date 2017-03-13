@@ -435,16 +435,16 @@ TABLE
 Parameter & Description & Value \\
 \hline
 $r$ & maximum per capita growth rate & 0.2 (variable) \\
-$a$ & Hill function rate parameter & 2 (variable) \\
+$a$ & Hill function rate parameter & 2.0 (variable) \\
 $b$ & Hill function curvature parameter & 2.5 (variable) \\
 $\epsilon$ & resource-to-biomass conversion efficiency & 0.5 \\
 $\alpha$ & allocation fraction of live biomass to dormant biomass & 0.5 (variable) \\
-$\gamma$ & dormant-to-live biomass transition fraction & n.a. \\
-$\rho$ & correlation of species' response to the environment & 0 (variable) \\
-$\sigma_E$ & variance of the environmental cue & 2 (variable) \\
+$\gamma$ & dormant-to-live biomass transition fraction & --- \\
+$\rho$ & correlation of species' response to the environment & 0.0 (variable) \\
+$\sigma_E$ & variance of the environmental cue & 2.0 (variable) \\
 $\eta$ & dormant biomass mortality rate & 0.1 \\
 $\mu(R^+)$ & mean annual resource pulse & 20 \\
-$\sigma(R^+)$ & standard deviation of annual resource pulse & 0 (variable) \\
+$\sigma(R^+)$ & standard deviation of annual resource pulse & 0.0 (variable) \\
 \hline
 \end{tabular}
 \end{table}
