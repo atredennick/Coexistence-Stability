@@ -52,10 +52,14 @@ constant_parameters <- list (
   Rsd_annual = 0,                  # std dev of resource pulses (on log scale)
   # sigE = 4,                        # environmental cue variance
   rho = 0,                        # environmental cue correlation between species
-  alpha1 = 0.50,                   # live-to-dormant biomass fraction; spp1
-  alpha2 = 0.495,                   # live-to-dormant biomass fraction; spp2
-  alpha3 = 0.490,                   # live-to-dormant biomass fraction; spp3
-  alpha4 = 0.485                    # live-to-dormant biomass fraction; spp4
+  alpha1 = 0.5,                    # live-to-dormant biomass fraction; spp1
+  alpha2 = 0.495,                  # live-to-dormant biomass fraction; spp2
+  alpha3 = 0.49,                   # live-to-dormant biomass fraction; spp3
+  alpha4 = 0.485,                  # live-to-dormant biomass fraction; spp4
+  eta1 = 0.1,                      # dormant mortality; spp1
+  eta2 = 0.1,                      # dormant mortality; spp2
+  eta3 = 0.1,                      # dormant mortality; spp3
+  eta4 = 0.1                       # dormant mortality; spp4
 )
 
 # Growth function parameters
