@@ -50,7 +50,7 @@ get_cv <- function(x, seasons_to_exclude){
   tmp_cv         <- sd(tmp_totbiomass) / mean(tmp_totbiomass)
   tmp_mean       <- mean(tmp_totbiomass)
   tmp_sd         <- sd(tmp_totbiomass)
-  tmp_sppavg     <- colMeans(x[seasons_to_exclude:nrow(x),livestates])
+  tmp_sppavg     <- colMeans(x[seasons_to_exclude:nrow(x),livestates], na.rm = TRUE)
   tmp_spprich    <- length(which(tmp_sppavg > 1))
   
   tmp_out <- data.frame(cv              = tmp_cv, 
@@ -71,7 +71,7 @@ DNR <- rbind(c(D=c(1,1,1,1),N=c(1,1,1,1),R=20),
 
 ## Define vectors of parameters to vary
 n_rsd <- 25 # Number of seasonal standard deviation levels
-rsd_vec <- pretty(seq(0.1, 1.4, length.out=n_rsd), n_rsd) # Make a pretty vector
+rsd_vec <- pretty(seq(0.1, 1.2, length.out=n_rsd), n_rsd) # Make a pretty vector
 prm <- expand.grid(as.matrix(rsd_vec), 1:4, 1:4)
 DNR_repped <- matrix(rep(DNR,each=(nrow(prm)/nrow(DNR))),ncol=ncol(DNR))
 colnames(prm) <- c("Rsd_annual", "Rmu", "dnr_id")
@@ -80,8 +80,7 @@ prm <- cbind(prm, DNR_repped)
 prm_full <- subset(prm, select = -c(dnr_id))
 
 
-if(dim(prm_full)[1] != number_of_files1) { stop("WRONG DIMENSIONS; 
-                                               CHECK PARAMETER MATRIX") }
+if(dim(prm_full)[1] != number_of_files1) { stop("WRONG DIMENSIONS; CHECK PARAMETER MATRIX") }
 
 
 
@@ -107,8 +106,10 @@ for(i in 1:nrow(out_files)) {
                         Rsd  = prm_full[i,"Rsd_annual"])
   sims_summary <- rbind(sims_summary, tmp_out)
 }
-if(nrow(sims_summary) != number_of_files1) { stop("WRONG DIMENSIONS;
-                                                 CHECK OUTPUT") }
+if(nrow(sims_summary) != number_of_files1) { stop("WRONG DIMENSIONS; CHECK OUTPUT") }
+
+tester <- cbind(sims_summary, DNR_repped)
+
 
 # Calculate mean CV at different realized richness
 torms <- which(is.nan(sims_summary$cv))
@@ -116,7 +117,8 @@ sims_summary <- sims_summary[-torms,]
 cv_means_su <- sims_summary %>%
   group_by(Rmu, Rsd, num_species) %>%
   summarise(avg_cv = mean(cv))  %>%
-  filter(num_species>0 & avg_cv<5 & avg_cv>0)
+  #filter(num_species>0 & avg_cv<5 & avg_cv>0)
+  filter(num_species>0)
 
 cv_means_su$Rmu <- paste0("Rmu = ", cv_means_su$Rmu)
 
@@ -125,6 +127,14 @@ firstones_su <- cv_means_su %>%
   group_by(Rmu, num_species) %>%
   summarise(Rsd = min(Rsd),
             cv = avg_cv[which.min(Rsd)])
+
+
+ggplot()+
+  geom_segment(data=firstones_su, aes(x=Rsd, y=cv, xend=Rsd, yend=0, color=as.factor(num_species)), size=0.5, alpha=0.7)+
+  geom_line(data=cv_means_su, aes(x=Rsd, y=avg_cv, color=as.factor(num_species)), size=0.7, alpha=0.7)+
+  geom_point(data=cv_means_su, aes(x=Rsd, y=avg_cv, color=as.factor(num_species)), size=1.5, alpha=1)+
+  geom_point(data=cv_means_su, aes(x=Rsd, y=avg_cv, color=as.factor(num_species)), size=1.5, alpha=1, shape=1, color="grey40")+
+  facet_grid(.~Rmu)
 
 
 
