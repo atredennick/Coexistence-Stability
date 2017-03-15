@@ -9,7 +9,7 @@ source(fxnfile)                  # Load the function for the simulations
 require(parallel)                # Load the parallel package
 
 nbcores <- 4 # Set number of cores to match machine/simulations
-# set.seed(123456789) # Set seed to reproduce random results
+# set.seed(12345678) # Set seed to reproduce random results
 
 ## Define vectors of parameters to vary
 # Initial conditions
@@ -19,7 +19,7 @@ nbcores <- 4 # Set number of cores to match machine/simulations
 #              c(D=c(1,1,0,0),N=c(1,1,0,0),R=20),
 #              c(D=c(1,0,0,0),N=c(1,0,0,0),R=20))
 DNR <- rbind(c(D=c(1,1,1,1),N=c(1,1,1,1),R=20))
-set.seed(12345678)
+set.seed(123456789)
 
 ##  Define constant parameters in list
 constant_parameters <- list (

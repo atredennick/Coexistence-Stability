@@ -27,6 +27,7 @@ simulate_model <- function(seasons, days_to_track, Rmu,
   
   require('deSolve') # for solving continuous differential equations
   require('mvtnorm') # for multivariate normal distribution functions
+  require('Runuran')
   
   ##  Assign parameter values to appropriate lists
   DNR <- c(D=c(D1,D2,D3,D4),   # initial dormant state abundance
@@ -105,7 +106,8 @@ simulate_model <- function(seasons, days_to_track, Rmu,
   NR             <- DNR[-dormants] 
   nmsNR          <- names(NR)
   gVec           <- getG(sigE = sigE, rho = rho, nTime = seasons, num_spp = num_spp)
-  Rvector        <- rlnorm(seasons, Rmu, Rsd_annual)
+  Rvector        <- urlnorm(seasons, Rmu, Rsd_annual, lb = 0, ub = 200)
+  # Rvector        <- rlnorm(seasons, Rmu, Rsd_annual)
   saved_outs     <- matrix(ncol=length(DNR), nrow=seasons+1)
   saved_outs[1,] <- DNR 
 
@@ -113,6 +115,7 @@ simulate_model <- function(seasons, days_to_track, Rmu,
   for(season_now in 1:seasons) {
     # Simulate continuous growing  season
     output   <- ode(y = NR, times=days, func = updateNR, parms = parms)
+    # saveRDS(output, file = paste0("~/Desktop/tests/within_season_", season_now,".RDS"))
     NR       <- output[nrow(output),nmsNR]
     dormants <- grep("D", names(DNR)) 
     DNR      <- c(DNR[dormants], NR)
