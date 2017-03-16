@@ -25,33 +25,6 @@ path2figs <- "../manuscript/components/"
 
 seasons_to_exclude <- 500
 mycols <- brewer.pal(3, "Set2")
-# mycols <- viridis(2, begin=0.25, end=0.7)
-# mycols <- c("#15E7A0", "#13CFE8")
-my_theme <- theme(legend.title=element_text(size=8, face="bold"),
-                  legend.text=element_text(size=8),
-                  legend.background = element_rect(colour = "grey45", size=0.5),
-                  legend.key = element_blank(),
-                  legend.key.size = unit(0.3, "cm"),
-                  panel.grid.major = element_line(colour = "white", linetype = "dotted"),
-                  panel.grid.minor = element_line(colour = "white", linetype = "dotted"),
-                  strip.background = element_blank())
-
-my_theme <- theme_bw()+
-  theme(panel.grid.major.x = element_blank(), 
-        panel.grid.minor.x = element_blank(),
-        panel.grid.minor.y = element_blank(),
-        panel.grid.major.y = element_line(color="white"),
-        panel.background   = element_rect(fill = "#EFEFEF"),
-        axis.text          = element_text(size=10, color="grey35", family = "Arial Narrow"),
-        axis.title         = element_text(size=12, family = "Arial Narrow", face = "bold"),
-        panel.border       = element_blank(),
-        axis.line.x        = element_line(color="black"),
-        axis.line.y        = element_line(color="black"),
-        strip.background   = element_blank(),
-        strip.text         = element_text(size=8, color="grey35", family = "Arial Narrow"),
-        legend.title       = element_text(size=8, family = "Arial Narrow"),
-        legend.text        = element_text(size=6, color="grey35", family = "Arial Narrow"))
-
 my_theme <- theme_few()+
   theme(axis.text          = element_text(size=6, color="grey35"),
         axis.title         = element_text(size=8),

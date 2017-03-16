@@ -172,6 +172,7 @@ Figshare (link) and is available on GitHub
   
   \KeywordTok{require}\NormalTok{(}\StringTok{'deSolve'}\NormalTok{) }\CommentTok{# for solving continuous differential equations}
   \KeywordTok{require}\NormalTok{(}\StringTok{'mvtnorm'}\NormalTok{) }\CommentTok{# for multivariate normal distribution functions}
+  \KeywordTok{require}\NormalTok{(}\StringTok{'Runuran'}\NormalTok{) }\CommentTok{# for truncated log normal random number generator}
   
   \NormalTok{##  Assign parameter values to appropriate lists}
   \NormalTok{DNR <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DataTypeTok{D=}\KeywordTok{c}\NormalTok{(D1,D2,D3,D4),   }\CommentTok{# initial dormant state abundance}
@@ -225,14 +226,15 @@ Figshare (link) and is available on GitHub
   
   \NormalTok{##  Resource uptake function (Hill function)}
   \NormalTok{uptake_R <-}\StringTok{ }\NormalTok{function(r, R, a, b) \{}
-    \KeywordTok{return}\NormalTok{((r*R^a) /}\StringTok{ }\NormalTok{(b^a +}\StringTok{ }\NormalTok{R^a))}
+    \KeywordTok{return}\NormalTok{( (r*R^a) /}\StringTok{ }\NormalTok{(b^a +}\StringTok{ }\NormalTok{R^a) )}
   \NormalTok{\}}
   
   \NormalTok{##  Generate germination fractions}
   \NormalTok{getG <-}\StringTok{ }\NormalTok{function(sigE, rho, nTime, num_spp) \{}
     \NormalTok{varcov       <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{rep}\NormalTok{(rho*sigE,num_spp*}\DecValTok{2}\NormalTok{), num_spp, num_spp)}
     \KeywordTok{diag}\NormalTok{(varcov) <-}\StringTok{ }\NormalTok{sigE}
-    \NormalTok{if(sigE >}\StringTok{ }\DecValTok{0}\NormalTok{) \{ varcov <-}\StringTok{ }\NormalTok{Matrix::}\KeywordTok{nearPD}\NormalTok{(varcov)$mat \} }\CommentTok{# crank through nearPD to fix rounding errors }
+    \NormalTok{if(sigE >}\StringTok{ }\DecValTok{0}\NormalTok{) \{ varcov <-}\StringTok{ }\NormalTok{Matrix::}\KeywordTok{nearPD}\NormalTok{(varcov)$mat \} }\CommentTok{# crank through nearPD... }
+                                                          \CommentTok{# ...to fix rounding errors }
     \NormalTok{varcov <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(varcov)}
     \NormalTok{e      <-}\StringTok{ }\KeywordTok{rmvnorm}\NormalTok{(}\DataTypeTok{n =} \NormalTok{nTime, }\DataTypeTok{mean =} \KeywordTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,num_spp), }\DataTypeTok{sigma =} \NormalTok{varcov)}
     \NormalTok{g      <-}\StringTok{ }\KeywordTok{exp}\NormalTok{(e) /}\StringTok{ }\NormalTok{(}\DecValTok{1}\NormalTok{+}\KeywordTok{exp}\NormalTok{(e))}
@@ -250,14 +252,14 @@ Figshare (link) and is available on GitHub
   \NormalTok{NR             <-}\StringTok{ }\NormalTok{DNR[-dormants] }
   \NormalTok{nmsNR          <-}\StringTok{ }\KeywordTok{names}\NormalTok{(NR)}
   \NormalTok{gVec           <-}\StringTok{ }\KeywordTok{getG}\NormalTok{(}\DataTypeTok{sigE =} \NormalTok{sigE, }\DataTypeTok{rho =} \NormalTok{rho, }\DataTypeTok{nTime =} \NormalTok{seasons, }\DataTypeTok{num_spp =} \NormalTok{num_spp)}
-  \NormalTok{Rvector        <-}\StringTok{ }\KeywordTok{rlnorm}\NormalTok{(seasons, Rmu, Rsd_annual)}
-  \NormalTok{saved_outs     <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\DataTypeTok{ncol=}\KeywordTok{length}\NormalTok{(DNR), }\DataTypeTok{nrow=}\NormalTok{seasons}\DecValTok{+1}\NormalTok{)}
+  \NormalTok{Rvector        <-}\StringTok{ }\KeywordTok{urlnorm}\NormalTok{(seasons, Rmu, Rsd_annual, }\DataTypeTok{lb =} \DecValTok{0}\NormalTok{, }\DataTypeTok{ub =} \DecValTok{200}\NormalTok{)}
+  \NormalTok{saved_outs     <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\DataTypeTok{ncol =} \KeywordTok{length}\NormalTok{(DNR), }\DataTypeTok{nrow =} \NormalTok{seasons}\DecValTok{+1}\NormalTok{)}
   \NormalTok{saved_outs[}\DecValTok{1}\NormalTok{,] <-}\StringTok{ }\NormalTok{DNR }
 
   \NormalTok{##  Loop over seasons}
   \NormalTok{for(season_now in }\DecValTok{1}\NormalTok{:seasons) \{}
     \CommentTok{# Simulate continuous growing  season}
-    \NormalTok{output   <-}\StringTok{ }\KeywordTok{ode}\NormalTok{(}\DataTypeTok{y =} \NormalTok{NR, }\DataTypeTok{times=}\NormalTok{days, }\DataTypeTok{func =} \NormalTok{updateNR, }\DataTypeTok{parms =} \NormalTok{parms)}
+    \NormalTok{output   <-}\StringTok{ }\KeywordTok{ode}\NormalTok{(}\DataTypeTok{y =} \NormalTok{NR, }\DataTypeTok{times =} \NormalTok{days, }\DataTypeTok{func =} \NormalTok{updateNR, }\DataTypeTok{parms =} \NormalTok{parms)}
     \NormalTok{NR       <-}\StringTok{ }\NormalTok{output[}\KeywordTok{nrow}\NormalTok{(output),nmsNR]}
     \NormalTok{dormants <-}\StringTok{ }\KeywordTok{grep}\NormalTok{(}\StringTok{"D"}\NormalTok{, }\KeywordTok{names}\NormalTok{(DNR)) }
     \NormalTok{DNR      <-}\StringTok{ }\KeywordTok{c}\NormalTok{(DNR[dormants], NR)}
@@ -278,7 +280,7 @@ Figshare (link) and is available on GitHub
   
   \KeywordTok{return}\NormalTok{(saved_outs)}
   
-\NormalTok{\} }\CommentTok{#end simulation function}
+\NormalTok{\} }\CommentTok{# end simulation function}
 \end{Highlighting}
 \end{Shaded}
 
@@ -463,7 +465,7 @@ From one to four species, the relationship is as presented in the main
 text: total community \emph{CV} increases approximately linearly with
 environmental variability because (1) environmental variability promotes
 species coexistence \emph{and} (2) environmental variability causes
-populations fluctuations to increase (Figure SI-4). However, after four
+population fluctuations to increase (Figure SI-4). However, after four
 species, the relationship saturates --- species additions due to
 coexistence by the storage effect completely buffer ecosystem
 variability from further increases in environmental variability (Figure

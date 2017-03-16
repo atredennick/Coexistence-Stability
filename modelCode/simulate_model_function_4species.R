@@ -9,9 +9,9 @@
 ##  These are the core model functions that can be called 
 ##  from simulation wrappers. This is the four species version.
 
-##  Author: Andrew Tredennick
+##  Author: Andrew Tredennick, Peter Adler, & Fred Adler
 ##  Email:  atredenn@gmail.com
-##  Last update: 2-21-2017
+##  Last update: 3-16-2017
 
 
 simulate_model <- function(seasons, days_to_track, Rmu, 
@@ -27,7 +27,7 @@ simulate_model <- function(seasons, days_to_track, Rmu,
   
   require('deSolve') # for solving continuous differential equations
   require('mvtnorm') # for multivariate normal distribution functions
-  require('Runuran')
+  require('Runuran') # for truncated log normal random number generator
   
   ##  Assign parameter values to appropriate lists
   DNR <- c(D=c(D1,D2,D3,D4),   # initial dormant state abundance
@@ -81,7 +81,7 @@ simulate_model <- function(seasons, days_to_track, Rmu,
   
   ##  Resource uptake function (Hill function)
   uptake_R <- function(r, R, a, b) {
-    return((r*R^a) / (b^a + R^a))
+    return( (r*R^a) / (b^a + R^a) )
   }
   
   ##  Generate germination fractions
@@ -107,7 +107,6 @@ simulate_model <- function(seasons, days_to_track, Rmu,
   nmsNR          <- names(NR)
   gVec           <- getG(sigE = sigE, rho = rho, nTime = seasons, num_spp = num_spp)
   Rvector        <- urlnorm(seasons, Rmu, Rsd_annual, lb = 0, ub = 200)
-  # Rvector        <- rlnorm(seasons, Rmu, Rsd_annual)
   saved_outs     <- matrix(ncol=length(DNR), nrow=seasons+1)
   saved_outs[1,] <- DNR 
 
@@ -115,7 +114,6 @@ simulate_model <- function(seasons, days_to_track, Rmu,
   for(season_now in 1:seasons) {
     # Simulate continuous growing  season
     output   <- ode(y = NR, times=days, func = updateNR, parms = parms)
-    # saveRDS(output, file = paste0("~/Desktop/tests/within_season_", season_now,".RDS"))
     NR       <- output[nrow(output),nmsNR]
     dormants <- grep("D", names(DNR)) 
     DNR      <- c(DNR[dormants], NR)
@@ -124,10 +122,10 @@ simulate_model <- function(seasons, days_to_track, Rmu,
     saved_outs[season_now+1,] <- DNR
     
     names(DNR) <- nmsDNR
-    DNR <- update_DNR(season_now, DNR, gVec[season_now,],
-                      alpha1 = alpha1, alpha2 = alpha2, 
-                      alpha3 = alpha3, alpha4 = alpha4,
-                      eta1 = eta1, eta2 = eta2, eta3 = eta3, eta4 = eta4)
+    DNR        <- update_DNR(season_now, DNR, gVec[season_now,],
+                             alpha1 = alpha1, alpha2 = alpha2, 
+                             alpha3 = alpha3, alpha4 = alpha4,
+                             eta1 = eta1, eta2 = eta2, eta3 = eta3, eta4 = eta4)
     
     names(DNR) <- nmsDNR
     NR         <- DNR[-dormants]  
@@ -136,5 +134,5 @@ simulate_model <- function(seasons, days_to_track, Rmu,
   
   return(saved_outs)
   
-} #end simulation function
+} # end simulation function
 

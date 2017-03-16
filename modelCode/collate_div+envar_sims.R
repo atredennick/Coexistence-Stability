@@ -26,11 +26,11 @@ get_cv <- function(x){
   x <- as.data.frame(x)
   names(x) <- c("D1", "D2", "D3", "D4", "N1", "N2", "N3", "N4", "R")
   livestates <- grep("N", colnames(x))
-  tmp_totbiomass <- rowSums(x[seasons_to_exclude:nrow(x),livestates], na.rm = T)
+  tmp_totbiomass <- rowSums(x[seasons_to_exclude:nrow(x),livestates])
   tmp_cv <- sd(tmp_totbiomass) / mean(tmp_totbiomass)
   tmp_mean <- mean(tmp_totbiomass)
   tmp_sd <- sd(tmp_totbiomass)
-  tmp_sppavg <- colMeans(x[seasons_to_exclude:nrow(x),livestates], na.rm = T)
+  tmp_sppavg <- colMeans(x[seasons_to_exclude:nrow(x),livestates])
   tmp_spprich <- length(which(tmp_sppavg > 1))
   tmp_out <- c(tmp_cv, tmp_spprich, tmp_mean, tmp_sd)
 }
@@ -72,30 +72,6 @@ get_slope_rnonlin <- function(df_subset) {
 ####
 ####  My plotting theme (for ggplot2)
 ####
-my_theme <- theme(legend.title=element_text(size=8, face="bold"),
-                  legend.text=element_text(size=8),
-                  legend.background = element_rect(colour = "grey45", size=0.5),
-                  legend.key = element_blank(),
-                  legend.key.size = unit(0.3, "cm"),
-                  panel.grid.major = element_line(colour = "grey25", linetype = "dotted"),
-                  panel.grid.minor = element_line(colour = "white", linetype = "dotted"),
-                  strip.background = element_blank())
-my_theme2 <- theme_bw()+
-  theme(panel.grid.major.x = element_blank(), 
-        panel.grid.minor.x = element_blank(),
-        panel.grid.minor.y = element_blank(),
-        panel.grid.major.y = element_line(color="white"),
-        panel.background   = element_rect(fill = "#EFEFEF"),
-        axis.text          = element_text(size=10, color="grey35", family = "Arial Narrow"),
-        axis.title         = element_text(size=12, family = "Arial Narrow", face = "bold"),
-        panel.border       = element_blank(),
-        axis.line.x        = element_line(color="black"),
-        axis.line.y        = element_line(color="black"),
-        strip.background   = element_blank(),
-        strip.text         = element_text(size=8, color="grey35", family = "Arial Narrow"),
-        legend.title       = element_text(size=8, family = "Arial Narrow"),
-        legend.text        = element_text(size=6, color="grey35", family = "Arial Narrow"))
-
 my_theme2 <- theme_few()+
   theme(axis.text          = element_text(size=6, color="grey35"),
         axis.title         = element_text(size=8),
@@ -227,112 +203,6 @@ ggplot( strg_comp_cvs_slopes, aes(x=spprich, y=slope, color=as.factor(comp)))+
   theme_bw()+
   my_theme
 ggsave("../manuscript/components/storage_effect_div+envar_varycomp_loglog_slopes.png", width = 5, height=2, units = "in", dpi = 120)
-
-
-
-####
-####  Compare high and low dormant mortality
-####
-DNR <- rbind(c(D=c(1,1,1,1),N=c(1,1,1,1),R=20),
-             c(D=c(1,1,1,0),N=c(1,1,1,0),R=20),
-             c(D=c(1,1,0,0),N=c(1,1,0,0),R=20),
-             c(D=c(1,0,0,0),N=c(1,0,0,0),R=20))
-n_sig_e <- 15 # Number of cue variance levels
-sig_e_vec <- pretty(seq(0.1, 2, length.out=n_sig_e), n_sig_e) # Make a pretty vector
-rho <- as.matrix(c(-1,0,1))
-prm <- expand.grid(as.matrix(sig_e_vec), rho, 1:4)
-DNR_repped <- matrix(rep(DNR,each=(nrow(prm)/nrow(DNR))),ncol=ncol(DNR))
-colnames(prm) <- c("sigE", "rho", "dnr_id")
-colnames(DNR_repped) <- colnames(DNR)
-prm <- cbind(prm, DNR_repped)
-prm <- subset(prm, select = -c(dnr_id))
-loweta <- 0.2
-hieta <- 0.8
-etas <- rbind(c(eta1=loweta, eta2=loweta, eta3=loweta, eta4=loweta),
-              c(eta1=hieta, eta2=hieta, eta3=hieta, eta4=hieta))
-prm_repped <- do.call("rbind", replicate(2, prm,  simplify = FALSE))
-etas_repped <- matrix(rep(etas, each=nrow(prm)), ncol=ncol(etas))
-colnames(etas_repped) <- colnames(etas)
-parameter_matrix <- cbind(prm_repped, etas_repped)
-
-
-##  Collate the results, if necessary, otherwise read in collated results
-strg_eta_large_file <- "../simulationResults/storageeffect_div+envvar_stability_varyeta.RDS"
-strg_eta_file <- "../simulationResults/storageeffect_div+envvar_cv_varyeta_collated.RDS"
-if(file.exists(strg_eta_file) == FALSE) {
-  collate_sims(in_file = strg_eta_large_file, 
-               parameter_matrix = parameter_matrix, 
-               save_file = strg_eta_file)
-}
-
-
-##  Read in collated results and do some housekeeping columns
-strg_eta_cvs <- readRDS(strg_eta_file)
-
-##  Summarise by taking mean CV at different realized richness
-strg_eta_cvs_mean <- ddply(strg_eta_cvs, .(sigE, rho, spprichness, eta1), 
-                            summarise,
-                            cv = mean(cv))
-
-##  Plot and save
-ggplot(strg_eta_cvs_mean, aes(x=sigE, y=cv, color=as.factor(spprichness)))+
-  geom_line(size=0.7, alpha=0.7)+
-  geom_point(size=2, alpha=1)+
-  geom_point(size=2, alpha=1, shape=1, color="grey15")+
-  scale_color_brewer(palette = "Set2", name = "Species\nRichness")+
-  xlab(expression(paste("Variance of environmental cue (",sigma[E]^2, ")")))+
-  ylab("CV of community biomass")+
-  facet_grid(eta1~rho, scales="free_y")+
-  theme_bw()+
-  my_theme+
-  theme(legend.position = c(0.95, 0.15))
-ggsave(filename = "../manuscript/components/storage_effect_div+envar_varyeta.png", width = 8, height=4, units = "in", dpi = 82)
-
-## Log-log plot and save
-ggplot(strg_eta_cvs_mean, aes(x=log(sigE), y=log(cv), color=as.factor(spprichness)))+
-  stat_smooth(method="lm", size=0.7, alpha=0.7, se=FALSE)+
-  geom_point(size=2, alpha=1)+
-  geom_point(size=2, alpha=1, shape=1, color="grey15")+
-  scale_color_brewer(palette = "Set2", name = "Species\nRichness")+
-  xlab(expression(paste("Variance of environmental cue (",sigma[E]^2, ")")))+
-  ylab("CV of community biomass")+
-  facet_grid(eta1~rho, scales="free_y")+
-  theme_bw()+
-  my_theme+
-  theme(legend.position = c(0.95, 0.15))
-ggsave(filename = "../manuscript/components/storage_effect_div+envar_varyeta_loglog.png", width = 8, height=4, units = "in", dpi = 82)
-
-##  Get slopes and plot
-strg_eta_cvs_slopes <- list()
-for(do_eta in unique(strg_eta_cvs_mean$eta1)){
-  for(do_rho in c(-1,0)){
-    for(do_spprich in unique(strg_eta_cvs_mean$spprichness)){
-      tmp_df <- subset(strg_eta_cvs_mean, eta1==do_eta & spprichness==do_spprich & rho==do_rho)
-      tmp_slope <- get_slope(tmp_df)
-      tmpout <- data.frame(eta=do_eta, spprich=do_spprich, rho=do_rho, 
-                           slope=tmp_slope[1], lowslope=tmp_slope[2], hislope=tmp_slope[3])
-      strg_eta_cvs_slopes <- rbind(strg_eta_cvs_slopes, tmpout)
-    }
-  }
-}
-
-ylabel <- bquote("Slope (CV vs." ~ sigma[E]^2 ~ ")")
-ggplot( strg_eta_cvs_slopes, aes(x=spprich, y=slope, color=as.factor(eta)))+
-  geom_ribbon(aes(ymin=lowslope, ymax=hislope, fill=as.factor(eta)), alpha=0.2, color=NA)+
-  geom_point()+
-  geom_line()+
-  facet_wrap("rho")+
-  ylab(ylabel)+
-  xlab("Realized species richness")+
-  scale_fill_manual(values=c("red", "blue"), name=expression(eta), labels=c("Symmetric comp.", "Asymmetric comp."))+
-  scale_color_manual(values=c("red", "blue"), name=expression(eta), labels=c("Symmetric comp.", "Asymmetric comp."))+
-  theme_bw()+
-  my_theme
-ggsave("../manuscript/components/storage_effect_div+envar_varyeta_loglog_slopes.png", width = 5, height=2, units = "in", dpi = 120)
-
-
-
-
 
 
 
