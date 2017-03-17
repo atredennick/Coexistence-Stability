@@ -1,6 +1,1199 @@
+Loading required package: Runuran
 DLSODA-  At T (=R1), too much accuracy requested  
       for precision of machine..  See TOLSF (=R2) 
-In above message, R1 = 55.7889, R2 = nan
+In above message, R1 = 79.8892, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
+ 
+DLSODA-  At T (=R1), too much accuracy requested  
+      for precision of machine..  See TOLSF (=R2) 
+In above message, R1 = 2, R2 = nan
  
 DLSODA-  At T (=R1), too much accuracy requested  
       for precision of machine..  See TOLSF (=R2) 
