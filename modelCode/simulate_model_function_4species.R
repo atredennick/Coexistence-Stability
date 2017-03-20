@@ -106,7 +106,7 @@ simulate_model <- function(seasons, days_to_track, Rmu,
   NR             <- DNR[-dormants] 
   nmsNR          <- names(NR)
   gVec           <- getG(sigE = sigE, rho = rho, nTime = seasons, num_spp = num_spp)
-  Rvector        <- urlnorm(seasons, Rmu, Rsd_annual, lb = 0, ub = 200)
+  Rvector        <- urlnorm(seasons, Rmu, Rsd_annual, lb = 0, ub = 100)
   saved_outs     <- matrix(ncol=length(DNR), nrow=seasons+1)
   saved_outs[1,] <- DNR 
 

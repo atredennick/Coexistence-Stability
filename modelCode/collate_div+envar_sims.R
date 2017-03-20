@@ -284,7 +284,7 @@ rnonlin_cvs_mean_full <- ddply(rnonlin_cvs_eqrich, .(Rsd_annual, spprichness, sp
                                summarise,
                                cv = mean(cv))
 rnonlin_cvs_mean <- subset(rnonlin_cvs_mean_full, Rsd_annual<1.2 & Rsd_annual>0  & spprichness>0 & cv>0 & cv<10)
-
+rnonlin_cvs_mean <- subset(rnonlin_cvs_mean_full, spprichness>0)
 ##  Plot and save
 ## Find species first occurences for lines
 firstones_rnonlin <- ddply(rnonlin_cvs_mean, 

@@ -165,8 +165,13 @@ MATERIALS AND METHODS
 ---------------------
 \new{To bound the problem and to isolate the effect of fluctation-dependent coexistence on the diversity--ecosystem variability relationship we constrain our analysis to four species communities and do not consider communities where coexistence is maintained by a combination of mechanisms.
 We limit our analysis to four species communities to keep the models tractable while still allowing enough of a species richness gradient for trends to emerge.
-It is notoriously difficult to get more than four species to coexist via relative nonlinearity without introducing some form of fluctuation-independent mechanism like resource partitioning} [@Yuan2015], \new{which would then cloud our inference on the effect of fluctuation-dependent coexistence.
+It is exceedingly difficult to get more than four species to coexist via relative nonlinearity without introducing some form of fluctuation-independent mechanism like resource partitioning} [@Yuan2015], \new{which would then cloud our inference on the effect of fluctuation-dependent coexistence.
 So, for consistency we also constrain our focus to four species communities under the storage effect, but our conclusions generally apply to more species-rich communities too (see SI section SI.2).}
+
+\new{We also do not include demographic stochasticity, which can lead to stochastic extinction for small populations as environmental  variability increases} [@Boyce1992].
+\new{Previous work has shown how demographic stochasticity and coexistence mechanisms can interact to create a weak "humped-shape" relationship between coexistence time and environmental variability} [@Adler2008],
+\new{because environmental variability increases coexistence strength and the probability of stochastic extinction simultaneously.
+We do not consider this potential effect here because our focus is on large populations that would most influence ecosystem functioning.}
 
 ###  Consumer-resource model
 We developed a semi-discrete consumer-resource model that allows many species to coexist on one resource by either the storage effect or relative nonlinearity. 
@@ -348,7 +353,8 @@ In local settings where environmental variability is relatively homogeneous, red
 When we allowed communities to assemble at sites across a gradient of environmental variability, we discovered a positive relationship between species richness and ecosystem variability (Fig. 2A,C).
 While surprising when viewed through the lens of biodiversity--ecosystem functioning theory and experimental findings, such a relationship is predicted by theory on coexistence in fluctuating environments.
 Environmental variability is a prerequisite for the storage effect and relative nonlinearity to stabilize coexistence [@Chesson2000].
-These mechanisms can translate increased variability into higher species richness (Fig. S1-2), but the increase in environmental variability also increases ecosystem variability.
+These mechanisms can translate increased variability into higher species richness (Fig. SI-2), but the increase in environmental variability also increases ecosystem variability.
+\new{We limited our primary analysis to four-species communities, but the buffering effect of additional species under the storage effect is even stronger in more species rich communities (Fig. SI-x.}
 
 Our results may explain why deviations from the negative diversity--\new{ecosystem variability} relationship often come from observational studies [@Jiang2009].
 Observational studies must rely on natural diversity gradients, which do not control for differences in environmental variability among sites.
@@ -356,6 +362,7 @@ If species richness depends on environmental variability, it is entirely possibl
 For example, Sasaki and Lauenroth (2011) found a positive relationship between species richness and the temporal variability of plant abundance in a semi-arid grassland.
 Their data came from a six sites that were 6 km apart.
 While Sasaki and Lauenroth explained their results in terms of dominant species' effects, it is also possible that each site experienced sufficiently different levels of environmental variability to influence species coexistence.
+\new{So far as we know, prior to the work presented here the effect of dominant species on ecosystem variability was the only available theoretical explanation for a positive diversity--\new{ecosystem variability} relationship} [e.g., @Thibaut2013].
 @DeClerck2006 also found a positive diversity--\new{ecosystem variability} when sampling conifer richness and the variability of productivity across a large spatial gradient in the Sierra Nevada.
 
 While our modeling results show that fluctuation-dependent coexistence can create positive diversity--\new{ecosystem variability} relationships, whether such trends are detected will depend on the particular traits of the species in the community and the relative influence of fluctuation-dependent and fluctuation-independent coexistence mechanisms.
@@ -372,13 +379,12 @@ Therefore, increasing environmental variability will always increase ecosystem v
 When coexistence is fluctuation-dependent, however, the outcome is less certain.
 By simulating communities with different species pool sizes across a gradient of environmental variability, we showed that species gains due to increasing environmental variability can buffer the direct effect of environmental variability on ecosystem variability (Figs. 3 and 4).
 
-\new{One limitation of our model is that we did not include demographic stochasticity, which can lead to stochastic extinction for small populations as environmental  variability increases} [@Boyce1992].
-\new{Previous work has shown how demographic stochasticity and coexistence mechanisms can interact to create a "humped-shape" relationship between coexistence time and environmental variability} [@Adler2008].
-\new{This occurs because environmental variability increases coexistence strength and the probability of stochastic extinction simultaneously.
-We did not consider this potential effect here because our focus was on large populations that would most influence ecosystem functioning.
-However, an interesting extension of our work will be to investigate the role of small populations and demographic stochasticity.
-Another limitation of our analysis is our focus on four-species communities.
-However, preliminary results suggest our conclusions apply more species rich communities under the storage effect (Fig. SI-4).}
+\new{We relied on numerical simulations of a mechanistic model to reach our conclusions, meaning our results could be sensitive to the specific parameters values we chose.
+In a targeted sensitivity analysis (Supprting Information section SI.3), we found that our qualitative results are robust to different parameter values.
+However, altering parameter values in our model typically influences the strength and possibility of species coexistence.
+This leads to an important point.
+So long as specific parameter combinations allow fluctuation-dependent species coexistence (by either the storage effect or relative nonlinearity), the results we found will emerge.
+We did not investigate the impact of altering parameters to allow both the storage effect and relative nonlinearity to operate, and doing so is a future challenge.}
 
 Overall, our results lead to two conclusions.
 First, when predicting the impacts of increasing environmental variability on ecosystem variability, the mechanism of coexistence matters.

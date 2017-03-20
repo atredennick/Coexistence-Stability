@@ -25,6 +25,7 @@ DNR <- rbind(c(D=c(1,1,1,1),N=c(1,1,1,1),R=20),
 ## Define vectors of parameters to vary
 n_rsd <- 25 # Number of seasonal standard deviation levels
 rsd_vec <- pretty(seq(0.1, 1.4, length.out=n_rsd), n_rsd) # Make a pretty vector
+red_vec <- rsd_vec[which(rsd_vec<1.25)]
 prm <- expand.grid(as.matrix(rsd_vec), 1:4)
 DNR_repped <- matrix(rep(DNR,each=(nrow(prm)/nrow(DNR))),ncol=ncol(DNR))
 colnames(prm) <- c("Rsd_annual", "dnr_id")
