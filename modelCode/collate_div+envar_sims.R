@@ -44,7 +44,8 @@ collate_sims <- function(in_file, parameter_matrix, save_file, remove_big_file=F
   sims_list <- readRDS(in_file)                     # read in the large simulation output
   out_cvs <- lapply(sims_list, get_cv)              # apply the function
   out_cvs_df <- do.call(rbind.data.frame, out_cvs)  # convert to data frame
-  colnames(out_cvs_df) <- c("cv", "spprichness")    # give the columns names
+  colnames(out_cvs_df) <- c("cv", "spprichness",
+                            "mean", "sdev")    # give the columns names
   cvs_params <- cbind(parameter_matrix, out_cvs_df) # combine with parameter values
   saveRDS(cvs_params, file = save_file)             # save the file
   if(remove_big_file) file.remove(in_file)          # delete the large, raw file
@@ -169,8 +170,7 @@ ggplot(strg_comp_cvs_mean, aes(x=log(sigE), y=log(cv), color=as.factor(spprichne
   xlab(expression(paste("Variance of environmental cue (",sigma[E]^2, ")")))+
   ylab("CV of community biomass")+
   facet_grid(comp~rho)+
-  theme_bw()+
-  my_theme+
+  my_theme2+
   theme(legend.position = c(0.95, 0.15))
 ggsave(filename = "../manuscript/components/storage_effect_div+envar_varycomp_loglog.png", width = 8, height=4, units = "in", dpi = 82)
 
@@ -200,8 +200,7 @@ ggplot( strg_comp_cvs_slopes, aes(x=spprich, y=slope, color=as.factor(comp)))+
   xlab("Realized species richness")+
   scale_fill_manual(values=c("red", "blue"), name="Competition", labels=c("Symmetric comp.", "Asymmetric comp."))+
   scale_color_manual(values=c("red", "blue"), name="Competition", labels=c("Symmetric comp.", "Asymmetric comp."))+
-  theme_bw()+
-  my_theme
+  my_theme2
 ggsave("../manuscript/components/storage_effect_div+envar_varycomp_loglog_slopes.png", width = 5, height=2, units = "in", dpi = 120)
 
 
@@ -223,6 +222,7 @@ DNR <- rbind(c(D=c(1,1,1,1),N=c(1,1,1,1),R=20),
 ## Define vectors of parameters to vary
 n_rsd <- 25 # Number of seasonal standard deviation levels
 rsd_vec <- pretty(seq(0.1, 1.4, length.out=n_rsd), n_rsd) # Make a pretty vector
+rsd_vec <- rsd_vec[which(rsd_vec<1.25)]
 prm <- as.data.frame(rsd_vec)
 colnames(prm) <- "Rsd_annual"
 # Add in variable parameters to form parameter matrix
@@ -249,6 +249,7 @@ DNR <- rbind(c(D=c(1,1,1,1),N=c(1,1,1,1),R=20),
 ## Define vectors of parameters to vary
 n_rsd <- 25 # Number of seasonal standard deviation levels
 rsd_vec <- pretty(seq(0.1, 1.4, length.out=n_rsd), n_rsd) # Make a pretty vector
+rsd_vec <- rsd_vec[which(rsd_vec<1.25)]
 prm <- as.data.frame(rsd_vec)
 colnames(prm) <- "Rsd_annual"
 # Add in variable parameters to form parameter matrix
@@ -266,6 +267,8 @@ if(file.exists(rnonlin_unstable2stable_large_file) == TRUE) {
 }
 
 
+test <- readRDS(rnonlin_unstable2stable_large_file)[[75]]
+matplot(test[1:50,5:8], type="l")
 
 ##  Read in collated results and do some housekeeping columns
 rnonlin_stable2unstable_cvs <- readRDS(rnonlin_stable2unstable_file) 
@@ -283,7 +286,6 @@ rnonlin_cvs_eqrich <- rnonlin_cvs #[ids_to_keep,]
 rnonlin_cvs_mean_full <- ddply(rnonlin_cvs_eqrich, .(Rsd_annual, spprichness, spporder), 
                                summarise,
                                cv = mean(cv))
-rnonlin_cvs_mean <- subset(rnonlin_cvs_mean_full, Rsd_annual<1.2 & Rsd_annual>0  & spprichness>0 & cv>0 & cv<10)
 rnonlin_cvs_mean <- subset(rnonlin_cvs_mean_full, spprichness>0)
 ##  Plot and save
 ## Find species first occurences for lines

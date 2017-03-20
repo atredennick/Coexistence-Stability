@@ -116,7 +116,8 @@ simulate_model <- function(seasons, days_to_track, Rmu,
     output   <- ode(y = NR, times=days, func = updateNR, parms = parms)
     NR       <- output[nrow(output),nmsNR]
     dormants <- grep("D", names(DNR)) 
-    DNR      <- c(DNR[dormants], NR)
+    # DNR      <- c(DNR[dormants], NR)
+    DNR      <- round(c(DNR[dormants], NR),10)
     
     # Save end of season biomasses, before discrete transitions
     saved_outs[season_now+1,] <- DNR

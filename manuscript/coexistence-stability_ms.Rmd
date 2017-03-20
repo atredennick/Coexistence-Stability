@@ -148,7 +148,7 @@ In a meta-analysis of diversity--\new{ecosystem variability} relationships, @Jia
 The idiosyncratic results of these observational studies contrast with the consistent conclusions from \new{experimental and theoretical work that ignore, or control, the} feedbacks between variability and richness.
 
 The gap between theoretical expectations and empirical results of diversity--\new{ecosystem variability} relationships might reflect the divergence of theory developed to explain species coexistence and theory developed to explain diversity and ecosystem variability.
-\new{In his thorough review of the topic, Loreau (2010) cautions that "one of the pieces of the stability jigsaw that is still missing here is the interconnection between community stability and the maintenance of species diversity due to temporal environmental variability."}
+\new{In his thorough review of the topic, Loreau (2010) cautions that "one of the pieces of the stability jigsaw [puzzle] that is still missing here is the interconnection between community stability and the maintenance of species diversity due to temporal environmental variability."}
 One reason these two disciplines have diverged is because they have focused on different questions.
 Diversity--\new{ecosystem variability} studies typically ask how ecosystem variability responds to different levels of species richness at a given level of environmental variability [reviewed in @Kinzig2001; @Loreau2010], whereas coexistence studies ask how species richness responds to different levels of environmental variability [@Chesson1981a].
 

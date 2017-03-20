@@ -24,7 +24,7 @@ else
      cd $SCRATCH_DIR
      # Copy content SCRIPT_DIR to SCRATCH_DIR
      cp -pR $SCRIPT_DIR/* . 
-     Rscript relnonlin_sims_div+envvar_stability_revpool_three_Rmus.R $1 >& rscript$1.out
+     Rscript relnonlin_sims_div+envvar_stability_three_Rmus.R $1 >& rscript$1.out
      rm *.R
 
      # Copy results back to OUT_DIR
