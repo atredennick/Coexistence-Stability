@@ -23,7 +23,7 @@ set.seed(12345678)
 
 ##  Define constant parameters in list
 constant_parameters <- list (
-  seasons = 500,                  # number of seasons to simulate
+  seasons = 1000,                  # number of seasons to simulate
   days_to_track = 100,              # number of days to simulate in odSolve
   Rmu = 3,                         # mean resource pulse (on log scale)
   Rsd_annual = 0.2,                # std dev of resource pulses (on log scale)

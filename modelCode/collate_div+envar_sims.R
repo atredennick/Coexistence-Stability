@@ -268,7 +268,7 @@ if(file.exists(rnonlin_unstable2stable_large_file) == TRUE) {
 
 
 test <- readRDS(rnonlin_unstable2stable_large_file)[[75]]
-matplot(test[1:50,5:8], type="l")
+matplot(test[1:5000,5:8], type="l")
 
 ##  Read in collated results and do some housekeeping columns
 rnonlin_stable2unstable_cvs <- readRDS(rnonlin_stable2unstable_file) 

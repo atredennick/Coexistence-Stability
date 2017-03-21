@@ -33,6 +33,7 @@ simulate_model <- function(seasons, days_to_track, Rmu,
   DNR <- c(D=c(D1,D2,D3,D4),   # initial dormant state abundance
            N=c(N1,N2,N3,N4),   # initial live state abundance
            R=R)                # initial resource level
+  DNR_inits <- DNR
   
   parms <- list (
     r   = c(r1,r2,r3,r4),          # max growth rate for each species
@@ -113,11 +114,14 @@ simulate_model <- function(seasons, days_to_track, Rmu,
   ##  Loop over seasons
   for(season_now in 1:seasons) {
     # Simulate continuous growing  season
-    output   <- ode(y = NR, times=days, func = updateNR, parms = parms)
+    output   <- ode(y = NR, times=days, func = updateNR, parms = parms, atol=1e-100)
     NR       <- output[nrow(output),nmsNR]
     dormants <- grep("D", names(DNR)) 
-    # DNR      <- c(DNR[dormants], NR)
-    DNR      <- round(c(DNR[dormants], NR),10)
+    DNR      <- c(DNR[dormants], NR)
+    # DNR      <- round(c(DNR[dormants], NR),10)
+    
+    # Enforce zeros from initial states, avoids ode errors
+    # DNR[which(DNR_inits==0)] <- 0
     
     # Save end of season biomasses, before discrete transitions
     saved_outs[season_now+1,] <- DNR
