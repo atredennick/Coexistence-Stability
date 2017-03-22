@@ -24,8 +24,8 @@ set.seed(123456789) # Set seed to reproduce random results
 ## Define vectors of parameters to vary
 n_rsd  <- 50 # Approx number of seasonal standard deviation levels
 rsd_vec <- pretty(seq(0, 1.4, length.out=n_rsd), n_rsd) # Make a pretty vector
-rsd_vec <- rsd_vec[which(rsd_vec>0)]
-rsd_vec[which(rsd_vec==0.06)] <- 0.061 #urlnorm doesn't like 0.06!!
+rsd_vec <- rsd_vec[which(rsd_vec<1.25)] # get rid of super high variability
+rsd_vec[which(rsd_vec==0.06)] <- 0.061 # urlnorm doesn't like 0.06!!
 rsd_vec <- as.data.frame(rsd_vec)
 names(rsd_vec) <- "Rsd_annual"
 

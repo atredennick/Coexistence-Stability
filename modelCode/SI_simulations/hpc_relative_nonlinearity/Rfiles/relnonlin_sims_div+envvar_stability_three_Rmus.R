@@ -20,7 +20,7 @@ args <- commandArgs(trailingOnly = F)
 myargument <- args[length(args)]
 myargument <- sub("-","",myargument)
 i <- as.numeric(myargument)
-set.seed(1234567) # Set seed to reproduce random results
+set.seed(123456789) # Set seed to reproduce random results
 
 ## Define vectors of parameters to vary -- here, initial conditions to vary richness
 DNR <- rbind(c(D=c(1,1,1,1),N=c(1,1,1,1),R=20),
@@ -30,8 +30,9 @@ DNR <- rbind(c(D=c(1,1,1,1),N=c(1,1,1,1),R=20),
 
 ## Define vectors of parameters to vary
 n_rsd <- 25 # Number of seasonal standard deviation levels
-rsd_vec <- pretty(seq(0.1, 1.4, length.out=n_rsd), n_rsd) # Make a pretty vector
-rsd_vec <- rsd_vec[which(rsd_vec<1.25)]
+rsd_vec <- pretty(seq(0, 1.4, length.out=n_rsd), n_rsd) # Make a pretty vector
+rsd_vec <- rsd_vec[which(rsd_vec<1.25)] # get rid of super high variability
+rsd_vec[which(rsd_vec==0.06)] <- 0.061 # urlnorm doesn't like 0.06!!
 prm <- expand.grid(as.matrix(rsd_vec), 1:4, 1:4)
 DNR_repped <- matrix(rep(DNR,each=(nrow(prm)/nrow(DNR))),ncol=ncol(DNR))
 colnames(prm) <- c("Rsd_annual", "Rmu", "dnr_id")

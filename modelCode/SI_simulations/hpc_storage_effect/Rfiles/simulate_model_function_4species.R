@@ -9,9 +9,9 @@
 ##  These are the core model functions that can be called 
 ##  from simulation wrappers. This is the four species version.
 
-##  Author: Andrew Tredennick
+##  Author: Andrew Tredennick, Peter Adler, & Fred Adler
 ##  Email:  atredenn@gmail.com
-##  Last update: 2-21-2017
+##  Last update: 3-16-2017
 
 
 simulate_model <- function(seasons, days_to_track, Rmu, 
@@ -27,11 +27,13 @@ simulate_model <- function(seasons, days_to_track, Rmu,
   
   require('deSolve') # for solving continuous differential equations
   require('mvtnorm') # for multivariate normal distribution functions
+  require('Runuran') # for truncated log normal random number generator
   
   ##  Assign parameter values to appropriate lists
   DNR <- c(D=c(D1,D2,D3,D4),   # initial dormant state abundance
            N=c(N1,N2,N3,N4),   # initial live state abundance
            R=R)                # initial resource level
+  DNR_inits <- DNR
   
   parms <- list (
     r   = c(r1,r2,r3,r4),          # max growth rate for each species
@@ -80,15 +82,15 @@ simulate_model <- function(seasons, days_to_track, Rmu,
   
   ##  Resource uptake function (Hill function)
   uptake_R <- function(r, R, a, b) {
-    return((r*R^a) / (b^a + R^a))
+    return( (r*R^a) / (b^a + R^a) )
   }
   
   ##  Generate germination fractions
   getG <- function(sigE, rho, nTime, num_spp) {
     varcov       <- matrix(rep(rho*sigE,num_spp*2), num_spp, num_spp)
     diag(varcov) <- sigE
-    # if(sigE > 0) { varcov <- Matrix::nearPD(varcov)$mat } # crank through nearPD to fix rounding errors
-    # varcov <- as.matrix(varcov)
+    if(sigE > 0) { varcov <- Matrix::nearPD(varcov)$mat } # crank through nearPD to fix rounding errors 
+    varcov <- as.matrix(varcov)
     e      <- rmvnorm(n = nTime, mean = rep(0,num_spp), sigma = varcov)
     g      <- exp(e) / (1+exp(e))
     return(g)
@@ -105,14 +107,21 @@ simulate_model <- function(seasons, days_to_track, Rmu,
   NR             <- DNR[-dormants] 
   nmsNR          <- names(NR)
   gVec           <- getG(sigE = sigE, rho = rho, nTime = seasons, num_spp = num_spp)
-  Rvector        <- rlnorm(seasons, Rmu, Rsd_annual)
+  
+  if(Rsd_annual == 0) {
+    Rvector        <- rlnorm(seasons, Rmu, Rsd_annual)
+  }
+  if(Rsd_annual > 0) {
+    Rvector        <- urlnorm(seasons, Rmu, Rsd_annual, lb = 0, ub = 200)
+  }
+  
   saved_outs     <- matrix(ncol=length(DNR), nrow=seasons+1)
   saved_outs[1,] <- DNR 
 
   ##  Loop over seasons
   for(season_now in 1:seasons) {
     # Simulate continuous growing  season
-    output   <- ode(y = NR, times=days, func = updateNR, parms = parms)
+    output   <- ode(y = NR, times = days, func = updateNR, parms = parms, atol = 1e-100)
     NR       <- output[nrow(output),nmsNR]
     dormants <- grep("D", names(DNR)) 
     DNR      <- c(DNR[dormants], NR)
@@ -121,10 +130,10 @@ simulate_model <- function(seasons, days_to_track, Rmu,
     saved_outs[season_now+1,] <- DNR
     
     names(DNR) <- nmsDNR
-    DNR <- update_DNR(season_now, DNR, gVec[season_now,],
-                      alpha1 = alpha1, alpha2 = alpha2, 
-                      alpha3 = alpha3, alpha4 = alpha4,
-                      eta1 = eta1, eta2 = eta2, eta3 = eta3, eta4 = eta4)
+    DNR        <- update_DNR(season_now, DNR, gVec[season_now,],
+                             alpha1 = alpha1, alpha2 = alpha2, 
+                             alpha3 = alpha3, alpha4 = alpha4,
+                             eta1 = eta1, eta2 = eta2, eta3 = eta3, eta4 = eta4)
     
     names(DNR) <- nmsDNR
     NR         <- DNR[-dormants]  
@@ -133,5 +142,5 @@ simulate_model <- function(seasons, days_to_track, Rmu,
   
   return(saved_outs)
   
-} #end simulation function
+} # end simulation function
 

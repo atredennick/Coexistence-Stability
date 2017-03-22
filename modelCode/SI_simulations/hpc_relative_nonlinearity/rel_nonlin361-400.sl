@@ -1,10 +1,10 @@
 #!/bin/bash
 #SBATCH --time=05:00:00
-#SBATCH --ntasks=8
+#SBATCH --ntasks=40
 #SBATCH --tasks-per-node=8
 
 #SBATCH --account=owner-guest
-#SBATCH --partition=lonepeak-guest
+#SBATCH --partition=ember-guest
 #SBATCH --job-name=relnonlin361-368
 
 #SBATCH --mail-type=FAIL,BEGIN,END

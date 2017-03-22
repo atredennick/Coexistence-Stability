@@ -4,7 +4,7 @@
 #SBATCH --tasks-per-node=8
 
 #SBATCH --account=owner-guest
-#SBATCH --partition=lonepeak-guest
+#SBATCH --partition=ember-guest
 #SBATCH --job-name=relnonlin145-216
 
 #SBATCH --mail-type=FAIL,BEGIN,END

@@ -33,6 +33,7 @@ simulate_model <- function(seasons, days_to_track, Rmu,
   DNR <- c(D=c(D1,D2,D3,D4),   # initial dormant state abundance
            N=c(N1,N2,N3,N4),   # initial live state abundance
            R=R)                # initial resource level
+  DNR_inits <- DNR
   
   parms <- list (
     r   = c(r1,r2,r3,r4),          # max growth rate for each species
@@ -106,14 +107,21 @@ simulate_model <- function(seasons, days_to_track, Rmu,
   NR             <- DNR[-dormants] 
   nmsNR          <- names(NR)
   gVec           <- getG(sigE = sigE, rho = rho, nTime = seasons, num_spp = num_spp)
-  Rvector        <- urlnorm(seasons, Rmu, Rsd_annual, lb = 0, ub = 100)
+  
+  if(Rsd_annual == 0) {
+    Rvector        <- rlnorm(seasons, Rmu, Rsd_annual)
+  }
+  if(Rsd_annual > 0) {
+    Rvector        <- urlnorm(seasons, Rmu, Rsd_annual, lb = 0, ub = 200)
+  }
+  
   saved_outs     <- matrix(ncol=length(DNR), nrow=seasons+1)
   saved_outs[1,] <- DNR 
 
   ##  Loop over seasons
   for(season_now in 1:seasons) {
     # Simulate continuous growing  season
-    output   <- ode(y = NR, times=days, func = updateNR, parms = parms)
+    output   <- ode(y = NR, times = days, func = updateNR, parms = parms, atol = 1e-100)
     NR       <- output[nrow(output),nmsNR]
     dormants <- grep("D", names(DNR)) 
     DNR      <- c(DNR[dormants], NR)

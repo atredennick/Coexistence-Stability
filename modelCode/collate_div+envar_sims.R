@@ -221,8 +221,9 @@ DNR <- rbind(c(D=c(1,1,1,1),N=c(1,1,1,1),R=20),
 
 ## Define vectors of parameters to vary
 n_rsd <- 25 # Number of seasonal standard deviation levels
-rsd_vec <- pretty(seq(0.1, 1.4, length.out=n_rsd), n_rsd) # Make a pretty vector
-rsd_vec <- rsd_vec[which(rsd_vec<1.25)]
+rsd_vec <- pretty(seq(0, 1.4, length.out=n_rsd), n_rsd) # Make a pretty vector
+rsd_vec <- rsd_vec[which(rsd_vec<1.25)] # get rid of super high variability
+rsd_vec[which(rsd_vec==0.06)] <- 0.061 # urlnorm doesn't like 0.06!!
 prm <- as.data.frame(rsd_vec)
 colnames(prm) <- "Rsd_annual"
 # Add in variable parameters to form parameter matrix
@@ -248,8 +249,9 @@ DNR <- rbind(c(D=c(1,1,1,1),N=c(1,1,1,1),R=20),
 
 ## Define vectors of parameters to vary
 n_rsd <- 25 # Number of seasonal standard deviation levels
-rsd_vec <- pretty(seq(0.1, 1.4, length.out=n_rsd), n_rsd) # Make a pretty vector
-rsd_vec <- rsd_vec[which(rsd_vec<1.25)]
+rsd_vec <- pretty(seq(0, 1.4, length.out=n_rsd), n_rsd) # Make a pretty vector
+rsd_vec <- rsd_vec[which(rsd_vec<1.25)] # get rid of super high variability
+rsd_vec[which(rsd_vec==0.06)] <- 0.061 # urlnorm doesn't like 0.06!!
 prm <- as.data.frame(rsd_vec)
 colnames(prm) <- "Rsd_annual"
 # Add in variable parameters to form parameter matrix

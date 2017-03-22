@@ -78,3 +78,6 @@ outs <- mclapply(seq_len(nrow(prm)),
 
 saveRDS(outs, "../simulationResults/storage_effect_4species_rho0.RDS")
 
+# for(i in 1:61){
+#   do.call(simulate_model, as.list(parameter_matrix[i,]))
+# }

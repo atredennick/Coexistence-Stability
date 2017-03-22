@@ -216,10 +216,12 @@ Thus, the initial conditions for each state ($D, N, R$) at the beginning of grow
 \begin{align}
   D_{i,\tau(0) + 1} &= (1-\gamma_{i,\tau}) \left[\alpha_i N_{i,\tau(T)} + D_{i,\tau(T)} \right] (1-\eta_i) \\
   N_{i,\tau(0) + 1} &= \gamma_{i,\tau} \left[\alpha_i N_{i,\tau(T)} + D_{i,\tau(T)} \right] (1-\eta_i) \\
-  R_{\tau + 1} &= \text{lognormal}\left(\mu(R^+), \sigma(R^+) \right),
+  R_{\tau + 1} &= \text{lognormal}\left(\mu(R^+), \sigma(R^+) \right)_0^{200},
 \end{align}
 \vspace{-3em}
 \noindent \new{where, as above, $\tau(T)$ denotes the end of growing season $\tau$ and $\tau(0) + 1$ denotes the beginning of growing season $\tau+1$.} 
+\new{The subscript (0) and superscript (200) indicates a lognormal distribution truncated at those values.
+We used the function \texttt{urlnorm} from the Runuran package (CITATION) to generate values from the truncated lognormal distribution.}
 Model parameters and notation are described in Table 1.
 
 
