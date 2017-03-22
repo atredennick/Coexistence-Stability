@@ -321,7 +321,7 @@ Previous theory [@Loreau2013] identifies three main mechanisms by which diversit
 \begin{figure}[!ht]
   \centering
       \includegraphics[width=5in]{./components/storage_effect_div+envar_varycomp_loglog_slopes.png}
-  \caption{Slopes of linear fits for the relationship between log(\emph{CV}) and log($\sigma_E$) at different levels of realized species richness from storage effect simulations. The slopes come from linear models fit to log-transformed versions of Figure 3 in the main text. For these simulations, ``symmetric competion'' (\tikzcircle{1.5pt}) refers to similar live-to-dormant biomass allocation fractions ($\boldsymbol{\alpha} = [0.5, 0.495, 0.49, 0.485]$ for the four species), and ``asymmetric competition'' (\tikzcircle[fill=blue]{1.5pt}) refers to more dissimilar live-to-dormant biomass allocation fractions ($\boldsymbol{\alpha} = [0.5, 0.49, 0.48, 0.47]$ for the four species).}
+  \caption{Slopes of linear fits for the relationship between log(\emph{CV}) and log($\sigma_E$) at different levels of realized species richness from storage effect simulations. The slopes come from linear models fit to log-transformed versions of Figure 3 in the main text. For these simulations, ``symmetric competition'' (\tikzcircle{1.5pt}) refers to similar live-to-dormant biomass allocation fractions ($\boldsymbol{\alpha} = [0.5, 0.495, 0.49, 0.485]$ for the four species), and ``asymmetric competition'' (\tikzcircle[fill=blue]{1.5pt}) refers to more dissimilar live-to-dormant biomass allocation fractions ($\boldsymbol{\alpha} = [0.5, 0.49, 0.48, 0.47]$ for the four species).}
 \end{figure}
 
 \newpage{}
