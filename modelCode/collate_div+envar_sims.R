@@ -329,7 +329,7 @@ ggplot(rnonlin_cvs_mean, aes(x=log(Rsd_annual), y=log(cv), color=as.factor(sppri
   ylab("CV of community biomass")+
   facet_wrap("spporder", ncol=2)+
   theme_bw()+
-  my_theme+
+  my_theme2+
   theme(legend.position = c(0.95, 0.15))
 ggsave(filename = "../manuscript/components/relative_nonlinearity_div+envar_loglog.png", width = 8, height=4, units = "in", dpi = 82)
 
@@ -337,7 +337,7 @@ ggsave(filename = "../manuscript/components/relative_nonlinearity_div+envar_logl
 rnonlin_cvs_slopes <- list()
 for(do_order in unique(rnonlin_cvs_mean$spporder)){
   for(do_spprich in unique(rnonlin_cvs_mean$spprichness)){
-    tmp_df <- subset(rnonlin_cvs_mean, spporder==do_order & spprichness==do_spprich)
+    tmp_df <- subset(rnonlin_cvs_mean, spporder==do_order & spprichness==do_spprich & Rsd_annual>0)
     if(nrow(tmp_df)>2){
       tmp_slope <- get_slope_rnonlin(tmp_df)
       tmpout <- data.frame(spporder=do_order, spprich=do_spprich, 
@@ -357,6 +357,6 @@ ggplot(rnonlin_cvs_slopes, aes(x=spprich, y=slope, color=as.factor(spporder)))+
   scale_fill_manual(values=c("red", "blue"), name="Spp. Addition Order", labels=c("Stable to unstable", "Unstable to stable"))+
   scale_color_manual(values=c("red", "blue"), name="Spp. Addition Order", labels=c("Stable to unstable", "Unstable to stable"))+
   theme_bw()+
-  my_theme
+  my_theme2
 ggsave("../manuscript/components/relative_nonlinearity_div+envar_loglog_slopes.png", width = 4, height=2, units = "in", dpi = 120)
 

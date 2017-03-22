@@ -252,7 +252,14 @@ Figshare (link) and is available on GitHub
   \NormalTok{NR             <-}\StringTok{ }\NormalTok{DNR[-dormants] }
   \NormalTok{nmsNR          <-}\StringTok{ }\KeywordTok{names}\NormalTok{(NR)}
   \NormalTok{gVec           <-}\StringTok{ }\KeywordTok{getG}\NormalTok{(}\DataTypeTok{sigE =} \NormalTok{sigE, }\DataTypeTok{rho =} \NormalTok{rho, }\DataTypeTok{nTime =} \NormalTok{seasons, }\DataTypeTok{num_spp =} \NormalTok{num_spp)}
-  \NormalTok{Rvector        <-}\StringTok{ }\KeywordTok{urlnorm}\NormalTok{(seasons, Rmu, Rsd_annual, }\DataTypeTok{lb =} \DecValTok{0}\NormalTok{, }\DataTypeTok{ub =} \DecValTok{100}\NormalTok{)}
+  
+  \NormalTok{if(Rsd_annual ==}\StringTok{ }\DecValTok{0}\NormalTok{) \{}
+    \NormalTok{Rvector        <-}\StringTok{ }\KeywordTok{rlnorm}\NormalTok{(seasons, Rmu, Rsd_annual)}
+  \NormalTok{\}}
+  \NormalTok{if(Rsd_annual >}\StringTok{ }\DecValTok{0}\NormalTok{) \{}
+    \NormalTok{Rvector        <-}\StringTok{ }\KeywordTok{urlnorm}\NormalTok{(seasons, Rmu, Rsd_annual, }\DataTypeTok{lb =} \DecValTok{0}\NormalTok{, }\DataTypeTok{ub =} \DecValTok{200}\NormalTok{)}
+  \NormalTok{\}}
+  
   \NormalTok{saved_outs     <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\DataTypeTok{ncol=}\KeywordTok{length}\NormalTok{(DNR), }\DataTypeTok{nrow=}\NormalTok{seasons}\DecValTok{+1}\NormalTok{)}
   \NormalTok{saved_outs[}\DecValTok{1}\NormalTok{,] <-}\StringTok{ }\NormalTok{DNR }
 
@@ -283,6 +290,46 @@ Figshare (link) and is available on GitHub
 \NormalTok{\} }\CommentTok{# end simulation function}
 \end{Highlighting}
 \end{Shaded}
+
+\newpage{}
+
+\section{Eight-Species Storage Effect Model}
+
+In the main text we constrained our focus to four-species communities
+because getting more than four species to coexist by relative
+nonlinearity is tricky, and usually requires adding another coexistence
+mechanism on top off relative nonlinearity (Yuan \& Chesson 2015). The
+storage effect does not suffer from this limitation, but we wanted our
+results in the main text to be easily comparable between coexistence
+mechanisms. Here, we show that our results are qualitatively similar if
+we simulate an eight-species community with species coexistence
+maintained by the storage effect. We conducted the same numerical
+simulations described in the main text for Figure 2. Quoting from the
+main text:
+
+\begin{quote}
+\emph{First, we allowed the variance of the environment to determine how many species can coexist, akin to a community assembly experiment with a species pool of four species.
+To do this, we simulated communities with all species initially present across a gradient of annual resource variability (for relative nonlinearity) or environmental cue variability (for the storage effect).
+Second, we chose parameter values that allowed coexistence of all four species and then performed species removals, akin to a biodiversity--ecosystem function experiment.
+The two simulation experiments correspond to (i) sampling ecosystem function across a natural gradient of species richness and (ii) sampling ecosystem function across diversity treatments within a site.}
+\end{quote}
+
+\begin{figure}[!ht]
+  \centering
+      \includegraphics[width=6in]{./components/SI_storage_effect_eightspp_local_regional.png}
+  \caption{Variability of total community biomass as a function of species richness when coexistence is maintained by the storage effect. The left panel shows results from simulations where environmental cue variance determines the number of species that coexist in a community. The right panel shows results from simulations where environmental cue variance is fixed at a level ($\sigma_E^2=10$) that allows coexistence of all eight species, but species are removed to manipulate diversity. The left-hand panel represents a "regional" diversity--ecosystem variability relationship across a natural diversity gradient, whereas the right-hand panel represents a "local" diversity--ecosystem variability relationship. Points are jittered within discrete richness values for visual clarity. Lines show the mean trend (loess fits).}
+\end{figure}
+
+From one to four species, the relationship is as presented in the main
+text: total community \emph{CV} increases approximately linearly with
+environmental variability because (1) environmental variability promotes
+species coexistence \emph{and} (2) environmental variability causes
+population fluctuations to increase (Figure SI-4). However, after four
+species, the relationship saturates --- species additions due to
+coexistence by the storage effect completely buffer ecosystem
+variability from further increases in environmental variability (Figure
+SI-4). Thus, our results provide novel theoretical explanations for
+positive and flat diversity--ecosystem variability relationships.
 
 \newpage{}
 
@@ -434,46 +481,6 @@ environmental conditions and species' traits.
 
 \newpage{}
 
-\section{Eight-Species Storage Effect Model}
-
-In the main text we constrained our focus to four-species communities
-because getting more than four species to coexist by relative
-nonlinearity is tricky, and usually requires adding another coexistence
-mechanism on top off relative nonlinearity (Yuan \& Chesson 2015). The
-storage effect does not suffer from this limitation, but we wanted our
-results in the main text to be easily comparable between coexistence
-mechanisms. Here, we show that our results are qualitatively similar if
-we simulate an eight-species community with species coexistence
-maintained by the storage effect. We conducted the same numerical
-simulations described in the main text for Figure 2. Quoting from the
-main text:
-
-\begin{quote}
-\emph{First, we allowed the variance of the environment to determine how many species can coexist, akin to a community assembly experiment with a species pool of four species.
-To do this, we simulated communities with all species initially present across a gradient of annual resource variability (for relative nonlinearity) or environmental cue variability (for the storage effect).
-Second, we chose parameter values that allowed coexistence of all four species and then performed species removals, akin to a biodiversity--ecosystem function experiment.
-The two simulation experiments correspond to (i) sampling ecosystem function across a natural gradient of species richness and (ii) sampling ecosystem function across diversity treatments within a site.}
-\end{quote}
-
-\begin{figure}[!ht]
-  \centering
-      \includegraphics[width=6in]{./components/SI_storage_effect_eightspp_local_regional.png}
-  \caption{Variability of total community biomass as a function of species richness when coexistence is maintained by the storage effect. The left panel shows results from simulations where environmental cue variance determines the number of species that coexist in a community. The right panel shows results from simulations where environmental cue variance is fixed at a level ($\sigma_E^2=10$) that allows coexistence of all eight species, but species are removed to manipulate diversity. The left-hand panel represents a "regional" diversity--ecosystem variability relationship across a natural diversity gradient, whereas the right-hand panel represents a "local" diversity--ecosystem variability relationship. Points are jittered within discrete richness values for visual clarity. Lines show the mean trend (loess fits).}
-\end{figure}
-
-From one to four species, the relationship is as presented in the main
-text: total community \emph{CV} increases approximately linearly with
-environmental variability because (1) environmental variability promotes
-species coexistence \emph{and} (2) environmental variability causes
-population fluctuations to increase (Figure SI-4). However, after four
-species, the relationship saturates --- species additions due to
-coexistence by the storage effect completely buffer ecosystem
-variability from further increases in environmental variability (Figure
-SI-4). Thus, our results provide novel theoretical explanations for
-positive and flat diversity--ecosystem variability relationships.
-
-\newpage{}
-
 \section{Additional Figures}
 
 \begin{figure}[!ht]
@@ -521,8 +528,6 @@ positive and flat diversity--ecosystem variability relationships.
       \includegraphics[width=5in]{./components/relative_nonlinearity_div+envar_loglog_slopes.png}
   \caption{Slopes of linear fits for the relationship between log(\emph{CV}) and log($\sigma_R$) at different levels of realized species richness from relative nonlinearity simulations. The slopes come from linear models fit to log-transformed versions of Figure 4 in the main text.}
 \end{figure}
-
-\newpage{}
 
 \section*{References}\label{references}
 \addcontentsline{toc}{section}{References}
