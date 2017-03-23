@@ -359,7 +359,7 @@ DISCUSSION
 ----------
 Theory developed for biodiversity--ecosystem function experiments emphasizes that increases in species richness should reduce ecosystem variability. 
 Consistent with theoretical expectations from models and with results from biodiversity--ecosystem functioning experiments, in which species coexistence is maintained by fluctuation-independent mechanisms, our model of  fluctuation-dependent species coexistence [also see @Chesson2001] produced a negative diversity--\new{ecosystem variability} relationship (Fig. 2B,D).
-This agreement is encouraging because species almost certainly coexist by some combination of fluctuation-independent (e.g., resource partitioning) and fluctuation-dependent mechanisms.
+This agreement is encouraging because \new{empirical evidence for fluctuation-dependent coexistence is accumulating} [@Pake1995; @Caceres1997; @Descamps-Julien2005; @Adler2006; @Angert2009; @Usinowicz2012] and species almost certainly coexist by some combination of fluctuation-independent (e.g., resource partitioning) and fluctuation-dependent mechanisms [@Ellner2016].
 By extending theory to communities where species richness is explicitly maintained by temporal variability, we have gained confidence that experimental findings are generalizable to many communities.
 In local settings where environmental variability is relatively homogeneous, reductions in the number of species should increase the variability of ecosystem functioning, regardless of how coexistence is maintained.
 
@@ -372,17 +372,18 @@ These mechanisms can translate increased variability into higher species richnes
 Our results may explain why deviations from the negative diversity--\new{ecosystem variability} relationship often come from observational studies [@Jiang2009].
 Observational studies must rely on natural diversity gradients, which do not control for differences in environmental variability among sites.
 If species richness depends on environmental variability, it is entirely possible to observe positive diversity--\new{ecosystem variability} relationships.
-For example, Sasaki and Lauenroth (2011) found a positive relationship between species richness and the temporal variability of plant abundance in a semi-arid grassland.
+For example, @DeClerck2006 found a positive diversity--\new{ecosystem variability} when sampling conifer richness and the variability of productivity across a large spatial gradient in the Sierra Nevada, across which environmental variability may have promoted coexistence.
+Sasaki and Lauenroth (2011) also found a positive relationship between species richness and the temporal variability of plant abundance in a semi-arid grassland.
 Their data came from a six sites that were 6 km apart.
 While Sasaki and Lauenroth explained their results in terms of dominant species' effects, it is also possible that each site experienced sufficiently different levels of environmental variability to influence species coexistence.
-\new{So far as we know, prior to the work presented here the effect of dominant species on ecosystem variability was the only available theoretical explanation for a positive diversity--\new{ecosystem variability} relationship} [e.g., @Thibaut2013].
-@DeClerck2006 also found a positive diversity--\new{ecosystem variability} when sampling conifer richness and the variability of productivity across a large spatial gradient in the Sierra Nevada.
+\new{Until now, so far as we know, the effect of dominant species on ecosystem variability was the only available theoretical explanation for a positive diversity--\new{ecosystem variability} relationship} [e.g., @Thibaut2013].
 
 While our modeling results show that fluctuation-dependent coexistence can create positive diversity--\new{ecosystem variability} relationships, whether such trends are detected will depend on the particular traits of the species in the community and the relative influence of fluctuation-dependent and fluctuation-independent coexistence mechanisms.
 Thus, our results may also help explain observational studies where no relationship between diversity and variability is detected.
 For example, @Cusson2015 found no relationship between species richness and variability of abundances in several marine macro-benthic ecosystems.
 Many of their focal ecosystems were from highly variable intertidal environments.
 If coexistence was at least in part determined by environmental fluctuations, then the confounding effect of environmental variability and species richness could offset or overwhlem any effect of species richness on ecosystem variability.
+\new{This may be particularly common in natural communities, where environmental fluctuations can help promote species coexistence even in cases where fluctuation-independent coexistence mechanisms are most important} [@Ellner2016].
 Previous theoretical work showed how environmental variation can mask the effect of species diversity on ecosystem productivity when sampling across sites [@Loreau1998].
 Our mechanistic model extends that conclusion to ecosystem variability.
 
