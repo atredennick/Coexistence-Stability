@@ -1,0 +1,4 @@
+Loading required package: Runuran
+Error in 1:days_to_track : NA/NaN argument
+Calls: do.call -> <Anonymous>
+Execution halted
