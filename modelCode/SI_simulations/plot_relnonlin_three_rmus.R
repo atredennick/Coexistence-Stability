@@ -64,6 +64,7 @@ get_cv <- function(x, seasons_to_exclude){
 ####
 ####  RECREATE PARAMETER GRID (STABLE TO USTABLE) ----
 ####
+## Define vectors of parameters to vary -- here, initial conditions to vary richness
 DNR <- rbind(c(D=c(1,1,1,1),N=c(1,1,1,1),R=20),
              c(D=c(1,1,1,0),N=c(1,1,1,0),R=20),
              c(D=c(1,1,0,0),N=c(1,1,0,0),R=20),
@@ -71,7 +72,9 @@ DNR <- rbind(c(D=c(1,1,1,1),N=c(1,1,1,1),R=20),
 
 ## Define vectors of parameters to vary
 n_rsd <- 25 # Number of seasonal standard deviation levels
-rsd_vec <- pretty(seq(0.1, 1.2, length.out=n_rsd), n_rsd) # Make a pretty vector
+rsd_vec <- pretty(seq(0, 1.4, length.out=n_rsd), n_rsd) # Make a pretty vector
+rsd_vec <- rsd_vec[which(rsd_vec<1.25)] # get rid of super high variability
+rsd_vec[which(rsd_vec==0.06)] <- 0.061 # urlnorm doesn't like 0.06!!
 prm <- expand.grid(as.matrix(rsd_vec), 1:4, 1:4)
 DNR_repped <- matrix(rep(DNR,each=(nrow(prm)/nrow(DNR))),ncol=ncol(DNR))
 colnames(prm) <- c("Rsd_annual", "Rmu", "dnr_id")
@@ -108,12 +111,7 @@ for(i in 1:nrow(out_files)) {
 }
 if(nrow(sims_summary) != number_of_files1) { stop("WRONG DIMENSIONS; CHECK OUTPUT") }
 
-tester <- cbind(sims_summary, DNR_repped)
-
-
 # Calculate mean CV at different realized richness
-torms <- which(is.nan(sims_summary$cv))
-sims_summary <- sims_summary[-torms,]
 cv_means_su <- sims_summary %>%
   group_by(Rmu, Rsd, num_species) %>%
   summarise(avg_cv = mean(cv))  %>%
@@ -145,13 +143,14 @@ ggplot()+
 ####  RECREATE PARAMETER GRID (USTABLE TO STABLE) ----
 ####
 DNR <- rbind(c(D=c(1,1,1,1),N=c(1,1,1,1),R=20),
-             c(D=c(1,1,1,0),N=c(1,1,1,0),R=20),
-             c(D=c(1,1,0,0),N=c(1,1,0,0),R=20),
-             c(D=c(1,0,0,0),N=c(1,0,0,0),R=20))
+             c(D=c(0,1,1,1),N=c(0,1,1,1),R=20),
+             c(D=c(0,0,1,1),N=c(0,0,1,1),R=20),
+             c(D=c(0,0,0,1),N=c(0,0,0,1),R=20))
 
 ## Define vectors of parameters to vary
 n_rsd <- 25 # Number of seasonal standard deviation levels
 rsd_vec <- pretty(seq(0.1, 1.4, length.out=n_rsd), n_rsd) # Make a pretty vector
+rsd_vec <- rsd_vec[which(rsd_vec<1.25)]
 prm <- expand.grid(as.matrix(rsd_vec), 1:4, 1:4)
 DNR_repped <- matrix(rep(DNR,each=(nrow(prm)/nrow(DNR))),ncol=ncol(DNR))
 colnames(prm) <- c("Rsd_annual", "Rmu", "dnr_id")
@@ -195,7 +194,7 @@ if(nrow(sims_summary) != number_of_files2) { stop("WRONG DIMENSIONS;
 cv_means <- sims_summary %>%
   group_by(Rmu, Rsd, num_species) %>%
   summarise(avg_cv = mean(cv)) %>%
-  filter(num_species>0 & avg_cv<5 & avg_cv>0)
+  filter(num_species>0)
 
 cv_means$Rmu <- paste0("Rmu = ", cv_means$Rmu)
 
@@ -239,4 +238,4 @@ ggplot()+
         legend.key = element_blank(),
         legend.key.size = unit(0.2, "cm"))+
   guides(colour = guide_legend(override.aes = list(size=1)))
-# ggsave(paste0(figures_path, "SI_relative_nonlinearity_four_rmus.png"), width = 160, height=60, units = "mm", dpi = 600)
+ggsave(paste0(figures_path, "SI_relative_nonlinearity_four_rmus.png"), width = 8.5, height=4, units = "in", dpi = 300)
