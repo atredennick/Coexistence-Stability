@@ -130,7 +130,7 @@ Much of the debate centers on the fact that BEF experimental protocols \new{do n
 Theoretical work on diversity--\new{ecosystem variability} relationships typically suffers from the same limitation: it recognizes the role of environmental variability in driving population fluctuations which destabilize ecosystems, but ignores the potential for environmental variability to promote species richness and thereby help stabilize ecosystems [Loreau 2010, but see @Chesson2001].
 
 Fluctuating environmental conditions are an important ingredient for stable species coexistence, both in theoretical models [@Chesson2000; @Chesson2004] and in natural communities [@Caceres1997; @Descamps-Julien2005; @Adler2006; @Angert2009].
-Such "fluctuation-dependent" coexistence \new{emerges most easily when} species have unique environmental responses and that environmental conditions vary so that each species in a community experiences favorable and unfavorable conditions, which prevents competitive exclusion [@Chesson2000].
+Such "fluctuation-dependent" coexistence \new{emerges most easily when} species have unique environmental responses and environmental conditions vary so that each species in a community experiences favorable and unfavorable conditions, which prevents competitive exclusion [@Chesson2000].
 \new{Chesson (2000) described the two fluctuation-dependent mechanisms: the storage effect and relative nonlinearity.
 Both mechanisms operate when environmental variation favors different species at different times. 
 Under the storage effect, this happens because species are competing for resources at different times (and escaping competition in unfavorable periods). 
@@ -216,7 +216,7 @@ Thus, the initial conditions for each state ($D, N, R$) at the beginning of grow
 \begin{align}
   D_{i,\tau(0) + 1} &= (1-\gamma_{i,\tau}) \left[\alpha_i N_{i,\tau(T)} + D_{i,\tau(T)} \right] (1-\eta_i) \\
   N_{i,\tau(0) + 1} &= \gamma_{i,\tau} \left[\alpha_i N_{i,\tau(T)} + D_{i,\tau(T)} \right] (1-\eta_i) \\
-  R_{\tau + 1} &= \text{lognormal}\left(\mu(R^+), \sigma(R^+) \right)_0^{200},
+  R_{\tau(0) + 1} &= \text{lognormal}\left(\mu(R^+), \sigma(R^+) \right)_0^{200},
 \end{align}
 \vspace{-3em}
 \noindent \new{where, as above, $\tau(T)$ denotes the end of growing season $\tau$ and $\tau(0) + 1$ denotes the beginning of growing season $\tau+1$.} 
