@@ -138,3 +138,49 @@ ggplot()+
 ggsave(paste0(figures_path, "SI_storage_effect_two_rmus_fourSpeciesOnly.png"), width = 133, height=90, units = "mm", dpi = 600)
 
 
+
+####
+####  DIG INTO MEAN AND SDS ----
+####
+sims_four <- filter(sims_summary, num_species==4)
+ggplot(sims_four, aes(x=sigE, y=temporal_mean, color=as.factor(rho)))+
+  geom_line()+
+  facet_wrap("Rmu", scales = "free_y")+
+  my_theme
+ggplot(sims_four, aes(x=sigE, y=temporal_stddev, color=as.factor(rho)))+
+  geom_line()+
+  facet_wrap("Rmu", scales = "free_y")+
+  my_theme
+
+library(mvtnorm)
+getG <- function(sigE, rho, nTime, num_spp=4) {
+  varcov       <- matrix(rep(rho*sigE,num_spp*2), num_spp, num_spp)
+  diag(varcov) <- sigE
+  if(sigE > 0) { varcov <- Matrix::nearPD(varcov)$mat } # crank through nearPD to fix rounding errors 
+  varcov <- as.matrix(varcov)
+  e      <- rmvnorm(n = nTime, mean = rep(0,num_spp), sigma = varcov)
+  g      <- exp(e) / (1+exp(e))
+  return(g)
+}
+
+rho <- -(1/3)
+nTime <- 5000
+sig_e_vec <- seq(0,10,by=0.2)
+gs <- matrix(ncol=length(sig_e_vec),nrow=nTime*4)
+zeros_ones <- numeric(length(sig_e_vec))
+for(i in 1:length(sig_e_vec)){
+  gs[,i] <- as.vector(getG(sigE=sig_e_vec[i],rho,nTime))
+  zeros_ones[i] <- length(which(gs[,i] < 0.01))
+}
+
+boxplot(gs, use.cols = T, xaxt="n")
+axis(1, at = c(1:length(sig_e_vec)), labels = sig_e_vec)
+plot(sig_e_vec,zeros_ones,ylab="Num. of germination events less than 0.01")
+
+extrema_df <- data.frame(sigE = sig_e_vec, zeros = zeros_ones)
+ggplot(extrema_df, aes(x = sigE, y=zeros/5000))+
+  geom_col()+
+  ylab("Proportion of germination events < 0.01")+
+  ggtitle(bquote(rho~~"= -1/3"))
+
+
