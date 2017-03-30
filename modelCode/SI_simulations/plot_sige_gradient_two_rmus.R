@@ -28,11 +28,11 @@ number_of_files    <- length(grep("*.RDS", list.files(results_path)))
 ####  MY PLOTTING THEME ----
 ####
 my_theme <- theme_few()+
-  theme(axis.text          = element_text(size=6, color="grey35"),
-        axis.title         = element_text(size=8),
-        strip.text         = element_text(size=8, color="grey35"),
-        legend.title       = element_text(size=8),
-        legend.text        = element_text(size=6, color="grey35"),
+  theme(axis.text          = element_text(size=10, color="grey35"),
+        axis.title         = element_text(size=12),
+        strip.text         = element_text(size=10, color="grey35"),
+        legend.title       = element_text(size=10),
+        legend.text        = element_text(size=8, color="grey35"),
         legend.key.size    = unit(0.3, "cm"))
 
 
@@ -104,6 +104,10 @@ for(i in 1:nrow(out_files)) {
 if(nrow(sims_summary) != number_of_files) { stop("WRONG DIMENSIONS;
                                                  CHECK OUTPUT") }
 
+i=44
+tmp_sim <- readRDS(paste0(results_path, out_files[i,1]))
+matplot(tmp_sim[,5:8], type="l")
+
 # Calculate mean CV at different realized richness
 cv_means <- sims_summary %>%
   group_by(sigE, rho, num_species, Rmu) %>%
@@ -129,13 +133,11 @@ ggplot()+
   facet_grid(.~Rmu, scales = "free_y")+
   my_theme+
   theme(legend.position = c(0.93, 0.4))+
-  theme(legend.title=element_text(size=6, face="bold"),
-        legend.text=element_text(size=6),
-        legend.background = element_rect(colour = "lightgrey", size=0.25),
+  theme(legend.background = element_rect(colour = "lightgrey", size=0.25),
         legend.key = element_blank(),
         legend.key.size = unit(0.2, "cm"))+
   guides(colour = guide_legend(override.aes = list(size=1)))
-ggsave(paste0(figures_path, "SI_storage_effect_two_rmus_fourSpeciesOnly.png"), width = 133, height=90, units = "mm", dpi = 600)
+ggsave(paste0(figures_path, "SI_storage_effect_two_rmus_fourSpeciesOnly.png"), width = 133, height=90, units = "mm", dpi = 120)
 
 
 
@@ -181,6 +183,8 @@ extrema_df <- data.frame(sigE = sig_e_vec, zeros = zeros_ones)
 ggplot(extrema_df, aes(x = sigE, y=zeros/5000))+
   geom_col()+
   ylab("Proportion of germination events < 0.01")+
-  ggtitle(bquote(rho~~"= -1/3"))
+  ggtitle(bquote(rho~~"= -1/3"))+
+  my_theme
+ggsave("../../manuscript/components/SI_big_sigE_gradient_extreme_events.png", height = 3, width=4, units = "in",dpi = 120)
 
 

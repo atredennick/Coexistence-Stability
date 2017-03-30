@@ -199,9 +199,9 @@ Chesson et al. 2004) and in natural communities (Cáceres 1997;
 Descamps-Julien \& Gonzalez 2005; Adler et al. 2006; Angert et al.
 2009). Such ``fluctuation-dependent'' coexistence
 \new{emerges most easily when} species have unique environmental
-responses and environmental conditions vary so that each species in a
-community experiences favorable and unfavorable conditions, which
-prevents competitive exclusion (Chesson 2000a).
+responses and environmental conditions vary so that each species
+experiences both favorable and unfavorable conditions, preventing
+competitive exclusion (Chesson 2000a).
 \new{Chesson (2000) described the two fluctuation-dependent mechanisms: the storage effect and relative nonlinearity.
 Both mechanisms operate when environmental variation favors different species at different times. 
 Under the storage effect, this happens because species are competing for resources at different times (and escaping competition in unfavorable periods). 
@@ -257,9 +257,10 @@ To reconcile these two perspectives, we extend theory on the
 relationship between species richness and ecosystem variability to cases
 in which species coexistence explicitly depends on environmental
 fluctuations and species-specific responses to environmental conditions.
-We focus on the temporal storage effect and relative nonlinearity using
-a general consumer-resource model. We use the model to investigate two
-questions:
+We focus on
+\new{communities where coexistence is maintained by either the temporal storage effect or relative nonlinearity, but not both,}
+using a general consumer-resource model. We use the model to investigate
+two questions:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -275,25 +276,11 @@ questions:
 
 \subsection{MATERIALS AND METHODS}\label{materials-and-methods}
 
-\new{To bound the problem and to isolate the effect of fluctation-dependent coexistence on the diversity--ecosystem variability relationship we constrain our analysis to four species communities and do not consider communities where coexistence is maintained by a combination of mechanisms.
-We limit our analysis to four species communities to keep the models tractable while still allowing enough of a species richness gradient for trends to emerge.
-It is exceedingly difficult to get more than four species to coexist via relative nonlinearity without introducing some form of fluctuation-independent mechanism like resource partitioning}
-(Yuan \& Chesson 2015),
-\new{which would then cloud our inference on the effect of fluctuation-dependent coexistence.
-For consistency, we also constrain our focus to four species communities under the storage effect, but our conclusions generally apply to more species-rich communities, too (see Supporting Information section SI.2).}
-
-\new{We also do not include demographic stochasticity, which can lead to stochastic extinction for small populations as environmental  variability increases}
-(Boyce 1992).
-\new{Previous work has shown how demographic stochasticity and coexistence mechanisms can interact to create a weak "humped-shape" relationship between coexistence time and environmental variability}
-(Adler \& Drake 2008),
-\new{because environmental variability increases coexistence strength and the probability of stochastic extinction simultaneously.
-We do not consider this potential effect here because our focus is on large populations that would most influence ecosystem functioning.}
-
 \subsubsection{Consumer-resource model}\label{consumer-resource-model}
 
-We developed a semi-discrete consumer-resource model that allows many
-species to coexist on one resource by either the storage effect or
-relative nonlinearity. In our model, the consumer can be in one of
+We developed a semi-discrete consumer-resource model that allows
+multiple species to coexist on one resource by either the storage effect
+or relative nonlinearity. In our model, the consumer can be in one of
 two-states: a dormant state \(D\) and a live state \(N\). The dormant
 state could represent, for example, the seed bank of an annual plant
 \new{or root biomass of a perennial plant}. Transitions between \(N\)
@@ -302,7 +289,7 @@ continuous-time consumer-resource dynamics between the discrete
 transitions. Thus, our model is formulated as ``pulsed differential
 equations'' (Pachepsky et al. 2008; Mailleret \& Lemesle 2009; Mordecai
 et al. 2016).
-\new{For clarity we refer to $\tau$ as seasons and the growing time within seasons have daily ($t$) time steps ($t=1,2,3,\dots,T$).
+\new{We refer to $\tau$ as growing seasons and each growing season is composed of $T$ daily time steps, indexed by $t$ ($t=1,2,3,\dots,T$).
 For example, the notation $\tau(t)$ reads as: ``day $t$ within growing season $\tau$.''}
 
 \new{At the beginning of growing season $\tau$ a season-specific fraction ($\gamma_{i,\tau}$) of dormant biomass is activated as living biomass such that}
@@ -322,14 +309,14 @@ equations: \vspace{-3em}
 \frac{\text{d}R}{\text{d}t} &= - \sum\limits_{i}f_{i}(R)N_{i},
 \end{align}\vspace{-3em}
 
-\noindent where the subscript \(i\) denotes species, \(N\) is the living
-biomass state, and \(\epsilon_i\) is each species' resource-to-biomass
+\noindent where the subscript \(i\) denotes species, \(N_i\) is living
+biomass, and \(\epsilon_i\) is species-specific resource-to-biomass
 conversion efficiency. The growth rate of living biomass is a
 resource-dependent Hill function,
 \(f_{i}(R) = r_{i}R^{a_{i}} / (b_{i}^{a_{i}}+R^{a_{i}})\), where
 \emph{r} is a species' intrinsic growth rate and \emph{a} and \emph{b}
-define the curvature of the function. Resource depletion is equal to the
-sum of each species' consumption.
+define the curvature and scale of the function, respectively. Resource
+depletion is equal to the sum of consumption by all species.
 
 \new{At the end of the growing season ($t=T$), a fraction ($\alpha_i$) of live biomass is stored as dormant biomass and a fraction of dormant biomass survives ($1-\eta_i$) to the next growing season, giving the following equation:}
 \vspace{-3em}
@@ -339,7 +326,7 @@ D_{i,\tau(0) + 1} = \left[\alpha_i N_{i,\tau(T)} + D_{i,\tau(T)} \right](1 - \et
 \end{align}\vspace{-3em}
 
 \noindent \new{where $\tau(T)$ denotes the end of growing season $\tau$.
-We assume remaining live biomass $\left(N_{\tau(T)}(1-\alpha)\right)$ dies (i.e., this is not a closed system where all biomass must be in either $N$ or $D$ states).
+We assume remaining live biomass $\left(N_{i,\tau(T)}(1-\alpha_i)\right)$ dies (i.e., this is not a closed system where all biomass must be in either $N$ or $D$ states).
 We do not include extinction thresholds, or any other form of demographic stochasticity, under the assumption that we are working with abundant species with generous seed dispersal.}
 
 We assume the resource pool is not replenished within a growing season.
@@ -365,24 +352,32 @@ We used the function \texttt{urlnorm} from the "Runuran" package}
 \new{to generate values from the truncated lognormal distribution.}
 Model parameters and notation are described in Table 1.
 
+\new{Our model does not include demographic stochasticity, which can lead to stochastic extinction for small populations as environmental  variability increases}
+(Boyce 1992).
+\new{Previous work has shown how demographic stochasticity and coexistence mechanisms can interact to create a weak "humped-shape" relationship between coexistence time and environmental variability}
+(Adler \& Drake 2008),
+\new{because environmental variability increases coexistence strength and the probability of stochastic extinction simultaneously.
+We do not consider this potential effect here because our focus is on large populations that would most influence ecosystem functioning.}
+
 \paragraph{Implementing the Storage
 Effect}\label{implementing-the-storage-effect}
 
 For the storage effect to operate, we need species-specific responses to
 environmental variability, density-dependent covariance between
 environmental conditions and competition (\emph{EC} covariance), and
-subadditive population growth (Chesson 1994, 2000b). Long-term
-coexistence is possible when all species can increase when rare. In the
-storage effect, rare species increase by escaping the effects of
-\emph{EC} covariance. Common species will experience greater than
-average competition (\emph{C}) in good environment (\emph{E}) years
-because common species cannot avoid intraspecific competition. However,
-rare species can escape intraspecific competition and have the potential
-to increase rapidly in a good \emph{E} year. \emph{EC} covariance
-emerges in our model because dormant-to-live transition rates
+subadditive population growth (Chesson 1994, 2000b). If these conditions
+are present, all species can increase when rare and coexistence is
+stable. In the storage effect, rare species increase by escaping the
+effects of \emph{EC} covariance. Common species will experience greater
+than average competition (\emph{C}) in environment (\emph{E}) years that
+are good for them because common species cannot avoid intraspecific
+competition. However, a rare species can escape intraspecific
+competition and has the potential to increase rapidly in a year when the
+environment is good for them but bad for the common species. \emph{EC}
+covariance emerges in our model because dormant-to-live transition rates
 (\(\gamma\)) are species-specific and vary through time.
 \new{In a high $\gamma$ year for a common species, resource uptake will be above average because combined population size will be above average.
-In a high $\gamma$ year for a rare species, resource uptake will be below average because combined population size will be below average.}
+In a year when $\gamma$ is high for rare species and low for common species, resource uptake will be below average because combined population size will be below average.}
 Subadditive population growth buffers populations against large
 population decreases in unfavorable years. It is included in our model
 through a dormant stage with very low death rates, which limits large
@@ -449,6 +444,11 @@ resource conservative species. Such reciprocity helps each species to
 increase when rare, stabilizing coexistence (Armstrong \& McGehee 1980;
 Chesson 2000a; Chesson et al. 2004).
 
+\new{We limit our analysis to four species communities because it is exceedingly difficult to get more than four species to coexist via relative nonlinearity without introducing some form of fluctuation-independent mechanism like resource partitioning}
+(Yuan \& Chesson 2015),
+\new{which would then cloud our inference on the effect of fluctuation-dependent coexistence.
+For consistency, we also constrain our focus to four species communities under the storage effect, but our conclusions apply to more species-rich communities (see Supporting Information section SI.2).}
+
 \subsubsection{Numerical simulations}\label{numerical-simulations}
 
 To explore how fluctuation-dependent coexistence can affect the
@@ -490,10 +490,10 @@ large population fluctuations. The difference in the intrinsic stability
 of these two kinds of species makes our simulations sensitive to initial
 conditions. Therefore, we ran two sets of simulations for relative
 nonlinearity: beginning with either stable or unstable species as a
-reference point For example, if species A is the most stable species and
-species D is the least stable, we ran simulations where A then B then C
-then D were \new{added to the initial pool of species}. We then ran
-simulations with that order reversed.
+reference point. For example, if species A is the most stable species
+and species D is the least stable, we ran simulations where A then B
+then C then D were \new{added to the initial pool of species}. We then
+ran simulations with that order reversed.
 
 All simulations were run for 5,000 growing seasons of 100 days each. We
 averaged biomass over the growing season, and yearly values of
@@ -550,39 +550,47 @@ sometimes less variable than three-species communities.
 This means that the relationship can become flat as species become more similar.}
 
 \new{For the storage effect, total community \emph{CV} decreased with species richness at a given level of environmental variability because additional species reduced the temporal standard deviation due to portfolio effects (Fig. SI-7).
-Mean biomass remained the same because all species had the same resource uptake functions, which was necessary to eliminate any potential effects of relative nonlinearity in growth.
-Portfolio effects under the storage effect remained strong in an eight-species community, where total community \emph{CV} saturated after the fifth species (Fig. SI-1).
-For relative nonlinearity, total community \emph{CV} decreased with species richness at a given level of environmental variability because additional species increased mean biomass (over-yeilding) and, at higher richness (three to four species), reduced the temporal standard deviation (Fig. SI-7).
+Mean biomass remained the same because all species had the same resource uptake functions, which was necessary to eliminate any potential effects of relative nonlinearity.
+Portfolio effects under the storage effect remained strong in an eight-species community, where total community \emph{CV} saturated after addition of the fifth species (Fig. SI-1).
+For relative nonlinearity, total community \emph{CV} decreased with species richness at a given level of environmental variability because additional species increased mean biomass (over-yielding) and, at higher richness (three to four species), reduced the temporal standard deviation (Fig. SI-7).
 Mean biomass increased because some species had higher growth rates (Fig. SI-5), increasing total biomass.}
 
-To understand how much species additions can stabilize ecosystem
+To understand how much species additions might stabilize ecosystem
 functioning as environmental variability increases, we simulated our
-model over a range of environmental variance and species pool sizes.
-Realized species richness increased with environmental variability and,
-in some cases, increases in richness completely offset the effect of
-increasing environmental variability on ecosystem variability (Fig. 3
-and 4). More species rich communities were less variable on average and
-increased in ecosystem \emph{CV} at a slower rate than communities with
-fewer species (e.g., lower slopes in log-log space; Fig. SI-8).
+model over a range of environmental variance and species pool sizes. For
+both coexistence mechanisms, realized species richness increased with
+environmental variability and, in some cases, increases in richness
+completely offset the effect of moderate increases in environmental
+variability on ecosystem variability (Fig. 3 and 4). More species rich
+communities were less variable on average and, under the storage effect,
+they increased in ecosystem \emph{CV} at a slower rate than communities
+with fewer species (e.g., lower slopes in log-log space; Fig. SI-8).
 \new{The buffering effect of species richness under the storage effect is also evident in Fig. 2A because the relationship between species richness and ecosystem \emph{CV} begins to saturate.
-In fact, ecosystem \emph{CV} remains relatively constant past four species when species have independent responses to the environment ($\rho=0$; Fig. SI-1).
-While it appears ecosystem \emph{CV} remains constant in a four-species community when $\rho < 0$ (Fig. 3A), it does eventually rise as environmental cue variability continues to increase past the values shown in Fig. 3A (Fig. SI-9).}
+In fact, ecosystem \emph{CV} remains relatively constant past four species when species have independent responses to the environment ($\rho=0$; Fig. SI-1).}
 
 The dampening effect of fluctuation-dependent coexistence on increasing
 environmental variability depends on the specific traits (parameter
 values) of the species in the regional pool.
-\new{Moderately asymmetric competition} makes it more difficult for new
-species to enter the local community, but once they do enter, ecosystem
-\emph{CV} is similar between communities with low and moderate
-competitive asymmetries (Fig. 3; compare top and bottom panels).
-Moderately asymmetric competition does decrease the rate at which
-ecosystem \emph{CV} increases with environmental variance (Fig. SI-8)
-because the abundance of inferior competitors is reduced and they do not
-influence ecosystem \emph{CV} as much as when competitive asymmetry is
-low. The correlation of species' environmental responses also mediates
-the relationship between environmental variance, species richness, and
-ecosystem \emph{CV}: lower correlations make it easier for new species
-to enter the community and contribute to porfolio effects (Fig. 3).
+\new{Under the storage effect, moderately asymmetric competition} makes
+it more difficult for new species to enter the local community, but once
+they do enter, ecosystem \emph{CV} is similar between communities with
+low and moderate competitive asymmetries (Fig. 3; compare top and bottom
+panels). Moderately asymmetric competition does decrease the rate at
+which ecosystem \emph{CV} increases with environmental variance (Fig.
+SI-8) because the abundance of inferior competitors is reduced and they
+do not influence ecosystem \emph{CV} as much as when competitive
+asymmetry is low. The correlation of species' environmental responses
+(\(\rho\)) also mediates the relationship between environmental
+variance, species richness, and ecosystem \emph{CV}: lower correlations
+make it easier for new species to enter the community and contribute to
+porfolio effects (Fig. 3). When the correlation of species'
+environmental responses were as negative as possible (\(\rho = -1/3\)),
+ecosystem \emph{CV} of the four-species community was immune to
+increases in the environmental cue variance (Fig. 3A). However, more
+extreme increases in the variance of the environmental cue, which
+increase the number of extremely low or high germination events (i.e.,
+\(\gamma \approx 0\) or 1\$; Fig. SI-9), eventually caused ecosystem
+\emph{CV} to increase in the four species community (Fig. SI-10).
 
 In communities where species coexist via relative nonlinearity, the
 extent to which species additions buffer ecosystem stability against
@@ -591,29 +599,29 @@ immigrating species and the order in which they enter the community.
 When additional species, which immigrate from the regional pool, are
 less intrinsically stable than the resident species, ecosystem
 variability increases at a relatively constant rate even as species are
-added (Fig. 4A; Fig. SI-10). If more stable species colonize, species
+added (Fig. 4A; Fig. SI-11). If more stable species colonize, species
 additions buffer the ecosystem from increasing environmental variability
 (Fig. 4B).
 
-\new{We tested the qualitative generality of our results under different parameters by conducting a targeted sensitivity analysis focused on parameter values and asymmetries that most affect species coexistence (Supporting Information section SI.3).
-Making parameters asymmetric induces competitive hierachies and makes coexistence more difficult.
-For the storage effect, this is evident in Fig. 3 where we made live-to-dormant transition rates ($\alpha$s) asymmetric, and we achieved the same result when we made dormant mortality rates ($\eta$s) asymmetric (Fig. SI-2).
+\new{We tested the generality of our results under different parameters by conducting a targeted sensitivity analysis focused on parameter values and asymmetries that most affect species coexistence (Supporting Information section SI.3).
+Making parameters asymmetric creates competitive hierachies and makes coexistence more difficult.
+For the storage effect, this is evident in Fig. 3 where we made live-to-dormant transition rates ($\alpha$s) asymmetric, and the same result occurred when we made dormant mortality rates ($\eta$s) asymmetric (Fig. SI-2).
 Furthermore, increasing the absolute value of dormant mortality also made coexistence more difficult, but results were qualitatively similar to those above (Fig. SI-3).
-For relative nonlinearity, altering the absolute value of the mean resource pulse shifts where species can coexist across a gradient of resource variability (Fig. SI-4).
+For relative nonlinearity, altering the absolute value of the mean resource pulse shifts the region of coexistence across a gradient of resource variability (Fig. SI-4).
 But, again, qualitatively similar results emerge when species \emph{can} coexist.
 In general, altering any parameter in isolation will make coexistence easier or harder at any given level of environmental variability.
-Thus, our results are robust in the sense that the qualitative patterns we present will always emerge when the particular parameter values permit species coexistence over some range of envrionmental variability.
-In other words, our results are only sensitive to whether fluctuation-dependent coexistence is operating, or not.}
+Thus, our results are robust in the sense that the qualitative patterns we present will always emerge for parameter values that permit species coexistence over some range of envrionmental variability.
+In other words, our results are only sensitive to whether or not fluctuation-dependent coexistence is operating.}
 
 \subsection{DISCUSSION}\label{discussion}
 
 Theory developed for biodiversity--ecosystem function experiments
 emphasizes that increases in species richness should reduce ecosystem
-variability. Consistent with theoretical expectations from models and
-with results from biodiversity--ecosystem functioning experiments, in
+variability. Consistent with theoretical expectations from models in
 which species coexistence is maintained by fluctuation-independent
-mechanisms, our model of fluctuation-dependent species coexistence (also
-see Chesson et al. 2001) produced a negative
+mechanisms and with results from biodiversity--ecosystem functioning
+experiments, our model of fluctuation-dependent species coexistence
+(also see Chesson et al. 2001) produced a negative
 diversity--\new{ecosystem variability} relationship (Fig. 2B,D). This
 agreement is encouraging because
 \new{empirical evidence for fluctuation-dependent coexistence is accumulating}
@@ -640,7 +648,9 @@ nonlinearity to stabilize coexistence (Chesson 2000a). These mechanisms
 can translate increased variability into higher species richness (Fig.
 SI-6), but the increase in environmental variability also increases
 ecosystem variability.
-\new{We limited our primary analysis to four-species communities, but the buffering effect of additional species under the storage effect is even stronger in more species rich communities (Fig. SI-1).}
+\new{However, the apparent saturation of the relationship in Fig. 3A suggests that the portfolio effects that buffer ecosystems against environmental variability, and inherently emerge under the storage effect, get stronger as more species are able to coexist.
+Indeed, the relationship between species richness and ecosystem \emph{CV} completely saturates under the storage effect in more species rich communities (Fig. SI-1).
+This suggests neutral diversity--ecosystem variability relationships are possible due to the storage effect.}
 
 Our results may explain why deviations from the negative
 diversity--\new{ecosystem variability} relationship often come from
@@ -657,11 +667,10 @@ promoted coexistence. Sasaki and Lauenroth (2011) also found a positive
 relationship between species richness and the temporal variability of
 plant abundance in a semi-arid grassland. Their data came from a six
 sites that were 6 km apart. While Sasaki and Lauenroth explained their
-results in terms of dominant species' effects, it is also possible that
-each site experienced sufficiently different levels of environmental
+results in terms of dominant species' effects (e.g., Thibaut \& Connolly
+2013), our findings suggest an alternative explanation: each site may
+have experienced sufficiently different levels of environmental
 variability to influence species coexistence.
-\new{Until now, so far as we know, the effect of dominant species on ecosystem variability was the only available theoretical explanation for a positive diversity--\new{ecosystem variability} relationship}
-(e.g., Thibaut \& Connolly 2013).
 
 While our modeling results show that fluctuation-dependent coexistence
 can create positive diversity--\new{ecosystem variability}
@@ -700,11 +709,8 @@ effect of environmental variability on ecosystem variability (Figs. 3
 and 4).
 
 \new{We relied on numerical simulations of a mechanistic model to reach our conclusions, meaning our results could be sensitive to the specific parameters values we chose.
-In a targeted sensitivity analysis (Supprting Information section SI.3), we found that our qualitative results are robust to different parameter values.
-However, altering parameter values in our model typically influences the strength and possibility of species coexistence.
-This leads to an important point.
-So long as specific parameter combinations allow fluctuation-dependent species coexistence (by either the storage effect or relative nonlinearity), the results we found will emerge.
-We did not investigate the impact of altering parameters to allow both the storage effect and relative nonlinearity to operate, and doing so is a future challenge.}
+In a targeted sensitivity analysis (Supprting Information section SI.3), we found that our qualitative results are robust so long as specific parameter combinations allow fluctuation-dependent species coexistence (by either the storage effect or relative nonlinearity).
+Investigating the case in which both the storage effect and relative nonlinearity operate remains a future challenge.}
 
 Overall, our results lead to two conclusions. First, when predicting the
 impacts of increasing environmental variability on ecosystem
@@ -814,7 +820,7 @@ correlated in time.}
 \begin{figure}[!ht]
   \centering
       \includegraphics[height=2.5in]{/Users/atredenn/Google_Drive/coexistence-stability_submission/figures/coex_stability_figure3.png}
-  \caption{The effect of environmental variability on ecosystem variability when species coexist via relative nonlinearity. (A) The species pool increases from one to four species, with the fourth species being most unstable (e.g., resource conservative to resource acquisitive). Increasing environmental variability (the SD of annual resource availability) allows for greater species richness, but species additions do not modulate the effect of environmental variability on ecosystem variability. (B) The species pool increases from one to four species, with the fourth species being most stable (e.g., resource acquisitive to resrouce conservative). In this case, increasing environmental variability allows for greater realized species richness and can temper the effect of environmental variability. In (B), there is limited parameter space under which only three species coexist, which is why a three species community is missing. Parameter values are as in Figure 2C.}
+  \caption{The effect of environmental variability on ecosystem variability when species coexist via relative nonlinearity. (A) The species pool increases from one to four species, with the fourth species being most unstable (e.g., resource conservative to resource acquisitive). Increasing environmental variability (the SD of annual resource availability) allows for greater species richness, but species additions do not modulate the effect of environmental variability on ecosystem variability. (B) The species pool increases from one to four species, with the fourth species being most stable (e.g., resource acquisitive to resrouce conservative). In this case, increasing environmental variability allows for greater realized species richness and can temper the effect of environmental variability. Parameter values are as in Figure 2C.}
 \end{figure}
 
 \newpage{}
@@ -822,7 +828,7 @@ correlated in time.}
 \begin{figure}[!ht]
   \centering
       \includegraphics[height=4in]{./components/coexistence_stability_infographic_v2.png}
-  \caption{Example of how species additions under increasing environmental variability can buffer ecosystem stability when species coexist via the storage effect. Environmental variability ($\sigma^2_E$) increases linearly with time on the \emph{x}-axis. (A) Time series of species' biomass (colored lines) in a closed community where colonization of new species is prevented and (B) its associated coefficient of variation (Rolling CV; calculated over 100-yr moving window) through time. (C) Time series of species' biomass in an open community where colonization by new species from the regional pool of four species becomes possible as environmental variation increases. The trajectory of total biomass CV in the open community (D) asymptotes at lower variability than in the closed community (B) due to the buffering effect of species richness. Parameter values are as in Figure 2A except for $\alpha$s: (A-C) $\alpha_1 = 0.5, \alpha_2 = 0.494, \alpha_3 = 0.49, \alpha_4 = 0.483$.}
+  \caption{Example of how species additions under increasing environmental variability can buffer ecosystem stability when species coexist via the storage effect. Environmental variability ($\sigma^2_E$) increases linearly with time on the \emph{x}-axis. (A) Time series of species' biomass (colored lines) in a closed community where colonization of new species is prevented and (B) its associated coefficient of variation (Rolling CV; calculated over 100-yr moving window) through time. (C) Time series of species' biomass in an open community where colonization by new species from the regional pool of four species becomes possible as environmental variation increases. The trajectory of total biomass CV in the open community (D) asymptotes at lower variability than in the closed community (B) due to the buffering effect of species richness. Parameter values are as in Figure 2A except for $\alpha$s: $\alpha_1 = 0.5, \alpha_2 = 0.494, \alpha_3 = 0.49, \alpha_4 = 0.483$.}
 \end{figure}
 
 \newpage{}
