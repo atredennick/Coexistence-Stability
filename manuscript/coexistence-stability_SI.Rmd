@@ -138,10 +138,10 @@ simulate_model <- function(seasons, days_to_track, Rmu,
   nmsNR          <- names(NR)
   gVec           <- getG(sigE = sigE, rho = rho, nTime = seasons, num_spp = num_spp)
   
-  if(Rsd_annual == 0) {
+  if(Rsd_annual == 0) { # urlnorm can't handle zero variance
     Rvector        <- rlnorm(seasons, Rmu, Rsd_annual)
   }
-  if(Rsd_annual > 0) {
+  if(Rsd_annual > 0) { # when variance greater than zero
     Rvector        <- urlnorm(seasons, Rmu, Rsd_annual, lb = 0, ub = 200)
   }
   
@@ -179,7 +179,7 @@ simulate_model <- function(seasons, days_to_track, Rmu,
 \newpage{}
 
 \section{Eight-Species Storage Effect Model}
-In the main text we constrained our focus to four-species communities because getting more than four species to coexist by relative nonlinearity is tricky, and usually requires adding another coexistence mechanism on top off relative nonlinearity [@Yuan2015].
+In the main text we constrained our focus to four-species communities because getting more than four species to coexist by relative nonlinearity is tricky, and usually requires adding another coexistence mechanism on top of relative nonlinearity [@Yuan2015].
 The storage effect does not suffer from this limitation, but we wanted our results in the main text to be easily comparable between coexistence mechanisms.
 Here, we show that our results are qualitatively similar if we simulate an eight-species community with species coexistence maintained by the storage effect.
 We conducted the same numerical simulations described in the main text for Figure 2.
@@ -195,7 +195,7 @@ The two simulation experiments correspond to (i) sampling ecosystem function acr
 \begin{figure}[!ht]
   \centering
       \includegraphics[width=6in]{./components/SI_storage_effect_eightspp_local_regional.png}
-  \caption{Variability of total community biomass as a function of species richness when coexistence is maintained by the storage effect. The left panel shows results from simulations where environmental cue variance determines the number of species that coexist in a community. The right panel shows results from simulations where environmental cue variance is fixed at a level ($\sigma_E^2=10$) that allows coexistence of all eight species, but species are removed to manipulate diversity. The left-hand panel represents a "regional" diversity--ecosystem variability relationship across a natural diversity gradient, whereas the right-hand panel represents a "local" diversity--ecosystem variability relationship. Points are jittered within discrete richness values for visual clarity. Lines show the mean trend (loess fits).}
+  \caption{Variability of total community biomass as a function of species richness when coexistence is maintained by the storage effect. The left panel shows results from simulations where environmental cue variance determines the number of species that coexist in a community. The right panel shows results from simulations where environmental cue variance is fixed at a level ($\sigma_E^2=10$, which is where the far right cluster of points are in the left panel) that allows coexistence of all eight species, but species are removed to manipulate diversity. The left-hand panel represents a "regional" diversity--ecosystem variability relationship across a natural diversity gradient, whereas the right-hand panel represents a "local" diversity--ecosystem variability relationship. Points are jittered within discrete richness values for visual clarity. Lines show the mean trend (loess fits).}
 \end{figure}
 
 From one to four species, the relationship is as presented in the main text: total community *CV* increases approximately linearly with environmental variability because (1) environmental variability promotes species coexistence \emph{and} (2) environmental variability causes population fluctuations to increase (Figure SI-4).
@@ -234,7 +234,7 @@ We chose parameters to investigate based on their influence on species coexisten
 For the storage effect, coexistence strength declines as:
 
 1. Environment-competition covariance (*EC* covariance) becomes less positive
-2. Environemntal variation decreases
+2. Environmental variation decreases
 3. Buffering of population growth rate declines
 
 Conditions 1 \& 2 are already included in our main analysis because we present results across a spectrum of correlations among species' environmental responses (condition 1) and across gradients of environmental variation (condition 2).
@@ -242,10 +242,10 @@ Here, we show how the patterns described in the main text change as the bufferin
 We do this by conducting the same simulations as in Figure 3 of the main text, but for one set of live-to-dormant transition rates ($\alpha$s) and with two levels (high and low) of dormant mortality rates ($\eta$s).
 
 Our results are qualitatively similar: (1) increasing environmental variation allows more species to coexist, creating a positive relationship between species richness and ecosystem variability (richness increases along x-axes within panels); (2) and at any given level of environmental variability, it is always better to have more species, creating a within-site negative relationship between species richness and ecosystem variability (Fig. SI-2).
-Although the qualitative patterns are similar, increasing the dormant mortality rate has two interesting effects: (1) it makes coexistence more difficult, (2) it reduces the absolute value of ecosystem *CV* by reducing mean population size a little bit and by reducing the temporal standard deviation a lot, and (3) it weakens the buffering effect of additional species (compare the spread of the lines between top and bottom panels of Fig. SI-2).
+Although the qualitative patterns are similar, increasing the dormant mortality rate has three consistent effects: (1) it makes coexistence more difficult, (2) it reduces the absolute value of ecosystem *CV* by slightly reducing mean population size and significantly reducing temporal standard deviation, and (3) it weakens the buffering effect of additional species (compare the spread of the lines between top and bottom panels of Fig. SI-2).
 The second result occurs because population fluctuations are reduced when very little biomass can be activated to the live stage at the beginning of each season.
 That is, in terms of an annual plant, germination of live biomass is always a fraction of a very small number.
-The third result is a consequence of the second: populations are not fluctuating that much, so total *CV* can only be reduced by so much with the addition of another species.
+The third result is a consequence of the second: populations are not fluctuating that much, so total *CV* can only be reduced by as much with the addition of another species.
 
 \begin{figure}[!ht]
   \centering
@@ -262,17 +262,17 @@ For relative nonlinearity, coexistence strength declines as:
 
 Condition 1 is already included in our main analysis (Figures 2 and 4 in the main text).
 Condition 2 simply creates conditions where some species cannot coexist, which would not change the relationship between species richness and ecosystem variability, but rather disallow it.
-Condition 3 is more interesting, because it could create situations where species may not coexist, but it could also weaken the diversity--ecosystem variabilty relationship be reducing mean biomass and the effect of species with very nonlinear growth rates.
+Condition 3 could create situations where species may not coexist, but it could also weaken the diversity--ecosystem variabilty relationship by reducing mean biomass and the effect of species with very nonlinear growth rates.
 To explore the effect of condition 3, we ran simulations across a gradient of resource variability (11 levels) crossed with a gradient of mean resource levels (4 levels: $\mu_R = 1,2,3,4$).
 
 As expected, lower mean levels of resource make coexistence more difficult because resource acquisitive species are never favored (Fig. SI-3).
 Our general conclusion remains, however, that positive diversity--ecosystem variability relationships are possible.
-However, the occurence a of positive diversity--ecosystem variability relationship depends on amount of resource variability being sampled over and the traits of individual species (e.g., resource uptake curves). 
+However, the occurrence of a positive diversity--ecosystem variability relationship depends on the extent of the resource variability gradient and the traits of individual species (e.g., resource uptake curves). 
 In other words, the patterns we report in the main text require that fluctuation-dependent species coexistence be possible given the environmental conditions and species' traits.
 
 \begin{figure}[!ht]
   \centering
-      \includegraphics[width=6in]{./components/SI_relative_nonlinearity_four_rmus.png}
+      \includegraphics[width=7in]{./components/SI_relative_nonlinearity_four_rmus.png}
   \caption{The effect of environmental variability on ecosystem variability when species coexist via relative nonlinearity. The species pool increases from one to four species, with the fourth species being most unstable (e.g., resource conservative to resource acquisitive). Increasing environmental variability (the SD of annual resource availability) allows for greater species richness, but species additions do not modulate the effect of environmental variability on ecosystem variability. Higher values of mean resource availability (left to right across panels) makes coexistence easier. Parameter values are as in Figure 2C in the main text.}
 \end{figure}
 
@@ -328,8 +328,16 @@ Previous theory [@Loreau2013] identifies three main mechanisms by which diversit
 
 \begin{figure}[!ht]
   \centering
+      \includegraphics[width=5in]{./components/SI_big_sigE_gradient_extreme_events.png}
+  \caption{The number of extreme germination events ($\gamma<0.01$) at different levels of germination cue variance($\sigma_E^2$). Past $\sigma_E^2=2$ the number of extreme germination events increases rapidly. This is why, in a four-species community, ecosystem \emph{CV} is flat up to $\sigma_E^2=2$ (as in Fig. 3A of the main text) but then begins to increase (Fig. SI-9). Because germination is bounded at 0 and 1, once germination begins to approah those values more frequently, the portfolio effects possible when species are perfectly anti-correlated can no longer perfectly compensate for increased population variability.}
+\end{figure}
+
+\newpage{}
+
+\begin{figure}[!ht]
+  \centering
       \includegraphics[width=5in]{./components/SI_storage_effect_two_rmus_fourSpeciesOnly.png}
-  \caption{Ecosystem \emph{CV} of a four-species community coexisting via the storage effect as a function of environmental cue variance at two levels of mean resource availability (\texttt{Rmu} across tops of panels) and two levels of correlation of species' responses to environmental conditions ($\rho$). Here we simualted community dynamics across a greater range of environmental cue variance (up to 10) to show that the \emph{CV} of four-species communities does not remain flat as environmental variance increases beyond levels shown in the main text. The mean resource level has no effect on the results.}
+  \caption{Ecosystem \emph{CV} of a four-species community coexisting via the storage effect as a function of environmental cue variance at two levels of mean resource availability (\texttt{Rmu} across tops of panels) and two levels of correlation of species' responses to environmental conditions ($\rho$). Here we simulated community dynamics across a greater range of environmental cue variance (up to 10) to show that the \emph{CV} of four-species communities does not remain flat as environmental variance increases beyond levels shown in the main text. The mean resource level has no effect on the results.}
 \end{figure}
 
 \newpage{}
@@ -339,5 +347,8 @@ Previous theory [@Loreau2013] identifies three main mechanisms by which diversit
       \includegraphics[width=5in]{./components/relative_nonlinearity_div+envar_loglog_slopes.png}
   \caption{Slopes of linear fits for the relationship between log(\emph{CV}) and log($\sigma_R$) at different levels of realized species richness from relative nonlinearity simulations. The slopes come from linear models fit to log-transformed versions of Figure 4 in the main text.}
 \end{figure}
+
+
+
 
 # References

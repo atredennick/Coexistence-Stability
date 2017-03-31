@@ -27,11 +27,11 @@ seasons_to_exclude <- 500
 mycols <- brewer.pal(3, "Set2")
 
 my_theme <- theme_few()+
-  theme(axis.text          = element_text(size=6, color="grey35"),
-        axis.title         = element_text(size=8),
-        strip.text         = element_text(size=8, color="grey35"),
-        legend.title       = element_text(size=8),
-        legend.text        = element_text(size=6, color="grey35"),
+  theme(axis.text          = element_text(size=12, color="grey35"),
+        axis.title         = element_text(size=14),
+        strip.text         = element_text(size=12, color="grey35"),
+        legend.title       = element_text(size=12),
+        legend.text        = element_text(size=10, color="grey35"),
         legend.key.size    = unit(0.3, "cm"))
 
 ####

@@ -34,7 +34,7 @@ urlcolor: black
 
 \begin{centering}
 
-\Large{The relationship between species richness and ecosystem variability is shaped by the mechanism of coexistence}
+\Large{\textbf{The relationship between species richness and ecosystem variability is shaped by the mechanism of coexistence}}
 
 \bigskip{} \bigskip{}
 
@@ -201,7 +201,7 @@ We assume remaining live biomass $\left(N_{i,\tau(T)}(1-\alpha_i)\right)$ dies (
 We do not include extinction thresholds, or any other form of demographic stochasticity, under the assumption that we are working with abundant species with generous seed dispersal.}
 
 We assume the resource pool is not replenished within a growing season.
-Resource replenishment occurs between growing seasons, and the resource pool (*R*) at the start of the growing season is $R_{\tau(0)} = R^+$, where $R^+$ is a random resource pulse drawn from a log-normal distribution with mean $\mu(R^+)$ and standard deviation $\sigma(R^+)$. 
+Resource replenishment occurs between growing seasons, and the resource pool (*R*) at the start of the growing season is $R_{\tau(0)} = R^+$, where $R^+$ is a random resource pulse drawn from a lognormal distribution with mean $\mu(R^+)$ and standard deviation $\sigma(R^+)$. 
 \new{Taken all together, we can combine equations 1 and 4 to define the discrete transitions between live and dormant biomass at the end of a growing season.
 Thus, the initial conditions for each state ($D, N, R$) at the beginning of growing season $\tau+1$ are:}
 \vspace{-3em}
@@ -212,8 +212,8 @@ Thus, the initial conditions for each state ($D, N, R$) at the beginning of grow
 \end{align}
 \vspace{-3em}
 \noindent \new{where, as above, $\tau(T)$ denotes the end of growing season $\tau$ and $\tau(0) + 1$ denotes the beginning of growing season $\tau+1$.} 
-\new{The subscript (0) and superscript (200) indicates a lognormal distribution truncated at those values.
-We used the function \texttt{urlnorm} from the "Runuran" package} [@Leydold2015] \new{to generate values from the truncated lognormal distribution.}
+\new{The subscript (0) and superscript (200) indicates a lognormal distribution truncated at those values to avoid extreme resource pulses that cause computational problems.
+We used the function \texttt{urlnorm} from the \texttt{Runuran} package} [@Leydold2015] \new{to generate values from the truncated lognormal distribution.}
 Model parameters and notation are described in Table 1.
 
 \new{Our model does not include demographic stochasticity, which can lead to stochastic extinction for small populations as environmental  variability increases} [@Boyce1992].
@@ -282,6 +282,10 @@ But note that we do not attribute any particular area size to "region", it is si
 To understand how increasing environmental variability will impact ecosystem variability when coexistence is fluctuation-dependent, we simulated the model over a range of species pool sizes and environmental cue or resource variability.
 For each size of species pool (1, 2, 3, or 4 species), we simulated the model at 15 evenly-spaced levels of environmental cue (range = [0.1, 2]) for the storage effect and 25 evenly-spaced levels of resource variability (range = [0, 1.2]) for relative nonlinearity.
 We also explored the influence of asymmetries in species' competitive abilities and correlations in species' environmental responses within the storage effect model.
+\new{We created competitive hierarchies by making the live-to-dormant biomass fractions ($\alpha$s) unequal among species.
+A small difference among values of $\alpha$ were needed to create competitive hierarchies because we chose a relatively constrained gradient of environmental cue variance.
+Larger differences among values of $\alpha$ expand the region of coexistence farther along a gradient environmental cue variance.
+These parameter value choices do not affect our conclusions, but would change the quantitative results.}
 
 Under relative nonlinearity, species' resource response curves (Fig. SI-5) reflect traits that determine the temporal variability of each species' population growth.
 "Stable" species achieve maximum resource uptake at low resource levels, but their maximum uptake rates are modest. 
@@ -345,6 +349,7 @@ However, more extreme increases in the variance of the environmental cue, which 
 In communities where species coexist via relative nonlinearity, the extent to which species additions buffer ecosystem stability against increases in environmental variability depends on the species traits of immigrating species and the order in which they enter the community.
 When additional species, which immigrate from the regional pool, are less intrinsically stable than the resident species, ecosystem variability increases at a relatively constant rate even as species are added (Fig. 4A; Fig. SI-11).
 If more stable species colonize, species additions buffer the ecosystem from increasing environmental variability (Fig. 4B).
+\new{The "stair-steps" in Fig. 4B emerge because a different species is making up the one-species community at different levels of resource variability, increasing ecosystem \emph{CV} each time as a more unstable species composes the single species community.}
 
 \new{We tested the generality of our results under different parameters by conducting a targeted sensitivity analysis focused on parameter values and asymmetries that most affect species coexistence (Supporting Information section SI.3).
 Making parameters asymmetric creates competitive hierachies and makes coexistence more difficult.
@@ -458,8 +463,8 @@ TABLE
 Parameter & Description & Value \\
 \hline
 $r$ & maximum per capita growth rate & 0.2 (variable) \\
-$a$ & Hill function rate parameter & 2.0 (variable) \\
-$b$ & Hill function curvature parameter & 2.5 (variable) \\
+$a$ & Hill function curvature parameter & 2.0 (variable) \\
+$b$ & Hill function scale parameter & 2.5 (variable) \\
 $\epsilon$ & resource-to-biomass conversion efficiency & 0.5 \\
 $\alpha$ & allocation fraction of live biomass to dormant biomass & 0.5 (variable) \\
 $\gamma$ & dormant-to-live biomass transition fraction & --- \\
@@ -619,7 +624,7 @@ g_strg <- grid.arrange(strg_uptake_plot, strg_germ_plot,
 \begin{figure}[!ht]
   \centering
       \includegraphics[height=5in]{/Users/atredenn/Google_Drive/coexistence-stability_submission/figures/coex_stability_figure1.png}
-  \caption{Variability of total community biomass as a function of species richness when coexistence is maintained by the storage effect (A,B) or relative nonlinearity (C,D). Left panels show results from simulations where environmental or resource variance determine the number species that coexist in a community. Right panels show results from simulations where environmental or resource variance is fixed at a level that allows coexistence of all four species, but species are removed to manipulate diversity. The left-hand panels represent ``regional'' diversity--ecosystem variability relationships across natural diversity gradients, whereas the right-hand panels represent ``local'' diversity--ecosystem variability relationships. Points are jittered within discrete richness values for visual clarity. Parameter values, where species are denoted by numeric subscripts: (A) $r_1 = r_2 = r_3 = r_4 = 0.2$, $a_1 = a_2 = a_3 = a_4 = 2$, $b_1 = b_2 = b_3 = b_4 = 2.5$, $\alpha_1 = 0.5, \alpha_2 = 0.49, \alpha_3 = 0.48, \alpha_4 = 0.47$, $\rho_1 = \rho_2 = \rho_3 = \rho_4 = 0$, $\sigma_E =$ variable; (B) $r_1 = r_2 = r_3 = r_4 = 0.2$, $a_1 = a_2 = a_3 = a_4 = 2$, $b_1 = b_2 = b_3 = b_4 = 2.5$, $\alpha_1 = 0.5, \alpha_2 = 0.49, \alpha_3 = 0.48, \alpha_4 = 0.47$, $\rho_1 = \rho_2 = \rho_3 = \rho_4 = -1/3$, $\sigma_E = 4$; (C) $r_1 = 0.2, r_2 = 1, r_3 = 2, r_4 = 5$, $a_1 = 2, a_2 = 5, a_3 = 10, a_4 = 25$, $b_1 = 2.5, b_2 = 20, b_3 = 30, b_4 = 45$, $\alpha_1 = \alpha_2 = \alpha_3 = \alpha_4 = 0.5$, $\rho_1 = \rho_2 = \rho_3 = \rho_4 = 1$, $\sigma(R^+) =$ variable; (D) $r_1 = 0.2, r_2 = 1, r_3 = 2, r_4 = 5$, $a_1 = 2, a_2 = 5, a_3 = 10, a_4 = 25$, $b_1 = 2.5, b_2 = 20, b_3 = 30, b_4 = 45$, $\alpha_1 = \alpha_2 = \alpha_3 = \alpha_4 = 0.5$, $\rho_1 = \rho_2 = \rho_3 = \rho_4 = 1$, $\sigma(R^+) =$ 1.1.}
+  \caption{Variability of total community biomass as a function of species richness when coexistence is maintained by the storage effect (A,B) or relative nonlinearity (C,D). Left panels show results from simulations where environmental or resource variance determine the number species that coexist in a community. Right panels show results from simulations where environmental or resource variance is fixed at a level that allows coexistence of all four species, but species are removed to manipulate diversity. The left-hand panels represent ``regional'' diversity--ecosystem variability relationships across natural diversity gradients, whereas the right-hand panels represent ``local'' diversity--ecosystem variability relationships. \new{Note that we do not attribute any particular area size to "region", it is simply any area over which a gradient of environmental variability can emerge.} Points are jittered within discrete richness values for visual clarity. Parameter values, where species are denoted by numeric subscripts: (A) $r_1 = r_2 = r_3 = r_4 = 0.2$, $a_1 = a_2 = a_3 = a_4 = 2$, $b_1 = b_2 = b_3 = b_4 = 2.5$, $\alpha_1 = 0.5, \alpha_2 = 0.49, \alpha_3 = 0.48, \alpha_4 = 0.47$, $\rho_1 = \rho_2 = \rho_3 = \rho_4 = 0$, $\sigma_E =$ variable; (B) $r_1 = r_2 = r_3 = r_4 = 0.2$, $a_1 = a_2 = a_3 = a_4 = 2$, $b_1 = b_2 = b_3 = b_4 = 2.5$, $\alpha_1 = 0.5, \alpha_2 = 0.49, \alpha_3 = 0.48, \alpha_4 = 0.47$, $\rho_1 = \rho_2 = \rho_3 = \rho_4 = -1/3$, $\sigma_E = 4$; (C) $r_1 = 0.2, r_2 = 1, r_3 = 2, r_4 = 5$, $a_1 = 2, a_2 = 5, a_3 = 10, a_4 = 25$, $b_1 = 2.5, b_2 = 20, b_3 = 30, b_4 = 45$, $\alpha_1 = \alpha_2 = \alpha_3 = \alpha_4 = 0.5$, $\rho_1 = \rho_2 = \rho_3 = \rho_4 = 1$, $\sigma(R^+) =$ variable; (D) $r_1 = 0.2, r_2 = 1, r_3 = 2, r_4 = 5$, $a_1 = 2, a_2 = 5, a_3 = 10, a_4 = 25$, $b_1 = 2.5, b_2 = 20, b_3 = 30, b_4 = 45$, $\alpha_1 = \alpha_2 = \alpha_3 = \alpha_4 = 0.5$, $\rho_1 = \rho_2 = \rho_3 = \rho_4 = 1$, $\sigma(R^+) =$ 1.1.}
 \end{figure}
 
 \newpage{}
@@ -635,7 +640,7 @@ g_strg <- grid.arrange(strg_uptake_plot, strg_germ_plot,
 \begin{figure}[!ht]
   \centering
       \includegraphics[height=2.5in]{/Users/atredenn/Google_Drive/coexistence-stability_submission/figures/coex_stability_figure3.png}
-  \caption{The effect of environmental variability on ecosystem variability when species coexist via relative nonlinearity. (A) The species pool increases from one to four species, with the fourth species being most unstable (e.g., resource conservative to resource acquisitive). Increasing environmental variability (the SD of annual resource availability) allows for greater species richness, but species additions do not modulate the effect of environmental variability on ecosystem variability. (B) The species pool increases from one to four species, with the fourth species being most stable (e.g., resource acquisitive to resrouce conservative). In this case, increasing environmental variability allows for greater realized species richness and can temper the effect of environmental variability. Parameter values are as in Figure 2C.}
+  \caption{The effect of environmental variability on ecosystem variability when species coexist via relative nonlinearity. (A) The species pool increases from one to four species, with the fourth species being most unstable (e.g., resource conservative to resource acquisitive). Increasing environmental variability (the SD of annual resource availability) allows for greater species richness, but species additions do not modulate the effect of environmental variability on ecosystem variability. (B) The species pool increases from one to four species, with the fourth species being most stable (e.g., resource acquisitive to resource conservative). In this case, increasing environmental variability allows for greater realized species richness and can temper the effect of environmental variability. Parameter values are as in Figure 2C.}
 \end{figure}
 
 \newpage{}

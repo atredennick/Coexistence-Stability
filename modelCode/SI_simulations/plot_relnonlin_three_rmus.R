@@ -30,11 +30,11 @@ number_of_files2    <- length(grep("*.RDS", list.files(results_path2)))
 ####  MY PLOTTING THEME ----
 ####
 my_theme <- theme_few()+
-  theme(axis.text          = element_text(size=6, color="grey35"),
-        axis.title         = element_text(size=8),
-        strip.text         = element_text(size=8, color="grey35"),
-        legend.title       = element_text(size=8),
-        legend.text        = element_text(size=6, color="grey35"),
+  theme(axis.text          = element_text(size=12, color="grey35"),
+        axis.title         = element_text(size=14),
+        strip.text         = element_text(size=12, color="grey35"),
+        legend.title       = element_text(size=12),
+        legend.text        = element_text(size=10, color="grey35"),
         legend.key.size    = unit(0.3, "cm"))
 
 
@@ -209,10 +209,10 @@ firstones <- cv_means %>%
 ####
 ####  COMBINE RESULTS ----
 ####
-cv_means$spporder <- "unstable2stable"
-cv_means_su$spporder <- "stable2unsable"
-firstones$spporder <- "unstable2stable"
-firstones_su$spporder <- "stable2unsable"
+cv_means$spporder <- "Unstable to Stable"
+cv_means_su$spporder <- "Stable to Unstable"
+firstones$spporder <- "Unstable to Stable"
+firstones_su$spporder <- "Stable to Unstable"
 
 cv_means <- rbind(cv_means, cv_means_su)
 firstones <- rbind(firstones, firstones_su)
@@ -232,10 +232,10 @@ ggplot()+
   facet_grid(spporder~Rmu, scales = "free_y")+
   my_theme+
   # theme(legend.position = c(0.93, 0.155))+
-  theme(legend.title=element_text(size=6, face="bold"),
-        legend.text=element_text(size=6),
+  theme(legend.title=element_text(size=9, face="bold"),
+        legend.text=element_text(size=12),
         legend.background = element_rect(colour = "lightgrey", size=0.25),
         legend.key = element_blank(),
         legend.key.size = unit(0.2, "cm"))+
-  guides(colour = guide_legend(override.aes = list(size=1)))
-ggsave(paste0(figures_path, "SI_relative_nonlinearity_four_rmus.png"), width = 8.5, height=4, units = "in", dpi = 300)
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+ggsave(paste0(figures_path, "SI_relative_nonlinearity_four_rmus.png"), width = 8.5, height=4, units = "in", dpi = 120)

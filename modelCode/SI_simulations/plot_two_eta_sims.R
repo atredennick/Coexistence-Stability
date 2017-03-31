@@ -28,11 +28,11 @@ number_of_files    <- length(grep("*.RDS", list.files(results_path)))
 ####  MY PLOTTING THEME ----
 ####
 my_theme <- theme_few()+
-  theme(axis.text          = element_text(size=6, color="grey35"),
-        axis.title         = element_text(size=8),
-        strip.text         = element_text(size=8, color="grey35"),
-        legend.title       = element_text(size=8),
-        legend.text        = element_text(size=6, color="grey35"),
+  theme(axis.text          = element_text(size=12, color="grey35"),
+        axis.title         = element_text(size=14),
+        strip.text         = element_text(size=12, color="grey35"),
+        legend.title       = element_text(size=12),
+        legend.text        = element_text(size=10, color="grey35"),
         legend.key.size    = unit(0.3, "cm"))
 
 
@@ -151,6 +151,6 @@ ggplot()+
         legend.key = element_blank(),
         legend.key.size = unit(0.2, "cm"))+
   guides(colour = guide_legend(override.aes = list(size=1)))
-ggsave(paste0(figures_path, "SI_storage_effect_two_etas.png"), width = 133, height=80, units = "mm", dpi = 600)
+ggsave(paste0(figures_path, "SI_storage_effect_two_etas.png"), width = 6, height=4, units = "in", dpi =120)
 
 
