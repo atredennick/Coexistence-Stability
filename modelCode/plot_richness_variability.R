@@ -25,33 +25,6 @@ path2figs <- "../manuscript/components/"
 
 seasons_to_exclude <- 500
 mycols <- brewer.pal(3, "Set2")
-# mycols <- viridis(2, begin=0.25, end=0.7)
-# mycols <- c("#15E7A0", "#13CFE8")
-my_theme <- theme(legend.title=element_text(size=8, face="bold"),
-                  legend.text=element_text(size=8),
-                  legend.background = element_rect(colour = "grey45", size=0.5),
-                  legend.key = element_blank(),
-                  legend.key.size = unit(0.3, "cm"),
-                  panel.grid.major = element_line(colour = "white", linetype = "dotted"),
-                  panel.grid.minor = element_line(colour = "white", linetype = "dotted"),
-                  strip.background = element_blank())
-
-my_theme <- theme_bw()+
-  theme(panel.grid.major.x = element_blank(), 
-        panel.grid.minor.x = element_blank(),
-        panel.grid.minor.y = element_blank(),
-        panel.grid.major.y = element_line(color="white"),
-        panel.background   = element_rect(fill = "#EFEFEF"),
-        axis.text          = element_text(size=10, color="grey35", family = "Arial Narrow"),
-        axis.title         = element_text(size=12, family = "Arial Narrow", face = "bold"),
-        panel.border       = element_blank(),
-        axis.line.x        = element_line(color="black"),
-        axis.line.y        = element_line(color="black"),
-        strip.background   = element_blank(),
-        strip.text         = element_text(size=8, color="grey35", family = "Arial Narrow"),
-        legend.title       = element_text(size=8, family = "Arial Narrow"),
-        legend.text        = element_text(size=6, color="grey35", family = "Arial Narrow"))
-
 my_theme <- theme_few()+
   theme(axis.text          = element_text(size=6, color="grey35"),
         axis.title         = element_text(size=8),
@@ -91,17 +64,18 @@ for(i in 1:length(rho0_storage_effect)){
   tmp_out <- data.frame(rho=0,
                         sigE=sig_e_vec[i],
                         cv=tmp_cv,
-                        spprich=tmp_spprich)
+                        spprich=tmp_spprich,
+                        sdev=sd(tmp_totbiomass),
+                        avg=mean(tmp_totbiomass))
   
   save_multispp_rho0 <- rbind(save_multispp_rho0, tmp_out)
 }
-
-
-
+write.csv(save_multispp_rho0, "../derivedSimulationStats/storage_effect_regional_div-stab.csv")
 
 
 ggplot(save_multispp_rho0, aes(x=spprich, y=cv))+
-  geom_point(shape=21, color="grey40", fill=mycols[1], size=2)+
+  # geom_point(shape=21, color="grey40", fill=mycols[1], size=2)+
+  geom_jitter(shape=21, color="grey40", fill=mycols[1], size=2, width=0.05)+
   stat_smooth(method="lm", color=mycols[1], se=FALSE, size=0.6)+
   xlab("Number of Species")+
   ylab("Variability of Total\nCommunity Biomass (CV)")+
@@ -110,16 +84,6 @@ ggplot(save_multispp_rho0, aes(x=spprich, y=cv))+
 fig.width <- 133/2
 ggsave(paste0(path2figs,"diversity_stability_relationship_storage_effect.png"), width = fig.width, height = 60, units = "mm", dpi = 600)
 
-# ggplot(save_multispp_rho0, aes(x=sigE, y=spprich))+
-#   geom_point(shape=1, col=mycols[1])+
-#   ylab("S")+
-#   xlab(expression(sigma[E]^2))+
-#   my_theme+
-#   theme(axis.title.y = element_text(angle=0, face="italic"),
-#         axis.title.x = element_text(face="italic"),
-#         panel.border = element_rect(fill=NA),
-#         plot.background = element_rect(fill = "#EFEFEF"))
-# ggsave(paste0(path2figs,"diversity_envvar_relationship_storage_effect.png"), width = 60, height = 35, units = "mm", dpi = 600)
 
 
 ####
@@ -127,8 +91,10 @@ ggsave(paste0(path2figs,"diversity_stability_relationship_storage_effect.png"), 
 ####
 ### Recreate parameter grid
 ## Define vectors of parameters to vary
-n_rsd <- 50 # Number of seasonal standard deviation levels
+n_rsd  <- 50 # Approx number of seasonal standard deviation levels
 rsd_vec <- pretty(seq(0, 1.4, length.out=n_rsd), n_rsd) # Make a pretty vector
+rsd_vec <- rsd_vec[which(rsd_vec<1.25)] # get rid of super high variability
+rsd_vec[which(rsd_vec==0.06)] <- 0.061 # urlnorm doesn't like 0.06!!
 rsd_vec <- as.data.frame(rsd_vec)
 names(rsd_vec) <- "Rsd_annual"
 
@@ -146,13 +112,18 @@ for(i in 1:length(multispp_rln)){
   
   tmp_out <- data.frame(rsd=rsd_vec[i,"Rsd_annual"],
                         cv=tmp_cv,
-                        spprich=tmp_spprich)
+                        spprich=tmp_spprich,
+                        sdev=sd(tmp_totbiomass),
+                        avg=mean(tmp_totbiomass))
   
   save_multispp <- rbind(save_multispp, tmp_out)
 }
 
+write.csv(save_multispp, "../derivedSimulationStats/relative_nonlinearity_regional_div-stab.csv")
+
 ggplot(subset(save_multispp, spprich>0), aes(x=spprich, y=cv))+
-  geom_point(shape=21, color="grey40", fill=mycols[2], size=2)+
+  # geom_point(shape=21, color="grey40", fill=mycols[2], size=2)+
+  geom_jitter(shape=21, color="grey40", fill=mycols[2], size=2, width=0.05)+
   stat_smooth(method="lm", color=mycols[2], se=FALSE, size=0.6)+
   xlab("Number of Species")+
   ylab("Variability of Total\nCommunity Biomass (CV)")+
@@ -161,16 +132,6 @@ ggplot(subset(save_multispp, spprich>0), aes(x=spprich, y=cv))+
 fig.width <- 133/2
 ggsave(paste0(path2figs,"diversity_stability_relationship_relnonlin.png"), width = fig.width, height = 60, units = "mm", dpi = 600)
 
-# ggplot(subset(save_multispp, spprich>0), aes(x=rsd, y=spprich))+
-#   geom_point(shape=1, col=mycols[2])+
-#   ylab("S")+
-#   xlab(expression(sigma[R]^phantom(0)))+
-#   my_theme+
-#   theme(axis.title.y = element_text(angle=0, face="italic"),
-#         axis.title.x = element_text(face="italic"),
-#         panel.border = element_rect(fill=NA),
-#         plot.background = element_rect(fill = "#EFEFEF"))
-# ggsave(paste0(path2figs,"diversity_envvar_relationship_relnonlin.png"), width = 60, height = 35, units = "mm", dpi = 600)
 
 
 ####
@@ -190,13 +151,18 @@ for(i in 1:length(sppco_strg)){
   tmp_spprich <- length(which(tmp_sppavg > 1))
   
   tmp_out <- data.frame(cv=tmp_cv,
-                        spprich=tmp_spprich)
+                        spprich=tmp_spprich,
+                        sdev=sd(tmp_totbiomass),
+                        avg=mean(tmp_totbiomass))
   
   save_multispp <- rbind(save_multispp, tmp_out)
 }
 
+write.csv(save_multispp, "../derivedSimulationStats/storage_effect_local_div-stab.csv")
+
 ggplot(save_multispp, aes(x=spprich, y=cv))+
-  geom_point(shape=21, color="grey40", fill=mycols[1], size=2)+
+  # geom_point(shape=21, color="grey40", fill=mycols[1], size=2)+
+  geom_jitter(shape=21, color="grey40", fill=mycols[1], size=2, width=0.05)+
   stat_smooth(method="lm", color=mycols[1], se=FALSE, size=0.6)+
   xlab("Number of Species")+
   ylab("Variability of Total\nCommunity Biomass (CV)")+
@@ -218,14 +184,19 @@ for(i in 1:length(sppco_relnonlin)){
   tmp_spprich <- length(which(tmp_sppavg > 1))
   
   tmp_out <- data.frame(cv=tmp_cv,
-                        spprich=tmp_spprich)
+                        spprich=tmp_spprich,
+                        sdev=sd(tmp_totbiomass),
+                        avg=mean(tmp_totbiomass))
   
   save_multispp <- rbind(save_multispp, tmp_out)
 }
 
+write.csv(save_multispp, "../derivedSimulationStats/relative_nonlinearity_local_div-stab.csv")
+
 save_multispp <- subset(save_multispp, spprich > 0)
 ggplot(save_multispp, aes(x=spprich, y=cv))+
-  geom_point(shape=21, color="grey40", fill=mycols[2], size=2)+
+  # geom_point(shape=21, color="grey40", fill=mycols[2], size=2)+
+  geom_jitter(shape=21, color="grey40", fill=mycols[2], size=2, width=0.05)+
   stat_smooth(method="lm", color=mycols[2], se=FALSE, size=0.6)+
   xlab("Number of Species")+
   ylab("Variability of Total\nCommunity Biomass (CV)")+

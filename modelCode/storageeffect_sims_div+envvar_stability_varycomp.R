@@ -5,7 +5,7 @@
 ###########################################################################
 
 ####
-#### ISSUE THIE COMMAND IN SHELL BEFORE STARTING R: export OMP_NUM_THREADS=1 
+#### ISSUE THIS COMMAND IN SHELL BEFORE STARTING R: export OMP_NUM_THREADS=1 
 ####
 
 rm(list=ls())                    # Erase the memory
@@ -22,57 +22,48 @@ DNR <- rbind(c(D=c(1,1,1,1),N=c(1,1,1,1),R=20),
              c(D=c(1,1,0,0),N=c(1,1,0,0),R=20),
              c(D=c(1,0,0,0),N=c(1,0,0,0),R=20))
 
-n_sig_e <- 15 # Number of cue variance levels
-sig_e_vec <- pretty(seq(0.1, 2, length.out=n_sig_e), n_sig_e) # Make a pretty vector
-rho <- as.matrix(c(-1,0,1))
-prm <- expand.grid(as.matrix(sig_e_vec), rho, 1:4)
-DNR_repped <- matrix(rep(DNR,each=(nrow(prm)/nrow(DNR))),ncol=ncol(DNR))
-colnames(prm) <- c("sigE", "rho", "dnr_id")
+n_sig_e              <- 15 # Number of cue variance levels
+sig_e_vec            <- pretty(seq(0.1, 2, length.out=n_sig_e), n_sig_e) # Make a pretty vector
+rho                  <- as.matrix(c(-1,0,1))
+prm                  <- expand.grid(as.matrix(sig_e_vec), rho, 1:4)
+DNR_repped           <- matrix(rep(DNR,each=(nrow(prm)/nrow(DNR))),ncol=ncol(DNR))
+colnames(prm)        <- c("sigE", "rho", "dnr_id")
 colnames(DNR_repped) <- colnames(DNR)
-prm <- cbind(prm, DNR_repped)
-prm <- subset(prm, select = -c(dnr_id))
+prm                  <- cbind(prm, DNR_repped)
+prm                  <- subset(prm, select = -c(dnr_id))
 
-alphas <- rbind(c(alpha1=0.5, alpha2=0.495, alpha3=0.49, alpha4=0.485),
-              c(alpha1=0.5, alpha2=0.49, alpha3=0.48, alpha4=0.47))
-prm_repped <- do.call("rbind", replicate(2, prm,  simplify = FALSE))
-alphas_repped <- matrix(rep(alphas, each=nrow(prm)), ncol=ncol(alphas))
+alphas                  <- rbind(c(alpha1=0.5, alpha2=0.495, alpha3=0.49, alpha4=0.485),
+                                 c(alpha1=0.5, alpha2=0.49, alpha3=0.48, alpha4=0.47))
+prm_repped              <- do.call("rbind", replicate(2, prm,  simplify = FALSE))
+alphas_repped           <- matrix(rep(alphas, each=nrow(prm)), ncol=ncol(alphas))
 colnames(alphas_repped) <- colnames(alphas)
-prm_full <- cbind(prm_repped, alphas_repped)
+prm_full                <- cbind(prm_repped, alphas_repped)
 
 
 ##  Define constant parameters in list
 constant_parameters <- list (
   seasons = 5000,                  # number of seasons to simulate
-  days_to_track = 100,              # number of days to simulate in odSolve
+  days_to_track = 100,             # number of days to simulate in odSolve
   Rmu = 3,                         # mean resource pulse (on log scale)
   Rsd_annual = 0,                  # std dev of resource pulses (on log scale)
-  # sigE = 4,                        # environmental cue variance
+  # sigE = 4,                       # environmental cue variance
   # rho = 0,                        # environmental cue correlation between species
-#   alpha1 = 0.50,                   # live-to-dormant biomass fraction; spp1
-#   alpha2 = 0.495,                   # live-to-dormant biomass fraction; spp2
-#   alpha3 = 0.490,                   # live-to-dormant biomass fraction; spp3
-#   alpha4 = 0.485,                   # live-to-dormant biomass fraction; spp4
-  beta1 = 0,                       # adult survivorship; spp1 (0 if annual, >0 if perennial)
-  beta2 = 0,                       # adult survivorship; spp2 (0 if annual, >0 if perennial)
-  beta3 = 0,                       # adult survivorship; spp3 (0 if annual, >0 if perennial)
-  beta4 = 0,                       # adult survivorship; spp4 (0 if annual, >0 if perennial)
+  # alpha1 = 0.50,                  # live-to-dormant biomass fraction; spp1
+  # alpha2 = 0.495,                 # live-to-dormant biomass fraction; spp2
+  # alpha3 = 0.490,                 # live-to-dormant biomass fraction; spp3
+  # alpha4 = 0.485,                 # live-to-dormant biomass fraction; spp4
   eta1 = 0.1,                      # dormant mortality; spp1
   eta2 = 0.1,                      # dormant mortality; spp2
   eta3 = 0.1,                      # dormant mortality; spp3
-  eta4 = 0.1,                      # dormant mortality; spp4
-  theta1 = 0,                      # resource recycling fraction; spp1
-  theta2 = 0,                      # resource recycling fraction; spp2
-  theta3 = 0,                      # resource recycling fraction; spp3
-  theta4 = 0,                      # resource recycling fraction; spp4
-  nu = 0                           # resource carry-over fraction
+  eta4 = 0.1                       # dormant mortality; spp4
 )
 
 # Growth function parameters
 grow_parameters <- list (
-  r = c(0.2,0.2,0.2,0.2),           # max growth rate for each species
-  a = c(2,2,2,2),           # rate parameter for Hill function 
-  b = c(2.5,2.5,2.5,2.5),   # shape parameter for Hill function
-  eps = c(0.5,0.5,0.5,0.5)  # resource-to-biomass efficiency
+  r   = c(0.2,0.2,0.2,0.2),   # max growth rate for each species
+  a   = c(2,2,2,2),           # rate parameter for Hill function 
+  b   = c(2.5,2.5,2.5,2.5),   # shape parameter for Hill function
+  eps = c(0.5,0.5,0.5,0.5)    # resource-to-biomass efficiency
 )
 
 

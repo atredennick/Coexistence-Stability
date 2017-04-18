@@ -12,10 +12,8 @@ library('mvtnorm')
 simulate_model <- function(seasons, days_to_track, Rmu, 
                            Rsd_annual, sigE, rho, 
                            alpha1, alpha2, alpha3, alpha4,
-                           beta1, beta2, beta3, beta4,
                            eta1, eta2, eta3, eta4,
-                           theta1, theta2, theta3, theta4,
-                           nu, r1, r2, r3, r4,
+                           r1, r2, r3, r4,
                            a1, a2, a3, a4,
                            b1, b2, b3, b4,
                            eps1, eps2, eps3, eps4,
@@ -26,7 +24,7 @@ simulate_model <- function(seasons, days_to_track, Rmu,
   require('mvtnorm') # for multivariate normal distribution functions
   
   ##  Assign parameter values to appropriate lists
-  DNR <- c(D=c(D1,D2,D3,D4),   # initial dormant state abundance
+  DNR <- c(D=c(D1,D2,D3,D4),    # initial dormant state abundance
            N=c(N1,N2,N3,N4),    # initial live state abundance
            R=R)                 # initial resource level
   
@@ -56,23 +54,21 @@ simulate_model <- function(seasons, days_to_track, Rmu,
   ## Discrete model
   update_DNR <- function(t, DNR, gammas,
                          alpha1, alpha2, alpha3, alpha4,
-                         eta1, eta2, eta3, eta4,
-                         beta1, beta2, beta3, beta4,
-                         theta1, theta2, theta3, theta4, nu) {
+                         eta1, eta2, eta3, eta4) {
     with (as.list(DNR),{
-      g1 <- gammas[1]
-      g2 <- gammas[2]
-      g3 <- gammas[3]
-      g4 <- gammas[4]
-      D1new <- alpha1*N1 + D1*(1-g1)*(1-eta1)
-      D2new <- alpha2*N2 + D2*(1-g2)*(1-eta2)
-      D3new <- alpha3*N3 + D3*(1-g3)*(1-eta3)
-      D4new <- alpha4*N4 + D4*(1-g4)*(1-eta4)
-      N1new <- beta1*(1-alpha1)*N1 + g1*(D1+(alpha1*N1))*(1-eta1)
-      N2new <- beta2*(1-alpha2)*N2 + g2*(D2+(alpha2*N2))*(1-eta2)
-      N3new <- beta3*(1-alpha3)*N3 + g3*(D3+(alpha3*N3))*(1-eta3)
-      N4new <- beta4*(1-alpha4)*N4 + g4*(D4+(alpha4*N4))*(1-eta4)
-      Rnew <- theta1*(1-alpha1)*N1 + theta2*(1-alpha2)*N2 + theta3*(1-alpha3)*N3 + theta4*(1-alpha4)*N4 + nu*R + Rvector[t]
+      g1    <- gammas[1]
+      g2    <- gammas[2]
+      g3    <- gammas[3]
+      g4    <- gammas[4]
+      D1new <- (1-g1)*(alpha1*N1 + D1)*(1-eta1)
+      D2new <- (1-g2)*(alpha2*N2 + D2)*(1-eta2)
+      D3new <- (1-g3)*(alpha3*N3 + D3)*(1-eta3)
+      D4new <- (1-g4)*(alpha4*N4 + D4)*(1-eta4)
+      N1new <- g1*(alpha1*N1 + D1)*(1-eta1)
+      N2new <- g2*(alpha2*N2 + D2)*(1-eta2)
+      N3new <- g3*(alpha3*N3 + D3)*(1-eta3)
+      N4new <- g4*(alpha4*N4 + D4)*(1-eta4)
+      Rnew  <- Rvector[t]
       return(c(D1new, D2new, D3new, D4new, N1new, N2new, N3new, N4new, Rnew))
     })
   }
@@ -113,10 +109,7 @@ simulate_model <- function(seasons, days_to_track, Rmu,
     names(DNR) <- nmsDNR
     DNR <- update_DNR(season_now, DNR, gVec[season_now,],
                       alpha1 = alpha1, alpha2 = alpha2, alpha3 = alpha3, alpha4 = alpha4,
-                      eta1 = eta1, eta2 = eta2, eta3 = eta3, eta4 = eta4,
-                      beta1 = beta1, beta2 = beta2, beta3 = beta3, beta4 = beta4,
-                      theta1 = theta1, theta2 = theta2, theta3 = theta3, theta4 = theta4,
-                      nu=nu)
+                      eta1 = eta1, eta2 = eta2, eta3 = eta3, eta4 = eta4)
     names(DNR) <- nmsDNR
     NR <- DNR[-dormants]
     names(NR) <- nmsNR
@@ -160,58 +153,35 @@ for(i in 1:timesim){
 
 ##  Define constant parameters in list
 constant_parameters <- list (
-  seasons = timesim,                  # number of seasons to simulate
-  days_to_track = 100,              # number of days to simulate in odSolve
+  seasons = timesim,               # number of seasons to simulate
+  days_to_track = 100,             # number of days to simulate in odSolve
   Rmu = 3,                         # mean resource pulse (on log scale)
   Rsd_annual = 0.0,                # std dev of resource pulses (on log scale)
-  # sigE = 0,                        # environmental cue variance
-  rho = rho_sim,                         # environmental cue correlation between species
+  # sigE = 0,                      # environmental cue variance
+  rho = rho_sim,                   # environmental cue correlation between species
   alpha1 = 0.50,                   # live-to-dormant biomass fraction; spp1
-  alpha2 = 0.494,                   # live-to-dormant biomass fraction; spp2
+  alpha2 = 0.494,                  # live-to-dormant biomass fraction; spp2
   alpha3 = 0.49,                   # live-to-dormant biomass fraction; spp3
-  alpha4 = 0.483,                   # live-to-dormant biomass fraction; spp4
-  beta1 = 0,                       # adult survivorship; spp1 (0 if annual, >0 if perennial)
-  beta2 = 0,                       # adult survivorship; spp2 (0 if annual, >0 if perennial)
-  beta3 = 0,                       # adult survivorship; spp3 (0 if annual, >0 if perennial)
-  beta4 = 0,                       # adult survivorship; spp4 (0 if annual, >0 if perennial)
+  alpha4 = 0.483,                  # live-to-dormant biomass fraction; spp4
   eta1 = 0.1,                      # dormant mortality; spp1
   eta2 = 0.1,                      # dormant mortality; spp2
   eta3 = 0.1,                      # dormant mortality; spp3
-  eta4 = 0.1,                      # dormant mortality; spp4
-  theta1 = 0,                      # resource recycling fraction; spp1
-  theta2 = 0,                      # resource recycling fraction; spp2
-  theta3 = 0,                      # resource recycling fraction; spp3
-  theta4 = 0,                      # resource recycling fraction; spp4
-  nu = 0                           # resource carry-over fraction
+  eta4 = 0.1                       # dormant mortality; spp4
 )
 
-# Growth function parameters
-# grow_parameters <- list (
-#   r = c(1,5,10,25),           # max growth rate for each species
-#   a = c(2,5,10,25),           # rate parameter for Hill function 
-#   b = c(2.5,20,30,45),   # shape parameter for Hill function
-#   eps = c(0.5,0.5,0.5,0.5)  # resource-to-biomass efficiency
-# )
 grow_parameters <- list (
-  r = c(1,1,1,1)/5,           # max growth rate for each species
-  a = c(2,2,2,2),           # rate parameter for Hill function 
-  b = c(2.5,2.5,2.5,2.5),   # shape parameter for Hill function
-  eps = c(0.5,0.5,0.5,0.5)  # resource-to-biomass efficiency
+  r   = c(0.2,0.2,0.2,0.2),   # max growth rate for each species
+  a   = c(2,2,2,2),           # rate parameter for Hill function 
+  b   = c(2.5,2.5,2.5,2.5),   # shape parameter for Hill function
+  eps = c(0.5,0.5,0.5,0.5)    # resource-to-biomass efficiency
 )
 
 # Make on long vector of named parameters
 constant_param_vec <- c(unlist(constant_parameters), unlist(grow_parameters))
 parameters <- c(constant_param_vec, DNR)
-names(parameters)[39:47] <- colnames(DNR)
+dnr_slots <- which(names(parameters) == "")
+names(parameters)[dnr_slots] <- colnames(DNR)
 outs <- do.call(simulate_model,c(list(gVec=gVec),parameters)) 
-
-
-# Look at the time-series
-# total_biomass <- rowSums(outs[101:3000,5:8])
-# par(mfrow=c(1,1), mgp=c(2.2,0.45,0), tcl=-0.4, mar=c(3.3,3.6,1.1,1.1), las=1)
-# matplot(outs[101:3000,5:8], type="l", xlab="Growing Season", ylab="Biomass",  col = c("red","green","blue","orange"))
-# lines(1:2900,total_biomass, type="l", ylim=c(0,max(total_biomass)), lwd=3)
-
 
 
 
@@ -238,7 +208,7 @@ ggplot(rolling_cv, aes(x=iteration, y=cv))+
   geom_line()+
   ylab("Rolling CV")+
   xlab("Time")+
-  scale_y_continuous(limits=c(0,0.5))+
+  scale_y_continuous(limits=c(0,0.3))+
   theme(panel.grid.major = element_line(colour = "grey", linetype = "dotted"),
         panel.grid.minor = element_line(colour = "white", linetype = "dotted"),
         panel.background = element_rect("white"),
@@ -247,26 +217,26 @@ ggplot(rolling_cv, aes(x=iteration, y=cv))+
         axis.title = element_text(size=16))+
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ggsave(paste0("../manuscript/components/open_community_infographic_cv.png"), width = 3, height = 3, units = "in", dpi = 72)
-  
+
 # mycols <- c("#890584","#b1cb3d","#12205b","#0085dc", rgb(52, 0, 66, maxColorValue = 255))
 mycols <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 mycols <- c("#E69F00", "#56B4E9", "#009E73", "#CC79A7", NA)
 # mycols <- c("orange","blue","red", "green", "grey25")
 ggplot(dosim_long, aes(x=iteration, y=value, color=variable))+
-      geom_line(size=0.35)+
+  geom_line(size=0.35)+
   scale_color_manual(values=mycols)+
-      # scale_color_viridis(discrete=TRUE, direction = -1, end = 0.9, name="")+
+  # scale_color_viridis(discrete=TRUE, direction = -1, end = 0.9, name="")+
   # scale_alpha_manual(values = c(0.7,0.7,0.7,0.7,1))+
-      xlab("Time")+
-      ylab("Biomass")+
-  scale_y_continuous(limits=c(0,50))+
-      theme(panel.grid.major = element_line(colour = "grey", linetype = "dotted"),
-            panel.grid.minor = element_line(colour = "white", linetype = "dotted"),
-            panel.background = element_rect("white"),
-            axis.line.x = element_line("white"),
-            axis.line.y = element_line("white"),
-            axis.title = element_text(size=16))+
-    guides(color=FALSE, alpha=FALSE)
+  xlab("Time")+
+  ylab("Biomass")+
+  scale_y_continuous(limits=c(0,30))+
+  theme(panel.grid.major = element_line(colour = "grey", linetype = "dotted"),
+        panel.grid.minor = element_line(colour = "white", linetype = "dotted"),
+        panel.background = element_rect("white"),
+        axis.line.x = element_line("white"),
+        axis.line.y = element_line("white"),
+        axis.title = element_text(size=16))+
+  guides(color=FALSE, alpha=FALSE)
 ggsave(paste0("../manuscript/components/open_community_infographic.png"), width = 8, height = 3, units = "in", dpi = 72)
 
 
@@ -277,7 +247,8 @@ ggsave(paste0("../manuscript/components/open_community_infographic.png"), width 
 ####
 DNR <- rbind(c(D=c(1,0,0,0),N=c(1,0,0,0),R=20)) # closed community
 parameters <- c(constant_param_vec, DNR)
-names(parameters)[39:47] <- colnames(DNR)
+dnr_slots <- which(names(parameters) == "")
+names(parameters)[dnr_slots] <- colnames(DNR)
 outs_close <- do.call(simulate_model,c(list(gVec=gVec),parameters)) 
 dosim_close <- as.data.frame(outs_close[101:3000,5:8])
 colnames(dosim_close) <- c("Species 1","Species 2","Species 3","Species 4")
@@ -293,7 +264,7 @@ ggplot(dosim_long_close, aes(x=iteration, y=value, color=variable))+
   # scale_alpha_manual(values = c(0.5,0.5,0.5,0.5,1))+
   xlab("Time")+
   ylab("Biomass")+
-  scale_y_continuous(limits=c(0,50))+
+  scale_y_continuous(limits=c(0,30))+
   theme(panel.grid.major = element_line(colour = "grey", linetype = "dotted"),
         panel.grid.minor = element_line(colour = "white", linetype = "dotted"),
         panel.background = element_rect("white"),
@@ -304,13 +275,13 @@ ggplot(dosim_long_close, aes(x=iteration, y=value, color=variable))+
 ggsave(paste0("../manuscript/components/closed_community_infographic.png"), width = 8, height = 3, units = "in", dpi = 72)
 
 rolling_cv_close <- data.frame(cv = rollapply(dosim_close$`Total Biomass`, width=100, FUN=mycv, fill=NA),
-                         iteration = 1:2900)
+                               iteration = 1:2900)
 
 ggplot(rolling_cv_close, aes(x=iteration, y=cv))+
   geom_line()+
   ylab("Rolling CV")+
   xlab("Time")+
-  scale_y_continuous(limits=c(0,0.5))+
+  scale_y_continuous(limits=c(0,0.3))+
   theme(panel.grid.major = element_line(colour = "grey", linetype = "dotted"),
         panel.grid.minor = element_line(colour = "white", linetype = "dotted"),
         panel.background = element_rect("white"),
@@ -321,72 +292,17 @@ ggplot(rolling_cv_close, aes(x=iteration, y=cv))+
 ggsave(paste0("../manuscript/components/closed_community_infographic_cv.png"), width = 3, height = 3, units = "in", dpi = 72)
 
 
-
-sd(dosim_close$`Total Biomass`) / mean(dosim_close$`Total Biomass`)
-sd(dosim$`Total Biomass`) / mean(dosim$`Total Biomass`)
-
-plot(dosim$`Total Biomass`, dosim_close$`Total Biomass`)
-
-
-# 
-# sig_df <- data.frame(iteration=1:2900, sig=sig_e_vec[101:3000])
-# ggplot(sig_df, aes(x=iteration, y=sig))+
-#   geom_line()+
+# sig_df <- data.frame(variance = sig_e_vec[101:3000],
+#                      years = 101:3000)
+# ggplot(sig_df, aes(x=years, y=variance))+
+#   geom_point(size=2)+
+#   ylab(expression(paste("Environmental variance (", sigma[E]^2, ")")))+
 #   xlab("Time")+
-#   ylab("Environmental\nvariance")+
 #   theme(panel.grid.major = element_line(colour = "grey", linetype = "dotted"),
 #         panel.grid.minor = element_line(colour = "white", linetype = "dotted"),
 #         panel.background = element_rect("white"),
-#         axis.line.x = element_line("white"),
-#         axis.line.y = element_line("white"),
-#         axis.title = element_text(size=16))
-
-
-# 
-# for(i in 1:length(outs)){
-#   dosim <- as.data.frame(outs[[i]][4501:5000,5:8])
-#   colnames(dosim) <- c("Species 1","Species 2","Species 3","Species 4")
-#   dosim$total <- rowSums(dosim)
-#   colnames(dosim)[5] <- "Total Biomass"
-#   dosim$iteration <- 1:500
-#   dosim_long <- melt(dosim, id.vars = "iteration")
-#   cv <- round(sd(dosim$`Total Biomass`) / mean(dosim$`Total Biomass`),2)
-#   # title <- bquote("CV =" ~ .(cv) ~ "and" ~ sigma[E] ~ "=" ~ .(sig_e_vec[i]))
-#   title <- paste("CV =", cv)
-#   
-#   ggplot(dosim_long, aes(x=iteration, y=value, color=variable))+
-#     geom_line()+
-#     scale_color_viridis(discrete=TRUE, direction = -1, end = 0.9, name="")+
-#     xlab("Time")+
-#     ylab("Biomass")+
-#     theme(panel.grid.major = element_line(colour = "grey", linetype = "dotted"),
-#           panel.grid.minor = element_line(colour = "white", linetype = "dotted"),
-#           panel.background = element_rect("white"),
-#           axis.line.x = element_line("white"),
-#           axis.line.y = element_line("white"),
-#           axis.title = element_text(size=16))+
-#     ggtitle(title)+
-#     guides(color=FALSE)
-#   ggsave(paste0("/Users/atredenn/Desktop/var_",i,"_ts.png"), width = 4, height = 2, units = "in", dpi = 72)
-#   
-# }
-# 
-
-# plot(sig_e_vec[101:3000], type="l")
-sig_df <- data.frame(variance = sig_e_vec[101:3000],
-                     years = 101:3000)
-ggplot(sig_df, aes(x=years, y=variance))+
-  geom_point(size=2)+
-  ylab(expression(paste("Environmental variance (", sigma[E]^2, ")")))+
-  xlab("Time")+
-  theme(panel.grid.major = element_line(colour = "grey", linetype = "dotted"),
-        panel.grid.minor = element_line(colour = "white", linetype = "dotted"),
-        panel.background = element_rect("white"),
-        axis.line.x = element_line("grey50"),
-        axis.line.y = element_line("grey50"),
-        axis.title = element_text(size=16))+
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-ggsave(paste0("../manuscript/components/infographic_variance.png"), width = 8, height = 2, units = "in", dpi = 72)
-
-
-
+#         axis.line.x = element_line("grey50"),
+#         axis.line.y = element_line("grey50"),
+#         axis.title = element_text(size=16))+
+#   theme(axis.text.x = element_text(angle = 45, hjust = 1))
+# ggsave(paste0("../manuscript/components/infographic_variance.png"), width = 8, height = 2, units = "in", dpi = 72)

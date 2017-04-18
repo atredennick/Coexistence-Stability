@@ -1,54 +1,75 @@
-##	Source files for Tredennick et al.
-##	"The mechanism of coexistence shapes the diversity-stability relationship"
+##	Source files for Tredennick, Adler, & Adler
+##	  "The relationship between species richness and ecosystem variability
+##     is shaped by the mechanism of coexistence."
 ##	
 ##	These scripts reproduce all our results, and are identified
 ##	by figure number below. Each script will take an hour or more
-##	to run. So proceed with caution.
+##	to run. So proceed with caution. You may also run into file path
+##  problems if you don't have the appropriate directory structure. But,
+##  if you unzipped this entire fileset, you should be good to go by
+##  setting your working directory to this source file location.
 ##
 ##	Many of these scripts generate model output that will be saved as .RDS
-##	files, but they do not plot the results. See our code archive
-##	(link in the paper) for our plotting code. Plotting code includes
-##	code for generating SI material plots.
+##	files, but they do not plot the results. Plotting code includes
+##	code for generating SI material plots. Most of the figures required
+##  post-production work in Adobe or similar to generate the figures as they
+##  appear in the published version of the paper.
+##
+##  GITHUB REPO: http://github.com/atredennick/Coexistence-Stability
+##
+##  CONTACT:     Andrew Tredennick (atredenn@gmail.com)
+##  LAST UPDATE: Feb. 22, 2017
 
 
 
 ####
-####	FIGURE 2 -- Diversity-Stability Relationships
+####	FIGURE 2 -- Diversity-Stability Relationships ----
 ####
-##	Figure 2A
+##	Figure 2A simulation script
 source("storageeffect_sims_multispecies.R")
 
-##	Figure 2B
+##	Figure 2B simulation script
 source("storageeffect_sims_div_stability.R")
 
-##	Figure 2C
+##	Figure 2C simulation script
 source("relativenonlin_sims_multispecies.R")
 
-##	Figure 2D
+##	Figure 2D simulation script
 source("relnonlin_sims_div_stability.R")
 
+##  Generate Figure 2 Panels
+source("plot_richness_variability.R")
+
 
 
 ####
-####	FIGURE 3 -- Effect of Environmental Variability (Storage Effect)
+####	FIGURE 3 SIMS -- Effect of Environmental Variability (Storage Effect) ----
 ####
+# simulation script
 source("storageeffect_sims_div+envvar_stability_varycomp.R")
 
 
 
 ####
-####	FIGURE 4 -- Effect of Environmental Variability (Relative Nonlinearity)
+####	FIGURE 4 SIMS -- Effect of Environmental Variability (Relative Nonlinearity) ----
 ####
-##	Figure 4A
+##	Figure 4A simulation script
 source("relnonlin_sims_div+envvar_stability.R")
 
-##	Figure 4B
+##	Figure 4B simulation script
 source("relnonlin_sims_div+envvar_stability_revpool.R")
 
 
 
 ####
-####	FIGURE 5 -- Example Time Series
+####  GENERATE PANELS FOR FIG. 3 and 4 ----
+####
+source("collate_div+envar_sims.R")
+
+
+
+####
+####	FIGURE 5 -- Example Time Series ----
 ####
 source("infographic_sims.R")
 
