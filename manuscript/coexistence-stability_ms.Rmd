@@ -622,6 +622,8 @@ reln_germ_plot <- ggplot()+
 g_strg <- grid.arrange(strg_uptake_plot, strg_germ_plot, 
                        reln_uptake_plot, reln_germ_plot,
                        ncol=2, nrow=2)
+ggsave("figure1_onthefly.pdf",plot = g_strg, height = 3, width = 5, units = "in",dpi = 300)
+
 
 ```
 
