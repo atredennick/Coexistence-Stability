@@ -215,7 +215,8 @@ ggplot(rolling_cv, aes(x=iteration, y=cv))+
         axis.line.x = element_line("grey50"),
         axis.line.y = element_line("grey50"),
         axis.title = element_text(size=16))+
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  theme(axis.text.x = element_text(size=12,angle = 45, hjust = 1),
+        axis.text.y = element_text(size=12))
 ggsave(paste0("../manuscript/components/open_community_infographic_cv.png"), width = 3, height = 3, units = "in", dpi = 72)
 
 # mycols <- c("#890584","#b1cb3d","#12205b","#0085dc", rgb(52, 0, 66, maxColorValue = 255))
@@ -236,6 +237,8 @@ ggplot(dosim_long, aes(x=iteration, y=value, color=variable))+
         axis.line.x = element_line("white"),
         axis.line.y = element_line("white"),
         axis.title = element_text(size=16))+
+  theme(axis.text.x = element_text(size=12),
+        axis.text.y = element_text(size=12))+
   guides(color=FALSE, alpha=FALSE)
 ggsave(paste0("../manuscript/components/open_community_infographic.png"), width = 8, height = 3, units = "in", dpi = 72)
 
@@ -271,6 +274,8 @@ ggplot(dosim_long_close, aes(x=iteration, y=value, color=variable))+
         axis.line.x = element_line("white"),
         axis.line.y = element_line("white"),
         axis.title = element_text(size=16))+
+  theme(axis.text.x = element_text(size=12),
+        axis.text.y = element_text(size=12))+
   guides(color=FALSE, alpha=FALSE)
 ggsave(paste0("../manuscript/components/closed_community_infographic.png"), width = 8, height = 3, units = "in", dpi = 72)
 
@@ -288,7 +293,8 @@ ggplot(rolling_cv_close, aes(x=iteration, y=cv))+
         axis.line.x = element_line("grey50"),
         axis.line.y = element_line("grey50"),
         axis.title = element_text(size=16))+
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  theme(axis.text.x = element_text(size=12,angle = 45, hjust = 1),
+        axis.text.y = element_text(size=12))
 ggsave(paste0("../manuscript/components/closed_community_infographic_cv.png"), width = 3, height = 3, units = "in", dpi = 72)
 
 
