@@ -217,7 +217,7 @@ ggplot(rolling_cv, aes(x=iteration, y=cv))+
         axis.title = element_text(size=16))+
   theme(axis.text.x = element_text(size=12,angle = 45, hjust = 1),
         axis.text.y = element_text(size=12))
-ggsave(paste0("../manuscript/components/open_community_infographic_cv.png"), width = 3, height = 3, units = "in", dpi = 300)
+ggsave(paste0("../manuscript/components/open_community_infographic_cv.pdf"), width = 3, height = 3, units = "in")
 
 # mycols <- c("#890584","#b1cb3d","#12205b","#0085dc", rgb(52, 0, 66, maxColorValue = 255))
 mycols <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
@@ -240,7 +240,7 @@ ggplot(dosim_long, aes(x=iteration, y=value, color=variable))+
   theme(axis.text.x = element_text(size=12),
         axis.text.y = element_text(size=12))+
   guides(color=FALSE, alpha=FALSE)
-ggsave(paste0("../manuscript/components/open_community_infographic.png"), width = 8, height = 3, units = "in", dpi = 300)
+ggsave(paste0("../manuscript/components/open_community_infographic.pdf"), width = 8, height = 3, units = "in")
 
 
 
@@ -277,7 +277,7 @@ ggplot(dosim_long_close, aes(x=iteration, y=value, color=variable))+
   theme(axis.text.x = element_text(size=12),
         axis.text.y = element_text(size=12))+
   guides(color=FALSE, alpha=FALSE)
-ggsave(paste0("../manuscript/components/closed_community_infographic.png"), width = 8, height = 3, units = "in", dpi = 300)
+ggsave(paste0("../manuscript/components/closed_community_infographic.pdf"), width = 8, height = 3, units = "in")
 
 rolling_cv_close <- data.frame(cv = rollapply(dosim_close$`Total Biomass`, width=100, FUN=mycv, fill=NA),
                                iteration = 1:2900)
@@ -295,7 +295,7 @@ ggplot(rolling_cv_close, aes(x=iteration, y=cv))+
         axis.title = element_text(size=16))+
   theme(axis.text.x = element_text(size=12,angle = 45, hjust = 1),
         axis.text.y = element_text(size=12))
-ggsave(paste0("../manuscript/components/closed_community_infographic_cv.png"), width = 3, height = 3, units = "in", dpi = 300)
+ggsave(paste0("../manuscript/components/closed_community_infographic_cv.pdf"), width = 3, height = 3, units = "in")
 
 
 # sig_df <- data.frame(variance = sig_e_vec[101:3000],
