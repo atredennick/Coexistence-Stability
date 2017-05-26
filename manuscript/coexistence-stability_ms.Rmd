@@ -511,7 +511,8 @@ mytheme <- theme_few()+
         legend.text        = element_text(size=6, color="grey35"),
         legend.key.size    = unit(0.3, "cm"))
 
-mycols <- brewer.pal(3, "Set2")
+mycols <- brewer.pal(3, "Set1")
+# mycols <- c("black","red")
 
  ##  Resource uptake function (Hill function)
   uptake_R <- function(r, R, alpha, beta){
@@ -552,7 +553,7 @@ strg_uptake_plot <- ggplot()+
   guides(size=FALSE, linetype=FALSE)+
   xlab("Resource")+
   ylab("Resource Uptake Rate")+
-  geom_text(aes(x=1,y=5, label="A"), size=2.5)+
+  geom_text(aes(x=1,y=5, label="(a)", fontface="bold"), size=2.5)+
   mytheme+
   theme(legend.position=c(0.7,0.35))+
   theme(legend.title=element_text(size=6, face="bold"),
@@ -573,7 +574,7 @@ strg_germ_plot <- ggplot()+
   guides(size=FALSE, linetype=FALSE, color=FALSE)+
   xlab("Simulation Year")+
   ylab("Germination Fraction")+
-  geom_text(aes(x=1,y=1,label="B"), size=2.5)+
+  geom_text(aes(x=1,y=1,label="(b)", fontface="bold"), size=2.5)+
   mytheme
 
 
@@ -604,7 +605,7 @@ reln_uptake_plot <- ggplot()+
   guides(size=FALSE, linetype=FALSE, color=FALSE)+
   xlab("Resource")+
   ylab("Resource Uptake Rate")+
-  geom_text(aes(x=1,y=5,label="C"), size=2.5)+
+  geom_text(aes(x=1,y=5,label="(c)", fontface="bold"), size=2.5)+
   mytheme
 
 sigE      <- 2   # environmental cue variability
@@ -620,7 +621,7 @@ reln_germ_plot <- ggplot()+
   guides(size=FALSE, linetype=FALSE, color=FALSE)+
   xlab("Simulation Year")+
   ylab("Germination Fraction")+
-  geom_text(aes(x=1,y=1,label="D"), size=2.5)+
+  geom_text(aes(x=1,y=1,label="(d)", fontface="bold"), size=2.5)+
   mytheme
 
 g_strg <- grid.arrange(strg_uptake_plot, strg_germ_plot, 
