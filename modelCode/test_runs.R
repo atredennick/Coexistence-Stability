@@ -18,21 +18,21 @@ nbcores <- 4 # Set number of cores to match machine/simulations
 #              c(D=c(1,1,0,0),N=c(1,1,0,0),R=20),
 #              c(D=c(1,1,0,0),N=c(1,1,0,0),R=20),
 #              c(D=c(1,0,0,0),N=c(1,0,0,0),R=20))
-DNR <- rbind(c(D=c(0,0,0,1),N=c(0,0,0,1),R=20))
-set.seed(12345678)
+DNR <- rbind(c(D=c(1,1,1,1),N=c(1,1,1,1),R=20))
+#set.seed(12345678)
 
 ##  Define constant parameters in list
 constant_parameters <- list (
-  seasons = 1000,                  # number of seasons to simulate
+  seasons = 200,                  # number of seasons to simulate
   days_to_track = 100,              # number of days to simulate in odSolve
   Rmu = 3,                         # mean resource pulse (on log scale)
-  Rsd_annual = 0.2,                # std dev of resource pulses (on log scale)
-  sigE = 0,                        # environmental cue variance
-  rho = 1,                         # environmental cue correlation between species
+  Rsd_annual = 0,                # std dev of resource pulses (on log scale)
+  sigE = 5,                        # environmental cue variance
+  rho = -1,                         # environmental cue correlation between species
   alpha1 = 0.5,                   # live-to-dormant biomass fraction; spp1
-  alpha2 = 0.5,                   # live-to-dormant biomass fraction; spp2
-  alpha3 = 0.5,                   # live-to-dormant biomass fraction; spp3
-  alpha4 = 0.5,                   # live-to-dormant biomass fraction; spp4
+  alpha2 = 0.49,                   # live-to-dormant biomass fraction; spp2
+  alpha3 = 0.47,                   # live-to-dormant biomass fraction; spp3
+  alpha4 = 0.46,                   # live-to-dormant biomass fraction; spp4
   eta1 = 0.1,                      # dormant mortality; spp1
   eta2 = 0.1,                      # dormant mortality; spp2
   eta3 = 0.1,                      # dormant mortality; spp3
@@ -40,18 +40,18 @@ constant_parameters <- list (
 )
 
 # Growth function parameters
-# grow_parameters <- list (
-#   r = c(1,1,1,1),           # max growth rate for each species
-#   a = c(2,2,2,2),           # rate parameter for Hill function
-#   b = c(2.5,2.5,2.5,2.5),   # shape parameter for Hill function
-#   eps = c(0.5,0.5,0.5,0.5)  # resource-to-biomass efficiency
-# )
 grow_parameters <- list (
-  r   = c(0.2,1.0,2.0,5.0), # max growth rate for each species
-  a   = c(2,5,10,25),       # rate parameter for Hill function
-  b   = c(2.5,20,30,45),    # shape parameter for Hill function
+  r = c(1,1,1,1),           # max growth rate for each species
+  a = c(2,2,2,2),           # rate parameter for Hill function
+  b = c(2.5,2.5,2.5,2.5),   # shape parameter for Hill function
   eps = c(0.5,0.5,0.5,0.5)  # resource-to-biomass efficiency
 )
+# grow_parameters <- list (
+#   r   = c(0.2,1.0,2.0,5.0), # max growth rate for each species
+#   a   = c(2,5,10,25),       # rate parameter for Hill function
+#   b   = c(2.5,20,30,45),    # shape parameter for Hill function
+#   eps = c(0.5,0.5,0.5,0.5)  # resource-to-biomass efficiency
+# )
 
 
 # Make on long vector of named parameters
@@ -88,4 +88,28 @@ matplot(outs[[1]][,5:8], type="l", xlab="Growing Season", ylab="Biomass", lty=1)
 
 sd(rowSums(outs[[1]][,5:8])) / mean(rowSums(outs[[1]][,5:8]))
 tail(outs[[1]])
-colMeans(outs[[1]][250:nrow(outs[[1]]),])
+colMeans(outs[[1]][50:nrow(outs[[1]]),])
+
+
+
+
+library(tidyverse)
+library(dplyr)
+library(ggthemes)
+library(ggalt)
+outdf <- as.data.frame(outs[[1]][,5:8])
+colnames(outdf) <- paste("Spp.",LETTERS[1:4],sep=" ")
+#outdf$`Total Biomass` <- rowSums(outdf)
+outdf$Year <- c(1:nrow(outdf))
+outdf <- outdf %>%
+  gather(key = Species, value = Biomass, 1:4)
+
+bgcol <- "#F1EFE7"
+mycols <- c("#1B398A","#C8860B","#B0410E","#40781D")
+ggplot(filter(outdf,Year<25), aes(x=Year, y=Biomass, color=Species))+
+  geom_xspline(spline_shape = 1, size=1)+
+  scale_color_manual(values = mycols)+
+  theme_few()+
+  theme(panel.background = element_rect(fill = bgcol),
+        text = element_text(size=20))+
+  guides(color=FALSE)
