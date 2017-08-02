@@ -99,14 +99,14 @@ library(ggthemes)
 library(ggalt)
 outdf <- as.data.frame(outs[[1]][,5:8])
 colnames(outdf) <- paste("Spp.",LETTERS[1:4],sep=" ")
-#outdf$`Total Biomass` <- rowSums(outdf)
+outdf$`Total Biomass` <- rowSums(outdf)
 outdf$Year <- c(1:nrow(outdf))
 outdf <- outdf %>%
-  gather(key = Species, value = Biomass, 1:4)
+  gather(key = Species, value = Biomass, 1:5)
 
 bgcol <- "#F1EFE7"
-mycols <- c("#1B398A","#C8860B","#B0410E","#40781D")
-ggplot(filter(outdf,Year<25), aes(x=Year, y=Biomass, color=Species))+
+mycols <- c("#1B398A","#C8860B","#B0410E","#40781D","black")
+ggplot(filter(outdf,Year<201), aes(x=Year, y=Biomass, color=Species))+
   geom_xspline(spline_shape = 1, size=1)+
   scale_color_manual(values = mycols)+
   theme_few()+
