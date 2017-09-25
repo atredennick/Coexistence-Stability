@@ -28,11 +28,11 @@ constant_parameters <- list (
   Rmu = 3,                         # mean resource pulse (on log scale)
   Rsd_annual = 0,                # std dev of resource pulses (on log scale)
   sigE = 5,                        # environmental cue variance
-  rho = -1,                         # environmental cue correlation between species
+  rho = 0,                         # environmental cue correlation between species
   alpha1 = 0.5,                   # live-to-dormant biomass fraction; spp1
-  alpha2 = 0.49,                   # live-to-dormant biomass fraction; spp2
-  alpha3 = 0.47,                   # live-to-dormant biomass fraction; spp3
-  alpha4 = 0.46,                   # live-to-dormant biomass fraction; spp4
+  alpha2 = 0.5,                   # live-to-dormant biomass fraction; spp2
+  alpha3 = 0.5,                   # live-to-dormant biomass fraction; spp3
+  alpha4 = 0.5,                   # live-to-dormant biomass fraction; spp4
   eta1 = 0.1,                      # dormant mortality; spp1
   eta2 = 0.1,                      # dormant mortality; spp2
   eta3 = 0.1,                      # dormant mortality; spp3
@@ -102,13 +102,14 @@ colnames(outdf) <- paste("Spp.",LETTERS[1:4],sep=" ")
 outdf$`Total Biomass` <- rowSums(outdf)
 outdf$Year <- c(1:nrow(outdf))
 outdf <- outdf %>%
-  gather(key = Species, value = Biomass, 1:5)
+  gather(key = Species, value = Biomass, 1:4)
 
 bgcol <- "#F1EFE7"
-mycols <- c("#1B398A","#C8860B","#B0410E","#40781D","black")
-ggplot(filter(outdf,Year<201), aes(x=Year, y=Biomass, color=Species))+
+mycols <- c("#1B398A","#C8860B","#B0410E","#40781D")
+ggplot(filter(outdf,Year<25), aes(x=Year, y=Biomass, color=Species))+
   geom_xspline(spline_shape = 1, size=1)+
   scale_color_manual(values = mycols)+
+  scale_y_continuous(breaks = c(0,5,10,15))+
   theme_few()+
   theme(panel.background = element_rect(fill = bgcol),
         text = element_text(size=20))+
