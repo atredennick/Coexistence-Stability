@@ -18,7 +18,7 @@ nbcores <- 4 # Set number of cores to match machine/simulations
 #              c(D=c(1,1,0,0),N=c(1,1,0,0),R=20),
 #              c(D=c(1,1,0,0),N=c(1,1,0,0),R=20),
 #              c(D=c(1,0,0,0),N=c(1,0,0,0),R=20))
-DNR <- rbind(c(D=c(1,1,1,1),N=c(1,1,1,1),R=20))
+DNR <- rbind(c(D=c(1,1,0,0),N=c(1,1,0,0),R=20))
 #set.seed(12345678)
 
 ##  Define constant parameters in list
@@ -107,7 +107,7 @@ outdf <- outdf %>%
 bgcol <- "#F1EFE7"
 mycols <- c("#1B398A","#C8860B","#B0410E","#40781D")
 ggplot(filter(outdf,Year<25), aes(x=Year, y=Biomass, color=Species))+
-  geom_xspline(spline_shape = 1, size=1)+
+  geom_xspline(spline_shape = 1, size=1, linetype=2)+
   scale_color_manual(values = mycols)+
   scale_y_continuous(breaks = c(0,5,10,15))+
   theme_few()+
